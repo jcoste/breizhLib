@@ -8,9 +8,10 @@ import play.test.Fixtures;
 public class Bootstrap extends Job {
  
     public void doJob() {
-        Logger.info("bootStrap load data");
+
         // Check if the database is empty
         if(Livre.count() == 0) {
+            Logger.info("bootStrap load data");
             Fixtures.load("initial-data.yml");
         }
     }
