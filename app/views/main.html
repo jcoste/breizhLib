@@ -1,16 +1,30 @@
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
-        #{get 'moreScripts' /}
-    </head>
-    <body>
-        #{doLayout /}
-    </body>
+<head>
+    <title>#{get 'title' /}</title>
+    <link rel="stylesheet" media="all" href="template.css"/>
+    <meta charset="utf-8">
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/template.css'}">
+    #{get 'moreStyles' /}
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+    <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+    #{get 'moreScripts' /}
+</head>
+<body>
+<header>
+    <img src="http://www.breizhjug.org/_/rsrc/1214896583171/config/app/images/customLogo/customLogo.gif?revision=4"/>
+
+    <h1>Bibliothèque</h1>
+</header>
+<nav>
+    <ul>
+        <li>Nouveautés</li>
+        <li><a href="#">Recherche</a></li>
+        <li><a href="#">Mon compte</a></li>
+    </ul>
+</nav>
+#{doLayout /}
+<footer>Copyleft - breizhjug.org</footer>
+</body>
 </html>

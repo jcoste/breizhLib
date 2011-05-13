@@ -1,4 +1,19 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib' /}
 
-#{welcome /}
+<article>
+    <p>Retrouvez ici les derniers livres de la bibliothèque du BreizhJug.</p>
+
+    #{if livres}
+        #{if livres.size()}
+            #{list item:livres, as:'livre'}
+                #{livre livre, as:'livre' /}
+            #{/list}
+        #{/if}
+     #{/if}
+
+    #{else}
+    <p>Aucun Livre enregistré.</p>
+    #{/else}
+
+</article>

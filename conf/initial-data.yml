@@ -1,0 +1,10 @@
+# Test data
+
+Livre():
+    titre:          Apache Maven
+    editeur:        Pearson
+    image:          http://www.pearson.fr/Resources/titles/27440100730370/Images/27440100730370L.gif
+    description:    Maven, l'outil open-source de gestion et d'automatisation de developpement Java,
+    iSBN:           123
+
+    

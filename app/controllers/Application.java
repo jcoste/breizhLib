@@ -1,16 +1,16 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import models.Livre;
+import play.mvc.Controller;
 
-import java.util.*;
+import java.util.List;
 
-import models.*;
 
 public class Application extends Controller {
 
     public static void index() {
-        render();
+        List<Livre> livres = Livre.findAll();
+        render(livres);
     }
 
 }
