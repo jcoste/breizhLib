@@ -2,4 +2,8 @@
 /.settings
 /.classpath
 /.project
+/*.iml
+/*.ipr
+/*.iws
 /tmp
+/target
