@@ -2,6 +2,7 @@ html {
 	font-family: Verdana;
 	font-size: 11px;
 	color: #353535;
+	background: #EEEEEE;
 	background-image: -moz-linear-gradient(top, #CCCCCC, #EEEEEE 30%, #EEEEEE 30%, #FFFFFF);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#CCCCCC), color-stop(0.3, #EEEEEE), color-stop(0.3, #EEEEEE), to(#FFFFFF));
 	height: 100%;
@@ -20,6 +21,7 @@ body {
 header {
 	padding: 10px;
 	border-radius: 10px 10px 0 0;
+	background: #84b710;
 	background-image: -moz-linear-gradient(top, #91be15, #84b710 27px, #7ab200 27px, #86bb08);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#91be15), color-stop(0.5, #84b710), color-stop(0.5, #7ab200), to(#86bb08));
 }
@@ -72,6 +74,7 @@ article p {
 
 section {
 	float: left;
+	background: #CCCCCC;
 	background-image: -moz-linear-gradient(top, #888888, #CCCCCC 50%, #EEEEEE);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#888888), color-stop(0.5, #CCCCCC), to(#EEEEEE));
 	border-radius: 5px 20px 0 10px;
@@ -100,7 +103,7 @@ section footer {
 	text-align: right;
 	padding: 4px;
 	border-radius: 0 0 0 10px;
-	background: #303030;
+	background: #BBBBBB;
 	background-image: -moz-linear-gradient(top, #AAAAAA, #CCCCCC 50%, #BBBBBB);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#CCCCCC), to(#BBBBBB));
 }
@@ -112,7 +115,7 @@ footer {
 	text-align: center;
 	padding: 10px;
 	border-radius: 0 0 10px 10px;
-	background: #303030;
+	background: #84b710;
 	background-image: -moz-linear-gradient(top, #91be15, #84b710 27px, #7ab200 27px, #86bb08);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#91be15), color-stop(0.5, #84b710), color-stop(0.5, #7ab200), to(#86bb08));
 }
