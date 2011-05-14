@@ -79,10 +79,11 @@ section {
 	margin: 10px 15px 10px 14px;
 }
 
-section h1 {
+section h1 a {
 	font-size: 12px;
 	padding: 0 0 0 20px;
 	color: white;
+    text-decoration: none;
 	text-shadow: 3px 3px 7px #333;
 }
 

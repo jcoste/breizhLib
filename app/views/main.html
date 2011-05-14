@@ -19,8 +19,10 @@
 </header>
 <nav>
     <ul>
-        <li>Nouveautés</li>
-        <li><a href="#">Recherche</a></li>
+        <li><a href="@{Livres.last()}">Nouveautés</a></li>
+        <li><a href="@{Livres.search()}">Recherche</a></li>
+        <li><a href="@{Livres.index()}">Ouvrages</a></li>
+        <li><a href="@{Livres.add()}">Ajouter</a></li>
         <li><a href="#">Mon compte</a></li>
     </ul>
 </nav>

@@ -2,23 +2,6 @@
 #{set title:'BreizhLib' /}
 
 <article>
-    <p>Retrouvez ici les derniers livres de la bibliothèque du BreizhJug.</p>
-
-    #{if livres}
-        #{if livres.size()}
-            #{list items:livres, as:'livre'}
-                <section>
-                    <h1>${livre.titre}</h1>
-                    <img src="${livre.image}"/>
-                    <p>${livre.description}</p>
-                    <footer>Disponible</footer>
-                </section>
-            #{/list}
-        #{/if}
-     #{/if}
-
-    #{else}
-    <p>Aucun Livre enregistré.</p>
-    #{/else}
+    <p>La bibliothèque du BreizhJug.</p>
 
 </article>

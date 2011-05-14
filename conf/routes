@@ -4,6 +4,9 @@
 
 # Home page
 GET     /                                       Application.index
+GET     /books                                  Livres.index
+GET     /news                                   Livres.last
+GET     /search                                 Livres.search
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

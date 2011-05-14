@@ -1,21 +1,32 @@
 package models;
 
 
+import play.data.binding.As;
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 public class Livre extends Model {
 
+    @Required
     public String titre;
+    @Required
     public String editeur;
     @Lob
     public String description;
+    @Required
     public String image;
+    @Required
     public String iSBN;
+
+    @As("yyyy-MM-dd")
+    public Date dateAjout;
 
     public Livre(){
 
@@ -27,11 +38,20 @@ public class Livre extends Model {
         this.editeur = editeur;
         this.image = image;
         this.iSBN = iSBN;
+        this.dateAjout = new Date();
     }
 
     public String toString() {
 		return titre;
 	}
+
+    public Date getDateAjout() {
+        return dateAjout;
+    }
+
+    public void setDateAjout(Date dateAjout) {
+        this.dateAjout = dateAjout;
+    }
 
     public String getTitre() {
         return titre;

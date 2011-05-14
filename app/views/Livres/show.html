@@ -1,0 +1,14 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib Nouveautés' /}
+
+<article>
+
+    #{if livre}
+        #{livre livre:livre, as:'full' /}
+     #{/if}
+
+    #{else}
+    <p>Aucun Livre Sélectionné.</p>
+    #{/else}
+
+</article>

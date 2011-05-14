@@ -1,10 +1,18 @@
-<section>
-        <h1>Apache Maven</h1>
-        <img src="http://www.pearson.fr/Resources/titles/27440100730370/Images/27440100730370L.gif"/>
-
-        <p>Maven, l'outil open-source de gestion et d'automatisation de d?veloppement Java, a le vent en poupe. Les
-            raisons : il syst?matise, rationalise et simplifie le d?veloppement collaboratif de projets Java, faisant
-            gagner aux entreprises comme aux d?veloppeurs du temps et de l'argent !</p>
+#{if _as == 'summary'}
+    <section>
+        <h1><a href="@{Livres.show(_livre.id)}">${_livre.titre}</a></h1>
+        <img src="${_livre.image}"/>
+        <p>${_livre.description}</p>
         <footer>Disponible</footer>
-</section>
+    </section>
+#{/if}
 
+
+#{if _as == 'full'}
+        <h1>${_livre.titre}</h1>
+        <img src="${_livre.image}"/>
+        <p>${_livre.description}</p>
+        <p>Disponible <a href="#">Reserver</a></p>
+        <br/>
+        <a href="#">Ajouter un commentaire</a>
+#{/if}
