@@ -3,7 +3,17 @@
         <h1><a href="@{Livres.show(_livre.id)}">${_livre.titre}</a></h1>
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
-        <footer>Disponible</footer>
+        <footer>
+            #{if _livre.isDisponnible()}
+                <span class="disponible"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">${_livre.etat}</a></span>
+            #{/if}
+            #{if _livre.isReserve()}
+                <span class="reserver"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">${_livre.etat}</a></span>
+            #{/if}
+             #{if _livre.isIndisponnible()}
+                <span class="indisponible"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">${_livre.etat}</a></span>
+            #{/if}
+            </footer>
     </section>
 #{/if}
 
@@ -13,7 +23,11 @@
         <h1>${_livre.titre}</h1>
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
-        <p>Disponible <a href="#">Reserver</a></p>
+
+        #{if _livre.isDisponnible()}
+           <p><span class="disponible"><a href="#">${_livre.etat}</a></span></p>
+        #{/if}
+
 </article>
 <article>
             #{if _livre.commentaires.size()}

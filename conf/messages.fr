@@ -1,0 +1,15 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+
+# views/main.html
+#
+views.main.title = Bibliothèque
+views.main.footer = Copyleft - breizhjug.org
+views.main.menu.add = Ajouter
+views.main.menu.news = Nouveautés
+views.main.menu.books = Ouvrages
+views.main.menu.search = Recherche
+
+
+validation.required= <span class="error">le champs %s est obligatoire </span>

@@ -9,6 +9,53 @@ form .error {
 }
 
 
+.disponible {
+    background: #00cc00;
+    color: #fff;
+    font-size: 90%;
+    padding: 3px 5px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #006600;
+}
+
+.disponible a {
+    color: white;
+	text-decoration: none;
+}
+
+.reserver {
+    background: #ff6600;
+    color: #fff;
+    font-size: 90%;
+    padding: 3px 5px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #996600;
+}
+
+.reserver a {
+    color: white;
+	text-decoration: none;
+}
+
+
+.indisponible {
+    background: #ff0033;
+    color: #fff;
+    font-size: 90%;
+    padding: 3px 5px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #006600;
+}
+
+.indisponible a {
+    color: white;
+	text-decoration: none;
+}
+
+
 /** Pagination **/
 
 #pagination {

@@ -7,7 +7,7 @@
     #{if livres}
         #{if livres.size()}
             #{list items:livres, as:'livre'}
-                #{livre livre:livre, as:'summary' /}
+                #{livre livre:livre, page:page,redirect:'index', as:'summary' /}
             #{/list}
         #{/if}
      #{/if}

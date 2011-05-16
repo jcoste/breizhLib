@@ -11,19 +11,16 @@
     <h1>Ajouter un commentaire</h1>
      #{form @Livres.postComment(_bookId)}
 
-            #{ifErrors}
-                <p class="error">
-                    All fields are required!
-                </p>
-            #{/ifErrors}
 
             <p>
-                <label for="nom">Votre nom: </label>
-                <input type="text" name="nom" id="nom" value="${params.nom}" />
+                <p>#{error 'nom' /} </p>
+                 <p><label for="nom">Votre nom: </label>
+                <input type="text" name="nom" id="nom" value="${params.nom}" /> </p>
             </p>
             <p>
-                <label for="content">Votre message: </label>
-                <textarea name="content" id="content">${params.content}</textarea>
+                <p>#{error 'content' /}</p>
+                <p><label for="content">Votre message: </label>
+                <textarea name="content" id="content">${params.content}</textarea>  </p>
             </p>
             <footer>
               <input type="submit" value="Envoyer votre commentaire" />

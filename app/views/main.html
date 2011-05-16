@@ -19,18 +19,18 @@
 <header>
     <img src="http://www.breizhjug.org/_/rsrc/1214896583171/config/app/images/customLogo/customLogo.gif?revision=4"/>
 
-    <h1>Bibliothèque</h1>
+    <h1>&{'views.main.title'}</h1>
 </header>
 <nav>
     <ul>
-        <li><a href="@{Livres.last()}">Nouveautés</a></li>
-        <li><a href="@{Livres.search()}">Recherche</a></li>
-        <li><a href="@{Livres.index()}">Ouvrages</a></li>
-        <li><a href="@{Livres.add()}">Ajouter</a></li>
+        <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
+        <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
+        <li><a href="@{Livres.index()}">&{'views.main.menu.books'}</a></li>
+        <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
         <li><a href="#">Mon compte</a></li>
     </ul>
 </nav>
 #{doLayout /}
-<footer>Copyleft - breizhjug.org</footer>
+<footer>&{'views.main.footer'}</footer>
 </body>
 </html>

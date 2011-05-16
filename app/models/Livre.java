@@ -30,11 +30,14 @@ public class Livre extends Model {
     @As("yyyy-MM-dd")
     public Date dateAjout;
 
+    public EtatLivre etat;
+
     @OneToMany(mappedBy = "livre",cascade = CascadeType.ALL)
     public List<Commentaire> commentaires;
 
     public Livre() {
         this.commentaires = new ArrayList<Commentaire>();
+        this.etat = EtatLivre.DISP0NIBLE;
     }
 
     public Livre(String titre, String editeur, String image, String description, String iSBN) {
@@ -66,52 +69,16 @@ public class Livre extends Model {
         return titre;
     }
 
-    public Date getDateAjout() {
-        return dateAjout;
+    public boolean isDisponnible(){
+        return  etat == EtatLivre.DISP0NIBLE;
     }
 
-    public void setDateAjout(Date dateAjout) {
-        this.dateAjout = dateAjout;
+    public boolean isIndisponnible(){
+        return  etat == EtatLivre.INSDIPONIBLE;
     }
 
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
-    public String getEditeur() {
-        return editeur;
-    }
-
-    public void setEditeur(String editeur) {
-        this.editeur = editeur;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getiSBN() {
-        return iSBN;
-    }
-
-    public void setiSBN(String iSBN) {
-        this.iSBN = iSBN;
+    public boolean isReserve(){
+        return  etat == EtatLivre.RESERVE;
     }
 }
 

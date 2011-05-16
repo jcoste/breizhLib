@@ -11,7 +11,7 @@ import java.util.List;
 public class Livres extends Controller {
 
     public static void index(int page) {
-        if(page < 0){
+        if (page < 0) {
             page = 0;
         }
         int max = Livre.findAll().size();
@@ -19,10 +19,10 @@ public class Livres extends Controller {
         int debut = (page * dept);
         int fin = (page * dept) + dept;
 
-        if(max < fin){
-            fin =  max;
-            debut =  fin-dept;
-            page =  debut/dept;
+        if (max < fin) {
+            fin = max;
+            debut = fin - dept;
+            page = debut / dept;
         }
 
         List<Livre> livres = Livre.find("order by dateAjout desc").from(debut).fetch(fin);
@@ -40,6 +40,22 @@ public class Livres extends Controller {
         }
         Livre livre = Livre.findById(id);
         render(livre);
+    }
+
+    public static void reserver(Long id,int page,String redirect) {
+        if (id == null) {
+            render();
+        }
+        Livre livre = Livre.findById(id);
+        //TODO gestion des réservations
+
+
+        livre.etat = livre.etat.getNextState();
+        livre.save();
+        if(redirect.equals("last")){
+           last();
+        }
+        index(page);
     }
 
     public static void search() {

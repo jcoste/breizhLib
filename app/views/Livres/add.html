@@ -6,11 +6,11 @@
    #{form @Livres.save()}
     <p>
         <label for="titre">Titre: </label>
-        <input type="text" name="titre" id="titre" value="${params.titre}" />
+        <input type="text" name="titre" id="titre" value="${params.titre}" />#{error 'titre' /}
     </p>
      <p>
         <label for="editeur">Editeur: </label>
-        <input type="text" name="editeur" id="editeur" value="${params.editeur}" />
+        <input type="text" name="editeur" id="editeur" value="${params.editeur}" />#{error 'titre' /}
     </p>
      <p>
         <label for="description">Description: </label>
@@ -21,8 +21,8 @@
         <input type="text" name="image" id="image" value="${params.image}" />
     </p>
     <p>
-        <label for="iSBN">ISBN: </label>
-        <input type="text" name="iSBN" id="iSBN" value="${params.iSBN}" />
+        <p><label for="iSBN">ISBN: </label>
+        <input type="text" name="iSBN" id="iSBN" value="${params.iSBN}" />#{error 'titre' /}
     </p>
     <p>
         <input type="submit" value="Ajouter" />
