@@ -12,4 +12,4 @@ views.main.menu.books = Ouvrages
 views.main.menu.search = Recherche
 
 
-validation.required= <span class="error">le champs %s est obligatoire </span>
+validation.required= <span class="error">le champ %s est obligatoire </span>

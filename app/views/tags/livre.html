@@ -4,16 +4,8 @@
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
         <footer>
-            #{if _livre.isDisponnible()}
-                <span class="disponible"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">${_livre.etat}</a></span>
-            #{/if}
-            #{if _livre.isReserve()}
-                <span class="reserver"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">${_livre.etat}</a></span>
-            #{/if}
-             #{if _livre.isIndisponnible()}
-                <span class="indisponible"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">${_livre.etat}</a></span>
-            #{/if}
-            </footer>
+                <span class="${_livre.etat.getClasseCss()}"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">${_livre.etat}</a></span>
+        </footer>
     </section>
 #{/if}
 
@@ -23,10 +15,7 @@
         <h1>${_livre.titre}</h1>
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
-
-        #{if _livre.isDisponnible()}
-           <p><span class="disponible"><a href="#">${_livre.etat}</a></span></p>
-        #{/if}
+        <p><span class="${_livre.etat.getClasseCss()}"><a href="#">${_livre.etat}</a></span></p>
 
 </article>
 <article>

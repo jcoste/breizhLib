@@ -68,18 +68,6 @@ public class Livre extends Model {
     public String toString() {
         return titre;
     }
-
-    public boolean isDisponnible(){
-        return  etat == EtatLivre.DISP0NIBLE;
-    }
-
-    public boolean isIndisponnible(){
-        return  etat == EtatLivre.INSDIPONIBLE;
-    }
-
-    public boolean isReserve(){
-        return  etat == EtatLivre.RESERVE;
-    }
 }
 
 

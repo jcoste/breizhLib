@@ -24,7 +24,7 @@ form .error {
 	text-decoration: none;
 }
 
-.reserver {
+.reserve {
     background: #ff6600;
     color: #fff;
     font-size: 90%;
@@ -34,7 +34,7 @@ form .error {
     -webkit-box-shadow: 0 2px 0 #996600;
 }
 
-.reserver a {
+.reserve a {
     color: white;
 	text-decoration: none;
 }
