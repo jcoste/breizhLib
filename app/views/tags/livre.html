@@ -9,10 +9,24 @@
 
 
 #{if _as == 'full'}
+<article>
         <h1>${_livre.titre}</h1>
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
         <p>Disponible <a href="#">Reserver</a></p>
-        <br/>
-        <a href="#">Ajouter un commentaire</a>
+</article>
+<article>
+            #{if _livre.commentaires.size()}
+                #{list items:_livre.commentaires, as:'comment'}
+                   #{commentaire comment:comment, as:'summary' /}
+                #{/list}
+            #{/if}
+</article>
+<article>
+    <section>
+        #{if _livre.hasRead()}
+             #{commentaire bookId:_livre.id, as:'postComment' /}
+        #{/if}
+    </section>
+ </article>
 #{/if}

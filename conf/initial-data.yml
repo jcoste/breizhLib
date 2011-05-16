@@ -1,5 +1,6 @@
 # Test data
 
+
 Livre(maven):
     titre:          Apache Maven
     editeur:        Pearson
@@ -32,4 +33,11 @@ Livre(progconcurrente):
     dateAjout:      2011-04-13
     iSBN:           4
 
+
+
+Commentaire(toto1):
+   nom:            Anonyme
+   commentaire:    Sérieux sans se prendre au sérieux, ce livre est une bonne référence pour apprendre et s'améliorer sur Maven.
+   dateAjout:      2011-05-16
+   livre:          maven
 

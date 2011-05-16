@@ -5,11 +5,13 @@ import play.data.binding.As;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Livre extends Model {
@@ -28,11 +30,15 @@ public class Livre extends Model {
     @As("yyyy-MM-dd")
     public Date dateAjout;
 
-    public Livre(){
+    @OneToMany(mappedBy = "livre",cascade = CascadeType.ALL)
+    public List<Commentaire> commentaires;
 
+    public Livre() {
+        this.commentaires = new ArrayList<Commentaire>();
     }
 
-    public Livre(String titre,String editeur,String image,String description,String iSBN) {
+    public Livre(String titre, String editeur, String image, String description, String iSBN) {
+        this();
         this.description = description;
         this.titre = titre;
         this.editeur = editeur;
@@ -41,9 +47,24 @@ public class Livre extends Model {
         this.dateAjout = new Date();
     }
 
+    public void addComment(String nom, String content) {
+        Commentaire commentaire = new Commentaire(this,nom, content);
+        commentaire.create();
+        this.commentaires.add(commentaire);
+    }
+
+    /**
+     * retourne 'true' si l'utilisateur à emprunté ce livre
+     * @return
+     */
+    public boolean hasRead(){
+        // TODO Long userId
+        return true;
+    }
+
     public String toString() {
-		return titre;
-	}
+        return titre;
+    }
 
     public Date getDateAjout() {
         return dateAjout;

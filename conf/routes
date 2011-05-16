@@ -5,6 +5,8 @@
 # Home page
 GET     /                                       Application.index
 GET     /books                                  Livres.index
+GET     /book/{id}                                  Livres.show
+GET     /add                                    Livres.add
 GET     /news                                   Livres.last
 GET     /search                                 Livres.search
 

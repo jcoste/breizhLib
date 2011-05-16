@@ -1,0 +1,32 @@
+#{if _as == 'summary'}
+    <section>
+        <h1>${_comment.nom}</h1>
+        <p>${_comment.commentaire}</p>
+        <footer>${_comment.dateAjout}</footer>
+    </section>
+#{/if}
+
+
+#{if _as == 'postComment'}
+    <h1>Ajouter un commentaire</h1>
+     #{form @Livres.postComment(_bookId)}
+
+            #{ifErrors}
+                <p class="error">
+                    All fields are required!
+                </p>
+            #{/ifErrors}
+
+            <p>
+                <label for="nom">Votre nom: </label>
+                <input type="text" name="nom" id="nom" value="${params.nom}" />
+            </p>
+            <p>
+                <label for="content">Votre message: </label>
+                <textarea name="content" id="content">${params.content}</textarea>
+            </p>
+            <footer>
+              <input type="submit" value="Envoyer votre commentaire" />
+           </footer>
+     #{/form}
+#{/if}

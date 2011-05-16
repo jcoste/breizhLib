@@ -11,9 +11,27 @@
             #{/list}
         #{/if}
      #{/if}
+     #{else}
+        <p>Aucun Livre enregistré.</p>
+     #{/else}
 
-    #{else}
-    <p>Aucun Livre enregistré.</p>
-    #{/else}
+        <ul id="pagination">
+            #{if page > 0}
+                <li id="previous">
+                    <a href="@{Livres.index(page-1)}">
+                       ${((page*dept)-dept)+1} - ${(page*dept)}
+                    </a>
+                </li>
+             #{/if}
+             #{if max > ((page+1)*dept) }
+                <li id="next">
+                    <a href="@{Livres.index(page+1)}">
+                        ${((page+1)*dept)+1} - ${((page+1)*dept)+dept}
+                    </a>
+                </li>
+             #{/if}
+        </ul>
+
+
 
 </article>
