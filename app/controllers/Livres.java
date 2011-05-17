@@ -25,8 +25,7 @@ public class Livres extends Controller {
             debut = max - (max - dept) / dept;
             page = debut / dept;
         }
-        //TODO from(debut)
-        List<Livre> livres = Livre.all(Livre.class).order("dateAjout").fetch(dept);
+        List<Livre> livres = Livre.all(Livre.class).order("dateAjout").fetch(dept,debut);
         render(livres, page, dept, max);
     }
 
