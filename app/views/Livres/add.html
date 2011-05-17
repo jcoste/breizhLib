@@ -2,30 +2,30 @@
 #{set title:'BreizhLib Ajout' /}
 
 <article>
-   <h1>Ajouter un Ouvrage dans la bibliothèque</h1>
+   <h1>&{'views.livres.add.title'}</h1>
    #{form @Livres.save()}
     <p>
-        <label for="titre">Titre: </label>
+        <label for="titre">&{'views.livres.add.titre.label'}</label>
         <input type="text" name="titre" id="titre" value="${params.titre}" />#{error 'titre' /}
     </p>
      <p>
-        <label for="editeur">Editeur: </label>
+        <label for="editeur">&{'views.livres.add.editeur.label'}</label>
         <input type="text" name="editeur" id="editeur" value="${params.editeur}" />#{error 'titre' /}
     </p>
      <p>
-        <label for="description">Description: </label>
+        <label for="description">&{'views.livres.add.description.label'}</label>
         <input type="text" name="description" id="description" value="${params.description}" />
     </p>
     <p>
-        <label for="image">Image: </label>
+        <label for="image">&{'views.livres.add.image.label'}</label>
         <input type="text" name="image" id="image" value="${params.image}" />
     </p>
     <p>
-        <p><label for="iSBN">ISBN: </label>
+        <p><label for="iSBN">&{'views.livres.add.iSBN.label'}</label>
         <input type="text" name="iSBN" id="iSBN" value="${params.iSBN}" />#{error 'titre' /}
     </p>
     <p>
-        <input type="submit" value="Ajouter" />
+        <input type="submit" value="&{'views.livres.add.submit'}" />
     </p>
    #{/form}
 </article>

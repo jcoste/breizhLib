@@ -2,7 +2,7 @@
 #{set title:'BreizhLib Nouveautés' /}
 
 <article>
-    <p>Retrouvez ici les derniers livres de la bibliothèque du BreizhJug.</p>
+    <p>&{'views.livres.last.title'}</p>
 
     #{if livres}
         #{if livres.size()}
@@ -13,7 +13,7 @@
      #{/if}
 
     #{else}
-    <p>Aucun Livre enregistré.</p>
+        <p>&{'views.livres.noBookRecorded'}</p>
     #{/else}
 
 </article>

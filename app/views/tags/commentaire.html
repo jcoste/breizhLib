@@ -7,23 +7,25 @@
 #{/if}
 
 
-#{if _as == 'postComment'}
-    <h1>Ajouter un commentaire</h1>
+#{if _as == 'post'}
+<article>
+    <section>
+    <h1>&{'views.tags.commentaire.post.title'}</h1>
      #{form @Livres.postComment(_bookId)}
-
-
             <p>
-                <p>#{error 'nom' /} </p>
-                 <p><label for="nom">Votre nom: </label>
-                <input type="text" name="nom" id="nom" value="${params.nom}" /> </p>
+                 <p>#{error 'nom' /} </p>
+                 <p><label for="nom">&{'views.tags.commentaire.post.nom.label'}</label>
+                 <input type="text" name="nom" id="nom" value="${params.nom}" /> </p>
             </p>
             <p>
                 <p>#{error 'content' /}</p>
-                <p><label for="content">Votre message: </label>
+                <p><label for="content">&{'views.tags.commentaire.post.content.label'}</label>
                 <textarea name="content" id="content">${params.content}</textarea>  </p>
             </p>
             <footer>
-              <input type="submit" value="Envoyer votre commentaire" />
-           </footer>
+                <input type="submit" value="&{'views.tags.commentaire.post.submit'}" />
+            </footer>
      #{/form}
+    </section>
+</article>
 #{/if}

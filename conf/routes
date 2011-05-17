@@ -4,10 +4,12 @@
 
 # Home page
 GET     /                                       Application.index
-GET     /books/?                                Livres.index
+GET     /books                                  Livres.index
 GET     /books/{page}                           Livres.index
 GET     /book/{<[0-9]+>id}                      Livres.show
+POST    /book/{<[0-9]+>bookId}/comment          Livres.postComment
 GET     /add                                    Livres.add
+POST    /add                                    Livres.save
 GET     /news                                   Livres.last
 GET     /search                                 Livres.search
 

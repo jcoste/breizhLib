@@ -4,32 +4,32 @@
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
         <footer>
-                <span class="${_livre.etat.getClasseCss()}"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">${_livre.etat}</a></span>
+                <span class="${_livre.etat.getClasseCss()}"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">&{_livre.etat.getLocalMessage()}</a></span>
         </footer>
     </section>
 #{/if}
 
 
 #{if _as == 'full'}
-<article>
+    <article>
         <h1>${_livre.titre}</h1>
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
-        <p><span class="${_livre.etat.getClasseCss()}"><a href="#">${_livre.etat}</a></span></p>
+        <p><span class="${_livre.etat.getClasseCss()}"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">&{_livre.etat.getLocalMessage()}</a></span></p>
 
-</article>
-<article>
-            #{if _livre.commentaires.size()}
-                #{list items:_livre.commentaires, as:'comment'}
-                   #{commentaire comment:comment, as:'summary' /}
-                #{/list}
-            #{/if}
-</article>
-<article>
-    <section>
-        #{if _livre.hasRead()}
-             #{commentaire bookId:_livre.id, as:'postComment' /}
-        #{/if}
-    </section>
- </article>
+    </article>
+
+    #{if _livre.commentaires.size()}
+         <article>
+            #{list items:_livre.commentaires, as:'comment'}
+                 #{commentaire comment:comment, as:'summary' /}
+             #{/list}
+         </article>
+    #{/if}
+
+
+    #{if _livre.hasRead()}
+        #{commentaire bookId:_livre.id, as:'post' /}
+    #{/if}
+
 #{/if}

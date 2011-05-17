@@ -2,6 +2,7 @@ package controllers;
 
 
 import models.Livre;
+import play.Logger;
 import play.data.validation.Required;
 import play.mvc.Controller;
 
@@ -10,27 +11,27 @@ import java.util.List;
 
 public class Livres extends Controller {
 
+    private static int NB_PAR_PAGE = 2;
+
+    private static int NB_NEWS_PAR_PAGE = 4;
+
     public static void index(int page) {
         if (page < 0) {
             page = 0;
         }
         int max = Livre.findAll().size();
-        int dept = 2;
+        int dept = NB_PAR_PAGE;
         int debut = (page * dept);
-        int fin = (page * dept) + dept;
-
-        if (max < fin) {
-            fin = max;
-            debut = fin - dept;
+        if (debut >= max) {
+            debut = max - (max-dept)/dept;
             page = debut / dept;
         }
-
-        List<Livre> livres = Livre.find("order by dateAjout desc").from(debut).fetch(fin);
+        List<Livre> livres = Livre.find("order by dateAjout desc").from(debut).fetch(dept);
         render(livres, page, dept, max);
     }
 
     public static void last() {
-        List<Livre> livres = Livre.find("order by dateAjout desc").from(0).fetch(3);
+        List<Livre> livres = Livre.find("order by dateAjout desc").from(0).fetch(NB_NEWS_PAR_PAGE);
         render(livres);
     }
 
@@ -54,6 +55,8 @@ public class Livres extends Controller {
         livre.save();
         if(redirect.equals("last")){
            last();
+        }else if(redirect.equals("show")){
+           show(id);
         }
         index(page);
     }

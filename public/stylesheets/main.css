@@ -55,6 +55,16 @@ form .error {
 	text-decoration: none;
 }
 
+.indice{
+    background: #ff6600;
+    color: white;
+    font-size: 50%;
+    padding: 3px 5px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #996600;
+    vertical-align:sub;
+}
 
 /** Pagination **/
 
@@ -87,3 +97,4 @@ form .error {
 #pagination #next:after {
     content: ' >>';
 }
+

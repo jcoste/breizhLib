@@ -2,14 +2,74 @@
 # For example, for French create a messages.fr file
 #
 
+#
 # views/main.html
 #
 views.main.title = Bibliothèque
 views.main.footer = Copyleft - breizhjug.org
+
+
+
+
+#
+# views/tags/menu.html
+#
 views.main.menu.add = Ajouter
 views.main.menu.news = Nouveautés
 views.main.menu.books = Ouvrages
 views.main.menu.search = Recherche
 
 
+#
+# views/tags/commentaire.html
+#
+views.tags.commentaire.post.title = Ajouter un commentaire
+views.tags.commentaire.post.nom.label = Votre nom:
+views.tags.commentaire.post.content.label = Votre message:
+views.tags.commentaire.post.submit = Envoyer votre commentaire
+
+
+
+
 validation.required= <span class="error">le champ %s est obligatoire </span>
+
+#
+# views/Application/index.html
+#
+views.application.index.title = La bibliothèque du BreizhJug.
+
+#
+# views/Livres/*.html
+#
+views.livres.noBookRecorded =  Aucun Livre enregistré.
+views.livres.noneSelected = Aucun Livre Sélectionné.
+
+#
+# views/Livres/add.html
+#
+views.livres.add.title = Ajouter un Ouvrage dans la bibliothèque
+views.livres.add.titre.label = Titre:
+views.livres.add.editeur.label =  Editeur:
+views.livres.add.description.label = Description:
+views.livres.add.image.label = Image:
+views.livres.add.iSBN.label = ISBN:
+views.livres.add.submit = Ajouter
+
+#
+# views/Livres/index.html
+#
+views.livres.index.title = Retrouvez ici les livres de la bibliothèque du BreizhJug.
+
+
+#
+# views/Livres/last.html
+#
+views.livres.last.title =  Retrouvez ici les derniers livres de la bibliothèque du BreizhJug.
+
+
+#
+# models
+#
+models.EtatLivre.disponible = disponible
+models.EtatLivre.indisponible = indisponible
+models.EtatLivre.reserve = réservé

@@ -1,5 +1,6 @@
 import models.Livre;
 import play.Logger;
+import play.Play;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import play.test.Fixtures;
@@ -8,10 +9,8 @@ import play.test.Fixtures;
 public class Bootstrap extends Job {
  
     public void doJob() {
-
-        // Check if the database is empty
-        if(Livre.count() == 0) {
-            Logger.info("bootStrap load data");
+        if(Livre.count() == 0 &&  Play.mode.name() == "DEV") {
+            Logger.info("bootStrap load data (DEV)");
             Fixtures.load("initial-data.yml");
         }
     }

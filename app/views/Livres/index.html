@@ -2,7 +2,7 @@
 #{set title:'BreizhLib' /}
 
 <article>
-    <p>Retrouvez ici les livres de la bibliothèque du BreizhJug.</p>
+    <p>&{'views.livres.index.title'}</p>
 
     #{if livres}
         #{if livres.size()}
@@ -12,7 +12,7 @@
         #{/if}
      #{/if}
      #{else}
-        <p>Aucun Livre enregistré.</p>
+        <p>&{'views.livres.noBookRecorded'}</p>
      #{/else}
 
         <ul id="pagination">

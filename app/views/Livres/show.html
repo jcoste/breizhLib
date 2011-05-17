@@ -2,11 +2,10 @@
 #{set title:'BreizhLib Nouveautés' /}
 
 
+#{if livre}
+      #{livre livre:livre,redirect:'show', as:'full' /}
+#{/if}
 
-    #{if livre}
-        #{livre livre:livre, as:'full' /}
-     #{/if}
-
-    #{else}
-    <p>Aucun Livre Sélectionné.</p>
-    #{/else}
+#{else}
+     <p>&{'views.livres.noneSelected'}</p>
+#{/else}
