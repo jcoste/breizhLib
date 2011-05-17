@@ -4,7 +4,7 @@
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
         <footer>
-                <span class="${_livre.etat.getClasseCss()}"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">&{_livre.etat.getLocalMessage()}</a></span>
+                <span class="${_livre.etat.getClasseCss()}"><a href="@{Reservations.reserver(_livre.id)}">&{_livre.etat.getLocalMessage()}</a></span>
         </footer>
     </section>
 #{/if}
@@ -15,7 +15,8 @@
         <h1>${_livre.titre}</h1>
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
-        <p><span class="${_livre.etat.getClasseCss()}"><a href="@{Livres.reserver(_livre.id,_page,_redirect)}">&{_livre.etat.getLocalMessage()}</a></span></p>
+        <p><a href="@{Reservations.index(_livre.id)}">Historique emprunt</a></p>
+        <p><span class="${_livre.etat.getClasseCss()}"><a href="@{Reservations.reserver(_livre.id)}">&{_livre.etat.getLocalMessage()}</a></span></p>
 
     </article>
 

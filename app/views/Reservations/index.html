@@ -1,0 +1,41 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib' /}
+
+<article>
+    <p>Réservations du livre <a href="@{Livres.show(livre.id)}">${livre.titre}</a></p>
+    <h1>Réservation/Emprunt en cours</h1>
+    #{if livre.reservationEncours}
+
+       <section>
+          <h1>${livre.reservationEncours.nom} ${livre.reservationEncours.prenom}</h1>
+          <p><span class="${livre.etat.getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
+          <p>Date reservation ${livre.reservationEncours.dateReservation}</p>
+           #{if livre.reservationEncours.dateEmprunt == null}
+           <footer><span class="indisponible"><a href="@{Reservations.annuler(livre.reservationEncours.id)}">Annuler Réservation</a></span></footer>
+           #{/if}
+            #{else}
+                <p>Date emprunt ${livre.reservationEncours.dateEmprunt}</p>
+           #{/else}
+       </section>
+     #{/if}
+      #{else}
+        <p>Aucune réservation en cours</p>
+     #{/else}
+</article>
+<article>
+    <h1>Historique des emprunts</h1>
+    #{if livre.historiqueReservation.size() > 0}
+       #{list items:livre.historiqueReservation, as:'emprunt'}
+         <section>
+          <h1>${emprunt.nom} ${emprunt.prenom}</h1>
+          <p>Date reservation ${emprunt.dateReservation}</p>
+          <p>Date emprunt ${emprunt.dateEmprunt}</p>
+          <p>Date retour ${emprunt.dateRetour}</p>
+       </section>
+       #{/list}
+
+    #{/if}
+
+
+
+</article>

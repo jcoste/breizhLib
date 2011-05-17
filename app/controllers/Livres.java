@@ -2,7 +2,6 @@ package controllers;
 
 
 import models.Livre;
-import play.Logger;
 import play.data.validation.Required;
 import play.mvc.Controller;
 
@@ -23,7 +22,7 @@ public class Livres extends Controller {
         int dept = NB_PAR_PAGE;
         int debut = (page * dept);
         if (debut >= max) {
-            debut = max - (max-dept)/dept;
+            debut = max - (max - dept) / dept;
             page = debut / dept;
         }
         List<Livre> livres = Livre.find("order by dateAjout desc").from(debut).fetch(dept);
@@ -41,24 +40,6 @@ public class Livres extends Controller {
         }
         Livre livre = Livre.findById(id);
         render(livre);
-    }
-
-    public static void reserver(Long id,int page,String redirect) {
-        if (id == null) {
-            render();
-        }
-        Livre livre = Livre.findById(id);
-        //TODO gestion des réservations
-
-
-        livre.etat = livre.etat.getNextState();
-        livre.save();
-        if(redirect.equals("last")){
-           last();
-        }else if(redirect.equals("show")){
-           show(id);
-        }
-        index(page);
     }
 
     public static void search() {
