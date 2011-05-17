@@ -4,7 +4,7 @@
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
         <footer>
-                <span class="${_livre.etat.getClasseCss()}"><a href="@{Reservations.reserver(_livre.id)}">&{_livre.etat.getLocalMessage()}</a></span>
+                <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.id)}">&{_livre.etat.getLocalMessage()}</a></span>
         </footer>
     </section>
 #{/if}
@@ -16,16 +16,17 @@
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
         <p><a href="@{Reservations.index(_livre.id)}">Historique emprunt</a></p>
-        <p><span class="${_livre.etat.getClasseCss()}"><a href="@{Reservations.reserver(_livre.id)}">&{_livre.etat.getLocalMessage()}</a></span></p>
+        <p><span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.id)}">&{_livre.etat.getLocalMessage()}</a></span></p>
 
     </article>
-
+     #{if _livre.commentaires}
     #{if _livre.commentaires.size()}
          <article>
             #{list items:_livre.commentaires, as:'comment'}
                  #{commentaire comment:comment, as:'summary' /}
              #{/list}
          </article>
+    #{/if}
     #{/if}
 
 

@@ -25,12 +25,13 @@ public class Livres extends Controller {
             debut = max - (max - dept) / dept;
             page = debut / dept;
         }
-        List<Livre> livres = Livre.find("order by dateAjout desc").from(debut).fetch(dept);
+        //TODO from(debut)
+        List<Livre> livres = Livre.all(Livre.class).order("dateAjout").fetch(dept);
         render(livres, page, dept, max);
     }
 
     public static void last() {
-        List<Livre> livres = Livre.find("order by dateAjout desc").from(0).fetch(NB_NEWS_PAR_PAGE);
+        List<Livre> livres = Livre.all(Livre.class).order("dateAjout").fetch(NB_NEWS_PAR_PAGE);
         render(livres);
     }
 
@@ -55,7 +56,7 @@ public class Livres extends Controller {
             render("Livres/add.html");
         }
         Livre livre = new Livre(titre, editeur, image, description, iSBN);
-        livre.create();
+        livre.insert();
         show(livre.getId());
     }
 

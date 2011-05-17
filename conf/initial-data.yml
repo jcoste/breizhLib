@@ -7,7 +7,7 @@ Livre(maven):
     image:          http://www.pearson.fr/Resources/titles/27440100730370/Images/27440100730370L.gif
     description:    Maven, l'outil open-source de gestion et d'automatisation de développement Java, a le vent en poupe. Les raisons , il systématise, rationalise et simplifie le développement collaboratif de projets Java, faisant gagner aux entreprises comme aux développeurs du temps et de l'argent !
     dateAjout:      2011-05-13
-    etat:           EtatLivre.DISP0NIBLE
+    etat:           disponible
     iSBN:           1
 
 Livre(coder):
@@ -16,7 +16,7 @@ Livre(coder):
     image:          http://www.pearson.fr/Resources/titles/27440100643800/Images/27440100643800L.gif
     description:    Nettoyez votre code et devenez plus performant ! Si un code sale peut fonctionner, il peut également compromettre la pérennité d'une entreprise de développement de logiciels. Chaque année, du temps et des ressources sont gaspillés à cause d'un code mal écrit. Toutefois, ce n'est pas une fatalité.
     dateAjout:      2011-05-13
-    etat:           EtatLivre.INDISP0NIBLE
+    etat:           disponible
     iSBN:           2
 
 Livre(android2):
@@ -25,7 +25,7 @@ Livre(android2):
     image:          http://www.pearson.fr/Resources/titles/27440100948550/Images/27440100948550L.gif
     description:    Développez des applications mobiles uniques avec le dernier SDK Android ! Très complet, ce livre passe en revue toutes les dernières nouveautés de la plateforme et les bonnes pratiques de développement sur mobile.
     dateAjout:      2011-05-13
-    etat:           EtatLivre.RESERVE
+    etat:           disponible
     iSBN:           3
 
 Livre(progconcurrente):
@@ -34,7 +34,7 @@ Livre(progconcurrente):
     image:          http://www.pearson.fr/Resources/titles/27440100754850/Images/27440100754850L.gif
     description:    Développez des programmes concurrents fiables en Java ! Cet ouvrage fournit à la fois les bases théoriques et les techniques concrètes pour construire des applications concurrentes fiables et adaptées aux systèmes actuels et futurs.
     dateAjout:      2011-04-13
-    etat:           EtatLivre.DISP0NIBLE
+    etat:           disponible
     iSBN:           4
 
 

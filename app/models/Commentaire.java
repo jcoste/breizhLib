@@ -3,15 +3,20 @@ package models;
 import play.data.binding.As;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
-import play.db.jpa.Model;
+import siena.Generator;
+import siena.Id;
+import siena.Model;
+import siena.Table;
 
-import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.util.Date;
 
-@Entity
+@Table("Commentaire")
 public class Commentaire extends Model {
+
+    @Id(Generator.AUTO_INCREMENT)
+    public Long id;
 
     @Required
     public String nom;
@@ -26,7 +31,7 @@ public class Commentaire extends Model {
     @As("yyyy-MM-dd")
     public Date dateAjout;
 
-    public Commentaire(Livre livre,String nom, String content) {
+    public Commentaire(Livre livre, String nom, String content) {
         this.nom = nom;
         this.livre = livre;
         this.commentaire = content;

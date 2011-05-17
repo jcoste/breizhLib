@@ -9,7 +9,7 @@ import java.util.List;
 public class Application extends Controller {
 
     public static void index() {
-        List<Livre> livres = Livre.findAll();
+        List<Livre> livres = Livre.all(Livre.class).fetch();
         render(livres);
     }
 

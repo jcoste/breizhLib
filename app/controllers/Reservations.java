@@ -18,9 +18,9 @@ public class Reservations extends Controller {
     }
 
     public static void reservations() {
-        List<Reservation> reservations = Reservation.find(" dateEmprunt IS null ").fetch();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt",null).fetch();
 
-        List<Reservation> empruints = Reservation.find(" dateEmprunt IS Not null And dateRetour IS null ").fetch();
+        List<Reservation> empruints = Reservation.all(Reservation.class).filter("dateEmprunt",null).filter("dateRetour",null).fetch();
         render(reservations,empruints);
     }
 
@@ -40,8 +40,8 @@ public class Reservations extends Controller {
         reservation.empruntEncours = null;
         livre.reservationEncours = null;
         reservation.delete();
-        livre.etat = EtatLivre.DISP0NIBLE;
-        livre.save();
+        livre.setEtat(EtatLivre.DISP0NIBLE);
+        livre.update();
         index(livre.id);
     }
 
@@ -60,7 +60,7 @@ public class Reservations extends Controller {
             render();
         }
         Livre livre = Livre.findById(id);
-        if (livre.etat.equals(EtatLivre.DISP0NIBLE)) {
+        if (livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
             render(id);
         } else {
             // TODO erreur message

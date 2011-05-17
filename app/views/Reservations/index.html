@@ -8,7 +8,7 @@
 
        <section>
           <h1>${livre.reservationEncours.nom} ${livre.reservationEncours.prenom}</h1>
-          <p><span class="${livre.etat.getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
+          <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
           <p>Date reservation ${livre.reservationEncours.dateReservation}</p>
            #{if livre.reservationEncours.dateEmprunt == null}
            <footer><span class="indisponible"><a href="@{Reservations.annuler(livre.reservationEncours.id)}">Annuler Réservation</a></span></footer>
@@ -24,6 +24,7 @@
 </article>
 <article>
     <h1>Historique des emprunts</h1>
+   #{if livre.historiqueReservation}
     #{if livre.historiqueReservation.size() > 0}
        #{list items:livre.historiqueReservation, as:'emprunt'}
          <section>
@@ -35,7 +36,7 @@
        #{/list}
 
     #{/if}
-
+   #{/if}
 
 
 </article>
