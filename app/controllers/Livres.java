@@ -1,6 +1,7 @@
 package controllers;
 
 
+import models.Commentaire;
 import models.Livre;
 import play.data.validation.Required;
 import play.mvc.Controller;
@@ -25,7 +26,7 @@ public class Livres extends Controller {
             debut = max - (max - dept) / dept;
             page = debut / dept;
         }
-        List<Livre> livres = Livre.all(Livre.class).order("dateAjout").fetch(dept,debut);
+        List<Livre> livres = Livre.all(Livre.class).order("dateAjout").fetch(dept, debut);
         render(livres, page, dept, max);
     }
 
@@ -54,6 +55,11 @@ public class Livres extends Controller {
         if (validation.hasErrors()) {
             render("Livres/add.html");
         }
+
+        if (Livre.all(Livre.class).filter("iSBN", iSBN).get() != null) {
+            error("le livre existe déja en base");
+        }
+
         Livre livre = new Livre(titre, editeur, image, description, iSBN);
         livre.insert();
         show(livre.getId());
@@ -64,7 +70,8 @@ public class Livres extends Controller {
         if (validation.hasErrors()) {
             render("Livres/show.html", livre);
         }
-        livre.addComment(nom, content);
+        Commentaire commentaire = new Commentaire(livre, nom, content);
+        commentaire.insert();
         show(bookId);
     }
 }

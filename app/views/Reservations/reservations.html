@@ -7,7 +7,7 @@
        #{list items:reservations, as:'emprunt'}
          <section>
           <h1><a href="@{Livres.show(emprunt.empruntEncours.id)}">${emprunt.empruntEncours.titre}</a> <p>réservé par ${emprunt.nom} ${emprunt.prenom}</p></h1>
-          <p>Date reservation ${emprunt.dateReservation}</p>
+          <p>Date reservation : ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
           <footer><span class="indisponible"><a href="@{Reservations.pretLivre(emprunt.id)}">Marquer le livre emprunté</a></span></footer>
        </section>
        #{/list}
@@ -19,12 +19,12 @@
 
 <article>
     <h1>Emprunt en cours</h1>
-    #{if empruints.size() > 0}
-       #{list items:empruints, as:'emprunt'}
+    #{if emprunts.size() > 0}
+       #{list items:emprunts, as:'emprunt'}
          <section>
           <h1><a href="@{Livres.show(emprunt.empruntEncours.id)}">${emprunt.empruntEncours.titre}</a> <p>emprunté par ${emprunt.nom} ${emprunt.prenom}</p></h1>
-          <p>Date reservation ${emprunt.dateReservation}</p>
-          <p>Date emprunt ${emprunt.dateEmprunt}</p>
+          <p>Date reservation : ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+          <p>Date emprunt : ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
           <footer><span class="indisponible"><a href="@{Reservations.rendreLivre(emprunt.id)}">Marquer le livre rendu</a></span></footer>
        </section>
        #{/list}

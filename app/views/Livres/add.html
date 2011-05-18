@@ -3,29 +3,35 @@
 
 <article>
    <h1>&{'views.livres.add.title'}</h1>
+   <section>
+   <table>
    #{form @Livres.save()}
-    <p>
-        <label for="titre">&{'views.livres.add.titre.label'}</label>
-        <input type="text" name="titre" id="titre" value="${params.titre}" />#{error 'titre' /}
-    </p>
-     <p>
-        <label for="editeur">&{'views.livres.add.editeur.label'}</label>
-        <input type="text" name="editeur" id="editeur" value="${params.editeur}" />#{error 'editeur' /}
-    </p>
-     <p>
-        <label for="description">&{'views.livres.add.description.label'}</label>
-        <input type="text" name="description" id="description" value="${params.description}" />
-    </p>
-    <p>
-        <label for="image">&{'views.livres.add.image.label'}</label>
-        <input type="text" name="image" id="image" value="${params.image}" />
-    </p>
-    <p>
-        <p><label for="iSBN">&{'views.livres.add.iSBN.label'}</label>
-        <input type="text" name="iSBN" id="iSBN" value="${params.iSBN}" />#{error 'iSBN' /}
-    </p>
-    <p>
+    <tr>
+        <td><label for="titre">&{'views.livres.add.titre.label'}</label></td>
+        <td><input type="text" name="titre" id="titre" value="${params.titre}" />#{error 'titre' /}</td>
+    </tr>
+    <tr>
+        <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
+        <td><input type="text" name="editeur" id="editeur" value="${params.editeur}" />#{error 'editeur' /}</td>
+    </tr>
+    <tr>
+        <td><label for="description">&{'views.livres.add.description.label'}</label></td>
+        <td><textarea  name="description" id="description" value="${params.description}" ></textarea></td>
+    </tr>
+    <tr>
+        <td><label for="image">&{'views.livres.add.image.label'}</label></td>
+        <td><input type="text" name="image" id="image" value="${params.image}" /></td>
+    </tr>
+    <tr>
+        <td><label for="iSBN">&{'views.livres.add.iSBN.label'}</label></td>
+        <td><input type="text" name="iSBN" id="iSBN" value="${params.iSBN}" />#{error 'iSBN' /}</td>
+   </tr>
+   </table>
+    <footer>
         <input type="submit" value="&{'views.livres.add.submit'}" />
-    </p>
+   </footer>
+
    #{/form}
+
+   </section>
 </article>

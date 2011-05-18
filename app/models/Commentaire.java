@@ -3,13 +3,9 @@ package models;
 import play.data.binding.As;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
-import siena.Generator;
-import siena.Id;
-import siena.Model;
-import siena.Table;
+import siena.*;
 
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Table("Commentaire")
@@ -25,7 +21,7 @@ public class Commentaire extends Model {
     @MaxSize(10000)
     public String commentaire;
 
-    @ManyToOne
+    @Column("livre")
     public Livre livre;
 
     @As("yyyy-MM-dd")

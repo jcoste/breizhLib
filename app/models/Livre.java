@@ -1,15 +1,11 @@
 package models;
 
 
-import play.Logger;
 import play.data.binding.As;
 import play.data.validation.Required;
 import siena.*;
-import siena.Column;
-import siena.Id;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Lob;
 import java.util.Date;
 import java.util.List;
 
@@ -31,8 +27,8 @@ public class Livre extends Model {
     @Column("image")
     public String image;
     @Required
-
     @Column("iSBN")
+    @Index("iSBN_index")
     public String iSBN;
 
     @As("yyyy-MM-dd")
@@ -40,32 +36,14 @@ public class Livre extends Model {
 
     public String etat;
 
-    @OneToMany(mappedBy = "livre", cascade = CascadeType.ALL)
-    public List<Commentaire> commentaires;
-
-    @OneToOne(mappedBy = "empruntEncours")
+    @Column("reservationEncours")
     public Reservation reservationEncours;
-
-    @OneToMany(mappedBy = "emprunt", cascade = CascadeType.ALL)
-    public List<Reservation> historiqueReservation;
 
 
     public Livre() {
-        this.commentaires = new ArrayList<Commentaire>();
-        this.historiqueReservation = new ArrayList<Reservation>();
+        super();
         setEtat(EtatLivre.DISP0NIBLE);
     }
-
-    //TODO
-    public void setEtat(EtatLivre etat) {
-        Logger.info("setEtat "+etat);
-        this.etat = etat.getClasseCss();
-    }
-
-    public EtatLivre getEtat() {
-        return EtatLivre.fromCss(this.etat);
-    }
-
 
     public Livre(String titre, String editeur, String image, String description, String iSBN) {
         this();
@@ -75,23 +53,6 @@ public class Livre extends Model {
         this.image = image;
         this.iSBN = iSBN;
         this.dateAjout = new Date();
-    }
-
-    public void addComment(String nom, String content) {
-        Commentaire commentaire = new Commentaire(this, nom, content);
-        commentaire.insert();
-        this.commentaires.add(commentaire);
-    }
-
-    public void addReservation(String nom, String prenom, String email) {
-        if (!getEtat().equals(EtatLivre.DISP0NIBLE)) {
-            throw new IllegalStateException("le livre n'est pas disponible a la réservation");
-        }
-        Reservation reservation = new Reservation(this, nom, prenom, email);
-        reservation.insert();
-        this.reservationEncours = reservation;
-        setEtat(this.getEtat().getNextState());
-        this.update();
     }
 
     /**
@@ -108,41 +69,41 @@ public class Livre extends Model {
         return titre;
     }
 
-    public void rendreDisponible() {
-        if (!getEtat().equals(EtatLivre.INSDIPONIBLE)) {
-            throw new IllegalStateException("le livre n'a pas été prêté : "+getEtat());
-        }
-        this.historiqueReservation.add(this.reservationEncours);
-        this.reservationEncours.emprunt = this;
-        this.reservationEncours.empruntEncours = null;
-        this.reservationEncours.dateRetour = new Date();
-        this.reservationEncours.update();
-        this.reservationEncours = null;
-        setEtat(this.getEtat().getNextState());
-        this.update();
-    }
-
-    public void preter() {
-        if (!getEtat().equals(EtatLivre.RESERVE)) {
-            throw new IllegalStateException("le livre n'a pas été réservé : "+getEtat());
-        }
-
-        this.reservationEncours.dateEmprunt = new Date();
-        this.reservationEncours.update();
-        setEtat(this.getEtat().getNextState());
-        this.update();
-    }
-
     public Long getId() {
         return id;
     }
 
     public static Livre findById(Long bookId) {
-        return Livre.all(Livre.class).filter("id", bookId).get();
+        return initData(Livre.all(Livre.class).filter("id", bookId).get());
+    }
+
+    public static Livre initData(Livre livre) {
+        if (livre != null) {
+            if (livre.reservationEncours != null) {
+                livre.reservationEncours.get();
+            }
+        }
+        return livre;
     }
 
     public static List<Livre> findAll() {
         return Livre.all(Livre.class).fetch();
+    }
+
+    public void setEtat(EtatLivre etat) {
+        this.etat = etat.getClasseCss();
+    }
+
+    public EtatLivre getEtat() {
+        return EtatLivre.fromCss(this.etat);
+    }
+
+    public List<Reservation> getHistoriqueReservation() {
+        return Reservation.all(Reservation.class).filter("emprunt", this).fetch();
+    }
+
+    public List<Commentaire> getCommentaires() {
+        return Commentaire.all(Commentaire.class).filter("livre",this).fetch();
     }
 }
 

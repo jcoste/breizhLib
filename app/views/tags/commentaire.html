@@ -2,26 +2,32 @@
     <section>
         <h1>${_comment.nom}</h1>
         <p>${_comment.commentaire}</p>
-        <footer>${_comment.dateAjout}</footer>
+        <footer>${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
     </section>
 #{/if}
 
 
 #{if _as == 'post'}
 <article>
-    <section>
     <h1>&{'views.tags.commentaire.post.title'}</h1>
+    <section>
      #{form @Livres.postComment(_bookId)}
-            <p>
-                 <p>#{error 'nom' /} </p>
-                 <p><label for="nom">&{'views.tags.commentaire.post.nom.label'}</label>
-                 <input type="text" name="nom" id="nom" value="${params.nom}" /> </p>
-            </p>
-            <p>
-                <p>#{error 'content' /}</p>
-                <p><label for="content">&{'views.tags.commentaire.post.content.label'}</label>
-                <textarea name="content" id="content">${params.content}</textarea>  </p>
-            </p>
+        <table>
+            <tr>
+                 <td></td><td>#{error 'nom' /}</td>
+            </tr>
+            <tr>
+                 <td><label for="nom">&{'views.tags.commentaire.post.nom.label'}</label></td>
+                 <td><input type="text" name="nom" id="nom" value="${params.nom}" /></td>
+            </tr>
+            <tr>
+                 <td></td><td>#{error 'content' /}</td>
+            </tr>
+            <tr>
+                <td><label for="content">&{'views.tags.commentaire.post.content.label'}</label></td>
+                <td><textarea name="content" id="content">${params.content}</textarea></td>
+           <tr>
+         </table>
             <footer>
                 <input type="submit" value="&{'views.tags.commentaire.post.submit'}" />
             </footer>

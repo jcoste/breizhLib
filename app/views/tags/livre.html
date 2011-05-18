@@ -20,13 +20,14 @@
 
     </article>
      #{if _livre.commentaires}
-    #{if _livre.commentaires.size()}
          <article>
-            #{list items:_livre.commentaires, as:'comment'}
-                 #{commentaire comment:comment, as:'summary' /}
-             #{/list}
-         </article>
-    #{/if}
+        <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
+        #{if _livre.commentaires.size() > 0}
+                #{list items:_livre.commentaires, as:'comment'}
+                     #{commentaire comment:comment, as:'summary' /}
+                 #{/list}
+        #{/if}
+        </article>
     #{/if}
 
 

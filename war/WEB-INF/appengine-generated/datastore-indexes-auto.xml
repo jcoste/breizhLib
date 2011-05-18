@@ -1,4 +1,11 @@
-<!-- Indices written at Tue, 17 May 2011 17:59:38 CEST -->
+<!-- Indices written at Wed, 18 May 2011 15:46:42 CEST -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 15 times in query history -->
+    <datastore-index kind="Reservation" ancestor="false" source="auto">
+        <property name="dateRetour" direction="asc"/>
+        <property name="dateEmprunt" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>
