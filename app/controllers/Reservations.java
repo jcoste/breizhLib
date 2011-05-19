@@ -14,8 +14,8 @@ import java.util.List;
 
 public class Reservations extends Controller {
 
-    public static void index(Long id) {
-        Livre livre = Livre.findById(id);
+    public static void index(String id) {
+        Livre livre = Livre.findByISBN(id);
         if (livre == null) {
             Logger.warn("l'ouvrage d'id {} n'existe pas en base", id);
             error("l'ouvrage d'id " + id + " n'existe pas en base");
@@ -77,7 +77,7 @@ public class Reservations extends Controller {
         reservation.delete();
         livre.setEtat(EtatLivre.DISP0NIBLE);
         livre.update();
-        index(livre.id);
+        index(livre.iSBN);
     }
 
 
@@ -97,11 +97,11 @@ public class Reservations extends Controller {
         reservations();
     }
 
-    public static void reserver(Long id) {
+    public static void reserver(String id) {
         if (id == null) {
             render();
         }
-        Livre livre = Livre.findById(id);
+        Livre livre = Livre.findByISBN(id);
         if (livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
             render(id);
         } else {
@@ -109,14 +109,14 @@ public class Reservations extends Controller {
         }
     }
 
-    public static void postReservation(Long id, @Required String nom, @Required String prenom, @Required @Email String email) {
+    public static void postReservation(String id, @Required String nom, @Required String prenom, @Required @Email String email) {
         if (validation.hasErrors()) {
             render("Reservations/reserver.html");
         }
         if (id == null) {
             render();
         }
-        Livre livre = Livre.findById(id);
+        Livre livre = Livre.findByISBN(id);
         if (!livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
             throw new IllegalStateException("le livre n'est pas disponible a la réservation");
         }

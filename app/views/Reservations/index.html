@@ -2,7 +2,7 @@
 #{set title:'BreizhLib' /}
 
 <article>
-    <p>Réservations du livre <a href="@{Livres.show(livre.id)}">${livre.titre}</a></p>
+    <p>Réservations du livre <a href="@{Livres.show(livre.iSBN)}">${livre.titre}</a></p>
     <h1>Réservation/Emprunt en cours</h1>
     #{if livre.reservationEncours}
 

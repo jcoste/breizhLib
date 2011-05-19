@@ -6,9 +6,9 @@
 GET     /                                       Application.index
 GET     /books                                  Livres.index
 GET     /books/{page}                           Livres.index
-GET     /book/{<[0-9]+>id}                      Livres.show
-POST    /book/{<[0-9]+>bookId}/comment          Livres.postComment
-GET     /book/{<[0-9]+>id}/reservations         Reservations.index
+GET     /book/{id}                              Livres.show
+POST    /book/{bookId}/comment                  Livres.postComment
+GET     /book/{id}/reservations                 Reservations.index
 GET     /reservations                           Reservations.reservations
 GET     /add                                    Livres.add
 POST    /add                                    Livres.save

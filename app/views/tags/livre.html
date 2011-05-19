@@ -1,10 +1,10 @@
 #{if _as == 'summary'}
     <section>
-        <h1><a href="@{Livres.show(_livre.id)}">${_livre.titre}</a></h1>
+        <h1><a href="@{Livres.show(_livre.iSBN)}">${_livre.titre}</a></h1>
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
         <footer>
-                <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.id)}">&{_livre.etat.getLocalMessage()}</a></span>
+                <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{_livre.etat.getLocalMessage()}</a></span>
         </footer>
     </section>
 #{/if}
@@ -15,8 +15,8 @@
         <h1>${_livre.titre}</h1>
         <img src="${_livre.image}"/>
         <p>${_livre.description}</p>
-        <p><a href="@{Reservations.index(_livre.id)}">Historique emprunt</a></p>
-        <p><span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.id)}">&{_livre.etat.getLocalMessage()}</a></span></p>
+        <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
+        <p><span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{_livre.etat.getLocalMessage()}</a></span></p>
 
     </article>
      #{if _livre.commentaires}
@@ -32,7 +32,7 @@
 
 
     #{if _livre.hasRead()}
-        #{commentaire bookId:_livre.id, as:'post' /}
+        #{commentaire bookId:_livre.iSBN, as:'post' /}
     #{/if}
 
 #{/if}

@@ -35,11 +35,11 @@ public class Livres extends Controller {
         render(livres);
     }
 
-    public static void show(Long id) {
+    public static void show(String id) {
         if (id == null) {
             render();
         }
-        Livre livre = Livre.findById(id);
+        Livre livre = Livre.findByISBN(id);
         render(livre);
     }
 
@@ -62,11 +62,11 @@ public class Livres extends Controller {
 
         Livre livre = new Livre(titre, editeur, image, description, iSBN);
         livre.insert();
-        show(livre.getId());
+        show(livre.iSBN);
     }
 
-    public static void postComment(Long bookId, @Required String nom, @Required String content) {
-        Livre livre = Livre.findById(bookId);
+    public static void postComment(String bookId, @Required String nom, @Required String content) {
+        Livre livre = Livre.findByISBN(bookId);
         if (validation.hasErrors()) {
             render("Livres/show.html", livre);
         }

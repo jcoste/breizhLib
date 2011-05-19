@@ -77,6 +77,10 @@ public class Livre extends Model {
         return initData(Livre.all(Livre.class).filter("id", bookId).get());
     }
 
+     public static Livre findByISBN(String iSBN) {
+        return initData(Livre.all(Livre.class).filter("iSBN", iSBN).get());
+    }
+
     public static Livre initData(Livre livre) {
         if (livre != null) {
             if (livre.reservationEncours != null) {
