@@ -50,9 +50,8 @@ views.livres.noneSelected = Aucun Livre Sélectionné.
 views.livres.add.title = Ajouter un Ouvrage dans la bibliothèque
 views.livres.add.titre.label = Titre:
 views.livres.add.editeur.label =  Editeur:
-views.livres.add.description.label = Description:
 views.livres.add.image.label = Image:
-views.livres.add.iSBN.label = ISBN:
+views.livres.add.iSBN.label =  ISBN-13:
 views.livres.add.submit = Ajouter
 
 #

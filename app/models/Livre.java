@@ -21,8 +21,6 @@ public class Livre extends Model {
     @Required
     @Column("editeur")
     public String editeur;
-    @Lob
-    public String description;
     @Required
     @Column("image")
     public String image;
@@ -45,9 +43,8 @@ public class Livre extends Model {
         setEtat(EtatLivre.DISP0NIBLE);
     }
 
-    public Livre(String titre, String editeur, String image, String description, String iSBN) {
+    public Livre(String titre, String editeur, String image,String iSBN) {
         this();
-        this.description = description;
         this.titre = titre;
         this.editeur = editeur;
         this.image = image;
