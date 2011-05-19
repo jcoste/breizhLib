@@ -2,9 +2,13 @@
     <section>
         <h1><a href="@{Livres.show(_livre.iSBN)}">${_livre.titre}</a></h1>
         <img src="${_livre.image}"/>
-        <p>${_livre.description}</p>
+        <p>
+             #{if _livre.reservationEncours == null}
+            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">Reserver</a></span>
+             #{/if}
+        </p>
         <footer>
-                <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{_livre.etat.getLocalMessage()}</a></span>
+                <span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span>
         </footer>
     </section>
 #{/if}
@@ -14,9 +18,13 @@
     <article>
         <h1>${_livre.titre}</h1>
         <img src="${_livre.image}"/>
-        <p>${_livre.description}</p>
+        <p>
+            #{if _livre.reservationEncours == null}
+            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">Reserver</a></span>
+             #{/if}
+        </p>
         <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
-        <p><span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{_livre.etat.getLocalMessage()}</a></span></p>
+        <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
 
     </article>
      #{if _livre.commentaires}
