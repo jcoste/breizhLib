@@ -26,14 +26,14 @@
         <ul id="pagination">
             #{if page > 0}
                 <li id="previous">
-                    <a href="@{Livres.index(page-1)}">
+                    <a href="@{Livres.editeur(editeur,page-1)}">
                        ${((page*dept)-dept)+1} - ${(page*dept)}
                     </a>
                 </li>
              #{/if}
              #{if max > ((page+1)*dept) }
                 <li id="next">
-                    <a href="@{Livres.index(page+1)}">
+                    <a href="@{Livres.editeur(editeur,page+1)}">
                         ${((page+1)*dept)+1} - ${((page+1)*dept)+dept}
                     </a>
                 </li>

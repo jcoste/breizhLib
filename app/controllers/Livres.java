@@ -5,7 +5,9 @@ import models.Commentaire;
 import models.Livre;
 import play.data.validation.Required;
 import play.mvc.Controller;
+import siena.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,19 +17,50 @@ public class Livres extends Controller {
 
     private static int NB_NEWS_PAR_PAGE = 4;
 
+    public static List<String> editeurs = new ArrayList<String>();
+
+    static{
+        editeurs.add("Pearson");
+        editeurs.add("Eyrolles");
+        editeurs.add("O'Reilly");
+        editeurs.add("APress");
+        editeurs.add("Packt");
+    }
+
     public static void index(int page) {
-        if (page < 0) {
+        Query<Livre> query = Livre.all(Livre.class);
+        int  max = Livre.findAll().size();
+        int debut = pagination(page,max,NB_PAR_PAGE);
+        List<Livre> livres = query.order("dateAjout").fetch(NB_PAR_PAGE, debut);
+
+        renderArgs.put("editeurs",editeurs);
+        renderArgs.put("dept",NB_PAR_PAGE);
+        render(livres, page, max);
+    }
+
+    private static int pagination(int page, int max,int nbParPage){
+       if (page < 0) {
             page = 0;
         }
-        int max = Livre.findAll().size();
+
         int dept = NB_PAR_PAGE;
         int debut = (page * dept);
         if (debut >= max) {
             debut = max - (max - dept) / dept;
             page = debut / dept;
         }
-        List<Livre> livres = Livre.all(Livre.class).order("dateAjout").fetch(dept, debut);
-        render(livres, page, dept, max);
+        return debut;
+    }
+
+    public static void editeur(String editeur,int page) {
+        int max =  Livre.all(Livre.class).filter("editeur",editeur).count();
+        int dept = NB_PAR_PAGE;
+        int debut = pagination(page,max,NB_PAR_PAGE);
+
+        List<Livre> livres = Livre.all(Livre.class).filter("editeur",editeur).order("dateAjout").fetch(dept, debut);
+
+        renderArgs.put("editeurs",editeurs);
+        render(livres, page, dept, max,editeur);
     }
 
     public static void last() {
@@ -48,6 +81,7 @@ public class Livres extends Controller {
     }
 
     public static void add() {
+        renderArgs.put("editeurs",editeurs);
         render();
     }
 
@@ -60,7 +94,7 @@ public class Livres extends Controller {
             error("le livre existe déja en base");
         }
 
-        Livre livre = new Livre(titre, editeur, image, description, iSBN);
+        Livre livre = new Livre(titre, editeur, image, iSBN);
         livre.insert();
         show(livre.iSBN);
     }

@@ -4,8 +4,8 @@
 
 # Home page
 GET     /                                       Application.index
-GET     /books                                  Livres.index
 GET     /books/{page}                           Livres.index
+GET     /editeur/{editeur}/{page}               Livres.editeur
 GET     /book/{id}                              Livres.show
 POST    /book/{bookId}/comment                  Livres.postComment
 GET     /book/{id}/reservations                 Reservations.index

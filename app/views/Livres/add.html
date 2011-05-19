@@ -12,7 +12,11 @@
     </tr>
     <tr>
         <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
-        <td><input type="text" name="editeur" id="editeur" value="${params.editeur}" />#{error 'editeur' /}</td>
+        <td><select name="editeur" id="editeur"  >
+             #{list items:editeurs, as:'editeur'}
+                   <option value="${editeur}">${editeur}</option>
+            #{/list}
+            </select>#{error 'editeur' /}</td>
     </tr>
     <tr>
         <td><label for="image">&{'views.livres.add.image.label'}</label></td>
