@@ -4,3 +4,4 @@ require:
     - play
     - play -> siena 1.5
     - play -> gae 1.4
+    - play -> secure

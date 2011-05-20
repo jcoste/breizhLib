@@ -8,7 +8,6 @@
     -webkit-box-shadow: 0 2px 0 #800;
 }
 
-
 .disponible {
     background: #00cc00;
     color: #fff;
@@ -21,7 +20,7 @@
 
 .disponible a {
     color: white;
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .reserve {
@@ -36,9 +35,8 @@
 
 .reserve a {
     color: white;
-	text-decoration: none;
+    text-decoration: none;
 }
-
 
 .indisponible {
     background: #ff0033;
@@ -52,10 +50,10 @@
 
 .indisponible a {
     color: white;
-	text-decoration: none;
+    text-decoration: none;
 }
 
-.indice{
+.indice {
     background: #ff6600;
     color: white;
     font-size: 50%;
@@ -63,16 +61,17 @@
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-box-shadow: 0 2px 0 #996600;
-    vertical-align:sub;
+    vertical-align: sub;
 }
 
 /** Pagination **/
 
 #pagination {
+    clear: left;
     list-style: none;
-    vertical-align: center;
     color: #869AB1;
     font-size: 90%;
+    height:10px;
 }
 
 #pagination a {
@@ -82,7 +81,7 @@
 
 #pagination #previous {
     top: 0;
-    left: 0;
+    float: left;
 }
 
 #pagination #previous:before {
@@ -91,7 +90,7 @@
 
 #pagination #next {
     top: 0;
-    right: 0;
+    float: right;
 }
 
 #pagination #next:after {

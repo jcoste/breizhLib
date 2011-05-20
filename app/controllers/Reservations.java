@@ -1,5 +1,7 @@
 package controllers;
 
+import controllers.security.Role;
+import controllers.security.Secure;
 import models.EtatLivre;
 import models.Livre;
 import models.Reservation;
@@ -7,11 +9,12 @@ import play.Logger;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.Controller;
+import play.mvc.With;
 
 import java.util.Date;
 import java.util.List;
 
-
+@With(Secure.class)
 public class Reservations extends Controller {
 
     public static void index(String id) {
@@ -29,6 +32,7 @@ public class Reservations extends Controller {
         render(livre, emprunts);
     }
 
+    @Role("admin")
     public static void reservations() {
         Date d = Reservation.getDummyDate();
         List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
@@ -48,7 +52,7 @@ public class Reservations extends Controller {
         render(reservations, emprunts);
     }
 
-
+    @Role("admin")
     public static void rendreLivre(Long id) {
         Reservation reservation = Reservation.findById(id);
         Livre livre = reservation.empruntEncours;
@@ -68,6 +72,7 @@ public class Reservations extends Controller {
         reservations();
     }
 
+    @Role("member")
     public static void annuler(Long id) {
         Reservation reservation = Reservation.findById(id);
         Livre livre = reservation.empruntEncours;
@@ -80,7 +85,7 @@ public class Reservations extends Controller {
         index(livre.iSBN);
     }
 
-
+    @Role("admin")
     public static void pretLivre(Long id) {
         Reservation reservation = Reservation.findById(id);
         Livre livre = reservation.empruntEncours;
@@ -97,6 +102,7 @@ public class Reservations extends Controller {
         reservations();
     }
 
+    @Role("member")
     public static void reserver(String id) {
         if (id == null) {
             render();
@@ -109,6 +115,7 @@ public class Reservations extends Controller {
         }
     }
 
+    @Role("member")
     public static void postReservation(String id, @Required String nom, @Required String prenom, @Required @Email String email) {
         if (validation.hasErrors()) {
             render("Reservations/reserver.html");

@@ -3,9 +3,9 @@ package models;
 
 import play.data.binding.As;
 import play.data.validation.Required;
+import play.modules.gae.GAE;
 import siena.*;
 
-import javax.persistence.Lob;
 import java.util.Date;
 import java.util.List;
 
@@ -58,8 +58,7 @@ public class Livre extends Model {
      * @return
      */
     public boolean hasRead() {
-        // TODO Long userId
-        return true;
+        return GAE.isLoggedIn();
     }
 
     public String toString() {
@@ -74,7 +73,7 @@ public class Livre extends Model {
         return initData(Livre.all(Livre.class).filter("id", bookId).get());
     }
 
-     public static Livre findByISBN(String iSBN) {
+    public static Livre findByISBN(String iSBN) {
         return initData(Livre.all(Livre.class).filter("iSBN", iSBN).get());
     }
 
@@ -104,7 +103,7 @@ public class Livre extends Model {
     }
 
     public List<Commentaire> getCommentaires() {
-        return Commentaire.all(Commentaire.class).filter("livre",this).fetch();
+        return Commentaire.all(Commentaire.class).filter("livre", this).fetch();
     }
 }
 

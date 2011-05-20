@@ -7,6 +7,7 @@ import siena.*;
 
 import javax.persistence.Lob;
 import java.util.Date;
+import java.util.List;
 
 @Table("Commentaire")
 public class Commentaire extends Model {
@@ -37,6 +38,10 @@ public class Commentaire extends Model {
     @Override
     public String toString() {
         return nom + " : " + commentaire;
+    }
+
+    public static List<Commentaire> findAll() {
+        return Commentaire.all(Commentaire.class).fetch();
     }
 }
 
