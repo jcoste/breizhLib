@@ -17,6 +17,7 @@ import java.util.List;
 @With(Secure.class)
 public class Reservations extends Controller {
 
+    @Role("member")
     public static void index(String id) {
         Livre livre = Livre.findByISBN(id);
         if (livre == null) {

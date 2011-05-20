@@ -43,5 +43,7 @@ public class Commentaire extends Model {
     public static List<Commentaire> findAll() {
         return Commentaire.all(Commentaire.class).fetch();
     }
+
+
 }
 

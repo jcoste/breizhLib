@@ -1,10 +1,13 @@
 package controllers;
 
+import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
+import models.Livre;
 import play.mvc.Controller;
 import play.mvc.With;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +28,60 @@ public class Commentaires extends Controller {
         render(commentaires);
     }
 
+    public static void commentaires(String id) {
+        if (id == null) {
+            render();
+        }
+        Livre livre = Livre.findByISBN(id);
+        List<Commentaire> commentaires = livre.getCommentaires();
+        for (Commentaire commentaire : commentaires) {
+            commentaire.livre.get();
+        }
+
+        render(commentaires, livre);
+    }
+
+    private static int pagination(int page, int max, int nbParPage) {
+        if (page < 0) {
+            page = 0;
+        }
+
+        int dept = NB_PAR_PAGE;
+        int debut = (page * dept);
+        if (debut >= max) {
+            debut = max - (max - dept) / dept;
+            page = debut / dept;
+        }
+        return debut;
+    }
+
+    @Role("public")
+    public static void editeur(String editeur, int page) {
+        int max = 0;
+        for (Commentaire commentaire :  Commentaire.findAll()) {
+            commentaire.livre.get();
+            if (commentaire.livre.editeur.equals(editeur)) {
+                max++;
+            }
+        }
+
+        int dept = NB_PAR_PAGE;
+        int debut = pagination(page, max, NB_PAR_PAGE);
+
+        List<Commentaire> commentairesAllByPage = Commentaire.all(Commentaire.class).order("-dateAjout").fetch(dept, debut);
+
+        List<Commentaire> commentaires = new ArrayList<Commentaire>();
+        for (Commentaire commentaire : commentairesAllByPage) {
+            commentaire.livre.get();
+            if (commentaire.livre.editeur.equals(editeur)) {
+                commentaires.add(commentaire);
+            }
+        }
+
+        renderArgs.put("editeurs", Livres.editeurs);
+        render(page, dept, max, editeur);
+    }
+
     public static void index(int page) {
 
         if (page < 0) {
@@ -42,6 +99,7 @@ public class Commentaires extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
+        renderArgs.put("editeurs", Livres.editeurs);
         render(commentaires, page, dept, max);
     }
 }

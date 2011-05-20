@@ -1,22 +1,46 @@
-#{if _as == 'list'}
+#{if _as == 'editeurBook'}
 <p>
          #{if _editeur == null}
-             <span class="indisponible">
+             <span class="actif">
          #{/if}
          #{else}
-           <span class="disponible">
+           <span class="inactif">
          #{/else}
          <a href="@{Livres.index(0)}">All</a></span>
 
         #{list items:_editeurs, as:'editeurFilter'}
                 - #{if _editeur != null && _editeur.equals(editeurFilter)}
-                      <span class="indisponible">
+                      <span class="actif">
 
                     #{/if}
                     #{else}
-                        <span class="disponible">
+                        <span class="inactif">
                     #{/else}
                 <a href="@{Livres.editeur(editeurFilter,0)}">${editeurFilter}</a></span>
+        #{/list}
+     </p>
+
+#{/if}
+
+#{if _as == 'editeurCommentaires'}
+<p>
+         #{if _editeur == null}
+             <span class="actif">
+         #{/if}
+         #{else}
+           <span class="inactif">
+         #{/else}
+         <a href="@{Commentaires.index(0)}">All</a></span>
+
+        #{list items:_editeurs, as:'editeurFilter'}
+                - #{if _editeur != null && _editeur.equals(editeurFilter)}
+                      <span class="actif">
+
+                    #{/if}
+                    #{else}
+                        <span class="inactif">
+                    #{/else}
+                <a href="@{Commentaires.editeur(editeurFilter,0)}">${editeurFilter}</a></span>
         #{/list}
      </p>
 

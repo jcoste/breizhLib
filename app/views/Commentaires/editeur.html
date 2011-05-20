@@ -1,33 +1,49 @@
 #{extends 'main.html' /}
-#{set title:'BreizhLib Commentaires' /}
+#{set title:'BreizhLib' /}
 
 <article>
-     #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurCommentaires' /}
+    #{if editeur == null}
+        <p>&{'views.livres.index.title'}</p>
+
+    #{/if}
+    #{else}
+        <p>Commentaires sur les Ouvrages de l'éditeur ${editeur}</p>
+     #{/else}
+
+    #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurCommentaires' /}
+
     #{if commentaires}
-            <h1>${max} Commentaire${commentaires.pluralize()} </h1>
+            <h1>${max} Commentaire${commentaires.pluralize()}</h1>
             #{if commentaires.size() > 0}
                     #{list items:commentaires, as:'comment'}
                          #{commentaire comment:comment, as:'defaut' /}
                      #{/list}
             #{/if}
-        <p><ul id="pagination">
+
+        <ul id="pagination">
             #{if page > 0}
                 <li id="previous">
-                    <a href="@{Commentaires.index(page-1)}">
+                    <a href="@{Commentaires.editeur(editeur,page-1)}">
                        ${((page*dept)-dept)+1} - ${(page*dept)}
                     </a>
                 </li>
              #{/if}
              #{if max > ((page+1)*dept) }
                 <li id="next">
-                    <a href="@{Commentaires.index(page+1)}">
+                    <a href="@{Commentaires.editeur(editeur,page+1)}">
                         ${((page+1)*dept)+1} - ${((page+1)*dept)+dept}
                     </a>
                 </li>
              #{/if}
-        </ul></p>
+        </ul>
     #{/if}
     #{else}
-        <h1>0 Commentaire</h1>
+        <!--h1>0 Commentaire</h1 -->
+        <h1>Non disponible pour le moment</h1>
     #{/else}
+
+
+
+
+
 </article>

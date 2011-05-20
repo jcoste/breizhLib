@@ -10,7 +10,7 @@
         <p>Ouvrages de l'éditeur ${editeur}</p>
      #{/else}
 
-    #{editeurs editeur:editeur,editeurs:editeurs, as:'list' /}
+    #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurBook' /}
 
     #{if livres}
         #{if livres.size()}

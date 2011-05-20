@@ -10,20 +10,15 @@
         <p>Ouvrages de l'éditeur ${editeur}</p>
      #{/else}
 
-    #{editeurs editeur:editeur,editeurs:editeurs, as:'list' /}
+    #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurBook' /}
 
     #{if livres}
         #{if livres.size()}
             #{list items:livres, as:'livre'}
                 #{livre livre:livre, page:page,redirect:'index', as:'summary' /}
             #{/list}
-        #{/if}
-     #{/if}
-     #{else}
-        <p>&{'views.livres.noBookRecorded'}</p>
-     #{/else}
 
-        <ul id="pagination">
+          <ul id="pagination">
             #{if page > 0}
                 <li id="previous">
                     <a href="@{Livres.editeur(editeur,page-1)}">
@@ -39,6 +34,13 @@
                 </li>
              #{/if}
         </ul>
+        #{/if}
+     #{/if}
+     #{else}
+        <p>&{'views.livres.noBookRecorded'}</p>
+     #{/else}
+
+
 
 
 

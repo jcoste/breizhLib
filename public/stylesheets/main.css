@@ -64,6 +64,37 @@
     vertical-align: sub;
 }
 
+
+.actif {
+    background: #ff9933;
+    color: #fff;
+    font-size: 90%;
+    padding: 3px 5px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #006600;
+}
+
+.actif a {
+    color: white;
+    text-decoration: none;
+}
+
+.inactif {
+    background: #cccccc;
+    color: #fff;
+    font-size: 90%;
+    padding: 3px 5px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #006600;
+}
+
+.inactif a {
+    color: black;
+    text-decoration: none;
+}
+
 /** Pagination **/
 
 #pagination {

@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib Commentaires' /}
+
+<article>
+
+    #{if commentaires}
+            <h1>${commentaires.size()} Commentaire${commentaires.pluralize()} du livre ${livre.titre} </h1>
+            #{if commentaires.size() > 0}
+                    #{list items:commentaires, as:'comment'}
+                         #{commentaire comment:comment, as:'defaut' /}
+                     #{/list}
+            #{/if}
+    #{/if}
+    #{else}
+        <h1>0 Commentaire</h1>
+    #{/else}
+</article>

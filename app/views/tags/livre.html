@@ -2,6 +2,13 @@
     <section>
         <h1><a href="@{Livres.show(_livre.iSBN)}">${_livre.titre}</a></h1>
         <img src="${_livre.image}"/>
+        <p><a href="@{Livres.editeur(_livre.editeur,0)}">${_livre.editeur}</a></p>
+         #{if _livre.getCommentaires().size() > 0}
+        <p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
+        #{/if}
+        #{else}
+            <h1>Aucun Commentaire</h1>
+        #{/else}
         <p>
              #{if _livre.reservationEncours == null}
             <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">Reserver</a></span>
