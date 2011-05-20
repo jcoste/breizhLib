@@ -5,6 +5,7 @@ import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
 import models.Livre;
+import models.User;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -34,7 +35,7 @@ public class Livres extends Controller {
     public static void index(int page) {
         Query<Livre> query = Livre.all(Livre.class);
         int max = Livre.findAll().size();
-        int debut = pagination(page, max, NB_PAR_PAGE);
+        int debut = Utils.pagination(page, max, NB_PAR_PAGE);
         List<Livre> livres = query.order("dateAjout").fetch(NB_PAR_PAGE, debut);
 
         renderArgs.put("editeurs", editeurs);
@@ -42,25 +43,13 @@ public class Livres extends Controller {
         render(livres, page, max);
     }
 
-    private static int pagination(int page, int max, int nbParPage) {
-        if (page < 0) {
-            page = 0;
-        }
 
-        int dept = NB_PAR_PAGE;
-        int debut = (page * dept);
-        if (debut >= max) {
-            debut = max - (max - dept) / dept;
-            page = debut / dept;
-        }
-        return debut;
-    }
 
     @Role("public")
     public static void editeur(String editeur, int page) {
         int max = Livre.all(Livre.class).filter("editeur", editeur).count();
         int dept = NB_PAR_PAGE;
-        int debut = pagination(page, max, NB_PAR_PAGE);
+        int debut = Utils.pagination(page, max, NB_PAR_PAGE);
 
         List<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("dateAjout").fetch(dept, debut);
 
@@ -80,7 +69,8 @@ public class Livres extends Controller {
             render();
         }
         Livre livre = Livre.findByISBN(id);
-        render(livre);
+        User user = Secure.getUser();
+        render(livre,user);
     }
 
 

@@ -58,4 +58,8 @@ public class Secure extends Controller {
         forbidden();
     }
 
+    public static User getUser() {
+        return secure.getUser();
+    }
+
 }

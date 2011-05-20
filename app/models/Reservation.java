@@ -52,6 +52,9 @@ public class Reservation extends Model {
         this.dateEmprunt = Reservation.getDummyDate();
     }
 
+    public boolean isDateEmpruntNull(){
+        return dateEmprunt.equals(getDummyDate());
+    }
 
     public static Reservation findById(Long id) {
         return Model.all(Reservation.class).filter("id", id).get();

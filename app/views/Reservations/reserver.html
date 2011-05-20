@@ -8,17 +8,17 @@
             <p>
                  <p>#{error 'nom' /} </p>
                  <p><label for="nom">Nom :</label>
-                 <input type="text" name="nom" id="nom" value="${params.nom}" /> </p>
+                 <input type="text" name="nom" id="nom" value="${user.nom}" /> </p>
             </p>
             <p>
                 <p>#{error 'prenom' /}</p>
                 <p><label for="prenom">Prénom :</label>
-                <input type="text" name="prenom" id="prenom"  value="${params.prenom}" />  </p>
+                <input type="text" name="prenom" id="prenom"  value="${user.prenom}" />  </p>
             </p>
             <p>
                 <p>#{error 'email' /}</p>
                 <p><label for="email">Email :</label>
-                <input type="email" name="email" id="email"  value="${params.email}" />  </p>
+                <input type="email" name="email" id="email"  value="${user.email}" />  </p>
             </p>
             <footer>
                 <input type="submit" value="Réserver" />

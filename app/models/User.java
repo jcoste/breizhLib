@@ -25,10 +25,17 @@ public class User extends Model {
     }
 
 
-
     public static User find(String email) {
         User user = User.all(User.class).filter("email", email).get();
         return user;
+    }
+
+    public String toString() {
+        if (prenom != null && nom != null) {
+            return nom + " " + prenom;
+        } else {
+            return email;
+        }
     }
 
 }

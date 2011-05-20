@@ -41,19 +41,6 @@ public class Commentaires extends Controller {
         render(commentaires, livre);
     }
 
-    private static int pagination(int page, int max, int nbParPage) {
-        if (page < 0) {
-            page = 0;
-        }
-
-        int dept = NB_PAR_PAGE;
-        int debut = (page * dept);
-        if (debut >= max) {
-            debut = max - (max - dept) / dept;
-            page = debut / dept;
-        }
-        return debut;
-    }
 
     @Role("public")
     public static void editeur(String editeur, int page) {
@@ -66,7 +53,7 @@ public class Commentaires extends Controller {
         }
 
         int dept = NB_PAR_PAGE;
-        int debut = pagination(page, max, NB_PAR_PAGE);
+        int debut = Utils.pagination(page, max, NB_PAR_PAGE);
 
         List<Commentaire> commentairesAllByPage = Commentaire.all(Commentaire.class).order("-dateAjout").fetch(dept, debut);
 
@@ -84,16 +71,10 @@ public class Commentaires extends Controller {
 
     public static void index(int page) {
 
-        if (page < 0) {
-            page = 0;
-        }
         int max = Commentaire.findAll().size();
         int dept = NB_PAR_PAGE;
-        int debut = (page * dept);
-        if (debut >= max) {
-            debut = max - (max - dept) / dept;
-            page = debut / dept;
-        }
+        int debut = Utils.pagination(page, max, NB_PAR_PAGE);
+
         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch(dept, debut);
 
         for (Commentaire commentaire : commentaires) {

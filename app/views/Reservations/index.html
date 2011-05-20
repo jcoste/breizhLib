@@ -10,7 +10,7 @@
           <h1>${livre.reservationEncours.nom} ${livre.reservationEncours.prenom}</h1>
           <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
           <p>Date reservation : ${livre.reservationEncours.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-           #{if livre.reservationEncours.dateEmprunt == null}
+           #{if livre.reservationEncours.isDateEmpruntNull()}
            <footer><span class="indisponible"><a href="@{Reservations.annuler(livre.reservationEncours.id)}">Annuler Réservation</a></span></footer>
            #{/if}
             #{else}

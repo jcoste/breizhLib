@@ -11,7 +11,7 @@
         #{if session.userEmail != null && session.userIsAdmin }
           <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
           <li><a href="@{Reservations.reservations()}">Réservations</a></li>
-          <li><a href="@{security.Secure.logout()}">Déconnection</a></li>
+          <li><a href="@{security.Secure.logout()}">Déconnexion</a></li>
         #{/if}
     </ul>
 </nav>

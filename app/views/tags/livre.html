@@ -7,7 +7,7 @@
         <p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
         #{/if}
         #{else}
-            <h1>Aucun Commentaire</h1>
+            <p>Aucun Commentaire</p>
         #{/else}
         <p>
              #{if _livre.reservationEncours == null}
@@ -47,7 +47,7 @@
 
 
     #{if _livre.hasRead()}
-        #{commentaire bookId:_livre.iSBN, as:'post' /}
+        #{commentaire bookId:_livre.iSBN,user:_user, as:'post' /}
     #{/if}
 
 #{/if}

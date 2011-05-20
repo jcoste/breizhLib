@@ -8,7 +8,7 @@
    #{form @Livres.save()}
     <tr>
         <td><label for="titre">&{'views.livres.add.titre.label'}</label></td>
-        <td><input type="text" name="titre" id="titre" value="${params.titre}" />#{error 'titre' /}</td>
+        <td><p>#{error 'titre' /}</p><input type="text" name="titre" id="titre" value="${params.titre}" size="50" /></td>
     </tr>
     <tr>
         <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
@@ -20,11 +20,11 @@
     </tr>
     <tr>
         <td><label for="image">&{'views.livres.add.image.label'}</label></td>
-        <td><input type="text" name="image" id="image" value="${params.image}" /></td>
+        <td><input type="text" name="image" id="image" value="${params.image}" size="50" /></td>
     </tr>
     <tr>
         <td><label for="iSBN">&{'views.livres.add.iSBN.label'}</label></td>
-        <td><input type="text" name="iSBN" id="iSBN" value="${params.iSBN}" />#{error 'iSBN' /}</td>
+        <td><input type="text" name="iSBN" id="iSBN" value="${params.iSBN}" pattern="[0-9]{3}-[0-9]{1}-[0-9]{4}-[0-9]{4}-[0-9]{1}"/>#{error 'iSBN' /}</td>
    </tr>
    </table>
     <footer>

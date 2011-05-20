@@ -5,6 +5,7 @@ import controllers.security.Secure;
 import models.EtatLivre;
 import models.Livre;
 import models.Reservation;
+import models.User;
 import play.Logger;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -110,7 +111,8 @@ public class Reservations extends Controller {
         }
         Livre livre = Livre.findByISBN(id);
         if (livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
-            render(id);
+            User user = Secure.getUser();
+            render(id,user);
         } else {
             error("l'ouvrage " + livre.titre + " n'est pas disponible a la reservation");
         }
@@ -128,6 +130,15 @@ public class Reservations extends Controller {
         if (!livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
             throw new IllegalStateException("le livre n'est pas disponible a la réservation");
         }
+
+        User user = Secure.getUser();
+        if(user.nom == null){
+            user.nom = nom;
+        }
+        if(user.prenom == null){
+            user.prenom = prenom;
+        }
+        user.update();
         Reservation reservation = new Reservation(livre, nom, prenom, email);
         reservation.insert();
         livre.reservationEncours = reservation;
