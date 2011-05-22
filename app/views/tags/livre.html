@@ -4,8 +4,8 @@
         <img src="${_livre.image}"/>
 
         <p><a href="@{Livres.editeur(_livre.editeur,0)}">${_livre.editeur}</a></p>
-         #{if _livre.getCommentaires().size() > 0}
-        <p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
+         #{if _livre.getCommentaires().size() > 1}
+        	<p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
         #{/if}
         #{else}
             <p>&{'views.commentaires.aucunCommentaire'}</p>

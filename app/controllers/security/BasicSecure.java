@@ -27,9 +27,13 @@ public class BasicSecure extends Controller implements ISecure {
             return true;
         }
         if ("admin".equals(profile)) {
-            return GAE.isLoggedIn() && GAE.isAdmin();
+	   if (session.get("userEmail") != null) {
+            	user = User.find(session.get("userEmail"));
+		return user.isAdmin;
+            }
+            return false;
         } else if ("member".equals(profile)) {
-            return GAE.isLoggedIn();
+            return  session.get("userEmail") != null;
         }
 
         return false;
