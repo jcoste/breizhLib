@@ -26,6 +26,10 @@ GET     /logout                                 Secure.logout
 GET     /authentification                       Secure.authentification
 *       /                                       Secure.checkAccess
 
+#RSS
+GET     /books.xml                               Livres.index(format:'xml')
+GET     /commentaires.xml                        Commentaires.index(format:'xml')
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

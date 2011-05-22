@@ -1,0 +1,25 @@
+<rss version="2.0">
+    <channel>
+        <title>BreizhLib</title>
+        <description>Ouvrages du BreizhJug</description>
+        <link>@@{Livres.index()}</link>
+
+		#{list items:livres, as:'livre'}
+            <item>
+                <title>${livre.titre}</title>
+                <description>
+                    <h1>${livre.titre}</h1>
+                    <img src="${livre.image}" width="150px"/>
+                    <p>${livre.editeur}</p>
+                    <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
+                </description>
+                <image>${livre.image}</image>
+                <pubDate>${livre.dateAjout}</pubDate>
+                <link>@@{Livres.show(livre.iSBN)}</link>
+
+                <comments>@@{Livres.show(livre.iSBN)}</comments>
+            </item>
+		#{/list}
+
+    </channel>
+</rss>
