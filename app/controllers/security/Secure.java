@@ -9,7 +9,7 @@ import play.mvc.Controller;
 
 public class Secure extends Controller {
 
-    private static ISecure secure = GAESecure.INSTANCE;
+    private static ISecure secure = SecureAdapter.INSTANCE;
 
     @Before(unless = {"login", "logout"})
     public static void checkAccess() throws Throwable {
@@ -21,6 +21,14 @@ public class Secure extends Controller {
         role = getControllerInheritedAnnotation(Role.class);
         if (role != null) {
             check(role);
+        }
+    }
+
+    public static String getImpl(){
+        if(session.get("secureimpl")!= null){
+           return session.get("secureimpl");
+        } else{
+            return "gae";
         }
     }
 
@@ -38,11 +46,15 @@ public class Secure extends Controller {
     }
 
     public static void login() {
-        secure.login();
+        render();
     }
 
     public static void logout() {
         secure.logout();
+    }
+
+    public static void glogin(){
+       secure.login();
     }
 
     private static void check(Role role) {

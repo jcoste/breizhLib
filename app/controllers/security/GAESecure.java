@@ -10,11 +10,11 @@ public class GAESecure implements ISecure {
 
 
     public void login() {
-        GAE.login("security.Secure.authetification");
+        GAE.login("security.secure.authetification");
     }
 
     public void logout() {
-        GAE.logout("security.Secure.authetification");
+        GAE.logout("security.secure.authetification");
     }
 
     public boolean check(String profile) {

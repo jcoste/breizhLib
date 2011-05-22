@@ -21,10 +21,12 @@ GET     /commentaires/editeur/{editeur}/{page}  Commentaires.editeur
 
 GET     /search                                 Livres.search
 
-GET     /login                                  Secure.login
+GET     /login                                  security.Secure.login
+GET     /glogin                                 security.Secure.glogin
+GET     /newuser                                security.BasicSecure.newuser
 GET     /logout                                 Secure.logout
-GET     /authentification                       Secure.authentification
-*       /                                       Secure.checkAccess
+GET     /authentification                       security.Secure.authentification
+*       /                                       security.Secure.checkAccess
 
 #RSS
 GET     /books.xml                               Livres.index(format:'xml')
