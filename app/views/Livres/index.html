@@ -7,7 +7,7 @@
 
     #{/if}
     #{else}
-        <p>Ouvrages de l'éditeur ${editeur}</p>
+        <p>&{'views.livres.editeur.title'} ${editeur}</p>
      #{/else}
 
     #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurBook' /}
@@ -20,12 +20,7 @@
                 #{/if}
             #{/list}
         #{/if}
-     #{/if}
-     #{else}
-        <p>&{'views.livres.noBookRecorded'}</p>
-     #{/else}
-</article>
-<p><ul id="pagination">
+        <p><ul id="pagination">
             #{if page > 0}
                 <li id="previous">
                     <a href="@{Livres.index(page-1)}">
@@ -40,4 +35,10 @@
                     </a>
                 </li>
              #{/if}
-</ul></p>
+        </ul></p>
+     #{/if}
+     #{else}
+        <p>&{'views.livres.noBookRecorded'}</p>
+     #{/else}
+</article>
+

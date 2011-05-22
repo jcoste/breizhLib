@@ -18,6 +18,10 @@ views.main.menu.add = Ajouter
 views.main.menu.news = Nouveautés
 views.main.menu.books = Ouvrages
 views.main.menu.search = Recherche
+views.main.menu.login = Se Connecter
+views.main.menu.logout = Déconnexion
+views.main.menu.reservations = Réservations
+views.main.menu.lastCommentaires = Derniers Commentaires
 
 
 #
@@ -27,6 +31,7 @@ views.tags.commentaire.post.title = Ajouter un commentaire
 views.tags.commentaire.post.nom.label = Votre nom:
 views.tags.commentaire.post.content.label = Votre message:
 views.tags.commentaire.post.submit = Envoyer votre commentaire
+views.tags.commentaire.post.note.label = Note :
 
 
 
@@ -65,6 +70,57 @@ views.livres.index.title = Retrouvez ici les livres de la bibliothèque du Breiz
 #
 views.livres.last.title =  Retrouvez ici les derniers livres de la bibliothèque du BreizhJug.
 
+views.livres.editeur.title= Ouvrages de l'éditeur
+
+#
+# views/Commentaires/*.html
+#
+views.commentaires.aucunCommentaire = 0 Commentaire
+views.commentaires.tousLesCommentaires = Tous les Commentaires
+
+#
+# views/Reservations/*.html
+#
+views.reservations.aucuneReservation = Aucune réservation en cours
+views.reservations.aucunEmprunt = Aucun emprunt en cours
+views.reservations.date = Date reservation :
+views.reservations.dateEmprunt = Date emprunt :
+views.reservations.dateRetour = Date retour :
+#
+# views/Reservations/index.html
+#
+views.reservations.index.title = Réservations du livre
+views.reservations.index.title2 = Réservation/Emprunt en cours
+views.reservations.index.title3 = Historique des emprunts
+views.reservations.index.date = Date reservation :
+views.reservations.index.dateEmprunt = Date emprunt :
+views.reservations.index.dateRetour = Date retour :
+views.reservations.index.aucuneReservation = Aucune réservation en cours
+views.reservations.index.aucunEmprunt = Aucun emprunt pour ce livre
+views.reservations.index.annuler = Annuler Réservation
+
+#
+# views/Reservations/reservations.html
+#
+views.reservations.reservations.title =  Réservation en cours
+views.reservations.reservations.title2 = Emprunt en cours
+views.reservations.reservations.emprunt.submit = Marquer le livre emprunté
+views.reservations.reservations.rendu.submit = Marquer le livre rendu
+views.reservations.reservations.reservePar = réservé par
+views.reservations.reservations.empruntePar = emprunté par
+
+#
+# views/Reservations/reserver.html
+#
+views.reservations.reserver.title = Réserver le livre
+views.reservations.reserver.nom.label = Nom :
+views.reservations.reserver.prenom.label = Prénom :
+views.reservations.reserver.email.label = Email :
+views.reservations.reserver.submit = Réserver
+
+#
+# views/Reservations/reserver.html
+#
 
 #
 # models

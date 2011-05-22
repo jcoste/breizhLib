@@ -2,50 +2,47 @@
 #{set title:'BreizhLib' /}
 
 <article>
-    <p>Réservations du livre <a href="@{Livres.show(livre.iSBN)}">${livre.titre}</a></p>
-    <h1>Réservation/Emprunt en cours</h1>
+    <p>&{'views.reservations.index.title'} <a href="@{Livres.show(livre.iSBN)}">${livre.titre}</a></p>
+    <h1>&{'views.reservations.index.title2'}</h1>
     #{if livre.reservationEncours}
 
        <section>
           <h1>${livre.reservationEncours.nom} ${livre.reservationEncours.prenom}</h1>
           <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
-          <p>Date reservation : ${livre.reservationEncours.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+          <p>&{'views.reservations.date'} ${livre.reservationEncours.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
            #{if livre.reservationEncours.isDateEmpruntNull()}
                 #{if livre.reservationEncours.user.equals(user)}
                      <footer>
                          <span class="indisponible"
-                                 ><a href="@{Reservations.annuler(livre.reservationEncours.id)}">Annuler Réservation</a>
+                                 ><a href="@{Reservations.annuler(livre.reservationEncours.id)}">&{'views.reservations.index.annuler'}</a>
                          </span>
                      </footer>
                 #{/if}
            #{/if}
             #{else}
-                <p>Date emprunt : ${livre.reservationEncours.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+                <p>&{'views.reservations.dateEmprunt'} ${livre.reservationEncours.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
            #{/else}
        </section>
      #{/if}
       #{else}
-        <p>Aucune réservation en cours</p>
+        <p>&{'views.reservations.aucuneReservation'}</p>
      #{/else}
 </article>
 <article>
-    <h1>Historique des emprunts</h1>
+    <h1>&{'views.reservations.index.title3'}</h1>
 
     #{if emprunts.size() > 0}
        #{list items:emprunts, as:'emprunt'}
          <section>
           <h1>${emprunt.nom} ${emprunt.prenom}</h1>
-          <p>Date reservation : ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-          <p>Date emprunt : ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-          <p>Date retour : ${emprunt.dateRetour.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+          <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+          <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+          <p>&{'views.reservations.dateRetour'} ${emprunt.dateRetour.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
        </section>
        #{/list}
 
     #{/if}
     #{else}
-        <p>Aucun emprunt pour ce livre</p>
+        <p>&{'views.reservations.index.aucunEmprunt'}</p>
     #{/else}
-
-
-
 </article>

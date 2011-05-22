@@ -1,17 +1,17 @@
 <nav>
     <ul>
         <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
-        <li><a href="@{Commentaires.last()}">Derniers Commentaires</a></li>
+        <li><a href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
         <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
         <li><a href="@{Livres.index(0)}">&{'views.main.menu.books'}</a></li>
         #{if session.userEmail == null}
-            <li><a href="@{security.Secure.login()}">Se Connecter</a></li>
+            <li><a href="@{security.Secure.login()}">&{views.main.menu.login}</a></li>
         #{/if}
 
         #{if session.userEmail != null && session.userIsAdmin }
           <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
-          <li><a href="@{Reservations.reservations()}">Réservations</a></li>
-          <li><a href="@{security.Secure.logout()}">Déconnexion</a></li>
+          <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
+          <li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li>
         #{/if}
     </ul>
 </nav>

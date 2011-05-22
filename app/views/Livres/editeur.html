@@ -7,7 +7,7 @@
 
     #{/if}
     #{else}
-        <p>Ouvrages de l'éditeur ${editeur}</p>
+        <p>&{'views.livres.editeur.title'} ${editeur}</p>
      #{/else}
 
     #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurBook' /}
@@ -41,9 +41,4 @@
      #{else}
         <p>&{'views.livres.noBookRecorded'}</p>
      #{/else}
-
-
-
-
-
 </article>

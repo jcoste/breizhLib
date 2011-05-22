@@ -8,11 +8,11 @@
         <p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
         #{/if}
         #{else}
-            <p>Aucun Commentaire</p>
+            <p>&{'views.commentaires.aucunCommentaire'}</p>
         #{/else}
         <p>
              #{if _livre.reservationEncours == null}
-            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">Reserver</a></span>
+            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
              #{/if}
         </p>
        <p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'static'   /}</p>
@@ -30,7 +30,7 @@
         <img src="${_livre.image}"/>
         <p>
             #{if _livre.reservationEncours == null}
-            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">Reserver</a></span>
+            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
              #{/if}
         </p>
         <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
