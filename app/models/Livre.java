@@ -105,6 +105,23 @@ public class Livre extends Model {
     public List<Commentaire> getCommentaires() {
         return Commentaire.all(Commentaire.class).filter("livre", this).fetch();
     }
+
+    public int getNote(){
+        int nb = getCommentaires().size();
+
+
+        if(nb >0 ){
+            int val = 0;
+
+            for(Commentaire comment : getCommentaires()){
+               comment.get();
+                val += comment.note;
+            }
+        return val/nb;
+        }else{
+            return 0;
+        }
+    }
 }
 
 

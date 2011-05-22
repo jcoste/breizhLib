@@ -1,14 +1,16 @@
 #{if _as == 'summary'}
-    <section>
+<section>
+        <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static'   /}</p>
         <p>${_comment.commentaire}</p>
         <footer>${_comment.nom} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
-    </section>
+</section>
 #{/if}
 
 #{if _as == 'defaut'}
     <section>
-        <h1><a href="@{Livres.show(_comment.livre.id)}">${_comment.livre.titre}</a></h1>
+        <h1><a href="@{Livres.show(_comment.livre.iSBN)}">${_comment.livre.titre}</a></h1>
         <img src="${_comment.livre.image}"/>
+        <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static'   /}</p>
         <p>${_comment.commentaire}</p>
         <footer>${_comment.nom} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
     </section>
@@ -24,6 +26,10 @@
             <tr>
                  <td></td><td>#{error 'nom' /}</td>
             </tr>
+             <tr>
+                 <td><label>Note :</label></td>
+                 <td>#{stars max:5, value:_note,id:'note'   /}</td>
+            </tr>
             <tr>
                  <td><label for="nom">&{'views.tags.commentaire.post.nom.label'}</label></td>
                  <td><input type="text" name="nom" id="nom" value="${_user.toString()}" /></td>
@@ -33,7 +39,7 @@
             </tr>
             <tr>
                 <td><label for="content">&{'views.tags.commentaire.post.content.label'}</label></td>
-                <td><textarea name="content" id="content">${params.content}</textarea></td>
+                <td><textarea name="content" id="content" rows="5" cols="40">${params.content}</textarea></td>
            <tr>
          </table>
             <footer>
@@ -42,4 +48,5 @@
      #{/form}
     </section>
 </article>
+
 #{/if}

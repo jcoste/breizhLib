@@ -11,7 +11,13 @@
           <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
           <p>Date reservation : ${livre.reservationEncours.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
            #{if livre.reservationEncours.isDateEmpruntNull()}
-           <footer><span class="indisponible"><a href="@{Reservations.annuler(livre.reservationEncours.id)}">Annuler Réservation</a></span></footer>
+                #{if livre.reservationEncours.user.equals(user)}
+                     <footer>
+                         <span class="indisponible"
+                                 ><a href="@{Reservations.annuler(livre.reservationEncours.id)}">Annuler Réservation</a>
+                         </span>
+                     </footer>
+                #{/if}
            #{/if}
             #{else}
                 <p>Date emprunt : ${livre.reservationEncours.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
@@ -29,9 +35,9 @@
        #{list items:emprunts, as:'emprunt'}
          <section>
           <h1>${emprunt.nom} ${emprunt.prenom}</h1>
-          <p>Date reservation : ${emprunt.dateReservation}</p>
-          <p>Date emprunt : ${emprunt.dateEmprunt}</p>
-          <p>Date retour : ${emprunt.dateRetour}</p>
+          <p>Date reservation : ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+          <p>Date emprunt : ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+          <p>Date retour : ${emprunt.dateRetour.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
        </section>
        #{/list}
 

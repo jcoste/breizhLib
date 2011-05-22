@@ -1,0 +1,24 @@
+#{if _as != 'static'}
+<script language="javascript" type="text/javascript">
+   $(function() {
+     $("#${_id}").webwidget_rating_simple({
+          rating_star_length: '${_max}',
+          rating_initial_value: '${_value}',
+          directory: '../public/images'
+          });
+   });
+</script>
+<input type="hidden" name="${_id}" value="" id="${_id}" />
+#{/if}
+#{else}
+      <ul class="webwidget_rating_simple">
+        #{list items:1.._value, as:'i'}
+             <li style="background-image: url('/public/images/sth.gif');" ><span>1</span></li>
+        #{/list}
+        #{if _value+1 < _max }
+            #{list items:_value+1.._max,as:'j'}
+                 <li style="background-image: url('/public/images/nst.gif');" ><span>1</span></li>
+            #{/list}
+        #{/if}
+      </ul>
+#{/else}

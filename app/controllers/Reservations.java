@@ -31,7 +31,9 @@ public class Reservations extends Controller {
                 resa.empruntEncours.get();
             }
         }
-        render(livre, emprunts);
+        User user = Secure.getUser();
+
+        render(livre, emprunts,user);
     }
 
     @Role("admin")
@@ -139,7 +141,7 @@ public class Reservations extends Controller {
             user.prenom = prenom;
         }
         user.update();
-        Reservation reservation = new Reservation(livre, nom, prenom, email);
+        Reservation reservation = new Reservation(livre,user, nom, prenom, email);
         reservation.insert();
         livre.reservationEncours = reservation;
         livre.setEtat(livre.getEtat().getNextState());

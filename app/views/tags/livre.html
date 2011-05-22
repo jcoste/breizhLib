@@ -2,6 +2,7 @@
     <section>
         <h1><a href="@{Livres.show(_livre.iSBN)}">${_livre.titre}</a></h1>
         <img src="${_livre.image}"/>
+
         <p><a href="@{Livres.editeur(_livre.editeur,0)}">${_livre.editeur}</a></p>
          #{if _livre.getCommentaires().size() > 0}
         <p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
@@ -14,6 +15,8 @@
             <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">Reserver</a></span>
              #{/if}
         </p>
+       <p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'static'   /}</p>
+
         <footer>
                 <span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span>
         </footer>
@@ -47,7 +50,7 @@
 
 
     #{if _livre.hasRead()}
-        #{commentaire bookId:_livre.iSBN,user:_user, as:'post' /}
+        #{commentaire bookId:_livre.iSBN,user:_user,note:_livre.getNote(), as:'post' /}
     #{/if}
 
 #{/if}

@@ -36,7 +36,7 @@ public class Livres extends Controller {
         Query<Livre> query = Livre.all(Livre.class);
         int max = Livre.findAll().size();
         int debut = Utils.pagination(page, max, NB_PAR_PAGE);
-        List<Livre> livres = query.order("dateAjout").fetch(NB_PAR_PAGE, debut);
+        List<Livre> livres = query.order("-dateAjout").fetch(NB_PAR_PAGE, debut);
 
         renderArgs.put("editeurs", editeurs);
         renderArgs.put("dept", NB_PAR_PAGE);
@@ -51,7 +51,7 @@ public class Livres extends Controller {
         int dept = NB_PAR_PAGE;
         int debut = Utils.pagination(page, max, NB_PAR_PAGE);
 
-        List<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("dateAjout").fetch(dept, debut);
+        List<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("-dateAjout").fetch(dept, debut);
 
         renderArgs.put("editeurs", editeurs);
         render(livres, page, dept, max, editeur);
@@ -59,7 +59,7 @@ public class Livres extends Controller {
 
     @Role("public")
     public static void last() {
-        List<Livre> livres = Livre.all(Livre.class).order("dateAjout").fetch(NB_NEWS_PAR_PAGE);
+        List<Livre> livres = Livre.all(Livre.class).order("-dateAjout").fetch(NB_NEWS_PAR_PAGE);
         render(livres);
     }
 
@@ -111,12 +111,13 @@ public class Livres extends Controller {
 
 
     @Role("member")
-    public static void postComment(String bookId, @Required String nom, @Required String content) {
+    public static void postComment(String bookId, @Required String nom, @Required String content,@Required int note) {
         Livre livre = Livre.findByISBN(bookId);
         if (validation.hasErrors()) {
             render("Livres/show.html", livre);
         }
-        Commentaire commentaire = new Commentaire(livre, nom, content);
+        User user = Secure.getUser();
+        Commentaire commentaire = new Commentaire(livre,user, nom, content,note);
         commentaire.insert();
         show(bookId);
     }

@@ -28,6 +28,8 @@ public class Reservation extends Model {
     @Email
     public String email;
 
+    public User user;
+
     @As("yyyy-MM-dd")
     public Date dateReservation;
 
@@ -43,13 +45,14 @@ public class Reservation extends Model {
     @Column("empruntEncours")
     public Livre empruntEncours;
 
-    public Reservation(Livre livre, String nom, String prenom, String email) {
+    public Reservation(Livre livre,User user, String nom, String prenom, String email) {
         this.empruntEncours = livre;
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
         this.dateReservation = new Date();
         this.dateEmprunt = Reservation.getDummyDate();
+        this.user = user;
     }
 
     public boolean isDateEmpruntNull(){

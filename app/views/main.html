@@ -6,9 +6,11 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}" />
     <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/template.css'}" />
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/webwidget_rating_simple.css'}" />
     #{get 'moreStyles' /}
     <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
     <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+    <script src="@{'/public/javascripts/webwidget_rating_simple.js'}" type="text/javascript" charset="utf-8"></script>
     #{get 'moreScripts' /}
     <!--[if lt IE 9]>
     	<script src="@{'/public/javascripts/html5-ie.js'}" type="text/javascript" charset="utf-8"></script>
@@ -17,7 +19,7 @@
 </head>
 <body>
 <header>
-    <img src="http://www.breizhjug.org/_/rsrc/1214896583171/config/app/images/customLogo/customLogo.gif?revision=4"/>
+    <a href="http://www.breizhjug.org/" target="_blank" ><img src="http://www.breizhjug.org/_/rsrc/1214896583171/config/app/images/customLogo/customLogo.gif?revision=4"/></a>
 
     <h1>
          &{'views.main.title'}
