@@ -5,7 +5,7 @@
         <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
         <li><a href="@{Livres.index(0)}">&{'views.main.menu.books'}</a></li>
         #{if session.userEmail == null}
-            <li><a href="@{security.Secure.login()}">&{views.main.menu.login}</a></li>
+            <li><a href="@{security.Secure.login()}">&{'views.main.menu.login'}</a></li>
         #{/if}
 
         #{if session.userEmail != null && session.userIsAdmin }
