@@ -8,12 +8,13 @@
             <li><a href="@{security.Secure.login()}">&{'views.main.menu.login'}</a></li>
         #{/if}
         #{else}
+            #{if session != null && session.userEmail != null && controllers.security.Secure.check("admin") }
+                <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
+                <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
+            #{/if}
             <li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li>
         #{/else}
 
-        #{if session != null && session.userEmail != null && session.userIsAdmin == true }
-          <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
-          <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
-        #{/if}
+
     </ul>
 </nav>

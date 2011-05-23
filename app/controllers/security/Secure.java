@@ -24,10 +24,10 @@ public class Secure extends Controller {
         }
     }
 
-    public static String getImpl(){
-        if(session.get("secureimpl")!= null){
-           return session.get("secureimpl");
-        } else{
+    public static String getImpl() {
+        if (session.get("secureimpl") != null) {
+            return session.get("secureimpl");
+        } else {
             return "gae";
         }
     }
@@ -53,17 +53,21 @@ public class Secure extends Controller {
         secure.logout();
     }
 
-    public static void glogin(){
-       secure.login();
+    public static void glogin() {
+        secure.login();
     }
 
     private static void check(Role role) {
         for (String profile : role.value()) {
-            boolean hasProfile = secure.check(profile);
+            boolean hasProfile = check(profile);
             if (!hasProfile) {
                 onCheckFailed(profile);
             }
         }
+    }
+
+    public static boolean check(String profile) {
+        return secure.check(profile);
     }
 
     private static void onCheckFailed(String profile) {

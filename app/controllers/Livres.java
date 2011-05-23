@@ -6,16 +6,12 @@ import controllers.security.Secure;
 import models.Commentaire;
 import models.Livre;
 import models.User;
-import play.Play;
 import play.data.validation.Required;
-import play.libs.Images;
 import play.mvc.Controller;
 import play.mvc.With;
 import siena.Query;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @With(Secure.class)
@@ -25,15 +21,6 @@ public class Livres extends Controller {
 
     private static int NB_NEWS_PAR_PAGE = 4;
 
-    public static List<String> editeurs = new ArrayList<String>();
-
-    static {
-        editeurs.add("Pearson");
-        editeurs.add("Eyrolles");
-        editeurs.add("O'Reilly");
-        editeurs.add("APress");
-        editeurs.add("Packt");
-    }
 
     @Role("public")
     public static void index(int page) {
@@ -42,11 +29,17 @@ public class Livres extends Controller {
         int debut = Utils.pagination(page, max, NB_PAR_PAGE);
         List<Livre> livres = query.order("-dateAjout").fetch(NB_PAR_PAGE, debut);
 
-        renderArgs.put("editeurs", editeurs);
+        renderArgs.put("editeurs", Utils.initListEditeurs());
         renderArgs.put("dept", NB_PAR_PAGE);
         render(livres, page, max);
     }
 
+    @Role("public")
+    public static void all() {
+        Query<Livre> query = Livre.all(Livre.class);
+        List<Livre> livres = query.order("-dateAjout").fetch();
+        render(livres);
+    }
 
 
     @Role("public")
@@ -57,9 +50,10 @@ public class Livres extends Controller {
 
         List<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("-dateAjout").fetch(dept, debut);
 
-        renderArgs.put("editeurs", editeurs);
+        renderArgs.put("editeurs", Utils.initListEditeurs());
         render(livres, page, dept, max, editeur);
     }
+
 
     @Role("public")
     public static void last() {
@@ -74,7 +68,7 @@ public class Livres extends Controller {
         }
         Livre livre = Livre.findByISBN(id);
         User user = Secure.getUser();
-        render(livre,user);
+        render(livre, user);
     }
 
 
@@ -94,12 +88,12 @@ public class Livres extends Controller {
 
     @Role("admin")
     public static void add() {
-        renderArgs.put("editeurs", editeurs);
+        renderArgs.put("editeurs", Utils.initListEditeurs());
         render();
     }
 
     @Role("admin")
-    public static void save(@Required String titre, @Required String editeur, File imageFile,String image, String description, @Required String iSBN) {
+    public static void save(@Required String titre, @Required String editeur, File imageFile, String image, String description, @Required String iSBN) throws Exception {
         if (validation.hasErrors()) {
             render("Livres/add.html");
         }
@@ -108,8 +102,8 @@ public class Livres extends Controller {
             error("le livre existe déja en base");
         }
 
-         if(imageFile != null){
-            image = Utils.createImage(imageFile,iSBN);
+        if (imageFile != null) {
+            image = Utils.createImage(imageFile, iSBN, true);
         }
 
         Livre livre = new Livre(titre, editeur, image, iSBN);
@@ -118,10 +112,8 @@ public class Livres extends Controller {
     }
 
 
-
-
     @Role("member")
-    public static void postComment(String bookId, @Required String nom, @Required String content,@Required int note) {
+    public static void postComment(String bookId, @Required String nom, @Required String content, @Required int note) {
         Livre livre = Livre.findByISBN(bookId);
         if (validation.hasErrors()) {
             render("Livres/show.html", livre);
@@ -129,7 +121,7 @@ public class Livres extends Controller {
 
 
         User user = Secure.getUser();
-        Commentaire commentaire = new Commentaire(livre,user, nom, content,note);
+        Commentaire commentaire = new Commentaire(livre, user, nom, content, note);
         commentaire.insert();
         show(bookId);
     }

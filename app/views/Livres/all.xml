@@ -8,7 +8,6 @@
             <item>
                 <title>${livre.titre}</title>
                 <description>
-                    <h1>${livre.titre}</h1>
                     <img src="${livre.image}" width="150px"/>
                     <p>${livre.editeur}</p>
                     <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>

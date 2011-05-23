@@ -3,9 +3,7 @@ package controllers.security;
 
 import models.User;
 import play.data.validation.Required;
-import play.modules.gae.GAE;
 import play.mvc.Controller;
-import play.mvc.results.Redirect;
 
 public class BasicSecure extends Controller implements ISecure {
 
@@ -13,11 +11,11 @@ public class BasicSecure extends Controller implements ISecure {
 
 
     public void login() {
-          basiclogin();
+        basiclogin();
     }
 
     public void logout() {
-        session.put("userEmail",null);
+        session.put("userEmail", null);
         session.put("secureimpl", null);
         Secure.authetification();
     }
@@ -27,33 +25,33 @@ public class BasicSecure extends Controller implements ISecure {
             return true;
         }
         if ("admin".equals(profile)) {
-	   if (session.get("userEmail") != null) {
-            	user = User.find(session.get("userEmail"));
-		return user.isAdmin;
+            if (session.get("userEmail") != null) {
+                User user = User.find(session.get("userEmail"));
+                return user.isAdmin;
             }
             return false;
         } else if ("member".equals(profile)) {
-            return  session.get("userEmail") != null;
+            return session.get("userEmail") != null;
         }
 
         return false;
     }
 
     public static void basiclogin() {
-          render();
+        render();
     }
 
     public static void newuser() {
-          render();
+        render();
     }
 
     public static void authenticate(@Required String username, String password, boolean remember) throws Throwable {
         User user = User.find(username);
-        if(user == null){
-            flash.put("error","Utilisateur inconu");
+        if (user == null) {
+            flash.put("error", "Utilisateur inconu");
             basiclogin();
         }
-        session.put("userEmail",username);
+        session.put("userEmail", username);
         session.put("secureimpl", "basic");
         Secure.authetification();
     }

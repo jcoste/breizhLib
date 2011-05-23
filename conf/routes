@@ -19,6 +19,10 @@ GET     /commentaires                           Commentaires.index
 GET     /commentaires/news                      Commentaires.last
 GET     /commentaires/editeur/{editeur}/{page}  Commentaires.editeur
 
+GET     /editeur/add                            Editeurs.add
+POST    /editeur/add                            Editeurs.postEditeur
+GET     /editeurs                               Editeurs.index
+
 GET     /search                                 Livres.search
 
 GET     /login                                  security.Secure.login
@@ -29,8 +33,10 @@ GET     /authentification                       security.Secure.authentification
 *       /                                       security.Secure.checkAccess
 
 #RSS
-GET     /books.xml                               Livres.index(format:'xml')
-GET     /commentaires.xml                        Commentaires.index(format:'xml')
+GET     /books.xml                               Livres.all(format:'xml')
+GET     /commentaires.xml                        Commentaires.all(format:'xml')
+
+*       /textile/renderPreview                  Textile.renderPreview
 
 
 # Ignore favicon requests
@@ -38,6 +44,8 @@ GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
+
+GET     /shared/{file}                          Pictures.getPicture
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

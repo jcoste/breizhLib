@@ -21,8 +21,10 @@
     <tr>
         <td><label for="image">&{'views.livres.add.image.label'}</label></td>
         <td><input type="text" name="image" id="image" value="${livre.image}" />
+             #{if play.Play.mode.isDev() }
             <br/>ou  <br/>
             <input type="file" name="imageFile" id="imageFile" multiple="false"   accept="image/gif, image/jpeg"  />
+            #{/if}
         </td>
     </tr>
     <tr>

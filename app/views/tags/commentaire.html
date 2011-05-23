@@ -18,6 +18,12 @@
 
 
 #{if _as == 'post'}
+<script language="javascript">
+    $(document).ready(function()    {
+        $('#content').markItUp(mySettings);
+    });
+</script>
+
 <article>
     <h1>&{'views.tags.commentaire.post.title'}</h1>
     <section>
@@ -47,6 +53,6 @@
             </footer>
      #{/form}
     </section>
-</article>
+<article>
 
 #{/if}

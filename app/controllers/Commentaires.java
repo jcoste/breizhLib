@@ -45,7 +45,7 @@ public class Commentaires extends Controller {
     @Role("public")
     public static void editeur(String editeur, int page) {
         int max = 0;
-        for (Commentaire commentaire :  Commentaire.findAll()) {
+        for (Commentaire commentaire : Commentaire.findAll()) {
             commentaire.livre.get();
             if (commentaire.livre.editeur.equals(editeur)) {
                 max++;
@@ -65,7 +65,7 @@ public class Commentaires extends Controller {
             }
         }
 
-        renderArgs.put("editeurs", Livres.editeurs);
+        renderArgs.put("editeurs", Utils.initListEditeurs());
         render(page, dept, max, editeur);
     }
 
@@ -80,7 +80,17 @@ public class Commentaires extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-        renderArgs.put("editeurs", Livres.editeurs);
+        renderArgs.put("editeurs", Utils.initListEditeurs());
         render(commentaires, page, dept, max);
+    }
+
+    @Role("public")
+    public static void all() {
+        List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
+
+        for (Commentaire commentaire : commentaires) {
+            commentaire.livre.get();
+        }
+        render(commentaires);
     }
 }
