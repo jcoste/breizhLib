@@ -28,6 +28,7 @@ GET     /search                                 Livres.search
 GET     /login                                  security.Secure.login
 GET     /glogin                                 security.Secure.glogin
 GET     /newuser                                security.BasicSecure.newuser
+POST    /newuser                                security.BasicSecure.postNewuser
 GET     /logout                                 Secure.logout
 GET     /authentification                       security.Secure.authentification
 *       /                                       security.Secure.checkAccess

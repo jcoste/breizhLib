@@ -19,6 +19,8 @@ public class User extends Model {
 
     public boolean isAdmin;
 
+    public String password;
+
 
     public User(String email) {
         this.email = email;
