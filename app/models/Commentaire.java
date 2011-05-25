@@ -5,7 +5,6 @@ import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import siena.*;
 
-import javax.persistence.Lob;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,6 @@ public class Commentaire extends Model {
 
     @Required
     public String nom;
-    @Lob
     @Required
     @MaxSize(10000)
     public String commentaire;
