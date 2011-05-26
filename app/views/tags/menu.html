@@ -12,6 +12,7 @@
                 <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
                 <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
             #{/if}
+            <li><a href="@{Application.infos()}">Mes Infos</a></li>
             <li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li>
         #{/else}
 

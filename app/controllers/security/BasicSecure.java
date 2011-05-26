@@ -54,7 +54,7 @@ public class BasicSecure extends Controller implements ISecure {
     public static void postNewuser(@Required String email,String nom,String prenom,@Required String password,
                                    @Required String passwordconfirm,@Required String captcha,String randomID) throws Throwable {
         User user = User.find(email);
-        validation.isTrue(user != null).message("<span class=\"error\">email déjà enregistré</span>");
+        validation.isTrue(user == null).message("<span class=\"error\">email déjà enregistré</span>");
         validation.equals(captcha, Cache.get(randomID)).message("<span class=\"error\">Invalid captcha. Please type it again</span>");
         validation.equals(password, passwordconfirm).message("<span class=\"error\">mot de passe incorrect</span>");
         if(validation.hasErrors()) {
@@ -70,9 +70,9 @@ public class BasicSecure extends Controller implements ISecure {
     }
 
 
-    public static void authenticate(@Required String username,@Required String password, boolean remember) throws Throwable {
+    public static void authenticate(@Required String username, String password, boolean remember) throws Throwable {
         User user = User.find(username);
-        validation.isTrue(user != null).message("<span class=\"error\">email déjà enregistré</span>");
+        validation.isTrue(user != null).message("<span class=\"error\">Utilisateur inconu</span>");
         validation.equals(user.password, Crypto.passwordHash(password)).message("<span class=\"error\">mot de passe incorrect</span>");
         if(validation.hasErrors()) {
            if (session.get("authfailcount") == null) {

@@ -31,7 +31,7 @@
          <tr>
             <td><label for="captcha">Captcha : </label><br /><img src="@{security.BasicSecure.captcha(randomID)}" />
         </td>
-            <td><p>#{error 'captcha' /}</p><input type="password" name="captcha" id="captcha" value="${params.captcha}" size="18" />
+            <td><p>#{error 'captcha' /}</p><input type="text" name="captcha" id="captcha" value="${params.captcha}" size="18" />
                 <input type="hidden" name="randomID" value="${randomID}" /></td>
         </tr>
 
