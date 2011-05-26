@@ -7,8 +7,8 @@
 <p><a href="@{security.Secure.glogin()}">Google</a></p>
 
 <div id="login">
-
-	<h1>Ouvrez une session</h1>
+#{if session.get("authfailcount") == null || Integer.valueOf(session.get("authfailcount")) < 3 }
+    <h1>Ouvrez une session</h1>
 
 	#{form @security.BasicSecure.authenticate()}
 
@@ -39,4 +39,8 @@
 			<input type="submit" id="signin" value="Login" />
 		</p>
 	#{/form}
+#{/if}
+#{else}
+    <h1>nombre d'essais depassés</h1>
+#{/else}
 </div>

@@ -27,10 +27,11 @@ GET     /search                                 Livres.search
 
 GET     /login                                  security.Secure.login
 GET     /glogin                                 security.Secure.glogin
-GET     /newuser                                security.BasicSecure.newuser
-POST    /newuser                                security.BasicSecure.postNewuser
+GET     /user/new                               security.BasicSecure.newuser
+POST    /user/new                               security.BasicSecure.postNewuser
 GET     /logout                                 Secure.logout
 GET     /authentification                       security.Secure.authentification
+GET     /captcha                                security.BasicSecure.captcha
 *       /                                       security.Secure.checkAccess
 
 #RSS

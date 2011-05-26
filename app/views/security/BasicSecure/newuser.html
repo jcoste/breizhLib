@@ -1,20 +1,9 @@
 #{extends 'main.html' /}
 #{set title:'Login' /}
 
-#{if play.Play.mode.isDev() }
 <article>
    <h1>Création de compte</h1>
 
-    #{if flash.error}
-			<p class="error">
-				&{flash.error}
-			</p>
-		#{/if}
-		#{if flash.success}
-			<p class="success">
-				&{flash.success}
-			</p>
-		#{/if}
 
    <section>
 #{form @security.BasicSecure.postNewuser(),enctype:'multipart/form-data'}
@@ -40,8 +29,10 @@
             <td><p>#{error 'passwordconfirm' /}</p><input type="password" name="passwordconfirm" id="passwordconfirm" value="${params.passwordconfirm}" size="20" /></td>
         </tr>
          <tr>
-            <td><label for="capcha">Captcha : </label></td>
-            <td><p>#{error 'capcha' /}</p><input type="password" name="capcha" id="capcha" value="${params.capcha}" size="20" /></td>
+            <td><label for="captcha">Captcha : </label><br /><img src="@{security.BasicSecure.captcha(randomID)}" />
+        </td>
+            <td><p>#{error 'captcha' /}</p><input type="password" name="captcha" id="captcha" value="${params.captcha}" size="18" />
+                <input type="hidden" name="randomID" value="${randomID}" /></td>
         </tr>
 
 
@@ -53,9 +44,3 @@
 
           </section>
 </article>
-#{/if}
-#{else}
-<article>
-    <p>Non disponible pour le moment</p>
-</article>
-#{/else}

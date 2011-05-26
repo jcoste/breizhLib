@@ -3,8 +3,11 @@ package controllers.security;
 
 import models.User;
 import play.Play;
+import play.cache.Cache;
 import play.data.validation.Required;
+import play.libs.Codec;
 import play.libs.Crypto;
+import play.libs.Images;
 import play.mvc.Controller;
 
 public class BasicSecure extends Controller implements ISecure {
@@ -44,20 +47,19 @@ public class BasicSecure extends Controller implements ISecure {
     }
 
     public static void newuser(String email, String nom, String prenom) {
-        render(email,nom,prenom);
+        String randomID = Codec.UUID();
+        render(email,nom,prenom,randomID);
     }
 
-    public static void postNewuser(@Required String email,String nom,String prenom,@Required String password,@Required String passwordconfirm,String captcha) throws Throwable {
+    public static void postNewuser(@Required String email,String nom,String prenom,@Required String password,
+                                   @Required String passwordconfirm,@Required String captcha,String randomID) throws Throwable {
         User user = User.find(email);
-        if (user != null) {
-            flash.put("error", "email déjà enregistré");
-            newuser(null,nom,prenom);
-        }
-        if (!password.equals(passwordconfirm)) {
-            flash.put("error", "mot de passe incorrect");
-            newuser(email,nom,prenom);
-        }
-
+        validation.isTrue(user != null).message("<span class=\"error\">email déjà enregistré</span>");
+        validation.equals(captcha, Cache.get(randomID)).message("<span class=\"error\">Invalid captcha. Please type it again</span>");
+        validation.equals(password, passwordconfirm).message("<span class=\"error\">mot de passe incorrect</span>");
+        if(validation.hasErrors()) {
+           render("security/BasicSecure/newuser.html",email, nom,prenom, randomID);
+         }
         user =  new User(email);
         user.nom = nom;
         user.prenom = prenom;
@@ -68,22 +70,29 @@ public class BasicSecure extends Controller implements ISecure {
     }
 
 
-    public static void authenticate(@Required String username, String password, boolean remember) throws Throwable {
+    public static void authenticate(@Required String username,@Required String password, boolean remember) throws Throwable {
         User user = User.find(username);
-        if (user == null) {
-            flash.put("error", "Utilisateur inconu");
-            basiclogin();
-        }
-        if (!user.password.equals(Crypto.passwordHash(password))) {
-            flash.put("error", "mot de passe incorrect");
-            //TODO compter le nobre d'echec, afin de pouvoir bloquer le compte
-            basiclogin();
-        }
+        validation.isTrue(user != null).message("<span class=\"error\">email déjà enregistré</span>");
+        validation.equals(user.password, Crypto.passwordHash(password)).message("<span class=\"error\">mot de passe incorrect</span>");
+        if(validation.hasErrors()) {
+           if (session.get("authfailcount") == null) {
+               session.put("authfailcount", 0);
+            }
+            session.put("authfailcount", Integer.valueOf(session.get("authfailcount"))+1);
+           basiclogin();
+         }
 
-
+        session.put("authfailcount", 0);
         session.put("userEmail", username);
         session.put("secureimpl", "basic");
         Secure.authetification();
+    }
+
+    public static void captcha(String id) {
+        Images.Captcha captcha = Images.captcha();
+        String code = captcha.getText("#0000FD");
+        Cache.set(id, code, "10mn");
+        renderBinary(captcha);
     }
 
 
