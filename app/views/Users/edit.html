@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib' /}
+
+<h1>Edition des informations de votre compte</h1>
+
+
+<section>
+    #{form @Users.postEdit(),enctype:'multipart/form-data'}
+    <table>
+        <tr>
+            <td><label>Email : </label></td>
+            <td>${user.email}</td>
+        </tr>
+        <tr>
+            <td><label for="nom">Nom : </label></td>
+            <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${user.nom}" size="20"/></td>
+        </tr>
+        <tr>
+            <td><label for="prenom">Prénom : </label></td>
+            <td><p>#{error 'prenom' /}</p><input type="text" name="prenom" id="prenom" value="${user.prenom}"
+                                                 size="20"/>
+            </td>
+        </tr>
+    </table>
+    <footer>
+        <input type="submit" value="Modifier"/>
+    </footer>
+    #{/form}
+
+</section>

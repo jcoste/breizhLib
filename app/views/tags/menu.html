@@ -11,8 +11,9 @@
             #{if session != null && session.userEmail != null && controllers.security.Secure.check("admin") }
                 <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
                 <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
+                 <li><a href="@{Users.index()}">Utilisateurs</a></li>
             #{/if}
-            <li><a href="@{Application.infos()}">Mes Infos</a></li>
+            <li><a href="@{Users.infos()}">Mes Infos</a></li>
             <li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li>
         #{/else}
 

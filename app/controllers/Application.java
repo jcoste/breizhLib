@@ -20,12 +20,6 @@ public class Application extends Controller {
         render(livres);
     }
 
-     public static void infos() {
-        User user = Secure.getUser();
-        if (user != null) {
-            render(user);
-        }
-        index();
-    }
+
 
 }

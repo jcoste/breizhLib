@@ -25,7 +25,12 @@ GET     /editeurs                               Editeurs.index
 
 GET     /search                                 Livres.search
 
-GET     /user/infos                             Application.infos
+GET     /users                                  Users.index
+GET     /user/infos                             Users.infos
+GET     /user/commentaires                      Users.commentaires
+GET     /user/emprunts                          Users.emprunts
+GET     /user/edit                              Users.edit
+POST    /user/edit                              Users.postEdit
 
 
 GET     /login                                  security.Secure.login

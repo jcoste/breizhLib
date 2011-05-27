@@ -2,45 +2,51 @@
 #{set title:'Login' /}
 
 <article>
-   <h1>Création de compte</h1>
+    <h1>Création de compte</h1>
 
 
-   <section>
-#{form @security.BasicSecure.postNewuser(),enctype:'multipart/form-data'}
+    <section>
+        #{form @security.BasicSecure.postNewuser(),enctype:'multipart/form-data'}
         <table>
-        <tr>
-            <td><label for="email">Email : </label></td>
-            <td><p>#{error 'email' /}</p><input type="email" name="email" id="email" value="${email}" size="20" /></td>
-        </tr>
-         <tr>
-            <td><label for="nom">Nom : </label></td>
-            <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${nom}" size="20" /></td>
-        </tr>
-         <tr>
-            <td><label for="prenom">Prénom : </label></td>
-            <td><p>#{error 'prenom' /}</p><input type="text" name="prenom" id="prenom" value="${prenom}" size="20" /></td>
-        </tr>
-        <tr>
-            <td><label for="password">Mot de passe : </label></td>
-            <td><p>#{error 'password' /}</p><input type="password" name="password" id="password" value="${params.password}" size="20" /></td>
-        </tr>
-         <tr>
-            <td><label for="passwordconfirm">Confirmation du mot de passe : </label></td>
-            <td><p>#{error 'passwordconfirm' /}</p><input type="password" name="passwordconfirm" id="passwordconfirm" value="${params.passwordconfirm}" size="20" /></td>
-        </tr>
-         <tr>
-            <td><label for="captcha">Captcha : </label><br /><img src="@{security.BasicSecure.captcha(randomID)}" />
-        </td>
-            <td><p>#{error 'captcha' /}</p><input type="text" name="captcha" id="captcha" value="${params.captcha}" size="18" />
-                <input type="hidden" name="randomID" value="${randomID}" /></td>
-        </tr>
+            <tr>
+                <td><label for="email">Email : </label></td>
+                <td><p>#{error 'email' /}</p><input type="email" name="email" id="email" value="${email}" size="20"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="nom">Nom : </label></td>
+                <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${nom}" size="20"/></td>
+            </tr>
+            <tr>
+                <td><label for="prenom">Prénom : </label></td>
+                <td><p>#{error 'prenom' /}</p><input type="text" name="prenom" id="prenom" value="${prenom}" size="20"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="password">Mot de passe : </label></td>
+                <td><p>#{error 'password' /}</p><input type="password" name="password" id="password"
+                                                       value="${params.password}" size="20"/></td>
+            </tr>
+            <tr>
+                <td><label for="passwordconfirm">Confirmation du mot de passe : </label></td>
+                <td><p>#{error 'passwordconfirm' /}</p><input type="password" name="passwordconfirm"
+                                                              id="passwordconfirm" value="${params.passwordconfirm}"
+                                                              size="20"/></td>
+            </tr>
+            <tr>
+                <td><label for="captcha">Captcha : </label><br/><img src="@{security.BasicSecure.captcha(randomID)}"/>
+                </td>
+                <td><p>#{error 'captcha' /}</p><input type="text" name="captcha" id="captcha" value="${params.captcha}"
+                                                      size="18"/>
+                    <input type="hidden" name="randomID" value="${randomID}"/></td>
+            </tr>
 
 
-       </table>
+        </table>
         <footer>
-            <input type="submit" value="&{'views.livres.add.submit'}" />
-       </footer>
-   #{/form}
+            <input type="submit" value="&{'views.livres.add.submit'}"/>
+        </footer>
+        #{/form}
 
-          </section>
+    </section>
 </article>

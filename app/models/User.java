@@ -1,9 +1,13 @@
 package models;
 
+import play.data.binding.As;
 import play.data.validation.Required;
 import siena.Generator;
 import siena.Id;
 import siena.Model;
+
+import java.util.Date;
+import java.util.List;
 
 @siena.Table("User")
 public class User extends Model {
@@ -21,8 +25,12 @@ public class User extends Model {
 
     public String password;
 
+    @As("yyyy-MM-dd")
+    public Date dateCreation;
+
 
     public User(String email) {
+        this.dateCreation = new Date();
         this.email = email;
     }
 
@@ -40,4 +48,11 @@ public class User extends Model {
         }
     }
 
+    public static List<User> findAll() {
+        return User.all(User.class).fetch();
+    }
+
+    public List<Commentaire> commentaires() {
+        return Commentaire.all(Commentaire.class).filter("user", this).fetch();
+    }
 }

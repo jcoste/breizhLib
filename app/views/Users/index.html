@@ -1,0 +1,16 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib' /}
+
+<article>
+    <h1>${users.size()} Utilisateur${users.pluralize()} </h1>
+    #{if users.size() > 0}
+        #{list items:users, as:'user'}
+            <section>
+                 <p>${user.nom} ${user.prenom}</p>
+                 <p>${user.commentaires().size()} commentaire${user.commentaires().pluralize()}</p>
+                 <p>depuis le ${user.dateCreation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+                <footer>${user.email}</footer>
+            </section>
+        #{/list}
+    #{/if}
+</article>
