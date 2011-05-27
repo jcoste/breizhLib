@@ -3,6 +3,7 @@ package controllers;
 import controllers.security.Role;
 import controllers.security.Secure;
 import models.Editeur;
+import models.Picture;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -19,7 +20,7 @@ public class Editeurs extends Controller {
     }
 
     @Role("admin")
-    public static void postEditeur(@Required String nom, String site/*, File imageFile, */ ,String image) {
+    public static void postEditeur(@Required String nom, String site, byte[] imageFile ,String image) {
         if (validation.hasErrors()) {
             render("Editeurs/add.html");
         }
@@ -28,13 +29,13 @@ public class Editeurs extends Controller {
             error("l'éditeur existe déja en base");
         }
 
-        //if (imageFile != null) {
-            //try {
-            //    image = Utils.createImage(imageFile, nom, false);
-            //} catch (Exception e) {
-            //    error(e.getLocalizedMessage());
-            //}
-        //}
+        if (imageFile != null) {
+            try {
+                image = Utils.createImage(imageFile, nom, false);
+            } catch (Exception e) {
+              error(e.getLocalizedMessage());
+            }
+        }
 
 
         editeur = new Editeur(nom, site);

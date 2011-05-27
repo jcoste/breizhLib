@@ -5,6 +5,7 @@ import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
 import models.Livre;
+import models.Picture;
 import models.User;
 import play.data.validation.Required;
 import play.mvc.Controller;
@@ -93,7 +94,7 @@ public class Livres extends Controller {
     }
 
     @Role("admin")
-    public static void save(@Required String titre, @Required String editeur, File imageFile, String image, String description, @Required String iSBN) throws Exception {
+    public static void save(@Required String titre, @Required String editeur, byte[] imageFile, String image, String description, @Required String iSBN) throws Exception {
         if (validation.hasErrors()) {
             render("Livres/add.html");
         }

@@ -17,10 +17,8 @@
        <tr>
             <td><label for="image">Image : </label></td>
             <td><input type="text" name="image" id="image" value="${params.image}" size="50" />
-                #{if play.Play.mode.isDev() }
                      <br/>ou  <br/>
-                    <input type="file" name="imageFile" id="imageFile" multiple="false"   accept="image/gif, image/jpeg, image/png"  />
-                #{/if}
+            <input type="file" name="imageFile" id="imageFile.image" multiple="false"   accept="image/gif, image/jpeg, image/png"  />
             </td>
         </tr>
        </table>
