@@ -6,6 +6,8 @@ import models.User;
 import play.mvc.Before;
 import play.mvc.Controller;
 
+import java.util.Date;
+
 
 public class Secure extends Controller {
 
@@ -16,11 +18,11 @@ public class Secure extends Controller {
         // Checks
         Role role = getActionAnnotation(Role.class);
         if (role != null) {
-            check(role);
+            checkRole(role);
         }
         role = getControllerInheritedAnnotation(Role.class);
         if (role != null) {
-            check(role);
+            checkRole(role);
         }
     }
 
@@ -37,6 +39,8 @@ public class Secure extends Controller {
         if (user != null) {
             session.put("userEmail", user.email);
             session.put("userIsAdmin", user.isAdmin);
+            user.dateConnexion = new Date();
+            user.update();
             Application.index();
         } else {
             session.put("userEmail", null);
@@ -57,7 +61,7 @@ public class Secure extends Controller {
         secure.login();
     }
 
-    private static void check(Role role) {
+    private static void checkRole(Role role) {
         for (String profile : role.value()) {
             boolean hasProfile = check(profile);
             if (!hasProfile) {

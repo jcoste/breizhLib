@@ -29,7 +29,7 @@
 <body>
 <header>
     <a href="http://www.breizhjug.org/" target="_blank" ><img src="http://www.breizhjug.org/_/rsrc/1214896583171/config/app/images/customLogo/customLogo.gif?revision=4"/></a>
-    <h1>&{'views.main.title'}#{if play.mode.name() == 'DEV'}<span class="indice">${play.mode.name()}</span>#{/if}</h1>
+    <h1>&{'views.main.title'}#{if play.mode.name() == 'DEV'}<span class="indice">${play.mode.name()}</span>#{/if}#{else}<span class="indice">BETA</span>#{/else}</h1>
 </header>
 #{menu user:session.user /}
 #{doLayout /}

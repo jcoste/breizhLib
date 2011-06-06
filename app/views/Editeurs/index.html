@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'BreizhLib Commentaires' /}
+#{set title:'BreizhLib Editeurs' /}
 
 <article >
     #{if editeurs}
@@ -9,6 +9,7 @@
                 <section>
                     <h1>${editeur.nom}</h1>
                     <span><img src="${editeur.image}" /></span>
+                    <p><a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a></p>
                     <footer><a href="${editeur.site}" target="_blank">${editeur.site}</a></footer>
                 </section>
             #{/list}

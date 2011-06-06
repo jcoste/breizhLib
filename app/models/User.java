@@ -28,6 +28,9 @@ public class User extends Model {
     @As("yyyy-MM-dd")
     public Date dateCreation;
 
+    @As("yyyy-MM-dd")
+    public Date dateConnexion;
+
 
     public User(String email) {
         this.dateCreation = new Date();
@@ -54,5 +57,14 @@ public class User extends Model {
 
     public List<Commentaire> commentaires() {
         return Commentaire.all(Commentaire.class).filter("user", this).fetch();
+    }
+
+    public Livre getLastEmprunt(){
+        Reservation reservation = Reservation.all(Reservation.class).filter("dateRetour>",Reservation.getDummyDate()).get();
+        if(reservation != null){
+            reservation.emprunt.get();
+            return reservation.emprunt;
+        }
+        return null;
     }
 }
