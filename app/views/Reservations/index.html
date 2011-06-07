@@ -6,7 +6,7 @@
     <h1>&{'views.reservations.index.title2'}</h1>
     #{if livre.reservationEncours}
 
-       <section>
+       <section class="miniature">
           <h1>${livre.reservationEncours.nom} ${livre.reservationEncours.prenom}</h1>
           <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
           <p>&{'views.reservations.date'} ${livre.reservationEncours.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
@@ -33,7 +33,7 @@
 
     #{if emprunts.size() > 0}
        #{list items:emprunts, as:'emprunt'}
-         <section>
+         <section class="miniature">
           <h1>${emprunt.nom} ${emprunt.prenom}</h1>
           <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
           <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>

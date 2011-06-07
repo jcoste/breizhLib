@@ -5,7 +5,7 @@
     <h1>${users.size()} Utilisateur${users.pluralize()} </h1>
     #{if users.size() > 0}
         #{list items:users, as:'user'}
-            <section>
+            <section class="miniature">
                  <p>${user.nom} ${user.prenom}</p>
                  <p>${user.commentaires().size()} commentaire${user.commentaires().pluralize()}</p>
                  #{if user.getLastEmprunt() != null}

@@ -72,13 +72,23 @@ article p {
 	margin: 10px 0 0 10px;
 }
 
-section {
+.miniature {
 	float: left;
 	background: #CCCCCC;
 	background-image: -moz-linear-gradient(top, #888888, #CCCCCC 50%, #EEEEEE);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#888888), color-stop(0.5, #CCCCCC), to(#EEEEEE));
 	border-radius: 5px 20px 0 10px;
 	width: 47%;
+	margin: 10px 15px 10px 14px;
+}
+
+.full {
+	float: left;
+	background: #CCCCCC;
+	background-image: -moz-linear-gradient(top, #888888, #CCCCCC 50%, #EEEEEE);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#888888), color-stop(0.5, #CCCCCC), to(#EEEEEE));
+	border-radius: 5px 20px 0 10px;
+	width: 95%;
 	margin: 10px 15px 10px 14px;
 }
 

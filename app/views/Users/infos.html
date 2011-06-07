@@ -2,7 +2,7 @@
 #{set title:'BreizhLib' /}
 
 <article>
-    <section>
+    <section class="full">
         <h1>Mes infos</h1>
 
         <p>Nom : ${user.nom}</p>
@@ -11,7 +11,7 @@
         <footer><a href="@{Users.commentaires()}">Mes commentaires</a> - <a href="@{Users.edit()}">Editer Mes infos</a> - <a href="@{Users.emprunts()}">Mes Emprunts</a></footer>
     </section>
 #{if  session.get("secureimpl") != null && session.get("secureimpl") == "basic"}
-    <section>
+    <section class="full">
         <h1>Modifier mon mot de passe</h1>
 
         #{form @Users.postEdit(),enctype:'multipart/form-data'}
