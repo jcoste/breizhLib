@@ -1,6 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'Login' /}
 
+<article>
 <h1>Nouveau sur BreizhLib ?</h1>
 <p><a href="@{security.BasicSecure.newuser()}">Créer un compte</a> </p>
 <p>ou Connectez-vous avec : </p>
@@ -44,3 +45,4 @@
     <h1>nombre d'essais depassés</h1>
 #{/else}
 </div>
+</article>
