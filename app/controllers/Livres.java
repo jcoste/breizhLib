@@ -10,6 +10,7 @@ import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
 import siena.Query;
+import utils.Paginator;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Livres extends Controller {
         Query<Livre> query = Livre.all(Livre.class).order("-dateAjout");
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.index", query);
 
-        renderArgs.put("editeurs", Utils.initListEditeurs());
+        renderArgs.put("editeurs", Editeurs.initListEditeurs());
         render(paginator);
     }
 
@@ -43,7 +44,7 @@ public class Livres extends Controller {
         Query<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("-dateAjout");
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.editeur", livres);
 
-        renderArgs.put("editeurs", Utils.initListEditeurs());
+        renderArgs.put("editeurs", Editeurs.initListEditeurs());
         render(editeur, paginator);
     }
 
@@ -81,7 +82,7 @@ public class Livres extends Controller {
 
     @Role("admin")
     public static void add() {
-        renderArgs.put("editeurs", Utils.initListEditeurs());
+        renderArgs.put("editeurs", Editeurs.initListEditeurs());
         render();
     }
 
@@ -96,7 +97,7 @@ public class Livres extends Controller {
         }
 
         if (imageFile != null) {
-            image = Utils.createImage(imageFile, iSBN, true);
+            image = Pictures.createImage(imageFile, iSBN, true);
         }
 
         Livre livre = new Livre(titre, editeur, image, iSBN);

@@ -7,6 +7,7 @@ import models.Livre;
 import play.mvc.Controller;
 import play.mvc.With;
 import siena.Query;
+import utils.Paginator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public class Commentaires extends Controller {
             }
         }
 
-        renderArgs.put("editeurs", Utils.initListEditeurs());
+        renderArgs.put("editeurs", Editeurs.initListEditeurs());
         render(page, dept, max, editeur);
     }
 
@@ -78,7 +79,7 @@ public class Commentaires extends Controller {
             commentaire.livre.get();
         }
 
-        renderArgs.put("editeurs", Utils.initListEditeurs());
+        renderArgs.put("editeurs", Editeurs.initListEditeurs());
         render(paginator);
     }
 

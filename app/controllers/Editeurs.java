@@ -7,6 +7,7 @@ import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,6 +17,15 @@ public class Editeurs extends Controller {
     @Role("admin")
     public static void add() {
         render();
+    }
+
+    public static List<String> initListEditeurs() {
+        List<Editeur> allEditeurs = Editeur.all(Editeur.class).order("nom").fetch();
+        List<String> editeurs = new ArrayList<String>();
+        for (Editeur pEditeur : allEditeurs) {
+            editeurs.add(pEditeur.nom);
+        }
+        return editeurs;
     }
 
     @Role("admin")
@@ -30,7 +40,7 @@ public class Editeurs extends Controller {
 
         if (imageFile != null) {
             try {
-                image = Utils.createImage(imageFile, nom, false);
+                image = Pictures.createImage(imageFile, nom, false);
             } catch (Exception e) {
                 error(e.getLocalizedMessage());
             }
