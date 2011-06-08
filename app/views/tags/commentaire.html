@@ -1,25 +1,28 @@
 #{if _as == 'summary'}
 <section class="miniature">
-        <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static'   /}</p>
-        <p>${_comment.commentaire}</p>
-        <footer>${_comment.nom} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
+    <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</p>
+
+    <p>${_comment.commentaire}</p>
+    <footer>${_comment.nom} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
 </section>
 #{/if}
 
 #{if _as == 'defaut'}
-    <section class="miniature">
-        <h1><a href="@{Livres.show(_comment.livre.iSBN)}">${_comment.livre.titre}</a></h1>
-        <img src="${_comment.livre.image}"/>
-        <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static'   /}</p>
-        <p>${_comment.commentaire}</p>
-        <footer>${_comment.nom} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
-    </section>
+<section class="miniature">
+    <h1><a href="@{Livres.show(_comment.livre.iSBN)}">${_comment.livre.titre}</a></h1>
+    <img src="${_comment.livre.image}"/>
+
+    <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</p>
+
+    <p>${_comment.commentaire}</p>
+    <footer>${_comment.nom} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
+</section>
 #{/if}
 
 
 #{if _as == 'post'}
 <script language="javascript">
-    $(document).ready(function()    {
+    $(document).ready(function() {
         $('#content').markItUp(mySettings);
     });
 </script>
@@ -27,32 +30,34 @@
 <article>
     <h1>&{'views.tags.commentaire.post.title'}</h1>
     <section class="full">
-     #{form @Livres.postComment(_bookId)}
+        #{form @Livres.postComment(_bookId)}
         <table>
             <tr>
-                 <td></td><td>#{error 'nom' /}</td>
-            </tr>
-             <tr>
-                 <td><label>&{'views.tags.commentaire.post.note.label'}</label></td>
-                 <td>#{stars max:5, value:_note,id:'note'   /}</td>
+                <td></td>
+                <td>#{error 'nom' /}</td>
             </tr>
             <tr>
-                 <td><label for="nom">&{'views.tags.commentaire.post.nom.label'}</label></td>
-                 <td><input type="text" name="nom" id="nom" value="${_user.toString()}" /></td>
+                <td><label>&{'views.tags.commentaire.post.note.label'}</label></td>
+                <td>#{stars max:5, value:_note,id:'note' /}</td>
             </tr>
             <tr>
-                 <td></td><td>#{error 'content' /}</td>
+                <td><label for="nom">&{'views.tags.commentaire.post.nom.label'}</label></td>
+                <td><input type="text" name="nom" id="nom" value="${_user.toString()}"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>#{error 'content' /}</td>
             </tr>
             <tr>
                 <td><label for="content">&{'views.tags.commentaire.post.content.label'}</label></td>
                 <td><textarea name="content" id="content" rows="5" cols="40">${params.content}</textarea></td>
-           <tr>
-         </table>
-            <footer>
-                <input type="submit" value="&{'views.tags.commentaire.post.submit'}" />
-            </footer>
-     #{/form}
+            <tr>
+        </table>
+        <footer>
+            <input type="submit" value="&{'views.tags.commentaire.post.submit'}"/>
+        </footer>
+        #{/form}
     </section>
-<article>
+    <article>
 
-#{/if}
+        #{/if}

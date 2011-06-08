@@ -1,6 +1,6 @@
 #{if _as == 'editeurBook'}
 <p>
-         #{if _editeur == null}
+    #{if _editeur == null}
              <span class="actif">
          #{/if}
          #{else}
@@ -18,13 +18,13 @@
                     #{/else}
                 <a href="@{Livres.editeur(editeurFilter,0)}">${editeurFilter}</a></span>
         #{/list}
-     </p>
+</p>
 
 #{/if}
 
 #{if _as == 'editeurCommentaires'}
 <p>
-         #{if _editeur == null}
+    #{if _editeur == null}
              <span class="actif">
          #{/if}
          #{else}
@@ -42,6 +42,6 @@
                     #{/else}
                 <a href="@{Commentaires.editeur(editeurFilter,0)}">${editeurFilter}</a></span>
         #{/list}
-     </p>
+</p>
 
 #{/if}

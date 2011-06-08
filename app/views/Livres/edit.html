@@ -2,39 +2,39 @@
 #{set title:'BreizhLib Ajout' /}
 
 <article>
-   <h1>&{'views.livres.add.title'}</h1>
-   <section class="full">
-   <table>
-   #{form @Livres.save()}
-    <tr>
-        <td><label for="titre">&{'views.livres.add.titre.label'}</label></td>
-        <td><input type="text" name="titre" id="titre" value="${livre.titre}" />#{error 'titre' /}</td>
-    </tr>
-    <tr>
-        <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
-        <td><input type="text" name="editeur" id="editeur" value="${livre.editeur}" />#{error 'editeur' /}</td>
-    </tr>
-    <tr>
-        <td><label for="description">&{'views.livres.add.description.label'}</label></td>
-        <td><textarea  name="description" id="description" value="${livre.description}" ></textarea></td>
-    </tr>
-    <tr>
-        <td><label for="image">&{'views.livres.add.image.label'}</label></td>
-        <td><input type="text" name="image" id="image" value="${livre.image}" />
-            <br/>ou  <br/>
-            <input type="file" name="imageFile" id="imageFile" multiple="false"   accept="image/gif, image/jpeg"  />
-        </td>
-    </tr>
-    <tr>
-        <td><label for="iSBN">&{'views.livres.add.iSBN.label'}</label></td>
-        <td><input type="text" name="iSBN" id="iSBN" value="${livre.iSBN}" />#{error 'iSBN' /}</td>
-   </tr>
-   </table>
-    <footer>
-        <input type="submit" value="&{'views.livres.add.submit'}" />
-   </footer>
+    <h1>&{'views.livres.add.title'}</h1>
+    <section class="full">
+        <table>
+            #{form @Livres.save()}
+            <tr>
+                <td><label for="titre">&{'views.livres.add.titre.label'}</label></td>
+                <td><input type="text" name="titre" id="titre" value="${livre.titre}"/>#{error 'titre' /}</td>
+            </tr>
+            <tr>
+                <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
+                <td><input type="text" name="editeur" id="editeur" value="${livre.editeur}"/>#{error 'editeur' /}</td>
+            </tr>
+            <tr>
+                <td><label for="description">&{'views.livres.add.description.label'}</label></td>
+                <td><textarea name="description" id="description" value="${livre.description}"></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="image">&{'views.livres.add.image.label'}</label></td>
+                <td><input type="text" name="image" id="image" value="${livre.image}"/>
+                    <br/>ou <br/>
+                    <input type="file" name="imageFile" id="imageFile" multiple="false" accept="image/gif, image/jpeg"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="iSBN">&{'views.livres.add.iSBN.label'}</label></td>
+                <td><input type="text" name="iSBN" id="iSBN" value="${livre.iSBN}"/>#{error 'iSBN' /}</td>
+            </tr>
+        </table>
+        <footer>
+            <input type="submit" value="&{'views.livres.add.submit'}"/>
+        </footer>
 
-   #{/form}
+        #{/form}
 
-   </section>
+    </section>
 </article>

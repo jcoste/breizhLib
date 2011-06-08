@@ -3,19 +3,20 @@
 
 <article>
     #{if editeurs}
-        <h1>${editeurs.size()} Editeur${editeurs.pluralize()} </h1>
-        #{if editeurs.size() > 0}
-            #{list items:editeurs, as:'editeur'}
-                <section class="miniature">
-                    <h1>${editeur.nom}</h1>
-                    <span><img src="${editeur.image}" /></span>
-                    <p><a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a></p>
-                    <footer><a href="${editeur.site}" target="_blank">${editeur.site}</a></footer>
-                </section>
-            #{/list}
-        #{/if}
+    <h1>${editeurs.size()} Editeur${editeurs.pluralize()} </h1>
+    #{if editeurs.size() > 0}
+    #{list items:editeurs, as:'editeur'}
+    <section class="miniature">
+        <h1>${editeur.nom}</h1>
+        <span><img src="${editeur.image}"/></span>
+
+        <p><a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a></p>
+        <footer><a href="${editeur.site}" target="_blank">${editeur.site}</a></footer>
+    </section>
+    #{/list}
+    #{/if}
     #{/if}
     #{else}
-        <h1>Aucun Editeur</h1>
+    <h1>Aucun Editeur</h1>
     #{/else}
 </article>

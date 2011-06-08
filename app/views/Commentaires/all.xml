@@ -4,19 +4,19 @@
         <description>Commentaires des Ouvrages du BreizhJug</description>
         <link>@@{Commentaires.index()}</link>
 
-		#{list items:commentaires, as:'comment'}
-            <item>
-                <title>${comment.livre.titre}</title>
-                <description>
-                    <img src="${comment.livre.image}" width="100px"/>
-                    <p>${comment.commentaire}</p>
-                    <p>${comment.nom} le ${comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-                </description>
-                <image>${comment.livre.image}</image>
-                <pubDate>${comment.dateAjout}</pubDate>
-                <link>@@{Livres.show(comment.livre.iSBN)}</link>
-            </item>
-		#{/list}
+        #{list items:commentaires, as:'comment'}
+        <item>
+            <title>${comment.livre.titre}</title>
+            <description>
+                <img src="${comment.livre.image}" width="100px"/>
+                <p>${comment.commentaire}</p>
+                <p>${comment.nom} le ${comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+            </description>
+            <image>${comment.livre.image}</image>
+            <pubDate>${comment.dateAjout}</pubDate>
+            <link>@@{Livres.show(comment.livre.iSBN)}</link>
+        </item>
+        #{/list}
 
     </channel>
 </rss>

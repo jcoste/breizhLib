@@ -45,7 +45,7 @@ public class Reservation extends Model {
     @Column("empruntEncours")
     public Livre empruntEncours;
 
-    public Reservation(Livre livre,User user, String nom, String prenom, String email) {
+    public Reservation(Livre livre, User user, String nom, String prenom, String email) {
         this.empruntEncours = livre;
         this.email = email;
         this.nom = nom;
@@ -55,7 +55,7 @@ public class Reservation extends Model {
         this.user = user;
     }
 
-    public boolean isDateEmpruntNull(){
+    public boolean isDateEmpruntNull() {
         return dateEmprunt.equals(getDummyDate());
     }
 

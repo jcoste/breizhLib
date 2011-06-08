@@ -59,9 +59,9 @@ public class User extends Model {
         return Commentaire.all(Commentaire.class).filter("user", this).fetch();
     }
 
-    public Livre getLastEmprunt(){
-        Reservation reservation = Reservation.all(Reservation.class).filter("dateRetour>",Reservation.getDummyDate()).get();
-        if(reservation != null){
+    public Livre getLastEmprunt() {
+        Reservation reservation = Reservation.all(Reservation.class).filter("dateRetour>", Reservation.getDummyDate()).get();
+        if (reservation != null) {
             reservation.emprunt.get();
             return reservation.emprunt;
         }

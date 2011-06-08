@@ -27,66 +27,70 @@
             <scope>test</scope>
         </dependency>
 
-         <!--
+        <!--
             Dependences wikitext
         -->
 
         <dependency>
-          <groupId>org.eclipse.mylyn.wikitext</groupId>
-          <artifactId>textile.core</artifactId>
-          <version>${wikitext.version}</version>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.textile.core_${wikitext.version}.jar</systemPath>
-        </dependency>
-
-         <dependency>
-          <groupId>org.eclipse.mylyn.wikitext</groupId>
-          <artifactId>core</artifactId>
-          <version>1.4.0.I20110104-0100-e3x</version>
-           <scope>system</scope>
-          <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.core_1.4.0.I20110104-0100-e3x.jar</systemPath>
+            <groupId>org.eclipse.mylyn.wikitext</groupId>
+            <artifactId>textile.core</artifactId>
+            <version>${wikitext.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.textile.core_${wikitext.version}.jar
+            </systemPath>
         </dependency>
 
         <dependency>
-          <groupId>org.eclipse.mylyn.wikitext</groupId>
-          <artifactId>confluence.core</artifactId>
-          <version>${wikitext.version}</version>
-           <scope>system</scope>
-           <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.confluence.core_${wikitext.version}.jar</systemPath>
+            <groupId>org.eclipse.mylyn.wikitext</groupId>
+            <artifactId>core</artifactId>
+            <version>1.4.0.I20110104-0100-e3x</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.core_1.4.0.I20110104-0100-e3x.jar</systemPath>
         </dependency>
 
         <dependency>
-          <groupId>org.eclipse.mylyn.wikitext</groupId>
-          <artifactId>mediawiki.core</artifactId>
-          <version>${wikitext.version}</version>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.mediawiki.core_${wikitext.version}.jar</systemPath>
+            <groupId>org.eclipse.mylyn.wikitext</groupId>
+            <artifactId>confluence.core</artifactId>
+            <version>${wikitext.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.confluence.core_${wikitext.version}.jar
+            </systemPath>
         </dependency>
 
         <dependency>
-          <groupId>org.eclipse.mylyn.wikitext</groupId>
-          <artifactId>tracwiki.core</artifactId>
-          <version>${wikitext.version}</version>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.tracwiki.core_${wikitext.version}.jar</systemPath>
+            <groupId>org.eclipse.mylyn.wikitext</groupId>
+            <artifactId>mediawiki.core</artifactId>
+            <version>${wikitext.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.mediawiki.core_${wikitext.version}.jar
+            </systemPath>
         </dependency>
 
         <dependency>
-          <groupId>org.eclipse.mylyn.wikitext</groupId>
-          <artifactId>twiki.core</artifactId>
-          <version>${wikitext.version}</version>
-          <scope>system</scope>
-          <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.twiki.core_${wikitext.version}.jar</systemPath>
+            <groupId>org.eclipse.mylyn.wikitext</groupId>
+            <artifactId>tracwiki.core</artifactId>
+            <version>${wikitext.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.tracwiki.core_${wikitext.version}.jar
+            </systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.mylyn.wikitext</groupId>
+            <artifactId>twiki.core</artifactId>
+            <version>${wikitext.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/org.eclipse.mylyn.wikitext.twiki.core_${wikitext.version}.jar
+            </systemPath>
         </dependency>
 
 
-
         <dependency>
-			<groupId>siena</groupId>
-			<artifactId>siena</artifactId>
-			<version>0.7.6</version>
-             <scope>system</scope>
-          <systemPath>${project.basedir}/lib/siena-0.7.6.jar</systemPath>
+            <groupId>siena</groupId>
+            <artifactId>siena</artifactId>
+            <version>0.7.6</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/siena-0.7.6.jar</systemPath>
         </dependency>
 
         <!--
@@ -101,8 +105,8 @@
         <dependency>
             <groupId>org.play</groupId>
             <artifactId>siena</artifactId>
-	        <version>1.5</version>
-         </dependency>
+            <version>1.5</version>
+        </dependency>
 
         <!--
             Dependences GAE
@@ -110,8 +114,8 @@
 
         <dependency>
             <groupId>org.play</groupId>
-	        <artifactId>gae</artifactId>
-	        <version>1.4</version>
+            <artifactId>gae</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 

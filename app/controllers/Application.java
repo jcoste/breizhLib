@@ -2,7 +2,6 @@ package controllers;
 
 import controllers.security.Secure;
 import models.Livre;
-import models.User;
 import play.modules.gae.GAE;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -19,7 +18,6 @@ public class Application extends Controller {
         List<Livre> livres = Livre.all(Livre.class).fetch();
         render(livres);
     }
-
 
 
 }

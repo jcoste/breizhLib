@@ -43,7 +43,7 @@ public class Livre extends Model {
         setEtat(EtatLivre.DISP0NIBLE);
     }
 
-    public Livre(String titre, String editeur, String image,String iSBN) {
+    public Livre(String titre, String editeur, String image, String iSBN) {
         this();
         this.titre = titre;
         this.editeur = editeur;
@@ -106,19 +106,19 @@ public class Livre extends Model {
         return Commentaire.all(Commentaire.class).filter("livre", this).fetch();
     }
 
-    public int getNote(){
+    public int getNote() {
         int nb = getCommentaires().size();
 
 
-        if(nb >0 ){
+        if (nb > 0) {
             int val = 0;
 
-            for(Commentaire comment : getCommentaires()){
-               comment.get();
+            for (Commentaire comment : getCommentaires()) {
+                comment.get();
                 val += comment.note;
             }
-        return val/nb;
-        }else{
+            return val / nb;
+        } else {
             return 0;
         }
     }

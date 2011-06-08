@@ -3,7 +3,7 @@ package controllers.security;
 
 import models.User;
 
-public class SecureAdapter implements ISecure{
+public class SecureAdapter implements ISecure {
 
     public static final SecureAdapter INSTANCE = new SecureAdapter();
 
@@ -13,37 +13,37 @@ public class SecureAdapter implements ISecure{
 
     @Override
     public void login() {
-        if(Secure.getImpl().equals("basic")){
+        if (Secure.getImpl().equals("basic")) {
             basicSecure.login();
-        }else{
+        } else {
             gaeSecure.login();
         }
     }
 
     @Override
     public void logout() {
-       if(Secure.getImpl().equals("basic")){
+        if (Secure.getImpl().equals("basic")) {
             basicSecure.logout();
-        }else{
+        } else {
             gaeSecure.logout();
         }
     }
 
     @Override
     public boolean check(String profile) {
-        if(Secure.getImpl().equals("basic")){
-           return basicSecure.check(profile);
-        }else{
+        if (Secure.getImpl().equals("basic")) {
+            return basicSecure.check(profile);
+        } else {
             return gaeSecure.check(profile);
         }
     }
 
     @Override
     public User getUser() {
-         if(Secure.getImpl().equals("basic")){
-           return basicSecure.getUser();
-        } else{
-           return gaeSecure.getUser();
+        if (Secure.getImpl().equals("basic")) {
+            return basicSecure.getUser();
+        } else {
+            return gaeSecure.getUser();
         }
     }
 }

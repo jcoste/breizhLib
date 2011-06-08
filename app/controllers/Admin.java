@@ -12,7 +12,7 @@ public class Admin extends Controller {
 
     @Role("admin")
     public static void index() {
-       Logger.info("admin page");
-       Application.index();
+        Logger.info("admin page");
+        Application.index();
     }
 }

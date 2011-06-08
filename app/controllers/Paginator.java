@@ -21,7 +21,7 @@ public class Paginator<E extends Model> {
 
     private final Map<String, Object> viewParams;
 
-   public Paginator(int nbParPage,int page,String action,Query<E> query){
+    public Paginator(int nbParPage, int page, String action, Query<E> query) {
         this.query = query;
         this.max = query.count();
         this.nbParPage = nbParPage;
@@ -33,41 +33,40 @@ public class Paginator<E extends Model> {
             this.viewParams.putAll(params.allSimple());
         }
         this.viewParams.remove("body");
-   }
+    }
 
     public List<E> getElements() {
-       if(elements == null){
+        if (elements == null) {
             elements = query.fetch(nbParPage, pagination(page, max, nbParPage));
         }
         return elements;
     }
 
-    public String previous(){
-        viewParams.put("page", String.valueOf(page-1));
+    public String previous() {
+        viewParams.put("page", String.valueOf(page - 1));
         return Router.reverse(action, viewParams).url;
     }
 
-    public boolean hasPreviousPage(){
+    public boolean hasPreviousPage() {
         return page > 0;
     }
 
-    public String previousLabel(){
-        return (((page*nbParPage)-nbParPage)+1)+" - "+(page*nbParPage);
+    public String previousLabel() {
+        return (((page * nbParPage) - nbParPage) + 1) + " - " + (page * nbParPage);
     }
 
-    public String next(){
-        viewParams.put("page", String.valueOf(page+1));
+    public String next() {
+        viewParams.put("page", String.valueOf(page + 1));
         return Router.reverse(action, viewParams).url;
     }
 
     public boolean hasNextPage() {
-        return max > ((page+1)*nbParPage);
+        return max > ((page + 1) * nbParPage);
     }
 
-    public String nextLabel(){
-        return ((page+1)*nbParPage)+1+" - "+(((page+1)*nbParPage)+nbParPage);
+    public String nextLabel() {
+        return ((page + 1) * nbParPage) + 1 + " - " + (((page + 1) * nbParPage) + nbParPage);
     }
-
 
 
     public static int pagination(int page, int max, int nbParPage) {

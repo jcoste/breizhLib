@@ -2,30 +2,31 @@
 #{set title:'BreizhLib Ajout Editeur' /}
 
 <article>
-   <h1>Ajouter un Editeur</h1>
-   <section class="full">
-   <table>
-   #{form @Editeurs.postEditeur(),enctype:'multipart/form-data'}
-        <tr>
-            <td><label for="nom">Nom :</label></td>
-            <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${params.nom}"  /></td>
-        </tr>
-        <tr>
-            <td><label for="site">Site :</label></td>
-            <td><input type="text" name="site" id="site" value="${params.site}" size="50"/>#{error 'site' /}</td>
-       </tr>
-       <tr>
-            <td><label for="image">Image : </label></td>
-            <td><input type="text" name="image" id="image" value="${params.image}" size="50" />
-                     <br/>ou  <br/>
-            <input type="file" name="imageFile" id="imageFile.image" multiple="false"   accept="image/gif, image/jpeg, image/png"  />
-            </td>
-        </tr>
-       </table>
+    <h1>Ajouter un Editeur</h1>
+    <section class="full">
+        <table>
+            #{form @Editeurs.postEditeur(),enctype:'multipart/form-data'}
+            <tr>
+                <td><label for="nom">Nom :</label></td>
+                <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${params.nom}"/></td>
+            </tr>
+            <tr>
+                <td><label for="site">Site :</label></td>
+                <td><input type="text" name="site" id="site" value="${params.site}" size="50"/>#{error 'site' /}</td>
+            </tr>
+            <tr>
+                <td><label for="image">Image : </label></td>
+                <td><input type="text" name="image" id="image" value="${params.image}" size="50"/>
+                    <br/>ou <br/>
+                    <input type="file" name="imageFile" id="imageFile.image" multiple="false"
+                           accept="image/gif, image/jpeg, image/png"/>
+                </td>
+            </tr>
+        </table>
         <footer>
-            <input type="submit" value="Créer" />
-       </footer>
-   #{/form}
+            <input type="submit" value="Créer"/>
+        </footer>
+        #{/form}
 
-   </section>
+    </section>
 </article>

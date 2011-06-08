@@ -44,8 +44,8 @@ public class Users extends Controller {
     }
 
     @Role("member")
-    public static void postEdit(@Required String nom,@Required String prenom) {
-         User user = Secure.getUser();
+    public static void postEdit(@Required String nom, @Required String prenom) {
+        User user = Secure.getUser();
         if (user != null) {
             user.nom = nom;
             user.prenom = prenom;
@@ -55,13 +55,13 @@ public class Users extends Controller {
     }
 
     @Role("member")
-    public static void modifPwd(@Required String oldwpd,@Required String pwd,@Required String pwdconfirm) {
+    public static void modifPwd(@Required String oldwpd, @Required String pwd, @Required String pwdconfirm) {
         User user = Secure.getUser();
         validation.equals(user.password, Crypto.passwordHash(oldwpd)).message("<span class=\"error\">mot de passe incorrect</span>");
         validation.equals(pwd, pwdconfirm).message("<span class=\"error\">mot de passe incorrect</span>");
-        if(validation.hasErrors()) {
-           render("Users/infos.html");
-         }
+        if (validation.hasErrors()) {
+            render("Users/infos.html");
+        }
         if (user != null) {
             user.password = pwd;
             user.update();

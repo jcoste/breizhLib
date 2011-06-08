@@ -3,27 +3,27 @@
 
 <article>
     #{if editeur == null}
-        <p>&{'views.livres.index.title'}</p>
+    <p>&{'views.livres.index.title'}</p>
 
     #{/if}
     #{else}
-        <p>&{'views.livres.editeur.title'} ${editeur}</p>
-     #{/else}
+    <p>&{'views.livres.editeur.title'} ${editeur}</p>
+    #{/else}
 
     #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurBook' /}
 
     #{if paginator.getElements()}
-        #{if paginator.getElements().size()}
-            #{list items:paginator.getElements(), as:'livre'}
-                #{if livre}
-                    #{livre livre:livre, page:page,redirect:'index', as:'summary' /}
-                #{/if}
-            #{/list}
+    #{if paginator.getElements().size()}
+    #{list items:paginator.getElements(), as:'livre'}
+    #{if livre}
+    #{livre livre:livre, page:page,redirect:'index', as:'summary' /}
+    #{/if}
+    #{/list}
 
-         #{paginate.controls paginator:paginator /}
-        #{/if}
-     #{/if}
-     #{else}
-        <p>&{'views.livres.noBookRecorded'}</p>
-     #{/else}
+    #{paginate.controls paginator:paginator /}
+    #{/if}
+    #{/if}
+    #{else}
+    <p>&{'views.livres.noBookRecorded'}</p>
+    #{/else}
 </article>

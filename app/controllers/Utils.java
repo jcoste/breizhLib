@@ -5,10 +5,7 @@ import com.google.appengine.api.datastore.Blob;
 import models.Editeur;
 import models.Picture;
 import play.Logger;
-import play.Play;
-import play.libs.Images;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +14,11 @@ public class Utils {
     public static String createImage(byte[] bytes, String iSBN, boolean resize) throws Exception {
         Logger.info("Utils.createImage");
         if (bytes != null) {
-                Picture imageFile = new Picture();
-                imageFile.image = new Blob(bytes);
-                imageFile.name = iSBN + ".jpg" ;
-                imageFile.insert();
-                return "/shared/" + imageFile.name;
+            Picture imageFile = new Picture();
+            imageFile.image = new Blob(bytes);
+            imageFile.name = iSBN + ".jpg";
+            imageFile.insert();
+            return "/shared/" + imageFile.name;
         }
         return null;
     }

@@ -2,7 +2,6 @@ package controllers.security;
 
 
 import models.User;
-import play.Play;
 import play.cache.Cache;
 import play.data.validation.Required;
 import play.libs.Codec;
@@ -48,19 +47,19 @@ public class BasicSecure extends Controller implements ISecure {
 
     public static void newuser(String email, String nom, String prenom) {
         String randomID = Codec.UUID();
-        render(email,nom,prenom,randomID);
+        render(email, nom, prenom, randomID);
     }
 
-    public static void postNewuser(@Required String email,String nom,String prenom,@Required String password,
-                                   @Required String passwordconfirm,@Required String captcha,String randomID) throws Throwable {
+    public static void postNewuser(@Required String email, String nom, String prenom, @Required String password,
+                                   @Required String passwordconfirm, @Required String captcha, String randomID) throws Throwable {
         User user = User.find(email);
         validation.isTrue(user == null).message("<span class=\"error\">email déjà enregistré</span>");
         validation.equals(captcha, Cache.get(randomID)).message("<span class=\"error\">Invalid captcha. Please type it again</span>");
         validation.equals(password, passwordconfirm).message("<span class=\"error\">mot de passe incorrect</span>");
-        if(validation.hasErrors()) {
-           render("security/BasicSecure/newuser.html",email, nom,prenom, randomID);
-         }
-        user =  new User(email);
+        if (validation.hasErrors()) {
+            render("security/BasicSecure/newuser.html", email, nom, prenom, randomID);
+        }
+        user = new User(email);
         user.nom = nom;
         user.prenom = prenom;
         user.password = Crypto.passwordHash(password);
@@ -74,13 +73,13 @@ public class BasicSecure extends Controller implements ISecure {
         User user = User.find(username);
         validation.isTrue(user != null).message("<span class=\"error\">Utilisateur inconu</span>");
         validation.equals(user.password, Crypto.passwordHash(password)).message("<span class=\"error\">mot de passe incorrect</span>");
-        if(validation.hasErrors()) {
-           if (session.get("authfailcount") == null) {
-               session.put("authfailcount", 0);
+        if (validation.hasErrors()) {
+            if (session.get("authfailcount") == null) {
+                session.put("authfailcount", 0);
             }
-            session.put("authfailcount", Integer.valueOf(session.get("authfailcount"))+1);
-           basiclogin();
-         }
+            session.put("authfailcount", Integer.valueOf(session.get("authfailcount")) + 1);
+            basiclogin();
+        }
 
         session.put("authfailcount", 0);
         session.put("userEmail", username);

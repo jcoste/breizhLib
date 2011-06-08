@@ -72,7 +72,7 @@ public class Commentaires extends Controller {
 
     public static void index(int page) {
         Query<Commentaire> query = Commentaire.all(Commentaire.class).order("-dateAjout");
-        Paginator<Commentaire> paginator = new Paginator<Commentaire>(NB_PAR_PAGE,page,"Commentaires.index",query);
+        Paginator<Commentaire> paginator = new Paginator<Commentaire>(NB_PAR_PAGE, page, "Commentaires.index", query);
 
         for (Commentaire commentaire : paginator.getElements()) {
             commentaire.livre.get();

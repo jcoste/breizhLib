@@ -31,13 +31,13 @@ public class Commentaire extends Model {
     @As("yyyy-MM-dd")
     public Date dateAjout;
 
-    public Commentaire(Livre livre,User user, String nom, String content,int note) {
+    public Commentaire(Livre livre, User user, String nom, String content, int note) {
         this.nom = nom;
         this.livre = livre;
         this.commentaire = content;
         this.dateAjout = new Date();
-        this.user =user;
-        this.note= note;
+        this.user = user;
+        this.note = note;
     }
 
     @Override

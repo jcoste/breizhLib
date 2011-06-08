@@ -4,19 +4,20 @@
 <article>
     <h1>${users.size()} Utilisateur${users.pluralize()} </h1>
     #{if users.size() > 0}
-        #{list items:users, as:'user'}
-            <section class="miniature">
-                 <p>${user.nom} ${user.prenom}</p>
-                 <p>${user.commentaires().size()} commentaire${user.commentaires().pluralize()}</p>
-                 #{if user.getLastEmprunt() != null}
-                    <p>dernier livre emprunté : ${user.getLastEmprunt().titre}</p>
-                 #{/if}
-                 <p>depuis le ${user.dateCreation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-                 #{if user.dateConnexion != null}
-                    <p>derniere connexion le ${user.dateConnexion.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-                 #{/if}
-                <footer>${user.email}</footer>
-            </section>
-        #{/list}
+    #{list items:users, as:'user'}
+    <section class="miniature">
+        <p>${user.nom} ${user.prenom}</p>
+
+        <p>${user.commentaires().size()} commentaire${user.commentaires().pluralize()}</p>
+        #{if user.getLastEmprunt() != null}
+        <p>dernier livre emprunté : ${user.getLastEmprunt().titre}</p>
+        #{/if}
+        <p>depuis le ${user.dateCreation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+        #{if user.dateConnexion != null}
+        <p>derniere connexion le ${user.dateConnexion.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+        #{/if}
+        <footer>${user.email}</footer>
+    </section>
+    #{/list}
     #{/if}
 </article>

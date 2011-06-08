@@ -1,55 +1,59 @@
 #{if _as == 'summary'}
-    <section class="miniature">
-        <h1><a href="@{Livres.show(_livre.iSBN)}">${_livre.titre}</a></h1>
-        <img src="${_livre.image}"/>
+<section class="miniature">
+    <h1><a href="@{Livres.show(_livre.iSBN)}">${_livre.titre}</a></h1>
+    <img src="${_livre.image}"/>
 
-        <p><a href="@{Livres.editeur(_livre.editeur,0)}">${_livre.editeur}</a></p>
-         #{if _livre.getCommentaires().size() > 1}
-        	<p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
+    <p><a href="@{Livres.editeur(_livre.editeur,0)}">${_livre.editeur}</a></p>
+    #{if _livre.getCommentaires().size() > 1}
+    <p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
+    #{/if}
+    #{else}
+    <p>&{'views.commentaires.aucunCommentaire'}</p>
+    #{/else}
+    <p>
+        #{if _livre.reservationEncours == null}
+        <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
         #{/if}
-        #{else}
-            <p>&{'views.commentaires.aucunCommentaire'}</p>
-        #{/else}
-        <p>
-             #{if _livre.reservationEncours == null}
-            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
-             #{/if}
-        </p>
-       <p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'static'   /}</p>
+    </p>
 
-        <footer>
-                <span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span>
-        </footer>
-    </section>
+    <p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'static' /}</p>
+
+    <footer>
+        <span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span>
+    </footer>
+</section>
 #{/if}
 
 
 #{if _as == 'full'}
-    <article>
-        <h1>${_livre.titre}</h1>
-        <img src="${_livre.image}"/>
-        <p>
-            #{if _livre.reservationEncours == null}
-            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
-             #{/if}
-        </p>
-        <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
-        <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
+<article>
+    <h1>${_livre.titre}</h1>
+    <img src="${_livre.image}"/>
 
-
-     #{if _livre.commentaires}
-        <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
-        #{if _livre.commentaires.size() > 0}
-                #{list items:_livre.commentaires, as:'comment'}
-                     #{commentaire comment:comment, as:'summary' /}
-                 #{/list}
+    <p>
+        #{if _livre.reservationEncours == null}
+        <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
         #{/if}
+    </p>
+
+    <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
+
+    <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
+
+
+    #{if _livre.commentaires}
+    <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
+    #{if _livre.commentaires.size() > 0}
+    #{list items:_livre.commentaires, as:'comment'}
+    #{commentaire comment:comment, as:'summary' /}
+    #{/list}
+    #{/if}
     #{/if}
 
 
     #{if _livre.hasRead()}
-        #{commentaire bookId:_livre.iSBN,user:_user,note:_livre.getNote(), as:'post' /}
+    #{commentaire bookId:_livre.iSBN,user:_user,note:_livre.getNote(), as:'post' /}
     #{/if}
-    </article>
+</article>
 
 #{/if}

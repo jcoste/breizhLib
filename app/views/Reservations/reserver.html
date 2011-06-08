@@ -3,26 +3,32 @@
 
 <article>
     <section class="full">
-    <h1>&{'views.reservations.reserver.title'}</h1>
-     #{form @Reservations.postReservation(id)}
-            <p>
-                 <p>#{error 'nom' /} </p>
-                 <p><label for="nom">&{'views.reservations.reserver.nom.label'}</label>
-                 <input type="text" name="nom" id="nom" value="${user.nom}" /> </p>
-            </p>
-            <p>
-                <p>#{error 'prenom' /}</p>
-                <p><label for="prenom">&{'views.reservations.reserver.prenom.label'}</label>
-                <input type="text" name="prenom" id="prenom"  value="${user.prenom}" />  </p>
-            </p>
-            <p>
-                <p>#{error 'email' /}</p>
-                <p><label for="email">&{'views.reservations.reserver.email.label'}</label>
-                <input type="email" name="email" id="email"  value="${user.email}" />  </p>
-            </p>
-            <footer>
-                <input type="submit" value="&{'views.reservations.reserver.submit'}" />
-            </footer>
-     #{/form}
+        <h1>&{'views.reservations.reserver.title'}</h1>
+        #{form @Reservations.postReservation(id)}
+        <p>
+
+        <p>#{error 'nom' /} </p>
+
+        <p><label for="nom">&{'views.reservations.reserver.nom.label'}</label>
+            <input type="text" name="nom" id="nom" value="${user.nom}"/></p>
+        </p>
+        <p>
+
+        <p>#{error 'prenom' /}</p>
+
+        <p><label for="prenom">&{'views.reservations.reserver.prenom.label'}</label>
+            <input type="text" name="prenom" id="prenom" value="${user.prenom}"/></p>
+        </p>
+        <p>
+
+        <p>#{error 'email' /}</p>
+
+        <p><label for="email">&{'views.reservations.reserver.email.label'}</label>
+            <input type="email" name="email" id="email" value="${user.email}"/></p>
+        </p>
+        <footer>
+            <input type="submit" value="&{'views.reservations.reserver.submit'}"/>
+        </footer>
+        #{/form}
     </section>
 </article>

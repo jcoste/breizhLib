@@ -1,23 +1,23 @@
 <nav>
     <ul>
         #{secure.check 'public'}
-            <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
-            <li><a href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
-            <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
-            <li><a href="@{Livres.index(0)}">&{'views.main.menu.books'}</a></li>
-            <li><a href="@{Editeurs.index()}">Editeurs</a></li>
+        <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
+        <li><a href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
+        <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
+        <li><a href="@{Livres.index(0)}">&{'views.main.menu.books'}</a></li>
+        <li><a href="@{Editeurs.index()}">Editeurs</a></li>
         #{/secure.check}
         #{secure.check 'public', not:'member'}
-            <li><a href="@{security.Secure.login()}">&{'views.main.menu.login'}</a></li>
+        <li><a href="@{security.Secure.login()}">&{'views.main.menu.login'}</a></li>
         #{/secure.check}
         #{secure.check 'admin'}
-            <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
-            <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
-            <li><a href="@{Users.index()}">Utilisateurs</a></li>
+        <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
+        <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
+        <li><a href="@{Users.index()}">Utilisateurs</a></li>
         #{/secure.check}
         #{secure.check 'member'}
-            <li><a href="@{Users.infos()}">Mes Infos</a></li>
-            <li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li>
+        <li><a href="@{Users.infos()}">Mes Infos</a></li>
+        <li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li>
         #{/secure.check}
     </ul>
 </nav>

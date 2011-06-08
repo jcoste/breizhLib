@@ -2,38 +2,43 @@
 #{set title:'BreizhLib Ajout' /}
 
 <article>
-   <h1>&{'views.livres.add.title'}</h1>
-   <section class="full">
-   <table>
-   #{form @Livres.save(),enctype:'multipart/form-data'}
-        <tr>
-            <td><label for="titre">&{'views.livres.add.titre.label'}</label></td>
-            <td><p>#{error 'titre' /}</p><input type="text" name="titre" id="titre" value="${params.titre}" size="50" /></td>
-        </tr>
-        <tr>
-            <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
-            <td><select name="editeur" id="editeur"  >
-                 #{list items:editeurs, as:'editeur'}
-                       <option value="${editeur}">${editeur}</option>
-                #{/list}
-                </select><a href="@{Editeurs.add()}">Nouveau</a> #{error 'editeur' /}</td>
-        </tr>
-        <tr>
-            <td><label for="image">&{'views.livres.add.image.label'}</label></td>
-            <td><input type="text" name="image" id="image" value="${params.image}" size="50" />
-                    <br/>ou  <br/>
-                    <input type="file" name="imageFile" id="imageFile" multiple="false"   accept="image/gif, image/jpeg, image/png"  />
-            </td>
-        </tr>
-        <tr>
-            <td><label for="iSBN">&{'views.livres.add.iSBN.label'}</label></td>
-            <td><input type="text" name="iSBN" id="iSBN" value="${params.iSBN}" pattern="[0-9]{3}-[0-9]{1}-[0-9]{4}-[0-9]{4}-[0-9]{1}"/>#{error 'iSBN' /}</td>
-       </tr>
-       </table>
+    <h1>&{'views.livres.add.title'}</h1>
+    <section class="full">
+        <table>
+            #{form @Livres.save(),enctype:'multipart/form-data'}
+            <tr>
+                <td><label for="titre">&{'views.livres.add.titre.label'}</label></td>
+                <td><p>#{error 'titre' /}</p><input type="text" name="titre" id="titre" value="${params.titre}"
+                                                    size="50"/></td>
+            </tr>
+            <tr>
+                <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
+                <td><select name="editeur" id="editeur">
+                    #{list items:editeurs, as:'editeur'}
+                    <option value="${editeur}">${editeur}</option>
+                    #{/list}
+                </select><a href="@{Editeurs.add()}">Nouveau</a> #{error 'editeur' /}
+                </td>
+            </tr>
+            <tr>
+                <td><label for="image">&{'views.livres.add.image.label'}</label></td>
+                <td><input type="text" name="image" id="image" value="${params.image}" size="50"/>
+                    <br/>ou <br/>
+                    <input type="file" name="imageFile" id="imageFile" multiple="false"
+                           accept="image/gif, image/jpeg, image/png"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="iSBN">&{'views.livres.add.iSBN.label'}</label></td>
+                <td><input type="text" name="iSBN" id="iSBN" value="${params.iSBN}"
+                           pattern="[0-9]{3}-[0-9]{1}-[0-9]{4}-[0-9]{4}-[0-9]{1}"/>#{error 'iSBN' /}
+                </td>
+            </tr>
+        </table>
         <footer>
-            <input type="submit" value="&{'views.livres.add.submit'}" />
-       </footer>
-   #{/form}
+            <input type="submit" value="&{'views.livres.add.submit'}"/>
+        </footer>
+        #{/form}
 
-   </section>
+    </section>
 </article>

@@ -1,139 +1,139 @@
 html {
-	font-family: Verdana;
-	font-size: 11px;
-	color: #353535;
-	background: #EEEEEE;
-	background-image: -moz-linear-gradient(top, #CCCCCC, #EEEEEE 30%, #EEEEEE 30%, #FFFFFF);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#CCCCCC), color-stop(0.3, #EEEEEE), color-stop(0.3, #EEEEEE), to(#FFFFFF));
-	height: 100%;
+    font-family: Verdana;
+    font-size: 11px;
+    color: #353535;
+    background: #EEEEEE;
+    background-image: -moz-linear-gradient(top, #CCCCCC, #EEEEEE 30%, #EEEEEE 30%, #FFFFFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#CCCCCC), color-stop(0.3, #EEEEEE), color-stop(0.3, #EEEEEE), to(#FFFFFF));
+    height: 100%;
 }
 
 body {
-	width: 1009px;
-	margin-left: auto;
-	margin-right: auto;
-	border: 1px solid black;
-	box-shadow: 3px 3px 7px #777;
-	border-radius: 10px;
-	
+    width: 1009px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    box-shadow: 3px 3px 7px #777;
+    border-radius: 10px;
+
 }
 
 header {
-	padding: 10px;
-	border-radius: 10px 10px 0 0;
-	background: #84b710;
-	background-image: -moz-linear-gradient(top, #91be15, #84b710 27px, #7ab200 27px, #86bb08);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#91be15), color-stop(0.5, #84b710), color-stop(0.5, #7ab200), to(#86bb08));
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    background: #84b710;
+    background-image: -moz-linear-gradient(top, #91be15, #84b710 27px, #7ab200 27px, #86bb08);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#91be15), color-stop(0.5, #84b710), color-stop(0.5, #7ab200), to(#86bb08));
 }
 
 header img {
-	height: 70px;
+    height: 70px;
 }
 
 header .rss {
-	height: 16px;
+    height: 16px;
     width: 16px;
-    float:right;
+    float: right;
 }
 
 header h1 {
-	float:right;
-	margin: 20px 20px 0 0;
+    float: right;
+    margin: 20px 20px 0 0;
 }
 
 nav ul {
-	height: 40px;
-	padding:0;
-	margin:0;
-	background: #303030;
-	background-image: -moz-linear-gradient(top, #222222, #444444 20px, #111111);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#222222), color-stop(0.5, #444444), to(#111111));
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    background: #303030;
+    background-image: -moz-linear-gradient(top, #222222, #444444 20px, #111111);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#222222), color-stop(0.5, #444444), to(#111111));
 }
 
 nav li {
-	color: white;
-	font-size: 11px;
-	font-weight: bold;
-	float: left;
-	line-height: 20px;
-	vertical-align: center;
-	list-style: none;
-	padding: 10px;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    float: left;
+    line-height: 20px;
+    vertical-align: center;
+    list-style: none;
+    padding: 10px;
 }
 
 nav li a {
-	color: white;
-	text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 article {
-	clear: left;
-	margin: 10px 0 10px 0;
-	padding: 0 10px 0 10px;
-	
-	height:100%;
+    clear: left;
+    margin: 10px 0 10px 0;
+    padding: 0 10px 0 10px;
+
+    height: 100%;
     min-height: 500px;
 }
 
 article p {
-	margin: 10px 0 0 10px;
+    margin: 10px 0 0 10px;
 }
 
 .miniature {
-	float: left;
-	background: #CCCCCC;
-	background-image: -moz-linear-gradient(top, #888888, #CCCCCC 50%, #EEEEEE);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#888888), color-stop(0.5, #CCCCCC), to(#EEEEEE));
-	border-radius: 5px 20px 0 10px;
-	width: 47%;
-	margin: 10px 15px 10px 14px;
+    float: left;
+    background: #CCCCCC;
+    background-image: -moz-linear-gradient(top, #888888, #CCCCCC 50%, #EEEEEE);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#888888), color-stop(0.5, #CCCCCC), to(#EEEEEE));
+    border-radius: 5px 20px 0 10px;
+    width: 47%;
+    margin: 10px 15px 10px 14px;
 }
 
 .full {
-	float: left;
-	background: #CCCCCC;
-	background-image: -moz-linear-gradient(top, #888888, #CCCCCC 50%, #EEEEEE);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#888888), color-stop(0.5, #CCCCCC), to(#EEEEEE));
-	border-radius: 5px 20px 0 10px;
-	width: 95%;
-	margin: 10px 15px 10px 14px;
+    float: left;
+    background: #CCCCCC;
+    background-image: -moz-linear-gradient(top, #888888, #CCCCCC 50%, #EEEEEE);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#888888), color-stop(0.5, #CCCCCC), to(#EEEEEE));
+    border-radius: 5px 20px 0 10px;
+    width: 95%;
+    margin: 10px 15px 10px 14px;
 }
 
 section h1 a {
-	font-size: 12px;
-	padding: 0 0 0 20px;
-	color: white;
+    font-size: 12px;
+    padding: 0 0 0 20px;
+    color: white;
     text-decoration: none;
-	text-shadow: 3px 3px 7px #333;
+    text-shadow: 3px 3px 7px #333;
 }
 
 section img {
-	width: 100px;
-	margin: 0 10px 10px 20px;
-	float: left;
+    width: 100px;
+    margin: 0 10px 10px 20px;
+    float: left;
 }
 
 section p {
-	padding-right: 10px;
+    padding-right: 10px;
 }
 
 section footer {
-	text-align: right;
-	padding: 4px;
-	border-radius: 0 0 0 10px;
-	background: #BBBBBB;
-	background-image: -moz-linear-gradient(top, #AAAAAA, #CCCCCC 50%, #BBBBBB);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#CCCCCC), to(#BBBBBB));
+    text-align: right;
+    padding: 4px;
+    border-radius: 0 0 0 10px;
+    background: #BBBBBB;
+    background-image: -moz-linear-gradient(top, #AAAAAA, #CCCCCC 50%, #BBBBBB);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#CCCCCC), to(#BBBBBB));
 }
 
 footer {
-	clear: left;
-	font-size: 10px;
-	font-weight: bold;
-	text-align: center;
-	padding: 10px;
-	border-radius: 0 0 10px 10px;
-	background: #84b710;
-	background-image: -moz-linear-gradient(top, #91be15, #84b710 27px, #7ab200 27px, #86bb08);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#91be15), color-stop(0.5, #84b710), color-stop(0.5, #7ab200), to(#86bb08));
+    clear: left;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    background: #84b710;
+    background-image: -moz-linear-gradient(top, #91be15, #84b710 27px, #7ab200 27px, #86bb08);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#91be15), color-stop(0.5, #84b710), color-stop(0.5, #7ab200), to(#86bb08));
 }

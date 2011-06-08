@@ -33,7 +33,7 @@ public class Reservations extends Controller {
         }
         User user = Secure.getUser();
 
-        render(livre, emprunts,user);
+        render(livre, emprunts, user);
     }
 
     @Role("admin")
@@ -114,7 +114,7 @@ public class Reservations extends Controller {
         Livre livre = Livre.findByISBN(id);
         if (livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
             User user = Secure.getUser();
-            render(id,user);
+            render(id, user);
         } else {
             error("l'ouvrage " + livre.titre + " n'est pas disponible a la reservation");
         }
@@ -134,14 +134,14 @@ public class Reservations extends Controller {
         }
 
         User user = Secure.getUser();
-        if(user.nom == null){
+        if (user.nom == null) {
             user.nom = nom;
         }
-        if(user.prenom == null){
+        if (user.prenom == null) {
             user.prenom = prenom;
         }
         user.update();
-        Reservation reservation = new Reservation(livre,user, nom, prenom, email);
+        Reservation reservation = new Reservation(livre, user, nom, prenom, email);
         reservation.insert();
         livre.reservationEncours = reservation;
         livre.setEtat(livre.getEtat().getNextState());

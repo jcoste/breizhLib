@@ -2,47 +2,52 @@
 #{set title:'Login' /}
 
 <article>
-<h1>Nouveau sur BreizhLib ?</h1>
-<p><a href="@{security.BasicSecure.newuser()}">Créer un compte</a> </p>
-<p>ou Connectez-vous avec : </p>
-<p><a href="@{security.Secure.glogin()}"><img src="@{'/public/images/openid-provider/google.png'}" alt="Google"/></a></p>
+    <h1>Nouveau sur BreizhLib ?</h1>
 
-<div id="login">
-#{if session.get("authfailcount") == null || Integer.valueOf(session.get("authfailcount")) < 3 }
-    <h1>Ouvrez une session</h1>
+    <p><a href="@{security.BasicSecure.newuser()}">Créer un compte</a></p>
 
-	#{form @security.BasicSecure.authenticate()}
+    <p>ou Connectez-vous avec : </p>
 
-		#{if flash.error}
-			<p class="error">
-				&{flash.error}
-			</p>
-		#{/if}
-		#{if flash.success}
-			<p class="success">
-				&{flash.success}
-			</p>
-		#{/if}
+    <p><a href="@{security.Secure.glogin()}"><img src="@{'/public/images/openid-provider/google.png'}"
+                                                  alt="Google"/></a></p>
 
-		<p id="username-field">
-			<label for="username">Email : </label>
-			<input type="text" name="username" id="username" value="${flash.username}" />
-		</p>
-		<p id="password-field">
-			<label for="password">Mot de passe</label>
-			<input type="password" name="password" id="password" value="" />
-		</p>
-		<!-- p id="remember-field">
-			<input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
-			<label for="remember">&{'secure.remember'}</label>
-		</p -->
-		<p id="signin-field">
-			<input type="submit" id="signin" value="Login" />
-		</p>
-	#{/form}
-#{/if}
-#{else}
-    <h1>nombre d'essais depassés</h1>
-#{/else}
-</div>
+    <div id="login">
+        #{if session.get("authfailcount") == null || Integer.valueOf(session.get("authfailcount")) < 3 }
+        <h1>Ouvrez une session</h1>
+
+        #{form @security.BasicSecure.authenticate()}
+
+        #{if flash.error}
+        <p class="error">
+            &{flash.error}
+        </p>
+        #{/if}
+        #{if flash.success}
+        <p class="success">
+            &{flash.success}
+        </p>
+        #{/if}
+
+        <p id="username-field">
+            <label for="username">Email : </label>
+            <input type="text" name="username" id="username" value="${flash.username}"/>
+        </p>
+
+        <p id="password-field">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" id="password" value=""/>
+        </p>
+        <!-- p id="remember-field">
+              <input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} />
+              <label for="remember">&{'secure.remember'}</label>
+          </p -->
+        <p id="signin-field">
+            <input type="submit" id="signin" value="Login"/>
+        </p>
+        #{/form}
+        #{/if}
+        #{else}
+        <h1>nombre d'essais depassés</h1>
+        #{/else}
+    </div>
 </article>

@@ -5,14 +5,12 @@ import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
 import models.Livre;
-import models.Picture;
 import models.User;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
 import siena.Query;
 
-import java.io.File;
 import java.util.List;
 
 @With(Secure.class)
@@ -26,7 +24,7 @@ public class Livres extends Controller {
     @Role("public")
     public static void index(int page) {
         Query<Livre> query = Livre.all(Livre.class).order("-dateAjout");
-        Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE,page,"Livres.index",query);
+        Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.index", query);
 
         renderArgs.put("editeurs", Utils.initListEditeurs());
         render(paginator);
@@ -43,10 +41,10 @@ public class Livres extends Controller {
     @Role("public")
     public static void editeur(String editeur, int page) {
         Query<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("-dateAjout");
-        Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE,page,"Livres.editeur",livres);
+        Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.editeur", livres);
 
         renderArgs.put("editeurs", Utils.initListEditeurs());
-        render(editeur,paginator);
+        render(editeur, paginator);
     }
 
 
