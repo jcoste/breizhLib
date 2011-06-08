@@ -4,26 +4,32 @@
 
 # Home page
 GET     /                                       Application.index
+
 GET     /books/{page}                           Livres.index
 GET     /books/editeur/{editeur}/{page}         Livres.editeur
 GET     /book/{id}                              Livres.show
 POST    /book/{bookId}/comment                  Livres.postComment
 GET     /book/{id}/edit                         Livres.edit
-GET     /book/{id}/reservations                 Reservations.index
-GET     /book/{id}/commentaires                 Commentaires.commentaires
-GET     /reservations                           Reservations.reservations
 GET     /add                                    Livres.add
 POST    /add                                    Livres.save
 GET     /news                                   Livres.last
+GET     /search                                 Livres.search
+
+GET     /book/{id}/reservations                 Reservations.index
+GET     /reservations                           Reservations.reservations
+GET     /book/{id}/reserver                     Reservations.reserver
+POST    /book/{id}/reserver                     Reservations.postReservation
+
 GET     /commentaires/{page}                    Commentaires.index
 GET     /commentaires                           Commentaires.last
 GET     /commentaires/editeur/{editeur}/{page}  Commentaires.editeur
+GET     /book/{id}/commentaires                 Commentaires.commentaires
 
 GET     /editeur/add                            Editeurs.add
 POST    /editeur/add                            Editeurs.postEditeur
 GET     /editeurs                               Editeurs.index
 
-GET     /search                                 Livres.search
+
 
 GET     /users                                  Users.index
 GET     /user/infos                             Users.infos
@@ -43,8 +49,8 @@ GET     /captcha/{id}                           security.BasicSecure.captcha
 *       /                                       security.Secure.checkAccess
 
 #RSS
-GET     /books.xml                               Livres.all(format:'xml')
-GET     /commentaires.xml                        Commentaires.all(format:'xml')
+GET     /books.xml                              Livres.all(format:'xml')
+GET     /commentaires.xml                       Commentaires.all(format:'xml')
 
 *       /textile/renderPreview                  Textile.renderPreview
 
@@ -54,7 +60,6 @@ GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
-
 GET     /shared/{file}                          Pictures.getPicture
 
 # Catch all
