@@ -30,6 +30,12 @@ header img {
 	height: 70px;
 }
 
+header .rss {
+	height: 16px;
+    width: 16px;
+    float:right;
+}
+
 header h1 {
 	float:right;
 	margin: 20px 20px 0 0;

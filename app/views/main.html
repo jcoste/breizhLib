@@ -29,7 +29,8 @@
 <body>
 <header>
     <a href="http://www.breizhjug.org/" target="_blank" ><img src="http://www.breizhjug.org/_/rsrc/1214896583171/config/app/images/customLogo/customLogo.gif?revision=4"/></a>
-    <h1>&{'views.main.title'}#{if play.mode.name() == 'DEV'}<span class="indice">${play.mode.name()}</span>#{/if}#{else}<span class="indice">BETA</span>#{/else}</h1>
+    <h1>&{'views.main.title'}#{if play.mode.name() == 'DEV'}<span class="indice">${play.mode.name()}</span>#{/if}
+    <a href="@{Application.index()}books.xml" target="_blank" ><img class="rss" src="@{'/public/images/rss.png'}"/></a></h1>
 </header>
 #{menu user:session.user /}
 #{doLayout /}
