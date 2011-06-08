@@ -12,30 +12,15 @@
 
     #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurBook' /}
 
-    #{if livres}
-        #{if livres.size()}
-            #{list items:livres, as:'livre'}
+    #{if paginator.getElements()}
+        #{if paginator.getElements().size()}
+            #{list items:paginator.getElements(), as:'livre'}
                 #{if livre}
                     #{livre livre:livre, page:page,redirect:'index', as:'summary' /}
                 #{/if}
             #{/list}
 
-          <ul id="pagination">
-            #{if page > 0}
-                <li id="previous">
-                    <a href="@{Livres.editeur(editeur,page-1)}">
-                       ${((page*dept)-dept)+1} - ${(page*dept)}
-                    </a>
-                </li>
-             #{/if}
-             #{if max > ((page+1)*dept) }
-                <li id="next">
-                    <a href="@{Livres.editeur(editeur,page+1)}">
-                        ${((page+1)*dept)+1} - ${((page+1)*dept)+dept}
-                    </a>
-                </li>
-             #{/if}
-        </ul>
+         #{paginate.controls paginator:paginator /}
         #{/if}
      #{/if}
      #{else}

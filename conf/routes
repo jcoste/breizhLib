@@ -15,8 +15,8 @@ GET     /reservations                           Reservations.reservations
 GET     /add                                    Livres.add
 POST    /add                                    Livres.save
 GET     /news                                   Livres.last
-GET     /commentaires                           Commentaires.index
-GET     /commentaires/news                      Commentaires.last
+GET     /commentaires/{page}                    Commentaires.index
+GET     /commentaires                           Commentaires.last
 GET     /commentaires/editeur/{editeur}/{page}  Commentaires.editeur
 
 GET     /editeur/add                            Editeurs.add

@@ -14,29 +14,13 @@ import java.util.List;
 
 public class Utils {
 
-    public static int pagination(int page, int max, int nbParPage) {
-        if (page < 0) {
-            page = 0;
-        }
-
-        int dept = nbParPage;
-        int debut = (page * dept);
-        if (debut >= max) {
-            debut = max - (max - dept) / dept;
-            page = debut / dept;
-        }
-        return debut;
-    }
-
     public static String createImage(byte[] bytes, String iSBN, boolean resize) throws Exception {
         Logger.info("Utils.createImage");
         if (bytes != null) {
-                Logger.info("PROD create image /shared/"+bytes);
                 Picture imageFile = new Picture();
                 imageFile.image = new Blob(bytes);
                 imageFile.name = iSBN + ".jpg" ;
                 imageFile.insert();
-                Logger.info("/shared/" + imageFile.name);
                 return "/shared/" + imageFile.name;
         }
         return null;

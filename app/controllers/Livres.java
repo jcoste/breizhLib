@@ -25,14 +25,11 @@ public class Livres extends Controller {
 
     @Role("public")
     public static void index(int page) {
-        Query<Livre> query = Livre.all(Livre.class);
-        int max = Livre.findAll().size();
-        int debut = Utils.pagination(page, max, NB_PAR_PAGE);
-        List<Livre> livres = query.order("-dateAjout").fetch(NB_PAR_PAGE, debut);
+        Query<Livre> query = Livre.all(Livre.class).order("-dateAjout");
+        Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE,page,"Livres.index",query);
 
         renderArgs.put("editeurs", Utils.initListEditeurs());
-        renderArgs.put("dept", NB_PAR_PAGE);
-        render(livres, page, max);
+        render(paginator);
     }
 
     @Role("public")
@@ -45,14 +42,11 @@ public class Livres extends Controller {
 
     @Role("public")
     public static void editeur(String editeur, int page) {
-        int max = Livre.all(Livre.class).filter("editeur", editeur).count();
-        int dept = NB_PAR_PAGE;
-        int debut = Utils.pagination(page, max, NB_PAR_PAGE);
-
-        List<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("-dateAjout").fetch(dept, debut);
+        Query<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("-dateAjout");
+        Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE,page,"Livres.editeur",livres);
 
         renderArgs.put("editeurs", Utils.initListEditeurs());
-        render(livres, page, dept, max, editeur);
+        render(editeur,paginator);
     }
 
 

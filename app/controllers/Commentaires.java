@@ -6,6 +6,7 @@ import models.Commentaire;
 import models.Livre;
 import play.mvc.Controller;
 import play.mvc.With;
+import siena.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class Commentaires extends Controller {
         }
 
         int dept = NB_PAR_PAGE;
-        int debut = Utils.pagination(page, max, NB_PAR_PAGE);
+        int debut = Paginator.pagination(page, max, NB_PAR_PAGE);
 
         List<Commentaire> commentairesAllByPage = Commentaire.all(Commentaire.class).order("-dateAjout").fetch(dept, debut);
 
@@ -70,18 +71,15 @@ public class Commentaires extends Controller {
     }
 
     public static void index(int page) {
+        Query<Commentaire> query = Commentaire.all(Commentaire.class).order("-dateAjout");
+        Paginator<Commentaire> paginator = new Paginator<Commentaire>(NB_PAR_PAGE,page,"Commentaires.index",query);
 
-        int max = Commentaire.findAll().size();
-        int dept = NB_PAR_PAGE;
-        int debut = Utils.pagination(page, max, NB_PAR_PAGE);
-
-        List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch(dept, debut);
-
-        for (Commentaire commentaire : commentaires) {
+        for (Commentaire commentaire : paginator.getElements()) {
             commentaire.livre.get();
         }
+
         renderArgs.put("editeurs", Utils.initListEditeurs());
-        render(commentaires, page, dept, max);
+        render(paginator);
     }
 
     @Role("public")

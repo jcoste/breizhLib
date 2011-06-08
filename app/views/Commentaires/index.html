@@ -3,29 +3,14 @@
 
 <article>
      #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurCommentaires' /}
-    #{if commentaires}
-            <h1>${max} Commentaire${commentaires.pluralize()} </h1>
-            #{if commentaires.size() > 0}
-                    #{list items:commentaires, as:'comment'}
+    #{if paginator.getElements()}
+            <h1>${paginator.max} Commentaire${paginator.getElements().pluralize()} </h1>
+            #{if paginator.getElements().size() > 0}
+                    #{list items:paginator.getElements(), as:'comment'}
                          #{commentaire comment:comment, as:'defaut' /}
                      #{/list}
             #{/if}
-        <p><ul id="pagination">
-            #{if page > 0}
-                <li id="previous">
-                    <a href="@{Commentaires.index(page-1)}">
-                       ${((page*dept)-dept)+1} - ${(page*dept)}
-                    </a>
-                </li>
-             #{/if}
-             #{if max > ((page+1)*dept) }
-                <li id="next">
-                    <a href="@{Commentaires.index(page+1)}">
-                        ${((page+1)*dept)+1} - ${((page+1)*dept)+dept}
-                    </a>
-                </li>
-             #{/if}
-        </ul></p>
+        #{paginate.controls paginator:paginator /}
     #{/if}
     #{else}
         <h1>&{'views.commentaires.aucunCommentaire'}</h1>
