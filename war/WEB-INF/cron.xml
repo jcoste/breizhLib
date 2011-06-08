@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <!-- cron>
+    <url>/cron/livres</url>
+    <description>rappel des livres a apporter lors du prochain Jug</description>
+      <schedule>1st monday of month 08:00</schedule>
+  </cron -->
+</cronentries>
