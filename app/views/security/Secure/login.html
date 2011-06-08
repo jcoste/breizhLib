@@ -5,7 +5,7 @@
 <h1>Nouveau sur BreizhLib ?</h1>
 <p><a href="@{security.BasicSecure.newuser()}">Créer un compte</a> </p>
 <p>ou Connectez-vous avec : </p>
-<p><a href="@{security.Secure.glogin()}">Google</a></p>
+<p><a href="@{security.Secure.glogin()}"><img src="@{'/public/images/openid-provider/google.png'}" alt="Google"/></a></p>
 
 <div id="login">
 #{if session.get("authfailcount") == null || Integer.valueOf(session.get("authfailcount")) < 3 }
