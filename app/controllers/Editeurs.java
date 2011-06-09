@@ -29,7 +29,7 @@ public class Editeurs extends Controller {
     }
 
     @Role("admin")
-    public static void postEditeur(@Required String nom, String site, byte[] imageFile, String image) {
+    public static void postEditeur(@Required String nom, String site, byte[] imageFile) {
         if (validation.hasErrors()) {
             render("Editeurs/add.html");
         }
@@ -38,6 +38,7 @@ public class Editeurs extends Controller {
             error("l'éditeur existe déja en base");
         }
 
+        String image = null;
         if (imageFile != null) {
             try {
                 image = Pictures.createImage(imageFile, nom, false);

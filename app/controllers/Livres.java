@@ -87,7 +87,7 @@ public class Livres extends Controller {
     }
 
     @Role("admin")
-    public static void save(@Required String titre, @Required String editeur, byte[] imageFile, String image, String description, @Required String iSBN) throws Exception {
+    public static void save(@Required String titre, @Required String editeur, byte[] imageFile, String description, @Required String iSBN) throws Exception {
         if (validation.hasErrors()) {
             render("Livres/add.html");
         }
@@ -96,6 +96,7 @@ public class Livres extends Controller {
             error("le livre existe déja en base");
         }
 
+        String image = null;
         if (imageFile != null) {
             image = Pictures.createImage(imageFile, iSBN, true);
         }

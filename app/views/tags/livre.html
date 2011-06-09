@@ -1,15 +1,9 @@
 #{if _as == 'summary'}
-<section class="miniature">
-    <h1><a href="@{Livres.show(_livre.iSBN)}">${_livre.titre}</a></h1>
+<section class="book">
+    <h1><a href="@{Livres.show(_livre.iSBN)}" >${_livre.titre}</a></h1>
     <img src="${_livre.image}"/>
 
     <p><a href="@{Livres.editeur(_livre.editeur,0)}">${_livre.editeur}</a></p>
-    #{if _livre.getCommentaires().size() > 1}
-    <p><a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaires </a></p>
-    #{/if}
-    #{else}
-    <p>&{'views.commentaires.aucunCommentaire'}</p>
-    #{/else}
     <p>
         #{if _livre.reservationEncours == null}
         <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
@@ -19,7 +13,12 @@
     <p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'static' /}</p>
 
     <footer>
-        <span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span>
+         #{if _livre.getCommentaires().size() > 0}
+            <a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaire${_livre.getCommentaires().pluralize()} </a>
+        #{/if}
+        #{else}
+            &{'views.commentaires.aucunCommentaire'}
+        #{/else}
     </footer>
 </section>
 #{/if}
