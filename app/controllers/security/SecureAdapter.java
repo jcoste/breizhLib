@@ -9,14 +9,17 @@ public class SecureAdapter implements ISecure {
 
     private static ISecure basicSecure = BasicSecure.INSTANCE;
     private static ISecure gaeSecure = GAESecure.INSTANCE;
+    private static ISecure fbsecure = FBSecure.INSTANCE;
 
 
     @Override
     public void login() {
         if (Secure.getImpl().equals("basic")) {
             basicSecure.login();
-        } else {
+        } else if(Secure.getImpl().equals("gae")) {
             gaeSecure.login();
+        } else {
+           fbsecure.login();
         }
     }
 
@@ -24,8 +27,10 @@ public class SecureAdapter implements ISecure {
     public void logout() {
         if (Secure.getImpl().equals("basic")) {
             basicSecure.logout();
-        } else {
+        } else if(Secure.getImpl().equals("gae")){
             gaeSecure.logout();
+        } else {
+           fbsecure.logout();
         }
     }
 
@@ -33,8 +38,10 @@ public class SecureAdapter implements ISecure {
     public boolean check(String profile) {
         if (Secure.getImpl().equals("basic")) {
             return basicSecure.check(profile);
-        } else {
+        } else if(Secure.getImpl().equals("gae")) {
             return gaeSecure.check(profile);
+        } else {
+           return fbsecure.check(profile);
         }
     }
 
@@ -42,8 +49,10 @@ public class SecureAdapter implements ISecure {
     public User getUser() {
         if (Secure.getImpl().equals("basic")) {
             return basicSecure.getUser();
-        } else {
+        } else if(Secure.getImpl().equals("gae")) {
             return gaeSecure.getUser();
+        } else {
+           return fbsecure.getUser();
         }
     }
 }
