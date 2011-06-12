@@ -10,6 +10,7 @@ public class SecureAdapter implements ISecure {
     private static ISecure basicSecure = BasicSecure.INSTANCE;
     private static ISecure gaeSecure = GAESecure.INSTANCE;
     private static ISecure fbsecure = FBSecure.INSTANCE;
+    private static ISecure tsecure = TwitterSecure.INSTANCE;
 
 
     @Override
@@ -18,8 +19,10 @@ public class SecureAdapter implements ISecure {
             basicSecure.login();
         } else if(Secure.getImpl().equals("gae")) {
             gaeSecure.login();
-        } else {
+        } else if(Secure.getImpl().equals("fbconnect")){
            fbsecure.login();
+        } else{
+            tsecure.login();
         }
     }
 
@@ -29,8 +32,10 @@ public class SecureAdapter implements ISecure {
             basicSecure.logout();
         } else if(Secure.getImpl().equals("gae")){
             gaeSecure.logout();
-        } else {
+        } else if(Secure.getImpl().equals("fbconnect")){
            fbsecure.logout();
+        }  else{
+            tsecure.logout();
         }
     }
 
@@ -40,8 +45,10 @@ public class SecureAdapter implements ISecure {
             return basicSecure.check(profile);
         } else if(Secure.getImpl().equals("gae")) {
             return gaeSecure.check(profile);
-        } else {
+        } else if(Secure.getImpl().equals("fbconnect")){
            return fbsecure.check(profile);
+        } else {
+           return tsecure.check(profile);
         }
     }
 
@@ -51,8 +58,10 @@ public class SecureAdapter implements ISecure {
             return basicSecure.getUser();
         } else if(Secure.getImpl().equals("gae")) {
             return gaeSecure.getUser();
-        } else {
+        } else if(Secure.getImpl().equals("fbconnect")){
            return fbsecure.getUser();
+        } else {
+           return tsecure.getUser();
         }
     }
 }

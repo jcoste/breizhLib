@@ -32,6 +32,9 @@
        <a href="@{security.Secure.fblogin()}"><img src="@{'/public/images/openid-provider/facebook.png'}"
                                                   alt="Facebook"/></a></p>
 
+    <!--p><a href="@{security.Secure.tlogin()}"><img src="@{'/public/images/openid-provider/twitter.png'}"
+                                                  alt="Twitter"/></a></p-->
+
      </div>
         #{if session.get("authfailcount") == null || Integer.valueOf(session.get("authfailcount")) < 3 }
         <h1 onclick="display('login',['openid','new']);">Ouvrez une session</h1>

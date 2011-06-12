@@ -2,7 +2,6 @@ package controllers.security;
 
 
 import models.User;
-import play.Logger;
 import play.modules.oauthclient.ICredentials;
 import play.modules.oauthclient.OAuthClient;
 import play.mvc.Controller;
@@ -11,9 +10,9 @@ import play.mvc.Router;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TwiterSecure extends Controller implements ISecure {
+public class TwitterSecure extends Controller implements ISecure {
 
-     public static final TwiterSecure INSTANCE = new TwiterSecure();
+     public static final TwitterSecure INSTANCE = new TwitterSecure();
 
     private static OAuthClient connector = null;
 	private static OAuthClient getConnector() {
@@ -30,16 +29,17 @@ public class TwiterSecure extends Controller implements ISecure {
 
     @Override
     public void login() {
-        String callback="";
-        Map<String, Object> args = new HashMap<String, Object>();
+
+
+    }
+
+    public static void authenticate(String callback) throws Exception {
+		// 1: get the request token
+		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("callback", callback);
 		String callbackURL = Router.getFullUrl(request.controller + ".oauthCallback", args);
-        try {
-            getConnector().authenticate(getTwiterUser(), callbackURL);
-        } catch (Exception e) {
-            Logger.error(e.getMessage());
-        }
-    }
+		getConnector().authenticate(getTwiterUser(), callbackURL);
+	}
 
     public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
 		// 2: get the access token
@@ -49,7 +49,10 @@ public class TwiterSecure extends Controller implements ISecure {
 
     @Override
     public void logout() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        session.put("userEmail", null);
+        session.put("secureimpl", null);
+        _session.set(null);
+        Secure.authetification();
     }
 
     @Override
@@ -57,8 +60,13 @@ public class TwiterSecure extends Controller implements ISecure {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    private static ThreadLocal<TwitterUser> _session = new ThreadLocal<TwitterUser>();
+
     public static TwitterUser getTwiterUser() {
-        return new TwitterUser();
+        if(_session.get() == null){
+            _session.set(new TwitterUser());
+        }
+        return _session.get();
     }
 
     @Override

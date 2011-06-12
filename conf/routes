@@ -42,6 +42,8 @@ POST    /user/edit                              Users.postEdit
 GET     /login                                  security.Secure.login
 GET     /glogin                                 security.Secure.glogin
 GET     /fbconnect                              security.Secure.fblogin
+GET     /tlogin                                 security.Secure.tlogin
+GET     /auth                                   security.TwiterSecure.authenticate
 GET     /user/new                               security.BasicSecure.newuser
 POST    /user/new                               security.BasicSecure.postNewuser
 GET     /logout                                 Secure.logout
