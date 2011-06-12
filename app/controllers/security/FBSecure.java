@@ -8,6 +8,14 @@ import play.mvc.Scope;
 import play.mvc.results.Redirect;
 import play.modules.fbconnect.FBConnectPlugin;
 
+/**
+ * Created by IntelliJ IDEA.
+ * User: sylvain
+ * Date: 09/06/11
+ * Time: 19:13
+ * To change this template use File | Settings | File Templates.
+ */
+public class FBSecure implements ISecure {
 
 public class FBSecure extends Controller implements ISecure {
 
