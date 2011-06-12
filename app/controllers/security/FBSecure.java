@@ -8,15 +8,6 @@ import play.mvc.Scope;
 import play.mvc.results.Redirect;
 import play.modules.fbconnect.FBConnectPlugin;
 
-/**
- * Created by IntelliJ IDEA.
- * User: sylvain
- * Date: 09/06/11
- * Time: 19:13
- * To change this template use File | Settings | File Templates.
- */
-public class FBSecure implements ISecure {
-
 public class FBSecure extends Controller implements ISecure {
 
     public static final FBSecure INSTANCE = new FBSecure();
@@ -26,7 +17,7 @@ public class FBSecure extends Controller implements ISecure {
 
     @Override
     public void login() {
-        throw new Redirect(Play.plugin(FBConnectPlugin.class).session().getLoginUrl("email  "));
+        throw new Redirect(Play.plugin(FBConnectPlugin.class).session().getLoginUrl());
     }
 
     @Override
@@ -36,10 +27,6 @@ public class FBSecure extends Controller implements ISecure {
         Secure.authetification();
     }
 
-    public static void facebookOAuthCallback(JsonObject data){
-        Scope.Session.current().put("userEmail", data.get("email").getAsString());
-    }
-
     @Override
     public boolean check(String profile) {
         if ("public".equals(profile)) {
@@ -47,7 +34,7 @@ public class FBSecure extends Controller implements ISecure {
         }
         if ("admin".equals(profile)) {
             if (session.get("userEmail") != null) {
-                User user = User.find(session.get("userEmail"));
+                User user = getUser();
                 return user.isAdmin;
             }
             return false;
@@ -63,6 +50,10 @@ public class FBSecure extends Controller implements ISecure {
         User user = null;
         if (session.get("userEmail") != null) {
             user = User.find(session.get("userEmail"));
+            if (user == null) {
+                user = new User(session.get("userEmail"));
+                user.insert();
+            }
         }
         return user;
     }

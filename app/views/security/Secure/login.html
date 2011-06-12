@@ -28,8 +28,9 @@
     <h1 onclick="display('openid',['login','new']);">Connectez-vous avec l'Open-ID </h1>
     <div id="openid" style="visibility:visible; display:block;">
     <p><a href="@{security.Secure.glogin()}"><img src="@{'/public/images/openid-provider/google.png'}"
-                                                  alt="Google"/></a></p>
-    <!-- p><a href="@{security.Secure.fblogin()}">Fb Connect</a></p -->
+                                                  alt="Google"/></a>
+       <a href="@{security.Secure.fblogin()}"><img src="@{'/public/images/openid-provider/facebook.png'}"
+                                                  alt="Facebook"/></a></p>
 
      </div>
         #{if session.get("authfailcount") == null || Integer.valueOf(session.get("authfailcount")) < 3 }

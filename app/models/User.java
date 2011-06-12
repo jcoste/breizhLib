@@ -1,7 +1,9 @@
 package models;
 
+import com.google.gson.JsonObject;
 import play.data.binding.As;
 import play.data.validation.Required;
+import play.mvc.Scope;
 import siena.Generator;
 import siena.Id;
 import siena.Model;
@@ -66,5 +68,14 @@ public class User extends Model {
             return reservation.emprunt;
         }
         return null;
+    }
+
+    /**
+     *  facebook connect
+     *
+     * @param data
+     */
+     public static void facebookOAuthCallback(JsonObject data){
+        Scope.Session.current().put("userEmail", data.get("email").getAsString());
     }
 }
