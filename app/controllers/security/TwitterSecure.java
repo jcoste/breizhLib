@@ -2,7 +2,10 @@ package controllers.security;
 
 
 import models.User;
-import play.modules.oauthclient.ICredentials;
+import models.oauthclient.Credentials;
+import play.Logger;
+import play.Play;
+import play.exceptions.UnexpectedException;
 import play.modules.oauthclient.OAuthClient;
 import play.mvc.Controller;
 import play.mvc.Router;
@@ -14,22 +17,50 @@ public class TwitterSecure extends Controller implements ISecure {
 
      public static final TwitterSecure INSTANCE = new TwitterSecure();
 
-    private static OAuthClient connector = null;
+    private String consumerKey;
+	private String consumerSecret;
+    private String callback;
+
+    private OAuthClient connector = null;
 	private static OAuthClient getConnector() {
-		if (connector == null) {
-			connector = new OAuthClient(
+		if (INSTANCE.connector == null) {
+			INSTANCE.connector = new OAuthClient(
 					"http://twitter.com/oauth/request_token",
 					"http://twitter.com/oauth/access_token",
-                    "http://twitter.com/oauth/authorize",
-					"1SZiYOUuvJ6r98xboU0NQ",
-					"yajGF4U43Oe12wIuyZEL6sGNbH7GvXiPGEGvet9C8");
+					"http://twitter.com/oauth/authorize",
+					INSTANCE.consumerKey,
+					INSTANCE.consumerSecret);
 		}
-		return connector;
+		return INSTANCE.connector;
 	}
+
+     private TwitterSecure(){
+           init();
+     }
+
+     public void init(){
+        if(!Play.configuration.containsKey("twitter.consumerKey")) {
+            throw new UnexpectedException("OAuth Twitter requires that you specify twitter.consumerKey in your application.conf");
+        }
+        if(!Play.configuration.containsKey("twitter.consumerSecret")){
+            throw new UnexpectedException("OAuth Twitter requires that you specify twitter.consumerSecret in your application.conf");
+        }
+        if(!Play.configuration.containsKey("twitter.callback")){
+            throw new UnexpectedException("OAuth Twitter requires that you specify twitter.callback in your application.conf");
+        }
+        consumerKey = Play.configuration.getProperty("twitter.consumerKey");
+        consumerSecret = Play.configuration.getProperty("twitter.consumerSecret");
+        callback = Router.getFullUrl(Play.configuration.getProperty("twitter.callback"));
+
+    }
 
     @Override
     public void login() {
-
+        try {
+            authenticate(callback);
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+        }
 
     }
 
@@ -43,7 +74,9 @@ public class TwitterSecure extends Controller implements ISecure {
 
     public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
 		// 2: get the access token
+        Logger.info("token :" + oauth_token);
 		getConnector().retrieveAccessToken(getTwiterUser(), oauth_verifier);
+        session.put("userEmail", getConnector().getProvider().getResponseParameters().get("screen_name"));
 		redirect(callback);
 	}
 
@@ -51,50 +84,47 @@ public class TwitterSecure extends Controller implements ISecure {
     public void logout() {
         session.put("userEmail", null);
         session.put("secureimpl", null);
-        _session.set(null);
         Secure.authetification();
     }
 
     @Override
     public boolean check(String profile) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        if ("public".equals(profile)) {
+            return true;
+        }
+        if ("admin".equals(profile)) {
+            if (session.get("userEmail") != null) {
+                User user = getUser();
+                return user.isAdmin;
+            }
+            return false;
+        } else if ("member".equals(profile)) {
+            return session.get("userEmail") != null;
+        }
+
+        return false;
     }
 
-    private static ThreadLocal<TwitterUser> _session = new ThreadLocal<TwitterUser>();
+    private static ThreadLocal<Credentials> _session = new ThreadLocal<Credentials>();
 
-    public static TwitterUser getTwiterUser() {
+    public static Credentials getTwiterUser() {
         if(_session.get() == null){
-            _session.set(new TwitterUser());
+            _session.set(new Credentials());
         }
         return _session.get();
     }
-
     @Override
     public User getUser() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public static class TwitterUser implements ICredentials{
-
-       private String token;
-
-        private String secret;
-
-        public void setToken(String token) {
-            this.token = token;
+        User user = null;
+        if (session.get("userEmail") != null) {
+            user = User.findByUsername(session.get("userEmail"));
+            if (user == null) {
+                user = new User(null);
+                user.username = session.get("userEmail");
+                user.insert();
+            }
         }
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setSecret(String secret) {
-            this.secret = secret;
-        }
-
-        public String getSecret() {
-            return secret;
-        }
+        return user;
     }
 
 }

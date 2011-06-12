@@ -44,12 +44,16 @@ public class Users extends Controller {
     }
 
     @Role("member")
-    public static void postEdit(@Required String nom, @Required String prenom) {
+    public static void postEdit(@Required String nom, @Required String prenom,String email) {
         User user = Secure.getUser();
         if (user != null) {
             user.nom = nom;
             user.prenom = prenom;
+            if(email != null && user.email == null){
+              user.email = email;
+            }
             user.update();
+
         }
         infos();
     }

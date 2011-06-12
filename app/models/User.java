@@ -33,6 +33,8 @@ public class User extends Model {
     @As("yyyy-MM-dd")
     public Date dateConnexion;
 
+    public String username;
+
 
     public User(String email) {
         this.dateCreation = new Date();
@@ -42,6 +44,11 @@ public class User extends Model {
 
     public static User find(String email) {
         User user = User.all(User.class).filter("email", email).get();
+        return user;
+    }
+
+    public static User findByUsername(String username) {
+        User user = User.all(User.class).filter("username", username).get();
         return user;
     }
 
