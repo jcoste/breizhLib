@@ -61,6 +61,11 @@ public class Secure extends Controller {
         secure.login();
     }
 
+    public static void fblogin() {
+        session.put("secureimpl","fbconnect");
+        secure.login();
+    }
+
     private static void checkRole(Role role) {
         for (String profile : role.value()) {
             boolean hasProfile = check(profile);
