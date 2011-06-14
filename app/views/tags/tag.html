@@ -1,0 +1,17 @@
+
+
+    #{if _tags}
+        #{if _tags.size()}<p>
+            #{list items:_tags, as:'tag'}
+                #{if tag}
+                   ${tag}
+                #{/if}
+            #{/list} </p>
+        #{/if}
+    #{/if}
+
+    #{secure.check 'admin'}
+      #{form @tag.Tags.addForbook(_bookId)}
+           <p><input type="text" name="tag" id="tag"/><input type="submit" value="Add Tag"/></p>
+      #{/form}
+    #{/secure.check}

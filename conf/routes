@@ -15,6 +15,8 @@ POST    /add                                    Livres.save
 GET     /news                                   Livres.last
 GET     /search                                 Livres.search
 
+POST    /book/{bookId}/tag/{tag}                tag.Tag.addForBook
+
 GET     /book/{id}/reservations                 Reservations.index
 GET     /reservations                           Reservations.reservations
 GET     /book/{id}/reserver                     Reservations.reserver
@@ -43,6 +45,7 @@ GET     /login                                  security.Secure.login
 GET     /glogin                                 security.Secure.glogin
 GET     /fbconnect                              security.Secure.fblogin
 GET     /tlogin                                 security.Secure.tlogin
+GET     /ylogin                                 security.Secure.ylogin
 GET     /user/new                               security.BasicSecure.newuser
 POST    /user/new                               security.BasicSecure.postNewuser
 GET     /logout                                 Secure.logout

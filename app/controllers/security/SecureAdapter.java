@@ -11,6 +11,7 @@ public class SecureAdapter implements ISecure {
     private static ISecure gaeSecure = GAESecure.INSTANCE;
     private static ISecure fbsecure = FBSecure.INSTANCE;
     private static ISecure tsecure = TwitterSecure.INSTANCE;
+    private static ISecure ysecure = YahooSecure.INSTANCE;
 
 
     @Override
@@ -21,8 +22,10 @@ public class SecureAdapter implements ISecure {
             gaeSecure.login();
         } else if(Secure.getImpl().equals("fbconnect")){
            fbsecure.login();
-        } else{
+        } else if(Secure.getImpl().equals("twitter")){
             tsecure.login();
+        } else {
+            ysecure.login();
         }
     }
 
@@ -34,8 +37,10 @@ public class SecureAdapter implements ISecure {
             gaeSecure.logout();
         } else if(Secure.getImpl().equals("fbconnect")){
            fbsecure.logout();
-        }  else{
+        }  else if(Secure.getImpl().equals("twitter")){
             tsecure.logout();
+        } else{
+            ysecure.logout();
         }
     }
 
@@ -47,8 +52,10 @@ public class SecureAdapter implements ISecure {
             return gaeSecure.check(profile);
         } else if(Secure.getImpl().equals("fbconnect")){
            return fbsecure.check(profile);
-        } else {
+        } else if(Secure.getImpl().equals("twitter")){
            return tsecure.check(profile);
+        } else{
+            return ysecure.check(profile);
         }
     }
 
@@ -60,8 +67,10 @@ public class SecureAdapter implements ISecure {
             return gaeSecure.getUser();
         } else if(Secure.getImpl().equals("fbconnect")){
            return fbsecure.getUser();
-        } else {
+        } else if(Secure.getImpl().equals("twitter")){
            return tsecure.getUser();
+        }else{
+            return ysecure.getUser();
         }
     }
 }

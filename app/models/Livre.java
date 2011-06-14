@@ -1,6 +1,8 @@
 package models;
 
 
+import models.tag.LivreTag;
+import models.tag.Tag;
 import play.data.binding.As;
 import play.data.validation.Required;
 import play.modules.gae.GAE;
@@ -8,6 +10,7 @@ import siena.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 @siena.Table("Livre")
 public class Livre extends Model {
@@ -104,6 +107,11 @@ public class Livre extends Model {
 
     public List<Commentaire> getCommentaires() {
         return Commentaire.all(Commentaire.class).filter("livre", this).fetch();
+    }
+
+    public List<Tag> getTags() {
+        List<Tag> tags = LivreTag.findByLivre(this);
+        return tags;
     }
 
     public int getNote() {

@@ -33,7 +33,8 @@
                                                   alt="Facebook"/></a></p>
 
     <p><a href="@{security.Secure.tlogin()}"><img src="@{'/public/images/openid-provider/twitter.png'}"
-                                                  alt="Twitter"/></a></p>
+                                                  alt="Twitter"/>
+    </a><!-- a href="@{security.Secure.ylogin()}">Yahoo</a --></p>
 
      </div>
         #{if session.get("authfailcount") == null || Integer.valueOf(session.get("authfailcount")) < 3 }

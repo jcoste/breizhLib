@@ -67,8 +67,13 @@ public class Secure extends Controller {
         secure.login();
     }
 
-     public static void tlogin() {
+    public static void tlogin() {
         session.put("secureimpl","twiter");
+        secure.login();
+    }
+
+    public static void ylogin() {
+        session.put("secureimpl","yahoo");
         secure.login();
     }
 

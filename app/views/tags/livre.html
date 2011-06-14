@@ -39,6 +39,7 @@
 
     <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
 
+    #{tag bookId:_livre.iSBN,tags:_livre.getTags() /}
 
     #{if _livre.commentaires}
     <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
