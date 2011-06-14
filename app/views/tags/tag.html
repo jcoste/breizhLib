@@ -1,17 +1,59 @@
-
-
-    #{if _tags}
-        #{if _tags.size()}<p>
-            #{list items:_tags, as:'tag'}
-                #{if tag}
-                   ${tag}
-                #{/if}
-            #{/list} </p>
-        #{/if}
-    #{/if}
-
+#{if _as == 'book'}
     #{secure.check 'admin'}
       #{form @tag.Tags.addForbook(_bookId)}
            <p><input type="text" name="tag" id="tag"/><input type="submit" value="Add Tag"/></p>
       #{/form}
     #{/secure.check}
+#{/if}
+    #{if _tags}
+        <style type="text/css">
+            .tagcloud a {
+                color: #92b22c;
+            }
+
+            .tagcloud {
+                width: 50px;
+                height: 50px;
+                margin-left: 40px;
+            }
+
+            .tagcloud a{
+                color: #92b22c;
+                text-decoration:none;
+                border-bottom:1px dotted #92b22c;
+                padding-bottom:1px;
+                margin: 4px;
+            }
+
+            .tagcloud a:hover {
+                text-decoration:none;
+                border-bottom:2px solid #92b22c;
+            }
+
+        </style>
+        <script type="text/javascript">
+            $(function() {
+                $('#tagcloud').tagCloud({separator: '.'});
+            });
+        </script>
+
+
+       #{if _as == 'book'}
+        #{if _tags.size()}<div id="tagcloud" class="tagcloud">
+            #{list items:_tags, as:'tag'}
+                #{if tag}
+                   ${tag}.
+                #{/if}
+            #{/list} </div>
+        #{/if}
+       #{/if}
+       #{else}
+            #{if _tags.size()}<div id="tagcloud" class="tagcloud">
+            #{list items:_tags, as:'tag'}
+                #{if tag}
+                   ${tag.tag}.
+                #{/if}
+            #{/list} </div>
+            #{/if}
+       #{/else}
+    #{/if}

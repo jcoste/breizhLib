@@ -27,20 +27,23 @@
 #{if _as == 'full'}
 <article>
     <h1>${_livre.titre}</h1>
-    <img src="${_livre.image}"/>
+    <table> <tr><td>
+        <img src="${_livre.image}"/>
+    </td><td>
+        <p>
+            #{if _livre.reservationEncours == null}
+            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
+            #{/if}
+        </p>
 
-    <p>
-        #{if _livre.reservationEncours == null}
-        <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
-        #{/if}
-    </p>
+        <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
 
-    <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
+        <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
 
-    <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
+        #{tag bookId:_livre.iSBN,tags:_livre.getTags(), as:'book' /}
 
-    #{tag bookId:_livre.iSBN,tags:_livre.getTags() /}
-
+    </td></tr>
+    </table>
     #{if _livre.commentaires}
     <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
     #{if _livre.commentaires.size() > 0}

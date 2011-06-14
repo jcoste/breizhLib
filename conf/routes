@@ -15,7 +15,8 @@ POST    /add                                    Livres.save
 GET     /news                                   Livres.last
 GET     /search                                 Livres.search
 
-POST    /book/{bookId}/tag/{tag}                tag.Tag.addForBook
+POST    /book/{bookId}/tag/{tag}                tag.Tags.addForBook
+GET     /tags                                   tag.Tags.index
 
 GET     /book/{id}/reservations                 Reservations.index
 GET     /reservations                           Reservations.reservations

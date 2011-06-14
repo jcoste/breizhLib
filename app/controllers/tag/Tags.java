@@ -9,6 +9,8 @@ import models.tag.Tag;
 import play.mvc.Controller;
 import play.mvc.With;
 
+import java.util.List;
+
 @With(Secure.class)
 public class Tags extends Controller {
 
@@ -22,5 +24,14 @@ public class Tags extends Controller {
        LivreTag livreTag = new LivreTag(livre, newTag);
        livreTag.insert();
        Livres.show(bookId);
+    }
+
+    @Role("public")
+    public static void index() {
+       List<LivreTag> tags = LivreTag.all().fetch();
+       for(LivreTag livreTag : tags) {
+           livreTag.tag.get();
+       }
+       render(tags);
     }
 }
