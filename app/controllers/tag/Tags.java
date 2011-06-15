@@ -34,4 +34,10 @@ public class Tags extends Controller {
        }
        render(tags);
     }
+
+    @Role("public")
+    public static void tag(String tag) {
+
+       render(tag);
+    }
 }

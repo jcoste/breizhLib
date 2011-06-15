@@ -17,6 +17,7 @@ GET     /search                                 Livres.search
 
 POST    /book/{bookId}/tag/{tag}                tag.Tags.addForBook
 GET     /tags                                   tag.Tags.index
+GET     /tag/{tag}                              tag.Tags.tag
 
 GET     /book/{id}/reservations                 Reservations.index
 GET     /reservations                           Reservations.reservations

@@ -28,7 +28,7 @@
             $.each(words_arr, function(k, v) {
                 v = (v > 9)? 9 : v;
                 v = (v >= 3)? '2' + '.' + v : v;
-                html += '<a href="#' + k + '" style="font-size: ' + v + 'em" title="' + k + '"><span>' + k + '</span></a>'
+                html += '<a href="/tag/' + k + '" style="font-size: ' + v + 'em" title="' + k + '"><span>' + k + '</span></a>'
             });
             $(this).html(html);
         });

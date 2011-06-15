@@ -1,4 +1,6 @@
 #{if _as == 'summary'}
+#{script 'webwidget_rating_simple.js' /}
+#{stylesheet 'webwidget_rating_simple.css' /}
 <section class="book">
     <h1><a href="@{Livres.show(_livre.iSBN)}" >${_livre.titre}</a></h1>
     <img src="${_livre.image}"/>
