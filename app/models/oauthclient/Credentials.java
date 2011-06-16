@@ -19,7 +19,6 @@ public class Credentials extends Model implements ICredentials {
 
 	public void setToken(String token) {
 		this.token = token;
-		save();
 	}
 
 	public String getToken() {
@@ -28,7 +27,6 @@ public class Credentials extends Model implements ICredentials {
 
 	public void setSecret(String secret) {
 		this.secret = secret;
-		save();
 	}
 
 	public String getSecret() {

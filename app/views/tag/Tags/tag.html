@@ -2,6 +2,12 @@
 #{set title:'BreizhLib Tag' /}
 
  <article>
-<h1>Tag : ${tag}</h1>
+    <h1><a href="@{tag.Tags.index()}" >Tag</a> : ${tag}</h1>
+
+ #{list items:livres, as:'livre'}
+    #{if livre}
+    #{livre livre:livre, as:'summary' /}
+    #{/if}
+ #{/list}
 
 </article>

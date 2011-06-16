@@ -18,11 +18,8 @@ public class Tags extends Controller {
     public static void addForBook(String bookId,String tag) {
 
        Livre livre = Livre.findByISBN(bookId);
+       livre.addTag(tag);
 
-       Tag newTag = Tag.findOrCreateByName(tag);
-
-       LivreTag livreTag = new LivreTag(livre, newTag);
-       livreTag.insert();
        Livres.show(bookId);
     }
 
@@ -37,7 +34,9 @@ public class Tags extends Controller {
 
     @Role("public")
     public static void tag(String tag) {
+        Tag tagBase = Tag.findOrCreateByName(tag);
 
-       render(tag);
+       List<Livre> livres = LivreTag.findByTag(tagBase);
+       render(tag,livres);
     }
 }

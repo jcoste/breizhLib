@@ -69,13 +69,13 @@ public class TwitterSecure extends Controller implements ISecure {
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("callback", callback);
 		String callbackURL = Router.getFullUrl(request.controller + ".oauthCallback", args);
-		getConnector().authenticate(getTwiterUser(), callbackURL);
+		getConnector().authenticate(getCredentials(), callbackURL);
 	}
 
     public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
 		// 2: get the access token
         Logger.info("token :" + oauth_token);
-		getConnector().retrieveAccessToken(getTwiterUser(), oauth_verifier);
+		getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
         session.put("userEmail", getConnector().getProvider().getResponseParameters().get("screen_name"));
 		redirect(callback);
 	}
@@ -107,7 +107,7 @@ public class TwitterSecure extends Controller implements ISecure {
 
     private static ThreadLocal<Credentials> _session = new ThreadLocal<Credentials>();
 
-    public static Credentials getTwiterUser() {
+    public static Credentials getCredentials() {
         if(_session.get() == null){
             _session.set(new Credentials());
         }

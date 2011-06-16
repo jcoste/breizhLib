@@ -1,16 +1,15 @@
 package models;
 
 
+import controllers.security.Secure;
 import models.tag.LivreTag;
 import models.tag.Tag;
 import play.data.binding.As;
 import play.data.validation.Required;
-import play.modules.gae.GAE;
 import siena.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 @siena.Table("Livre")
 public class Livre extends Model {
@@ -56,12 +55,12 @@ public class Livre extends Model {
     }
 
     /**
-     * retourne 'true' si l'utilisateur à emprunté ce livre
+     * TODO retourne 'true' si l'utilisateur à emprunté ce livre
      *
      * @return
      */
     public boolean hasRead() {
-        return GAE.isLoggedIn();
+        return Secure.getUser() != null;
     }
 
     public String toString() {
@@ -129,6 +128,12 @@ public class Livre extends Model {
         } else {
             return 0;
         }
+    }
+
+    public void addTag(String tag) {
+      Tag newTag = Tag.findOrCreateByName(tag);
+      LivreTag livreTag = new LivreTag(this, newTag);
+      livreTag.insert();
     }
 }
 
