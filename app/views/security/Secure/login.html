@@ -34,7 +34,13 @@
 
     <p><a href="@{security.Secure.tlogin()}"><img src="@{'/public/images/openid-provider/twitter.png'}"
                                                   alt="Twitter"/>
-    </a><!-- a href="@{security.Secure.ylogin()}">Yahoo</a --></p>
+    </a>
+
+    #{if play.mode.name() == 'DEV'}<a href="@{security.Secure.ylogin()}"><img src="@{'/public/images/openid-provider/yahoo.png'}"
+                                                  alt="Yahoo"/></a>
+
+    #{/if}
+    </p>
 
      </div>
         #{if session.get("authfailcount") == null || Integer.valueOf(session.get("authfailcount")) < 3 }
