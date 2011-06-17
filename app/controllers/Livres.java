@@ -17,7 +17,7 @@ import java.util.List;
 @With(Secure.class)
 public class Livres extends Controller {
 
-    private static int NB_PAR_PAGE = 6;
+    private static int NB_PAR_PAGE = 12;
 
     private static int NB_NEWS_PAR_PAGE = 4;
 
@@ -72,6 +72,7 @@ public class Livres extends Controller {
             render();
         }
         Livre livre = Livre.findById(id);
+        renderArgs.put("editeurs", Editeurs.initListEditeurs());
         render(livre);
     }
 
@@ -98,11 +99,36 @@ public class Livres extends Controller {
 
         String image = null;
         if (imageFile != null) {
-            image = Pictures.createImage(imageFile, iSBN, true);
+            image = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);
         }
 
         Livre livre = new Livre(titre, editeur, image, iSBN);
         livre.insert();
+        show(livre.iSBN);
+    }
+
+    @Role("admin")
+    public static void update(@Required String titre, @Required String editeur, byte[] imageFile, @Required String iSBN) throws Exception {
+         Livre livre = Livre.all(Livre.class).filter("iSBN", iSBN).get();
+        if (validation.hasErrors()) {
+            renderArgs.put("livre", livre);
+            renderArgs.put("editeurs", Editeurs.initListEditeurs());
+            render("Livres/edit.html");
+        }
+
+        if (livre == null) {
+            error("le livre n'existe pas en base");
+        }
+
+        String image = null;
+        if (imageFile != null) {
+            image = Pictures.createImage(imageFile, "ouvrages/",iSBN, true);
+            livre.image = image;
+        }
+        livre.editeur = editeur;
+        livre.titre = titre;
+
+        livre.update();
         show(livre.iSBN);
     }
 

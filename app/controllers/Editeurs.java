@@ -41,7 +41,7 @@ public class Editeurs extends Controller {
         String image = null;
         if (imageFile != null) {
             try {
-                image = Pictures.createImage(imageFile, nom, false);
+                image = Pictures.createImage(imageFile,"editeurs/",nom, false);
             } catch (Exception e) {
                 error(e.getLocalizedMessage());
             }

@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib explorer images' /}
+
+<article>
+ <h1>Explore images</h1>
+  %{
+          lastPath  = null;
+   }%
+ <p>/shared/</p>
+ #{list items:pictures, as:'picture'}
+    #{if picture}
+         #{if !lastPath.equals(picture.path)}
+          <p> |_ ${picture.path}</p>
+            %{
+                lastPath  = picture.path;
+             }%
+         #{/if}
+         <p><a href="@{Pictures.getPicture(picture.name)}"> |__ ${picture.name}</a></p>
+    #{/if}
+    #{/list}
+</article>

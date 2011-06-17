@@ -15,6 +15,7 @@ public class Picture extends Model {
 
     public Blob image;
     public String name;
+    public String path;
 
 
     public static Picture findByNname(String file) {
