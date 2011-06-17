@@ -1,4 +1,4 @@
-#{if _as != 'static'}
+#{if _as == 'note'}
 <script language="javascript" type="text/javascript">
     $(function() {
         $("#${_id}").webwidget_rating_simple({
@@ -18,9 +18,7 @@
     #{/list}
     #{/if}
     #{if _value+1 < _max }
-    #{list items:_value+1.._max,as:'j'}
-    <li style="background-image: url('/public/images/nst.gif');"><span>1</span></li>
-    #{/list}
+    #{list items:_value+1.._max,as:'j'}#{/list}
     #{/if}
 </ul>
 #{/else}

@@ -1,6 +1,22 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib' /}
+<script type="text/javascript" >
 
+    function show(id){
+        var divContainer = document.getElementById('popup');
+           for(i=0;i<divContainer.children.length;i++){
+               divContainer.children[i].style.visibility='hidden';
+               divContainer.children[i].style.display = "none";
+           }
+       var div = document.getElementById(id);
+       if(div.style.visibility == 'hidden'){
+           div.style.visibility='visible';
+           div.style.display = "block";
+
+       }
+    }
+
+</script>
 <article>
     #{if editeur == null}
     <p>&{'views.livres.index.title'}</p>
@@ -14,7 +30,14 @@
 
     #{if paginator.getElements()}
     #{if paginator.getElements().size()}
-    #{list items:paginator.getElements(), as:'livre'}
+    <div id="popup">
+        #{list items:paginator.getElements(), as:'livre'}
+        #{if livre}
+        #{livre livre:livre, as:'popup' /}
+        #{/if}
+        #{/list}
+    </div>
+     #{list items:paginator.getElements(), as:'livre'}
     #{if livre}
     #{livre livre:livre, page:page,redirect:'index', as:'summary' /}
     #{/if}
