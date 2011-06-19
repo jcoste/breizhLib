@@ -1,21 +1,62 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib explorer images' /}
+<script type="text/javascript">
+      function  display(id){
+       var div = document.getElementById(id);
+       if(div.style.visibility == 'hidden'){
+           div.style.visibility='visible';
+           div.style.display = "block";
+           var img = document.getElementById(id+'_img');
+           img.src = '/public/images/moins.png';
+       }else{
+          hide(id);
+       }
+    }
 
+    function  hide(id){
+        var div = document.getElementById(id);
+        div.style.visibility = 'hidden';
+        div.style.display = "none";
+        var img = document.getElementById(id+'_img');
+        img.src = '/public/images/plus.png';
+    }
+
+    function  showImg(srcUrl){
+        var img = document.getElementById('displayImg');
+        img.src = srcUrl;
+    }
+
+</script>
 <article>
- <h1>Explore images</h1>
+ <h1>Explorateur d'images</h1>
   %{
           lastPath  = null;
    }%
- <p>/shared/</p>
- #{list items:pictures, as:'picture'}
-    #{if picture}
-         #{if !lastPath.equals(picture.path)}
-          <p> |_ ${picture.path}</p>
-            %{
-                lastPath  = picture.path;
-             }%
-         #{/if}
-         <p><a href="@{Pictures.getPicture(picture.name)}"> |__ ${picture.name}</a></p>
-    #{/if}
-    #{/list}
+<table width="90%"><tr><td width="30%" valign="top">
+     <p onclick="display('shared');"><img id="shared_img" src="@{'/public/images/plus.png'}"/> <img src="@{'/public/images/drive.png'}"/> shared/</p>
+     <div id="shared" style="visibility:hidden; display:none;margin-left: 10px;">
+     #{list items:pictures, as:'picture'}
+        #{if picture}
+             #{if !lastPath.equals(picture.path)}
+                #{if lastPath != null }
+                    </div>
+                #{/if}
+               <p onclick="display('${picture.path}');"> <img id="${picture.path}_img" src="@{'/public/images/plus.png'}"/> <img src="@{'/public/images/folder.png'}"/> ${picture.path}</p>
+                %{
+                    lastPath  = picture.path;
+                 }%
+               <div id="${picture.path}" style="visibility:hidden; display:none;margin-left: 10px;">
+              #{/if}
+               %{
+                  imgUrl  = "/shared/"+picture.name;
+                 }%
+             <p onclick="showImg('${imgUrl}');"><img src="@{'/public/images/picture.png'}"/> ${picture.name}</p>
+        #{/if}
+        #{/list}
+      </div>
+  </div>
+  </td><td width="70%" align="center">
+
+      <img id="displayImg" src="" alt="No Image Selected"/>
+  </td></tr></table>
 </article>

@@ -40,12 +40,12 @@
 
 
        #{if _as == 'book'}
-        #{if _tags.size()}<div id="tagcloud" class="tagcloud">
+        #{if _tags.size()}<p><img src="@{'/public/images/tag_blue.png'}"/><div id="tagcloud" class="tagcloud">
             #{list items:_tags, as:'tag'}
                 #{if tag}
                    ${tag}.
                 #{/if}
-            #{/list} </div>
+            #{/list} </div></p>
         #{/if}
        #{/if}
        #{else}
