@@ -1,0 +1,12 @@
+<livres>
+#{list livres, as:'livre'}
+    <livre>
+        <editeur>${livre.editeur}</editeur>
+        <name>${livre.titre}</name>
+        <iSBN>${livre.iSBN}</iSBN>
+        <note>${livre.getNote()}</note>
+        <etat>${livre.etat}</etat>
+        <tags>${livre.getTags().join(';')}</tags>
+    </livre>
+#{/list}
+</livres>

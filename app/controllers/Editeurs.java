@@ -57,6 +57,8 @@ public class Editeurs extends Controller {
     @Role("public")
     public static void index() {
         List<Editeur> editeurs = Editeur.findAll();
+        if(request.format.equals("json"))
+            renderJSON(editeurs);
         render(editeurs);
     }
 }

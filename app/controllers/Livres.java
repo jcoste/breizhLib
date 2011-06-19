@@ -38,6 +38,21 @@ public class Livres extends Controller {
         render(livres);
     }
 
+    @Role("public")
+    public static void allXml() {
+        Query<Livre> query = Livre.all(Livre.class);
+        List<Livre> livres = query.order("-dateAjout").fetch();
+        render(livres);
+    }
+
+    @Role("public")
+    public static void allJson(){
+        Query<Livre> query = Livre.all(Livre.class);
+        List<Livre> livres = query.order("-dateAjout").fetch();
+
+        render(livres);
+    }
+
 
     @Role("public")
     public static void editeur(String editeur, int page) {

@@ -33,8 +33,9 @@ GET     /book/{id}/commentaires                 Commentaires.commentaires
 GET     /editeur/add                            Editeurs.add
 POST    /editeur/add                            Editeurs.postEditeur
 GET     /editeurs                               Editeurs.index
+GET     /editeurs.json                          Editeurs.index(format:'json')
 
-
+GET     /explorer                               Pictures.explore
 
 GET     /users                                  Users.index
 GET     /user/infos                             Users.infos
@@ -55,6 +56,11 @@ GET     /logout                                 Secure.logout
 GET     /authentification                       security.Secure.authentification
 GET     /captcha/{id}                           security.BasicSecure.captcha
 *       /                                       security.Secure.checkAccess
+
+#REST
+GET     /ouvrages/                              Livres.allXml(format:'xml')
+#REST
+GET     /ouvrages.json                          livres.allJson(format: 'json')
 
 #RSS
 GET     /books.xml                              Livres.all(format:'xml')
