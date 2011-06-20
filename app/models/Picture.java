@@ -17,6 +17,10 @@ public class Picture extends Model {
     public String name;
     public String path;
 
+    public String getUrl() {
+        return "/shared/"+ name;
+    }
+
 
     public static Picture findByNname(String file) {
         return Picture.all(Picture.class).filter("name", file).get();

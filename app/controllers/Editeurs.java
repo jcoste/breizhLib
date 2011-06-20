@@ -3,6 +3,7 @@ package controllers;
 import controllers.security.Role;
 import controllers.security.Secure;
 import models.Editeur;
+import models.Picture;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -41,7 +42,8 @@ public class Editeurs extends Controller {
         String image = null;
         if (imageFile != null) {
             try {
-                image = Pictures.createImage(imageFile,"editeurs/",nom, false);
+                Picture picture = Pictures.createImage(imageFile,"editeurs/",nom, false);
+                image = picture.getUrl();
             } catch (Exception e) {
                 error(e.getLocalizedMessage());
             }

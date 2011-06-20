@@ -5,6 +5,7 @@ import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
 import models.Livre;
+import models.Picture;
 import models.User;
 import play.data.validation.Required;
 import play.mvc.Controller;
@@ -114,7 +115,9 @@ public class Livres extends Controller {
 
         String image = null;
         if (imageFile != null) {
-            image = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);
+            Picture picture = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);
+            image = picture.getUrl();
+            Pictures.resizeImage(picture,100,133);
         }
 
         Livre livre = new Livre(titre, editeur, image, iSBN);
@@ -137,7 +140,8 @@ public class Livres extends Controller {
 
         String image = null;
         if (imageFile != null) {
-            image = Pictures.createImage(imageFile, "ouvrages/",iSBN, true);
+            Picture picture = Pictures.createImage(imageFile, "ouvrages/",iSBN, true);
+            image = picture.getUrl();
             livre.image = image;
         }
         livre.editeur = editeur;

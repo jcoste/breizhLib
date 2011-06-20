@@ -68,7 +68,6 @@ GET     /commentaires.xml                       Commentaires.all(format:'xml')
 
 *       /textile/renderPreview                  Textile.renderPreview
 
-
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

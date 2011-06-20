@@ -5,4 +5,11 @@
     <description>rappel des livres a apporter lors du prochain Jug</description>
       <schedule>1st monday of month 08:00</schedule>
   </cron -->
+
+
+   <cron>
+    <url>/Pictures/resize</url>
+    <description>redimensionnement des images</description>
+      <schedule>every tuesday 08:00</schedule>
+  </cron>
 </cronentries>
