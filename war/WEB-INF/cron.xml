@@ -10,6 +10,6 @@
    <cron>
     <url>/Pictures/resize</url>
     <description>redimensionnement des images</description>
-      <schedule>every tuesday 08:00</schedule>
+      <schedule>every wednesday 08:00</schedule>
   </cron>
 </cronentries>
