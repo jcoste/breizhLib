@@ -27,21 +27,8 @@ public class FBSecure extends Controller implements ISecure {
         Secure.authetification();
     }
 
-    @Override
+   @Override
     public boolean check(String profile) {
-        if ("public".equals(profile)) {
-            return true;
-        }
-        if ("admin".equals(profile)) {
-            if (session.get("userEmail") != null) {
-                User user = getUser();
-                return user.isAdmin;
-            }
-            return false;
-        } else if ("member".equals(profile)) {
-            return session.get("userEmail") != null;
-        }
-
         return false;
     }
 
@@ -52,8 +39,11 @@ public class FBSecure extends Controller implements ISecure {
             user = User.find(session.get("userEmail"));
             if (user == null) {
                 user = new User(session.get("userEmail"));
+                user.actif = true;
                 user.insert();
             }
+            user.actif = true;
+            user.update();
         }
         return user;
     }

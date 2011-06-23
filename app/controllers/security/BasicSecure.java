@@ -5,6 +5,7 @@ import models.User;
 import notifiers.Mails;
 import org.apache.commons.mail.EmailException;
 import play.Logger;
+import play.Play;
 import play.cache.Cache;
 import play.data.validation.Required;
 import play.libs.Codec;
@@ -34,15 +35,10 @@ public class BasicSecure extends Controller implements ISecure {
             return true;
         }
         if ("admin".equals(profile)) {
-            if (session.get("userEmail") != null) {
-                User user = User.find(session.get("userEmail"));
-                return user.isAdmin;
-            }
-            return false;
+            return getUser() == null ? false: getUser().isAdmin;
         } else if ("member".equals(profile)) {
-            return session.get("userEmail") != null;
+            return getUser() != null;
         }
-
         return false;
     }
 
@@ -69,8 +65,16 @@ public class BasicSecure extends Controller implements ISecure {
         user.nom = nom;
         user.prenom = prenom;
         user.password = Crypto.passwordHash(password);
-        user.insert();
 
+
+        boolean validationInscription = Boolean.parseBoolean(Play.configuration.getProperty("authbasic.inscription.validation"));
+        if(validationInscription){
+          // TODO envoyer un email pour la validation du compte
+          user.actif = false;
+        }else{
+          user.actif = true;
+        }
+        user.insert();
         authenticate(email, password, false);
     }
 

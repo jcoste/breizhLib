@@ -35,6 +35,8 @@ public class User extends Model {
 
     public String username;
 
+    public Boolean actif;
+
 
     public User(String email) {
         this.dateCreation = new Date();

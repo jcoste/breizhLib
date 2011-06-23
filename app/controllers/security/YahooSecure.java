@@ -87,21 +87,8 @@ public class YahooSecure extends Controller implements ISecure {
         Secure.authetification();
     }
 
-    @Override
+   @Override
     public boolean check(String profile) {
-        if ("public".equals(profile)) {
-            return true;
-        }
-        if ("admin".equals(profile)) {
-            if (session.get("userEmail") != null) {
-                User user = getUser();
-                return user.isAdmin;
-            }
-            return false;
-        } else if ("member".equals(profile)) {
-            return session.get("userEmail") != null;
-        }
-
         return false;
     }
 
@@ -121,6 +108,7 @@ public class YahooSecure extends Controller implements ISecure {
             if (user == null) {
                 user = new User(null);
                 user.username = session.get("userEmail");
+                user.actif = true;
                 user.insert();
             }
         }

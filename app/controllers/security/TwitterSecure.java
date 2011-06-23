@@ -89,19 +89,6 @@ public class TwitterSecure extends Controller implements ISecure {
 
     @Override
     public boolean check(String profile) {
-        if ("public".equals(profile)) {
-            return true;
-        }
-        if ("admin".equals(profile)) {
-            if (session.get("userEmail") != null) {
-                User user = getUser();
-                return user.isAdmin;
-            }
-            return false;
-        } else if ("member".equals(profile)) {
-            return session.get("userEmail") != null;
-        }
-
         return false;
     }
 
@@ -121,8 +108,11 @@ public class TwitterSecure extends Controller implements ISecure {
             if (user == null) {
                 user = new User(null);
                 user.username = session.get("userEmail");
+                user.actif = true;
                 user.insert();
             }
+             user.actif = true;
+            user.update();
         }
         return user;
     }

@@ -17,16 +17,8 @@ public class GAESecure implements ISecure {
         GAE.logout("security.secure.authetification");
     }
 
+    @Override
     public boolean check(String profile) {
-        if ("public".equals(profile)) {
-            return true;
-        }
-        if ("admin".equals(profile)) {
-            return GAE.isLoggedIn() && GAE.isAdmin();
-        } else if ("member".equals(profile)) {
-            return GAE.isLoggedIn();
-        }
-
         return false;
     }
 
@@ -37,8 +29,10 @@ public class GAESecure implements ISecure {
             user = User.find(GAE.getUser().getEmail());
             if (user == null) {
                 user = new User(GAE.getUser().getEmail());
+                user.actif = true;
                 user.insert();
             }
+            user.actif = true;
             user.isAdmin = GAE.isAdmin();
             user.update();
         }
