@@ -51,6 +51,7 @@ GET     /fbconnect                              security.Secure.fblogin
 GET     /tlogin                                 security.Secure.tlogin
 GET     /ylogin                                 security.Secure.ylogin
 GET     /user/new                               security.BasicSecure.newuser
+GET     /user/resetPassword/{id}                security.BasicSecure.changePassword
 POST    /user/new                               security.BasicSecure.postNewuser
 GET     /logout                                 Secure.logout
 GET     /authentification                       security.Secure.authentification

@@ -67,7 +67,7 @@ public class Users extends Controller {
             render("Users/infos.html");
         }
         if (user != null) {
-            user.password = pwd;
+            user.password = Crypto.passwordHash(pwd);
             user.update();
         }
         infos();
