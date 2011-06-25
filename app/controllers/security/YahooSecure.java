@@ -6,35 +6,20 @@ import models.oauthclient.Credentials;
 import play.Logger;
 import play.Play;
 import play.exceptions.UnexpectedException;
-import play.modules.oauthclient.OAuthClient;
-import play.mvc.Controller;
 import play.mvc.Router;
+import play.mvc.Scope;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class YahooSecure extends Controller implements ISecure {
+public class YahooSecure extends OAuthSecure implements ISecure {
 
      public static final YahooSecure INSTANCE = new YahooSecure();
 
-    private String consumerKey;
-	private String consumerSecret;
-    private String callback;
-
-    private OAuthClient connector = null;
-	private static OAuthClient getConnector() {
-		if (INSTANCE.connector == null) {
-			INSTANCE.connector = new OAuthClient(
-					"https://api.login.yahoo.com/oauth/v2/get_request_token",
-					"https://api.login.yahoo.com/oauth/v2/request_auth",
-					"https://api.login.yahoo.com/oauth/v2/get_token",
-					INSTANCE.consumerKey,
-					INSTANCE.consumerSecret);
-		}
-		return INSTANCE.connector;
-	}
-
      private YahooSecure(){
+           super("https://api.login.yahoo.com/oauth/v2/get_request_token",
+					"https://api.login.yahoo.com/oauth/v2/request_auth",
+					"https://api.login.yahoo.com/oauth/v2/get_token");
            init();
      }
 
@@ -54,17 +39,11 @@ public class YahooSecure extends Controller implements ISecure {
 
     }
 
-    @Override
-    public void login() {
-        try {
-            authenticate(callback);
-        } catch (Exception e) {
-            Logger.error(e.getMessage());
-        }
+    public static void authenticate() throws Exception {
+		INSTANCE.authenticate(INSTANCE.callback);
+	}
 
-    }
-
-    public static void authenticate(String callback) throws Exception {
+    public void authenticate(String callback) throws Exception {
 		// 1: get the request token
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("callback", callback);
@@ -72,20 +51,17 @@ public class YahooSecure extends Controller implements ISecure {
 		getConnector().authenticate(getCredentials(), callbackURL);
 	}
 
-    public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
+   protected Scope.Session session(){
+        return Scope.Session.current();
+    }
+
+    public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
 		// 2: get the access token
         Logger.info("token :" + oauth_token);
 		getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-        session.put("userEmail", getConnector().getProvider().getResponseParameters().get("screen_name"));
+        session().put(SESSION_EMAIL_KEY, getConnector().getProvider().getResponseParameters().get("screen_name"));
 		redirect(callback);
 	}
-
-    @Override
-    public void logout() {
-        session.put("userEmail", null);
-        session.put("secureimpl", null);
-        Secure.authetification();
-    }
 
    @Override
     public boolean check(String profile) {
@@ -103,11 +79,11 @@ public class YahooSecure extends Controller implements ISecure {
     @Override
     public User getUser() {
         User user = null;
-        if (session.get("userEmail") != null) {
-            user = User.findByUsername(session.get("userEmail"));
+        if (session().get(SESSION_EMAIL_KEY) != null) {
+            user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
                 user = new User(null);
-                user.username = session.get("userEmail");
+                user.username = session().get(SESSION_EMAIL_KEY);
                 user.actif = true;
                 user.insert();
             }

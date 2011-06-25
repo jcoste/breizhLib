@@ -32,6 +32,11 @@ public class SecureAdapter implements ISecure {
     }
 
     @Override
+    public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
+         secureMap.get(Secure.getImpl()).oauthCallback(callback,oauth_token,oauth_verifier);
+    }
+
+    @Override
     public boolean check(String profile) {
         ISecure secure = secureMap.get(Secure.getImpl());
         if ("public".equals(profile)) {

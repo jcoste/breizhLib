@@ -7,6 +7,12 @@
 <section class="full">
     #{form @Users.postEdit(),enctype:'multipart/form-data'}
     <table>
+        #{if user.username != null }
+             <tr>
+                <td><label>Nom d'utilisateur : </label></td>
+                <td>${user.username}</td>
+            </tr>
+        #{/if}
         #{if user.email != null }
             <tr>
                 <td><label>Email : </label></td>
@@ -15,12 +21,8 @@
         #{/if}
         #{else}
             <tr>
-                <td><label>Nom d'utilisateur : </label></td>
-                <td>${user.username}</td>
-            </tr>
-            <tr>
                 <td><label for="email">Email : </label></td>
-                <td><p>#{error 'email' /}</p><input type="email" name="email" id="email" value="${user.email}" size="20"/></td>
+                <td><p>#{error 'email' /}</p><input type="email" name="email" id="email" value="${email}" size="20"/></td>
             </tr>
         #{/else}
         <tr>

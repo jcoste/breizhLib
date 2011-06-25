@@ -10,6 +10,10 @@
         <p>Prénom : ${user.prenom}</p>
 
         <p>Email : ${user.email}</p>
+
+        #{if user.username != null }
+             <p>Nom d'utilisateur : ${user.username}</p>
+        #{/if}
         <footer><a href="@{Users.commentaires()}">Mes commentaires</a> - <a href="@{Users.edit()}">Editer Mes infos</a>
             - <a href="@{Users.emprunts()}">Mes Emprunts</a></footer>
     </section>

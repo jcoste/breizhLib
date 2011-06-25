@@ -14,7 +14,7 @@ public class Secure extends Controller {
 
     private static ISecure secure = SecureAdapter.INSTANCE;
 
-    @Before(unless = {"login", "logout"})
+    @Before(unless = {"login", "logout","oauthCallback"})
     public static void checkAccess() throws Throwable {
         // Checks
         Role role = getActionAnnotation(Role.class);
@@ -28,8 +28,8 @@ public class Secure extends Controller {
     }
 
     public static String getImpl() {
-        if (session.get("secureimpl") != null) {
-            return session.get("secureimpl");
+        if (session.get(ISecure.SESSION_IMPL_KEY) != null) {
+            return session.get(ISecure.SESSION_IMPL_KEY);
         } else {
             return "gae";
         }
@@ -38,13 +38,13 @@ public class Secure extends Controller {
     public static void authetification() {
         User user = secure.getUser();
         if (user != null) {
-            session.put("userEmail", user.email);
+            session.put(ISecure.SESSION_EMAIL_KEY, user.email);
             session.put("userIsAdmin", user.isAdmin);
             user.dateConnexion = new Date();
             user.update();
             Application.index();
         } else {
-            session.put("userEmail", null);
+            session.put(ISecure.SESSION_EMAIL_KEY, null);
             session.put("userIsAdmin", null);
             Application.index();
         }
@@ -60,23 +60,27 @@ public class Secure extends Controller {
     }
 
     public static void glogin() {
-        session.put("secureimpl","gae");
+        session.put(ISecure.SESSION_IMPL_KEY,"gae");
         secure.login();
     }
 
     public static void fblogin() {
-        session.put("secureimpl","fbconnect");
+        session.put(ISecure.SESSION_IMPL_KEY,"fbconnect");
         secure.login();
     }
 
     public static void tlogin() {
-        session.put("secureimpl","twitter");
+        session.put(ISecure.SESSION_IMPL_KEY,"twitter");
         secure.login();
     }
 
     public static void ylogin() {
-        session.put("secureimpl","yahoo");
+        session.put(ISecure.SESSION_IMPL_KEY,"yahoo");
         secure.login();
+    }
+
+    public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception{
+       secure.oauthCallback(callback,oauth_token,oauth_verifier);
     }
 
     private static void checkRole(Role role) {

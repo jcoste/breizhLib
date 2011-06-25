@@ -9,17 +9,22 @@ import java.io.UnsupportedEncodingException;
 public class Mails extends Mailer {
 
 
-    public static void validationInscription(User user) throws UnsupportedEncodingException {
-
+    public static void validationInscription(User user,String randomID) throws UnsupportedEncodingException {
       setFrom("team@breizhjug.org");
       setSubject("Validation de votre inscription au breizhlIB");
       addRecipient(user.email);
-      send(user);
+      send(user,randomID);
+   }
+
+   public static void validationEmail(User user,String randomID) throws UnsupportedEncodingException {
+      setFrom("team@breizhjug.org");
+      setSubject("Validation de votre Adresse email");
+      addRecipient(user.email);
+      send(user,randomID);
    }
 
 
    public static void lostPassword(User user,String randomID) throws UnsupportedEncodingException {
-
       setFrom("team@breizhjug.org");
       setSubject("Créez un nouveau mot de passe");
       addRecipient(user.email);

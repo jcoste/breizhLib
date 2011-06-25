@@ -2,6 +2,7 @@
 # For example, for French create a messages.fr file
 #
 
+
 #
 # views/main.html
 #
@@ -9,7 +10,8 @@ views.main.title = Bibliothèque
 views.main.footer = Copyleft - breizhjug.org
 
 
-
+ #error=<span class="error">%s</span>
+error=%s
 
 #
 # views/tags/menu.html

@@ -18,6 +18,11 @@ public class GAESecure implements ISecure {
     }
 
     @Override
+    public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
+        throw new IllegalAccessException();
+    }
+
+    @Override
     public boolean check(String profile) {
         return false;
     }

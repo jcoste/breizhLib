@@ -1,40 +1,27 @@
 package controllers.security;
 
 
+import controllers.Application;
+import controllers.Users;
 import models.User;
 import models.oauthclient.Credentials;
 import play.Logger;
 import play.Play;
 import play.exceptions.UnexpectedException;
-import play.modules.oauthclient.OAuthClient;
-import play.mvc.Controller;
 import play.mvc.Router;
+import play.mvc.Scope;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TwitterSecure extends Controller implements ISecure {
+public class TwitterSecure extends OAuthSecure implements ISecure {
 
      public static final TwitterSecure INSTANCE = new TwitterSecure();
 
-    private String consumerKey;
-	private String consumerSecret;
-    private String callback;
-
-    private OAuthClient connector = null;
-	private static OAuthClient getConnector() {
-		if (INSTANCE.connector == null) {
-			INSTANCE.connector = new OAuthClient(
-					"http://twitter.com/oauth/request_token",
-					"http://twitter.com/oauth/access_token",
-					"http://twitter.com/oauth/authorize",
-					INSTANCE.consumerKey,
-					INSTANCE.consumerSecret);
-		}
-		return INSTANCE.connector;
-	}
-
      private TwitterSecure(){
+            super("http://twitter.com/oauth/request_token",
+					"http://twitter.com/oauth/access_token",
+					"http://twitter.com/oauth/authorize");
            init();
      }
 
@@ -54,43 +41,22 @@ public class TwitterSecure extends Controller implements ISecure {
 
     }
 
-    @Override
-    public void login() {
-        try {
-            authenticate(callback);
-        } catch (Exception e) {
-            Logger.error(e.getMessage());
-        }
 
-    }
-
-    public static void authenticate(String callback) throws Exception {
+    public void authenticate(String callback) throws Exception {
 		// 1: get the request token
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("callback", callback);
 		String callbackURL = Router.getFullUrl(request.controller + ".oauthCallback", args);
-		getConnector().authenticate(getCredentials(), callbackURL);
+		INSTANCE.getConnector().authenticate(getCredentials(), callbackURL);
 	}
 
-    public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
+    public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
 		// 2: get the access token
         Logger.info("token :" + oauth_token);
-		getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-        session.put("userEmail", getConnector().getProvider().getResponseParameters().get("screen_name"));
+		INSTANCE.getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
+        session().put(SESSION_EMAIL_KEY, INSTANCE.getConnector().getProvider().getResponseParameters().get("screen_name"));
 		redirect(callback);
 	}
-
-    @Override
-    public void logout() {
-        session.put("userEmail", null);
-        session.put("secureimpl", null);
-        Secure.authetification();
-    }
-
-    @Override
-    public boolean check(String profile) {
-        return false;
-    }
 
     private static ThreadLocal<Credentials> _session = new ThreadLocal<Credentials>();
 
@@ -103,11 +69,11 @@ public class TwitterSecure extends Controller implements ISecure {
     @Override
     public User getUser() {
         User user = null;
-        if (session.get("userEmail") != null) {
-            user = User.findByUsername(session.get("userEmail"));
+        if (session().get(SESSION_EMAIL_KEY) != null) {
+            user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
                 user = new User(null);
-                user.username = session.get("userEmail");
+                user.username = session().get(SESSION_EMAIL_KEY);
                 user.actif = true;
                 user.insert();
             }
@@ -115,6 +81,18 @@ public class TwitterSecure extends Controller implements ISecure {
             user.update();
         }
         return user;
+    }
+
+    protected Scope.Session session(){
+        return Scope.Session.current();
+    }
+
+    public static void informations(){
+        if(Secure.getUser().email == null){
+            Users.edit();
+        }else {
+            Application.index();
+        }
     }
 
 }
