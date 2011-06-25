@@ -1,0 +1,67 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib Recherche' /}
+
+<article>
+     #{form @Livres.postSearch(),enctype:'multipart/form-data'}
+       <p><input type="text" name="recherche" id="recherche" value="${recherche}"  size="50"/>
+           <select name="type" id="type">
+                    <option value="tout" #{if type.equals('tout') }selected="true"#{/if}>Tout</option>
+                    <option value="images" #{if type.equals('images') }selected="true"#{/if}>Images</option>
+                    <option value="livres" #{if type.equals('livres') }selected="true"#{/if}>Livres</option>
+                    <option value="editeurs" #{if type.equals('editeurs') }selected="true"#{/if}>Editeurs</option>
+                    <option value="commentaires" #{if type.equals('commentaires') }selected="true"#{/if}>Commentaires</option>
+                </select>
+           <input type="submit" value="Rechercher"/></p>
+    #{/form}
+
+
+    %{ nbImages = 0; }%
+
+     #{list items:livres, as:'livre'}
+      #{if type.equals('tout') || type.equals('livres')}
+        <p><a href="@{Livres.show(livre.iSBN)}"> ${livre.titre}</a></p>
+      #{/if}
+      #{if type.equals('images')}
+         #{if nbImages == 0}
+          <p>
+         #{/if}
+         #{if nbImages == 8}
+           </p>
+           %{ nbImages = 0; }%
+         #{/if}
+        <a href="@{Livres.show(livre.iSBN)}"> <img src="${livre.image}" alt="${livre.titre}" width="100px" /></a>
+        %{ nbImages++; }%
+      #{/if}
+    #{/list}
+
+     #{if nbImages == 0}
+       </p>
+     #{/if}
+
+     #{list items:editeurs, as:'editeur'}
+          #{if type.equals('tout') || type.equals('editeurs')}
+          <p>${editeur.nom} - <a href="${editeur.site}" target="_blank">Site</a> - <a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a></p>
+          #{/if}
+          #{if type.equals('images')}
+            #{if nbImages == 0}
+              <p>
+             #{/if}
+             #{if nbImages == 8}
+               </p>
+               %{ nbImages = 0; }%
+             #{/if}
+                <img src="${editeur.image}" alt="${editeur.nom}" width="100px" />
+                %{ nbImages++; }%
+          #{/if}
+    #{/list}
+
+     #{if nbImages == 0}
+       </p>
+     #{/if}
+
+    #{list items:commentaires, as:'commentaire'}
+          #{if type.equals('tout') || type.equals('commentaires')}
+          <p>${commentaire.nom} - ${commentaire.commentaire}</p>
+          #{/if}
+    #{/list}
+</article>

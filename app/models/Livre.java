@@ -4,10 +4,12 @@ package models;
 import controllers.security.Secure;
 import models.tag.LivreTag;
 import models.tag.Tag;
+import play.Logger;
 import play.data.binding.As;
 import play.data.validation.Required;
 import siena.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -134,6 +136,19 @@ public class Livre extends Model {
       Tag newTag = Tag.findOrCreateByName(tag);
       LivreTag livreTag = new LivreTag(this, newTag);
       livreTag.insert();
+    }
+
+    public static List<Livre> findLikeTitre(String text) {
+       List<Livre> allLivres = findAll();
+       List<Livre> livres    = new ArrayList<Livre>();
+       for(Livre livre : allLivres){
+           Logger.info(livre.titre+" ->" +text);
+            if(livre.titre.toLowerCase().contains(text.toLowerCase())) {
+               Logger.info("add "+livre.titre);
+              livres.add(livre);
+            }
+       }
+        return livres;
     }
 }
 

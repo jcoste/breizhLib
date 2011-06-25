@@ -3,10 +3,7 @@ package controllers;
 
 import controllers.security.Role;
 import controllers.security.Secure;
-import models.Commentaire;
-import models.Livre;
-import models.Picture;
-import models.User;
+import models.*;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -164,5 +161,17 @@ public class Livres extends Controller {
         Commentaire commentaire = new Commentaire(livre, user, nom, content, note);
         commentaire.insert();
         show(bookId);
+    }
+
+    @Role("member")
+    public static void postSearch(String recherche,String type) {
+
+       List<Livre> livres = Livre.findLikeTitre(recherche);
+
+       List<Editeur> editeurs = Editeur.findLikeNom(recherche);
+
+       List<Commentaire> commentaires = Commentaire.findLike(recherche);
+
+       render(livres,recherche,editeurs,commentaires,type);
     }
 }

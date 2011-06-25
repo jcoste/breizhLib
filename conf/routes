@@ -15,6 +15,7 @@ GET     /add                                    Livres.add
 POST    /add                                    Livres.save
 GET     /news                                   Livres.last
 GET     /search                                 Livres.search
+POST    /search                                 Livres.postSearch
 
 POST    /book/{bookId}/tag/{tag}                tag.Tags.addForBook
 GET     /tags                                   tag.Tags.index

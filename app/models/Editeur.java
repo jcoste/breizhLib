@@ -5,6 +5,7 @@ import siena.Generator;
 import siena.Id;
 import siena.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @siena.Table("Editeur")
@@ -34,5 +35,16 @@ public class Editeur extends Model {
 
     public static List<Editeur> findAll() {
         return Editeur.all(Editeur.class).order("nom").fetch();
+    }
+
+    public static List<Editeur> findLikeNom(String recherche) {
+         List<Editeur> allEditeurs = findAll();
+        List<Editeur> editeurs    = new ArrayList<Editeur>();
+       for(Editeur editeur : allEditeurs){
+            if(editeur.nom.toLowerCase().contains(recherche.toLowerCase())) {
+              editeurs.add(editeur);
+            }
+       }
+        return editeurs;
     }
 }

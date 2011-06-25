@@ -2,5 +2,19 @@
 #{set title:'BreizhLib Recherche' /}
 
 <article>
-    <p>Non disponible pour le moment</p>
+     #{form @Livres.postSearch(),enctype:'multipart/form-data'}
+       <p><input type="text" name="recherche" id="recherche"  value="${recherche}"  size="50"/><select name="type" id="type">
+                    <option value="tout">Tout</option>
+                    <option value="images">Images</option>
+                </select><input type="submit" value="Rechercher"/></p>
+    #{/form}
+
+    #{list items:livres, as:'livre'}
+      #{if type.equals('tout')}
+        <p><a href="@{Livres.show(livre.iSBN)}"> ${livre.titre}</a></p>
+      #{/if}
+      #{if type.equals('images')}
+        <p><a href="@{Livres.show(livre.iSBN)}"> <img src="${_livre.image}" alt="${livre.titre}"/></a></p>
+      #{/if}
+    #{/list}
 </article>

@@ -5,6 +5,7 @@ import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import siena.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,5 +51,16 @@ public class Commentaire extends Model {
     }
 
 
+    public static List<Commentaire> findLike(String recherche) {
+       List<Commentaire> allCommetairess = findAll();
+       List<Commentaire> commentaires = new ArrayList<Commentaire>();
+       for(Commentaire commentaire : allCommetairess){
+            if(commentaire.commentaire.toLowerCase().contains(recherche.toLowerCase()) ||
+               commentaire.nom.toLowerCase().contains(recherche.toLowerCase())) {
+              commentaires.add(commentaire);
+            }
+       }
+        return commentaires;
+    }
 }
 
