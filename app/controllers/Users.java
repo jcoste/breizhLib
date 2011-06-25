@@ -7,6 +7,7 @@ import models.Commentaire;
 import models.User;
 import notifiers.Mails;
 import play.cache.Cache;
+import play.data.validation.Equals;
 import play.data.validation.Required;
 import play.i18n.Messages;
 import play.libs.Codec;
@@ -49,16 +50,16 @@ public class Users extends Controller {
     }
 
     @Role("member")
-    public static void postEdit(@Required String nom, @Required String prenom,String email) throws UnsupportedEncodingException {
+    public static void postEdit(@Required String nom, @Required String prenom, String email) throws UnsupportedEncodingException {
         User user = Secure.getUser();
         if (user != null) {
             user.nom = nom;
             user.prenom = prenom;
             user.update();
-            if(email != null && user.email == null){
+            if (email != null && user.email == null) {
                 User anotherUser = User.find(email);
-                if(anotherUser != null){
-                     error("email déjà utilisé par un autre compte");
+                if (anotherUser != null) {
+                    error("email déjà utilisé par un autre compte");
                     //TODO fusion de comptes
                 }
                 String validationID = Codec.UUID();
@@ -71,10 +72,9 @@ public class Users extends Controller {
     }
 
     @Role("member")
-    public static void modifPwd(@Required String oldwpd, @Required String pwd, @Required String pwdconfirm) {
+    public static void modifPwd(@Required String oldwpd, @Required @Equals("pwdconfirm") String pwd, @Required String pwdconfirm) {
         User user = Secure.getUser();
         validation.equals(user.password, Crypto.passwordHash(oldwpd)).message(Messages.get("error", "mot de passe incorrect"));
-        validation.equals(pwd, pwdconfirm).message(Messages.get("error","mot de passe incorrect"));
         if (validation.hasErrors()) {
             render("Users/infos.html");
         }
@@ -97,16 +97,16 @@ public class Users extends Controller {
     }
 
 
-     public static void validateEmail(@Required String id){
+    public static void validateEmail(@Required String id) {
         User user = Secure.getUser();
-        if(user != null){
-           String email = (String) Cache.get(id);
-           if(email != null){
-               user.email = email;
-               user.update();
-           }else{
-               error("le lien a expiré");
-           }
+        if (user != null) {
+            String email = (String) Cache.get(id);
+            if (email != null) {
+                user.email = email;
+                user.update();
+            } else {
+                error("le lien a expiré");
+            }
         }
 
 

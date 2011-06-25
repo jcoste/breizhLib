@@ -27,16 +27,16 @@
     </div>
     <h1 onclick="display('openid',['login','new']);">Connectez-vous avec l'Open-ID </h1>
     <div id="openid" style="visibility:visible; display:block;">
-    <p><a href="@{security.Secure.glogin()}"><img src="@{'/public/images/openid-provider/google.png'}"
+    <p><a href="@{security.Secure.login('gae')}"><img src="@{'/public/images/openid-provider/google.png'}"
                                                   alt="Google"/></a>
-       <a href="@{security.Secure.fblogin()}"><img src="@{'/public/images/openid-provider/facebook.png'}"
+       <a href="@{security.Secure.login('fbconnect')}"><img src="@{'/public/images/openid-provider/facebook.png'}"
                                                   alt="Facebook"/></a></p>
 
-    <p><a href="@{security.Secure.tlogin()}"><img src="@{'/public/images/openid-provider/twitter.png'}"
+    <p><a href="@{security.Secure.login('twitter')}"><img src="@{'/public/images/openid-provider/twitter.png'}"
                                                   alt="Twitter"/>
     </a>
 
-    #{if play.mode.name() == 'DEV'}<a href="@{security.Secure.ylogin()}"><img src="@{'/public/images/openid-provider/yahoo.png'}"
+    #{if play.mode.name() == 'DEV'}<a href="@{security.Secure.login('yahoo')}"><img src="@{'/public/images/openid-provider/yahoo.png'}"
                                                   alt="Yahoo"/></a>
 
     #{/if}

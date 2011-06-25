@@ -15,28 +15,28 @@ import java.util.List;
 public class Tags extends Controller {
 
     @Role("admin")
-    public static void addForBook(String bookId,String tag) {
+    public static void addForBook(String bookId, String tag) {
 
-       Livre livre = Livre.findByISBN(bookId);
-       livre.addTag(tag);
+        Livre livre = Livre.findByISBN(bookId);
+        livre.addTag(tag);
 
-       Livres.show(bookId);
+        Livres.show(bookId);
     }
 
     @Role("public")
     public static void index() {
-       List<LivreTag> tags = LivreTag.all().fetch();
-       for(LivreTag livreTag : tags) {
-           livreTag.tag.get();
-       }
-       render(tags);
+        List<LivreTag> tags = LivreTag.all().fetch();
+        for (LivreTag livreTag : tags) {
+            livreTag.tag.get();
+        }
+        render(tags);
     }
 
     @Role("public")
     public static void tag(String tag) {
         Tag tagBase = Tag.findOrCreateByName(tag);
 
-       List<Livre> livres = LivreTag.findByTag(tagBase);
-       render(tag,livres);
+        List<Livre> livres = LivreTag.findByTag(tagBase);
+        render(tag, livres);
     }
 }

@@ -7,6 +7,7 @@ import play.modules.gae.GAE;
 public class GAESecure implements ISecure {
 
     public static final GAESecure INSTANCE = new GAESecure();
+    public static final String ID = "gae";
 
 
     public void login() {

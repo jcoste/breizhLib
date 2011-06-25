@@ -42,7 +42,7 @@ public class Editeurs extends Controller {
         String image = null;
         if (imageFile != null) {
             try {
-                Picture picture = Pictures.createImage(imageFile,"editeurs/",nom, false);
+                Picture picture = Pictures.createImage(imageFile, "editeurs/", nom, false);
                 image = picture.getUrl();
             } catch (Exception e) {
                 error(e.getLocalizedMessage());
@@ -59,7 +59,7 @@ public class Editeurs extends Controller {
     @Role("public")
     public static void index() {
         List<Editeur> editeurs = Editeur.findAll();
-        if(request.format.equals("json"))
+        if (request.format.equals("json"))
             renderJSON(editeurs);
         render(editeurs);
     }

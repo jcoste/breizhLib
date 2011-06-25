@@ -9,36 +9,36 @@ import play.mvc.Scope;
 public abstract class OAuthSecure extends Controller implements ISecure {
 
     protected String consumerKey;
-	protected String consumerSecret;
+    protected String consumerSecret;
     protected String callback;
 
     private String requestURL;
-	private String accessURL;
-	private String authorizeURL;
+    private String accessURL;
+    private String authorizeURL;
 
     protected OAuthClient connector = null;
 
 
-    public OAuthSecure(String requestURL, String accessURL, String authorizeURL){
+    public OAuthSecure(String requestURL, String accessURL, String authorizeURL) {
         this.requestURL = requestURL;
-		this.accessURL = accessURL;
-		this.authorizeURL = authorizeURL;
+        this.accessURL = accessURL;
+        this.authorizeURL = authorizeURL;
         init();
     }
 
     public abstract void init();
 
     protected OAuthClient getConnector() {
-		if (connector == null) {
-			connector = new OAuthClient(
-					requestURL,
-					accessURL,
-					authorizeURL,
-					consumerKey,
-					consumerSecret);
-		}
-		return connector;
-	}
+        if (connector == null) {
+            connector = new OAuthClient(
+                    requestURL,
+                    accessURL,
+                    authorizeURL,
+                    consumerKey,
+                    consumerSecret);
+        }
+        return connector;
+    }
 
     @Override
     public void login() {
@@ -63,5 +63,6 @@ public abstract class OAuthSecure extends Controller implements ISecure {
     }
 
     abstract void authenticate(String callback) throws Exception;
+
     abstract Scope.Session session();
 }

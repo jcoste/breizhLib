@@ -7,6 +7,7 @@ import notifiers.Mails;
 import org.apache.commons.mail.EmailException;
 import play.Play;
 import play.cache.Cache;
+import play.data.validation.Equals;
 import play.data.validation.Required;
 import play.i18n.Messages;
 import play.libs.Codec;
@@ -19,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 public class BasicSecure extends Controller implements ISecure {
 
     public static final BasicSecure INSTANCE = new BasicSecure();
+    public static final String ID = "basic";
 
 
     public void login() {
@@ -31,7 +33,7 @@ public class BasicSecure extends Controller implements ISecure {
         Secure.authetification();
     }
 
-     @Override
+    @Override
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         throw new IllegalAccessException();
     }
@@ -49,12 +51,11 @@ public class BasicSecure extends Controller implements ISecure {
         render(email, nom, prenom, randomID);
     }
 
-    public static void postNewuser(@Required String email, String nom, String prenom, @Required String password,
+    public static void postNewuser(@Required String email, String nom, String prenom, @Required @Equals("passwordconfirm") String password,
                                    @Required String passwordconfirm, @Required String captcha, String randomID) throws Throwable {
         User user = User.find(email);
-        validation.isTrue(user == null).message(Messages.get("error","email déjà enregistré"));
-        validation.equals(captcha, Cache.get(randomID)).message(Messages.get("error","Invalid captcha. Please type it again"));
-        validation.equals(password, passwordconfirm).message(Messages.get("error","mot de passe incorrect"));
+        validation.isTrue(user == null).message(Messages.get("error", "email déjà enregistré"));
+        validation.equals(captcha, Cache.get(randomID)).message(Messages.get("error", "Invalid captcha. Please type it again"));
         if (validation.hasErrors()) {
             render("security/BasicSecure/newuser.html", email, nom, prenom, randomID);
         }
@@ -65,42 +66,45 @@ public class BasicSecure extends Controller implements ISecure {
 
 
         boolean validationInscription = Boolean.parseBoolean(Play.configuration.getProperty("authbasic.inscription.validation"));
-        if(validationInscription){
-             String activationID = Codec.UUID();
-             Cache.set(activationID,email, "10mn");
-             Mails.validationInscription(user,activationID);
-             user.actif = false;
-        }else{
-          user.actif = true;
+        if (validationInscription) {
+            String activationID = Codec.UUID();
+            Cache.set(activationID, email, "10mn");
+            Mails.validationInscription(user, activationID);
+            user.actif = false;
+        } else {
+            user.actif = true;
         }
         user.insert();
         authenticate(email, password, false);
     }
 
-    public static void activerCompte(@Required String id){
-        User user = User.find((String)Cache.get(id));
+    public static void activerCompte(@Required String id) {
+        User user = User.find((String) Cache.get(id));
         user.actif = true;
         user.update();
         Application.index();
     }
 
 
-    public static void authenticate(@Required String username, String password, boolean remember) throws Throwable {
+    public static void authenticate(@Required String username, @Required String password, boolean remember) throws Throwable {
         User user = User.find(username);
-        validation.isTrue(user != null).message(Messages.get("error","Utilisateur inconu"));
-        validation.equals(user.password, Crypto.passwordHash(password)).message(Messages.get("error","mot de passe incorrect"));
+        validation.isTrue(user != null).message(Messages.get("error", "Utilisateur inconu"));
+        if (user != null) {
+            validation.isTrue(user.password != null).message(Messages.get("error", "Type de compte non valide"));
+            validation.equals(user.password, Crypto.passwordHash(password)).message(Messages.get("error", "mot de passe incorrect"));
+        }
         if (validation.hasErrors()) {
             if (session.get("authfail") == null) {
                 String randomID = Codec.UUID();
-                session.put("authfail",randomID);
+                session.put("authfail", randomID);
             }
 
             Integer authFailCount = (Integer) Cache.get(session.get("authfail"));
-            if(authFailCount == null){
+            if (authFailCount == null) {
                 authFailCount = Integer.valueOf(0);
             }
-            Cache.set(session.get("authfail"),Integer.valueOf(authFailCount) + 1, "20mn");
-            Secure.login();
+            Cache.set(session.get("authfail"), Integer.valueOf(authFailCount) + 1, "20mn");
+            Secure.login(null);
         }
 
         session.remove("authfail");
@@ -131,27 +135,26 @@ public class BasicSecure extends Controller implements ISecure {
 
     public static void sendResetPassword(@Required String email) throws EmailException, UnsupportedEncodingException {
         User user = User.find(email);
-        validation.isTrue(user != null).message(Messages.get("error","email inconnu"));
-        validation.isTrue(user != null && user.password != null).message(Messages.get("error","Compte non valide pour un changement de mot de passe"));
+        validation.isTrue(user != null).message(Messages.get("error", "email inconnu"));
+        validation.isTrue(user != null && user.password != null).message(Messages.get("error", "Compte non valide pour un changement de mot de passe"));
         if (validation.hasErrors()) {
             render("security/BasicSecure/resetPassword.html");
         }
         String randomID = Codec.UUID();
-        Cache.set(randomID,email, "10mn");
+        Cache.set(randomID, email, "10mn");
 
-        Mails.lostPassword(user,randomID);
+        Mails.lostPassword(user, randomID);
 
-        Secure.login();
+        Secure.login(null);
     }
 
-    public static void changePassword(@Required String id){
+    public static void changePassword(@Required String id) {
         session.put("userResetPwd", Cache.get(id));
         render();
     }
 
-    public static void postChangePassword(@Required String newPwd,@Required String newPwd2){
-        validation.isTrue(session.contains("userResetPwd")).message(Messages.get("error","id inconnu"));
-        validation.equals(newPwd, newPwd2).message(Messages.get("error","mot de passe incorrect"));
+    public static void postChangePassword(@Required @Equals("newPwd2") String newPwd, @Required String newPwd2) {
+        validation.isTrue(session.contains("userResetPwd")).message(Messages.get("error", "id inconnu"));
         if (validation.hasErrors()) {
             render("security/BasicSecure/changePassword.html");
         }
@@ -159,7 +162,7 @@ public class BasicSecure extends Controller implements ISecure {
         user.password = Crypto.passwordHash(newPwd);
         user.update();
         session.remove("userResetPwd");
-        Secure.login();
+        Secure.login(null);
     }
 
 }

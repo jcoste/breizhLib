@@ -14,23 +14,24 @@ import java.util.Map;
 
 public class YahooSecure extends OAuthSecure implements ISecure {
 
-     public static final YahooSecure INSTANCE = new YahooSecure();
+    public static final YahooSecure INSTANCE = new YahooSecure();
+    public static final String ID = "yahoo";
 
-     private YahooSecure(){
-           super("https://api.login.yahoo.com/oauth/v2/get_request_token",
-					"https://api.login.yahoo.com/oauth/v2/request_auth",
-					"https://api.login.yahoo.com/oauth/v2/get_token");
-           init();
-     }
+    private YahooSecure() {
+        super("https://api.login.yahoo.com/oauth/v2/get_request_token",
+                "https://api.login.yahoo.com/oauth/v2/request_auth",
+                "https://api.login.yahoo.com/oauth/v2/get_token");
+        init();
+    }
 
-     public void init(){
-        if(!Play.configuration.containsKey("yahoo.consumerKey")) {
+    public void init() {
+        if (!Play.configuration.containsKey("yahoo.consumerKey")) {
             throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.consumerKey in your application.conf");
         }
-        if(!Play.configuration.containsKey("yahoo.consumerSecret")){
+        if (!Play.configuration.containsKey("yahoo.consumerSecret")) {
             throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.consumerSecret in your application.conf");
         }
-        if(!Play.configuration.containsKey("yahoo.callback")){
+        if (!Play.configuration.containsKey("yahoo.callback")) {
             throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.callback in your application.conf");
         }
         consumerKey = Play.configuration.getProperty("yahoo.consumerKey");
@@ -40,30 +41,30 @@ public class YahooSecure extends OAuthSecure implements ISecure {
     }
 
     public static void authenticate() throws Exception {
-		INSTANCE.authenticate(INSTANCE.callback);
-	}
+        INSTANCE.authenticate(INSTANCE.callback);
+    }
 
     public void authenticate(String callback) throws Exception {
-		// 1: get the request token
-		Map<String, Object> args = new HashMap<String, Object>();
-		args.put("callback", callback);
-		String callbackURL = Router.getFullUrl(request.controller + ".oauthCallback", args);
-		getConnector().authenticate(getCredentials(), callbackURL);
-	}
+        // 1: get the request token
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("callback", callback);
+        String callbackURL = Router.getFullUrl(request.controller + ".oauthCallback", args);
+        getConnector().authenticate(getCredentials(), callbackURL);
+    }
 
-   protected Scope.Session session(){
+    protected Scope.Session session() {
         return Scope.Session.current();
     }
 
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
-		// 2: get the access token
+        // 2: get the access token
         Logger.info("token :" + oauth_token);
-		getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
+        getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
         session().put(SESSION_EMAIL_KEY, getConnector().getProvider().getResponseParameters().get("screen_name"));
-		redirect(callback);
-	}
+        redirect(callback);
+    }
 
-   @Override
+    @Override
     public boolean check(String profile) {
         return false;
     }
@@ -71,11 +72,12 @@ public class YahooSecure extends OAuthSecure implements ISecure {
     private static ThreadLocal<Credentials> _session = new ThreadLocal<Credentials>();
 
     public static Credentials getCredentials() {
-        if(_session.get() == null){
+        if (_session.get() == null) {
             _session.set(new Credentials());
         }
         return _session.get();
     }
+
     @Override
     public User getUser() {
         User user = null;

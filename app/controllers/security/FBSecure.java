@@ -3,13 +3,13 @@ package controllers.security;
 import models.User;
 import play.Play;
 import play.modules.fbconnect.FBConnectPlugin;
-import play.mvc.Controller;
 import play.mvc.Scope;
 import play.mvc.results.Redirect;
 
 public class FBSecure implements ISecure {
 
     public static final FBSecure INSTANCE = new FBSecure();
+    public static final String ID = "fbconnect";
 
     private FBSecure() {
     }
@@ -26,12 +26,12 @@ public class FBSecure implements ISecure {
         Secure.authetification();
     }
 
-   @Override
+    @Override
     public boolean check(String profile) {
         return false;
     }
 
-     @Override
+    @Override
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         throw new IllegalAccessException();
     }
@@ -52,7 +52,7 @@ public class FBSecure implements ISecure {
         return user;
     }
 
-    private Scope.Session session(){
+    private Scope.Session session() {
         return Scope.Session.current();
     }
 }

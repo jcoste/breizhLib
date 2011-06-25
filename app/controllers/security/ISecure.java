@@ -5,9 +5,9 @@ import models.User;
 
 public interface ISecure {
 
-    String SESSION_IMPL_KEY="secureimpl";
+    String SESSION_IMPL_KEY = "secureimpl";
 
-    String SESSION_EMAIL_KEY="userEmail";
+    String SESSION_EMAIL_KEY = "userEmail";
 
     void login();
 

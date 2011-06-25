@@ -20,8 +20,8 @@ public class Application extends Controller {
         render(livres);
     }
 
-    public static void initDev(){
-        if(Play.mode.equals(Play.Mode.DEV)) {
+    public static void initDev() {
+        if (Play.mode.equals(Play.Mode.DEV)) {
             LoadDevData.doJob();
         }
         index();

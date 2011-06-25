@@ -45,11 +45,8 @@ GET     /user/edit                              Users.edit
 POST    /user/edit                              Users.postEdit
 
 
+GET     /login-{impl}                           security.Secure.login
 GET     /login                                  security.Secure.login
-GET     /glogin                                 security.Secure.glogin
-GET     /fbconnect                              security.Secure.fblogin
-GET     /tlogin                                 security.Secure.tlogin
-GET     /ylogin                                 security.Secure.ylogin
 GET     /user/new                               security.BasicSecure.newuser
 GET     /user/resetPassword/{id}                security.BasicSecure.changePassword
 POST    /user/new                               security.BasicSecure.postNewuser

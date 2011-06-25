@@ -14,7 +14,7 @@ public class Secure extends Controller {
 
     private static ISecure secure = SecureAdapter.INSTANCE;
 
-    @Before(unless = {"login", "logout","oauthCallback"})
+    @Before(unless = {"login", "logout", "oauthCallback"})
     public static void checkAccess() throws Throwable {
         // Checks
         Role role = getActionAnnotation(Role.class);
@@ -50,37 +50,22 @@ public class Secure extends Controller {
         }
     }
 
-    public static void login() {
-        Integer authFailcount = (Integer) Cache.get(session.get("authfail"));
-        render(authFailcount);
+    public static void login(String impl) {
+        if (impl == null) {
+            Integer authFailcount = (Integer) Cache.get(session.get("authfail"));
+            render(authFailcount);
+        } else {
+            session.put(ISecure.SESSION_IMPL_KEY, impl);
+            secure.login();
+        }
     }
 
     public static void logout() {
         secure.logout();
     }
 
-    public static void glogin() {
-        session.put(ISecure.SESSION_IMPL_KEY,"gae");
-        secure.login();
-    }
-
-    public static void fblogin() {
-        session.put(ISecure.SESSION_IMPL_KEY,"fbconnect");
-        secure.login();
-    }
-
-    public static void tlogin() {
-        session.put(ISecure.SESSION_IMPL_KEY,"twitter");
-        secure.login();
-    }
-
-    public static void ylogin() {
-        session.put(ISecure.SESSION_IMPL_KEY,"yahoo");
-        secure.login();
-    }
-
-    public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception{
-       secure.oauthCallback(callback,oauth_token,oauth_verifier);
+    public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
+        secure.oauthCallback(callback, oauth_token, oauth_verifier);
     }
 
     private static void checkRole(Role role) {

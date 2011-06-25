@@ -23,7 +23,7 @@ public class Pictures extends Controller {
         renderBinary(new ByteArrayInputStream(picture.image.getBytes()));
     }
 
-    public static Picture createImage(byte[] bytes,String path, String iSBN, boolean resize) throws Exception {
+    public static Picture createImage(byte[] bytes, String path, String iSBN, boolean resize) throws Exception {
         if (bytes != null) {
             Picture imageFile = new Picture();
             imageFile.image = new Blob(bytes);
@@ -35,17 +35,17 @@ public class Pictures extends Controller {
         return null;
     }
 
-    public static void resize(){
-         List<Picture> pictures = Picture.all(Picture.class).filter("path","ouvrages/").fetch();
+    public static void resize() {
+        List<Picture> pictures = Picture.all(Picture.class).filter("path", "ouvrages/").fetch();
 
-         for(Picture picture : pictures){
-               resizeImage(picture,100,133);
-         }
+        for (Picture picture : pictures) {
+            resizeImage(picture, 100, 133);
+        }
 
-         explore();
+        explore();
     }
 
-    public static void resizeImage(Picture imageFile,int width,int heigth) {
+    public static void resizeImage(Picture imageFile, int width, int heigth) {
         ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
         Image oldImage = ImagesServiceFactory.makeImage(imageFile.image.getBytes());
@@ -60,7 +60,7 @@ public class Pictures extends Controller {
     }
 
 
-     public static void explore() {
+    public static void explore() {
         List<Picture> pictures = Picture.all(Picture.class).order("path").fetch();
         render(pictures);
     }

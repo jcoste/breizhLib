@@ -47,7 +47,7 @@ public class Livres extends Controller {
     }
 
     @Role("public")
-    public static void allJson(){
+    public static void allJson() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
 
@@ -104,7 +104,7 @@ public class Livres extends Controller {
     }
 
     @Role("admin")
-    public static void save(@Required String titre, @Required String editeur, byte[] imageFile, String description, @Required String iSBN) throws Exception {
+    public static void save(@Required String titre, @Required String editeur, byte[] imageFile, @Required String iSBN) throws Exception {
         if (validation.hasErrors()) {
             render("Livres/add.html");
         }
@@ -117,7 +117,7 @@ public class Livres extends Controller {
         if (imageFile != null) {
             Picture picture = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);
             image = picture.getUrl();
-            Pictures.resizeImage(picture,100,133);
+            Pictures.resizeImage(picture, 100, 133);
         }
 
         Livre livre = new Livre(titre, editeur, image, iSBN);
@@ -127,7 +127,7 @@ public class Livres extends Controller {
 
     @Role("admin")
     public static void update(@Required String titre, @Required String editeur, byte[] imageFile, @Required String iSBN) throws Exception {
-         Livre livre = Livre.all(Livre.class).filter("iSBN", iSBN).get();
+        Livre livre = Livre.all(Livre.class).filter("iSBN", iSBN).get();
         if (validation.hasErrors()) {
             renderArgs.put("livre", livre);
             renderArgs.put("editeurs", Editeurs.initListEditeurs());
@@ -140,7 +140,7 @@ public class Livres extends Controller {
 
         String image = null;
         if (imageFile != null) {
-            Picture picture = Pictures.createImage(imageFile, "ouvrages/",iSBN, true);
+            Picture picture = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);
             image = picture.getUrl();
             livre.image = image;
         }

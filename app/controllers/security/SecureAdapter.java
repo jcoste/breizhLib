@@ -10,40 +10,56 @@ public class SecureAdapter implements ISecure {
 
     public static final SecureAdapter INSTANCE = new SecureAdapter();
 
-    private Map<String,ISecure> secureMap = new HashMap<String, ISecure>();
+    private Map<String, ISecure> secureMap = new HashMap<String, ISecure>();
 
-    private SecureAdapter(){
-        secureMap.put("basic",BasicSecure.INSTANCE);
-        secureMap.put("gae",GAESecure.INSTANCE);
-        secureMap.put("fbconnect",FBSecure.INSTANCE);
-        secureMap.put("twitter",TwitterSecure.INSTANCE);
-        secureMap.put("yahoo",YahooSecure.INSTANCE);
+    private static String DEFAULT_IMPL = GAESecure.ID;
+
+    private SecureAdapter() {
+        secureMap.put(BasicSecure.ID, BasicSecure.INSTANCE);
+        secureMap.put(GAESecure.ID, GAESecure.INSTANCE);
+        secureMap.put(FBSecure.ID, FBSecure.INSTANCE);
+        secureMap.put(TwitterSecure.ID, TwitterSecure.INSTANCE);
+        secureMap.put(YahooSecure.ID, YahooSecure.INSTANCE);
     }
 
 
     @Override
     public void login() {
-       secureMap.get(Secure.getImpl()).login();
+        if (secureMap.containsKey(Secure.getImpl())) {
+            secureMap.get(Secure.getImpl()).login();
+        } else {
+            secureMap.get(DEFAULT_IMPL).login();
+        }
     }
 
     @Override
     public void logout() {
-       secureMap.get(Secure.getImpl()).logout();
+        if (secureMap.containsKey(Secure.getImpl())) {
+            secureMap.get(Secure.getImpl()).logout();
+        } else {
+            secureMap.get(DEFAULT_IMPL).logout();
+        }
     }
 
     @Override
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
-         secureMap.get(Secure.getImpl()).oauthCallback(callback,oauth_token,oauth_verifier);
+        secureMap.get(Secure.getImpl()).oauthCallback(callback, oauth_token, oauth_verifier);
     }
 
     @Override
     public boolean check(String profile) {
-        ISecure secure = secureMap.get(Secure.getImpl());
+        ISecure secure = null;
+        if (secureMap.containsKey(Secure.getImpl())) {
+            secure = secureMap.get(Secure.getImpl());
+        } else {
+            secure = secureMap.get(DEFAULT_IMPL);
+        }
+
         if ("public".equals(profile)) {
             return true;
         }
         if ("admin".equals(profile)) {
-            return secure.getUser() == null ? false: secure.getUser().isAdmin;
+            return secure.getUser() == null ? false : secure.getUser().isAdmin;
         } else if ("member".equals(profile)) {
             return secure.getUser() != null;
         }
@@ -52,6 +68,11 @@ public class SecureAdapter implements ISecure {
 
     @Override
     public User getUser() {
-        return  secureMap.get(Secure.getImpl()).getUser();
+        if (secureMap.containsKey(Secure.getImpl())) {
+            return secureMap.get(Secure.getImpl()).getUser();
+        } else {
+            return secureMap.get(DEFAULT_IMPL).getUser();
+        }
+
     }
 }
