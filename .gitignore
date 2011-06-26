@@ -10,8 +10,9 @@
 /precompiled
 /test-result
 
+cloudbeesCmd
 
 /modules/cloudbees-0.2
 /modules/fbconnect-0.5
 /modules/gae-1.4
-/modules/siena-1.5
+/modules/siena-2.0.1
