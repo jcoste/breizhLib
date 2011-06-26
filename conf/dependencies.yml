@@ -4,3 +4,28 @@ require:
     - play
     - play -> siena 1.5
     - play -> gae 1.4
+    - play -> fbconnect 0.5
+    - play -> cloudbees 0.2
+
+    - provided -> siena 0.7.6
+    - provided -> org.eclipse.mylyn.wikitext.twiki.core_1.4.0.I20110104 0100-e3x
+    - provided -> org.eclipse.mylyn.wikitext.tracwiki.core_1.4.0.I20110104 0100-e3x
+    - provided -> org.eclipse.mylyn.wikitext.mediawiki.core_1.4.0.I20110104 0100-e3x
+    - provided -> org.eclipse.mylyn.wikitext.confluence.core_1.4.0.I20110104 0100-e3x
+    - provided -> org.eclipse.mylyn.wikitext.core_1.4.0.I20110104 0100-e3x
+    - provided -> org.eclipse.mylyn.wikitext.textile.core_1.4.0.I20110104 0100-e3x
+
+
+
+# repositories
+repositories:
+
+    - gsylvain35:
+        type:       http
+        artifact:   "http://gsylvain35.googlecode.com/svn/repository/"
+
+    - provided:
+       type:       local
+       artifact:   "${application.path}/lib/[module]-[revision].jar"
+       contains:
+         - provided -> *

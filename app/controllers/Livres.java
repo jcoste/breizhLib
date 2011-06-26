@@ -165,13 +165,16 @@ public class Livres extends Controller {
 
     @Role("member")
     public static void postSearch(String recherche,String type) {
+       if(recherche != null && recherche.length() >0){
+           List<Livre> livres = Livre.findLikeTitre(recherche);
 
-       List<Livre> livres = Livre.findLikeTitre(recherche);
+           List<Editeur> editeurs = Editeur.findLikeNom(recherche);
 
-       List<Editeur> editeurs = Editeur.findLikeNom(recherche);
+           List<Commentaire> commentaires = Commentaire.findLike(recherche);
 
-       List<Commentaire> commentaires = Commentaire.findLike(recherche);
-
-       render(livres,recherche,editeurs,commentaires,type);
+           render(livres,recherche,editeurs,commentaires,type);
+       }else{
+          render(recherche,type);
+       }
     }
 }

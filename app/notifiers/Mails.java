@@ -16,10 +16,10 @@ public class Mails extends Mailer {
       send(user,randomID);
    }
 
-   public static void validationEmail(User user,String randomID) throws UnsupportedEncodingException {
+   public static void validationEmail(User user,String email, String randomID) throws UnsupportedEncodingException {
       setFrom("team@breizhjug.org");
       setSubject("Validation de votre Adresse email");
-      addRecipient(user.email);
+      addRecipient(email);
       send(user,randomID);
    }
 

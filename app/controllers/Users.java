@@ -6,6 +6,7 @@ import controllers.security.Secure;
 import models.Commentaire;
 import models.User;
 import notifiers.Mails;
+import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
 import play.data.validation.Required;
@@ -62,9 +63,16 @@ public class Users extends Controller {
                     error("email déjà utilisé par un autre compte");
                     //TODO fusion de comptes
                 }
-                String validationID = Codec.UUID();
-                Cache.set(validationID, email, "10mn");
-                Mails.validationEmail(user, validationID);
+
+                boolean validationEmail = Boolean.parseBoolean(Play.configuration.getProperty("authbasic.email.validation"));
+                if (validationEmail) {
+                    String validationID = Codec.UUID();
+                    Cache.set(validationID, email, "10mn");
+                    Mails.validationEmail(user,email, validationID);
+                }else{
+                   user.email = email;
+                   user.update();
+                }
                 edit();
             }
         }
@@ -107,6 +115,7 @@ public class Users extends Controller {
             } else {
                 error("le lien a expiré");
             }
+            edit();
         }
 
 
