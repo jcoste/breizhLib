@@ -21,6 +21,11 @@
             <version>1.4.1</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.5</version>
@@ -108,6 +113,28 @@
             <version>1.5</version>
         </dependency>
 
+        <dependency>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+          <version>1.7.1</version>
+          <scope>compile</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>signpost</groupId>
+            <artifactId>signpost-core</artifactId>
+            <version>1.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/modules/oauth-1.0/lib/signpost-core-1.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.play</groupId>
+	        <artifactId>fbconnect</artifactId>
+	        <version>0.5</version>
+        </dependency>
+
         <!--
             Dependences GAE
         -->
@@ -123,6 +150,8 @@
     <build>
         <sourceDirectory>app</sourceDirectory>
 
+
+
         <resources>
             <resource>
                 <directory>public</directory>
@@ -132,6 +161,9 @@
             </resource>
             <resource>
                 <directory>db</directory>
+            </resource>
+            <resource>
+                <directory>modules/oauth-1.0/app/</directory>
             </resource>
         </resources>
 
