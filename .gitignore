@@ -12,6 +12,7 @@
 *~
 
 cloudbeesCmd
+/conf/application_cloudbees.conf
 
 /modules/cloudbees-0.2.1
 /modules/fbconnect-0.5
