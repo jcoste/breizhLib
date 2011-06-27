@@ -1,7 +1,6 @@
 package models;
 
 
-import com.google.appengine.api.datastore.Blob;
 import siena.Generator;
 import siena.Id;
 import siena.Model;
@@ -13,7 +12,7 @@ public class Picture extends Model {
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
 
-    public Blob image;
+    public byte[] image;
     public String name;
     public String path;
 

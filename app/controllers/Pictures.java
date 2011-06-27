@@ -1,10 +1,5 @@
 package controllers;
 
-import com.google.appengine.api.datastore.Blob;
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.Transform;
 import controllers.security.Role;
 import models.Picture;
 import play.data.validation.Required;
@@ -20,13 +15,13 @@ public class Pictures extends Controller {
     public static void getPicture(String file) {
         Picture picture = Picture.findByNname(file);
         //response.setContentTypeIfNotSet(picture.image.type());
-        renderBinary(new ByteArrayInputStream(picture.image.getBytes()));
+        renderBinary(new ByteArrayInputStream(picture.image));
     }
 
-    public static Picture createImage(byte[] bytes, String path, String iSBN, boolean resize) throws Exception {
+    public static Picture createImage(byte[] bytes, String path, String iSBN, boolean resize){
         if (bytes != null) {
             Picture imageFile = new Picture();
-            imageFile.image = new Blob(bytes);
+            imageFile.image = bytes;
             imageFile.name = iSBN + ".jpg";
             imageFile.path = path;
             imageFile.insert();
@@ -46,17 +41,7 @@ public class Pictures extends Controller {
     }
 
     public static void resizeImage(Picture imageFile, int width, int heigth) {
-        ImagesService imagesService = ImagesServiceFactory.getImagesService();
-
-        Image oldImage = ImagesServiceFactory.makeImage(imageFile.image.getBytes());
-        Transform resize = ImagesServiceFactory.makeResize(width, heigth);
-
-        Image newImage = imagesService.applyTransform(resize, oldImage);
-
-        byte[] newImageData = newImage.getImageData();
-
-        imageFile.image = new Blob(newImageData);
-        imageFile.update();
+        //TODO
     }
 
 

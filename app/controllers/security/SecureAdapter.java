@@ -12,11 +12,10 @@ public class SecureAdapter implements ISecure {
 
     private Map<String, ISecure> secureMap = new HashMap<String, ISecure>();
 
-    private static String DEFAULT_IMPL = GAESecure.ID;
+    public static String DEFAULT_IMPL = TwitterSecure.ID;
 
     private SecureAdapter() {
         secureMap.put(BasicSecure.ID, BasicSecure.INSTANCE);
-        secureMap.put(GAESecure.ID, GAESecure.INSTANCE);
         secureMap.put(FBSecure.ID, FBSecure.INSTANCE);
         secureMap.put(TwitterSecure.ID, TwitterSecure.INSTANCE);
         secureMap.put(YahooSecure.ID, YahooSecure.INSTANCE);

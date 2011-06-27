@@ -32,13 +32,4 @@ public class Credentials extends Model implements ICredentials {
 	public String getSecret() {
 		return secret;
 	}
-
-    public Credentials save(){
-		if(this.id == null){
-			this.insert();
-		}else{
-			this.update();
-		}
-		return this;
-	}
 }
