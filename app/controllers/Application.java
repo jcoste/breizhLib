@@ -27,4 +27,8 @@ public class Application extends Controller {
         index();
     }
 
+     public static void empty() {
+        render();
+    }
+
 }

@@ -16,6 +16,7 @@ public class SecureAdapter implements ISecure {
 
     private SecureAdapter() {
         secureMap.put(BasicSecure.ID, BasicSecure.INSTANCE);
+        secureMap.put(GoogleSecure.ID, GoogleSecure.INSTANCE);
         secureMap.put(GAESecure.ID, GAESecure.INSTANCE);
         secureMap.put(FBSecure.ID, FBSecure.INSTANCE);
         secureMap.put(TwitterSecure.ID, TwitterSecure.INSTANCE);

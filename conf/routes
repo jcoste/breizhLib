@@ -5,6 +5,7 @@
 # Home page
 GET     /                                       Application.index
 GET     /init                                   Application.initDev
+GET     /google8c4f508ef1fffa28.html            Application.empty
 
 GET     /books/{page}                           Livres.index
 GET     /books/editeur/{editeur}/{page}         Livres.editeur

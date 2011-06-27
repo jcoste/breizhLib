@@ -28,7 +28,7 @@
     <h1 onclick="display('openid',['login','new']);">Connectez-vous avec l'Open-ID </h1>
     <div id="openid" style="visibility:visible; display:block;">
     <p><a href="@{security.Secure.login('gae')}"><img src="@{'/public/images/openid-provider/google.png'}"
-                                                  alt="Google"/></a>
+                                                  alt="GAE"/></a>
        <a href="@{security.Secure.login('fbconnect')}"><img src="@{'/public/images/openid-provider/facebook.png'}"
                                                   alt="Facebook"/></a></p>
 
@@ -38,6 +38,8 @@
 
     #{if play.mode.name() == 'DEV'}<a href="@{security.Secure.login('yahoo')}"><img src="@{'/public/images/openid-provider/yahoo.png'}"
                                                   alt="Yahoo"/></a>
+            <a href="@{security.Secure.login('google')}"><img src="@{'/public/images/openid-provider/google.png'}"
+                                                  alt="Google"/></a>
 
     #{/if}
     </p>
