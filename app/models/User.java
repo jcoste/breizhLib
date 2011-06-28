@@ -3,6 +3,7 @@ package models;
 import com.google.gson.JsonObject;
 import play.data.binding.As;
 import play.data.validation.Required;
+import play.libs.Codec;
 import play.mvc.Scope;
 import siena.Generator;
 import siena.Id;
@@ -86,5 +87,12 @@ public class User extends Model {
      */
      public static void facebookOAuthCallback(JsonObject data){
         Scope.Session.current().put("userEmail", data.get("email").getAsString());
+    }
+
+    public String gravatarhash(String gravatarId){
+        if(gravatarId != null)
+            return Codec.hexMD5(gravatarId.toLowerCase().trim());
+         return null;
+
     }
 }
