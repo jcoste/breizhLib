@@ -4,6 +4,7 @@ package controllers.security;
 import controllers.Application;
 import models.User;
 import play.cache.Cache;
+import play.modules.router.Get;
 import play.mvc.Before;
 import play.mvc.Controller;
 
@@ -35,6 +36,7 @@ public class Secure extends Controller {
         }
     }
 
+    @Get("/authentification")
     public static void authetification() {
         User user = secure.getUser();
         if (user != null) {
@@ -50,6 +52,7 @@ public class Secure extends Controller {
         }
     }
 
+    @Get("/login-{impl}")
     public static void login(String impl) {
         if (impl == null) {
             Integer authFailcount = (Integer) Cache.get(session.get("authfail"));
@@ -60,6 +63,7 @@ public class Secure extends Controller {
         }
     }
 
+    @Get("/logout")
     public static void logout() {
         secure.logout();
     }

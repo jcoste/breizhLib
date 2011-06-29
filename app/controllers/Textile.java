@@ -3,6 +3,7 @@ package controllers;
 import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
 import org.eclipse.mylyn.wikitext.core.parser.builder.HtmlDocumentBuilder;
 import org.eclipse.mylyn.wikitext.textile.core.TextileLanguage;
+import play.modules.router.Any;
 import play.mvc.Controller;
 
 import java.io.StringWriter;
@@ -10,6 +11,7 @@ import java.io.StringWriter;
 public class Textile extends Controller {
 
     // Controller classique Play! qui sera appelé par l'iframe Preview de MarkItUp.
+    @Any("/textile/renderPreview")
     public static void renderPreview(String content) {
         StringWriter writer = new StringWriter();
         HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);

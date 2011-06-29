@@ -13,6 +13,8 @@ import play.data.validation.Required;
 import play.i18n.Messages;
 import play.libs.Codec;
 import play.libs.Crypto;
+import play.modules.router.Get;
+import play.modules.router.Post;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -23,6 +25,7 @@ import java.util.List;
 public class Users extends Controller {
 
     @Role("member")
+    @Get("/user/infos")
     public static void infos() {
         User user = Secure.getUser();
         if (user != null) {
@@ -32,6 +35,7 @@ public class Users extends Controller {
     }
 
     @Role("member")
+    @Get("/user/commentaires")
     public static void commentaires() {
         User user = Secure.getUser();
         List<Commentaire> commentaires = user.commentaires();
@@ -42,6 +46,7 @@ public class Users extends Controller {
     }
 
     @Role("member")
+    @Get("/user/edit")
     public static void edit() {
         User user = Secure.getUser();
         if (user != null) {
@@ -51,6 +56,7 @@ public class Users extends Controller {
     }
 
     @Role("member")
+    @Post("/user/edit")
     public static void postEdit(@Required String nom, @Required String prenom, String email) throws UnsupportedEncodingException {
         User user = Secure.getUser();
         if (user != null) {
@@ -94,12 +100,14 @@ public class Users extends Controller {
     }
 
     @Role("admin")
+    @Get("/users")
     public static void index() {
         List<User> users = User.findAll();
         render(users);
     }
 
     @Role("member")
+    @Get("/user/emprunts")
     public static void emprunts() {
         render();
     }

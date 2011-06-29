@@ -5,6 +5,8 @@ import controllers.security.Role;
 import controllers.security.Secure;
 import models.*;
 import play.data.validation.Required;
+import play.modules.router.Get;
+import play.modules.router.Post;
 import play.mvc.Controller;
 import play.mvc.With;
 import siena.Query;
@@ -21,6 +23,7 @@ public class Livres extends Controller {
 
 
     @Role("public")
+    @Get("/books/{page}")
     public static void index(int page) {
         Query<Livre> query = Livre.all(Livre.class).order("-dateAjout");
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.index", query);
@@ -30,6 +33,7 @@ public class Livres extends Controller {
     }
 
     @Role("public")
+    @Get(value = "/books.xml",format = "xml")
     public static void all() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
@@ -37,6 +41,7 @@ public class Livres extends Controller {
     }
 
     @Role("public")
+    @Get(value = "/ouvrages/" ,format = "xml")
     public static void allXml() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
@@ -44,6 +49,7 @@ public class Livres extends Controller {
     }
 
     @Role("public")
+    @Get(value = "/ouvrages.json" ,format = "json")
     public static void allJson() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
@@ -53,6 +59,7 @@ public class Livres extends Controller {
 
 
     @Role("public")
+    @Get("/books/editeur/{editeur}/{page}")
     public static void editeur(String editeur, int page) {
         Query<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("-dateAjout");
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.editeur", livres);
@@ -63,12 +70,14 @@ public class Livres extends Controller {
 
 
     @Role("public")
+    @Get("/news")
     public static void last() {
         List<Livre> livres = Livre.all(Livre.class).order("-dateAjout").fetch(NB_NEWS_PAR_PAGE);
         render(livres);
     }
 
     @Role("public")
+    @Get("/book/{id}")
     public static void show(String id) {
         if (id == null) {
             render();
@@ -80,6 +89,7 @@ public class Livres extends Controller {
 
 
     @Role("admin")
+    @Get("/book/{id}/edit")
     public static void edit(Long id) {
         if (id == null) {
             render();
@@ -90,17 +100,20 @@ public class Livres extends Controller {
     }
 
     @Role("public")
+    @Get("/search")
     public static void search() {
         render();
     }
 
     @Role("admin")
+    @Get("/add")
     public static void add() {
         renderArgs.put("editeurs", Editeurs.initListEditeurs());
         render();
     }
 
     @Role("admin")
+    @Post("/add")
     public static void save(@Required String titre, @Required String editeur, byte[] imageFile, @Required String iSBN) throws Exception {
         if (validation.hasErrors()) {
             render("Livres/add.html");
@@ -123,6 +136,7 @@ public class Livres extends Controller {
     }
 
     @Role("admin")
+    @Post("/book/{iSBN}/edit")
     public static void update(@Required String titre, @Required String editeur, byte[] imageFile, @Required String iSBN) throws Exception {
         Livre livre = Livre.all(Livre.class).filter("iSBN", iSBN).get();
         if (validation.hasErrors()) {
@@ -150,6 +164,7 @@ public class Livres extends Controller {
 
 
     @Role("member")
+    @Post("/book/{bookId}/comment")
     public static void postComment(String bookId, @Required String nom, @Required String content, @Required int note) {
         Livre livre = Livre.findByISBN(bookId);
         if (validation.hasErrors()) {
@@ -164,6 +179,7 @@ public class Livres extends Controller {
     }
 
     @Role("member")
+    @Post("/search")
     public static void postSearch(String recherche,String type) {
        if(recherche != null && recherche.length() >0){
            List<Livre> livres = Livre.findLikeTitre(recherche);

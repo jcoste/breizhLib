@@ -12,7 +12,8 @@
 
 cloudbeesCmd
 
-/modules/cloudbees-0.2
+/modules/cloudbees-0.2.1
 /modules/fbconnect-0.5
 /modules/gae-1.4
 /modules/siena-2.0.1
+/modules/router-1.1
