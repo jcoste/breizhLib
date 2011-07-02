@@ -13,6 +13,8 @@
 *~
 cloudbeesCmd
 
+/conf/cloudbees.conf
+
 /modules/cloudbees-*
 /modules/db-*
 /modules/fbconnect-*
