@@ -81,6 +81,7 @@ public class Reservations extends Controller {
     }
 
     @Role("member")
+    @Get("/reservation/{id}/annuler")
     public static void annuler(Long id) {
         Reservation reservation = Reservation.findById(id);
         Livre livre = reservation.empruntEncours;
@@ -94,6 +95,7 @@ public class Reservations extends Controller {
     }
 
     @Role("admin")
+    @Get("/reservation/{id}/pret")
     public static void pretLivre(Long id) {
         Reservation reservation = Reservation.findById(id);
         Livre livre = reservation.empruntEncours;

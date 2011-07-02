@@ -6,7 +6,7 @@ require:
     - play -> gae 1.4
     - play -> fbconnect 0.5
     - play -> cloudbees 0.2
-    - play -> router 1.1
+    - play -> router head
 
     - provided -> siena 0.7.6
     - provided -> org.eclipse.mylyn.wikitext.twiki.core_1.4.0.I20110104 0100-e3x

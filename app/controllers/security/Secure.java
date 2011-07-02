@@ -54,7 +54,7 @@ public class Secure extends Controller {
 
     @Get("/login-{impl}")
     public static void login(String impl) {
-        if (impl == null) {
+        if (impl == null || impl.equals("all") ) {
             Integer authFailcount = (Integer) Cache.get(session.get("authfail"));
             render(authFailcount);
         } else {
@@ -68,6 +68,7 @@ public class Secure extends Controller {
         secure.logout();
     }
 
+    @Get("/oauthCallback")
     public static void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         secure.oauthCallback(callback, oauth_token, oauth_verifier);
     }

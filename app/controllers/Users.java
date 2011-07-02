@@ -113,6 +113,7 @@ public class Users extends Controller {
     }
 
 
+    @Get("/user/validate-{id}")
     public static void validateEmail(@Required String id) {
         User user = Secure.getUser();
         if (user != null) {

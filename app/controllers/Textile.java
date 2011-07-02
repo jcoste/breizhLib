@@ -32,6 +32,7 @@ public class Textile extends Controller {
     }
 
     // Méthode qui sera appelée par les templates Groovy de Play!.
+    @Any("/textile/render")
     public static String render(String wiki) {
         StringWriter writer = new StringWriter();
         HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);

@@ -1,6 +1,5 @@
 package play.modules.router;
 
-import play.Logger;
 import play.Play;
 import play.PlayPlugin;
 import play.classloading.ApplicationClasses;
@@ -9,32 +8,48 @@ import play.utils.Java;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RouterAnnotationsPlugin extends PlayPlugin {
 
 
 	@Override
-	public void onApplicationStart() {
+	public void detectChange() {
 		computeRoutes();
 	}
 
-	@Override
-	public List<ApplicationClasses.ApplicationClass> onClassesChange(List<ApplicationClasses.ApplicationClass> modified) {
-		computeRoutes();
-		return super.onClassesChange(modified);
-	}
+    @Override
+    public void onConfigurationRead() {
+        computeRoutes();
+    }
+
+    @Override
+    public void onRoutesLoaded() {
+        computeRoutes();
+    }
+
+    @Override
+    public void onApplicationStart() {
+        computeRoutes();
+    }
 
     public String getControlerName(Method method){
           return method.getDeclaringClass().getName().substring(12,method.getDeclaringClass().getName().length());
     }
 	protected void computeRoutes() {
 		List<Class> controllerClasses = getControllerClasses();
-		List<Method> gets = Java.findAllAnnotatedMethods(controllerClasses, Get.class);
+		Set<Method> gets = new HashSet<Method>(Java.findAllAnnotatedMethods(controllerClasses, Get.class));
 		for (Method get : gets) {
-			Get annotation = get.getAnnotation(Get.class);
+            Get annotation = get.getAnnotation(Get.class);
 			if (annotation != null) {
-                Logger.info("get :"+get.getDeclaringClass().getName() +" - "+getControlerName(get));
+                boolean exists = false;
+                for (Router.Route route : Router.routes) {
+                boolean match = route.method.equals(get.getName()) && route.path.equals(annotation.value()) && route.action.equals(getControlerName(get) + "." + get.getName());
+                if (match) exists = true; break;
+                }
+                if (exists) continue;
 				if (annotation.priority() != -1) {
 					Router.addRoute(annotation.priority(), "GET", annotation.value(),getControlerName(get) + "." + get.getName(), getFormat(annotation.format()), annotation.accept());
 				} else {
@@ -42,10 +57,16 @@ public class RouterAnnotationsPlugin extends PlayPlugin {
 				}
 			}
 		}
-		List<Method> posts = Java.findAllAnnotatedMethods(controllerClasses, Post.class);
+		Set<Method> posts = new HashSet<Method>(Java.findAllAnnotatedMethods(controllerClasses, Post.class));
 		for (Method post : posts) {
 			Post annotation = post.getAnnotation(Post.class);
 			if (annotation != null) {
+                boolean exists = false;
+                for (Router.Route route : Router.routes) {
+                boolean match = route.method.equals(post.getName()) && route.path.equals(annotation.value()) && route.action.equals(getControlerName(post) + "." + post.getName());
+                if (match) exists = true; break;
+                }
+                if (exists) continue;
 				if (annotation.priority() != -1) {
 					Router.addRoute(annotation.priority(), "POST", annotation.value(), getControlerName(post) + "." + post.getName(), getFormat(annotation.format()), annotation.accept());
 				} else {
@@ -54,7 +75,7 @@ public class RouterAnnotationsPlugin extends PlayPlugin {
 
 			}
 		}
-		List<Method> puts = Java.findAllAnnotatedMethods(controllerClasses, Put.class);
+		Set<Method> puts = new HashSet<Method>( Java.findAllAnnotatedMethods(controllerClasses, Put.class));
 		for (Method put : puts) {
 			Put annotation = put.getAnnotation(Put.class);
 			if (annotation != null) {
@@ -66,7 +87,7 @@ public class RouterAnnotationsPlugin extends PlayPlugin {
 			}
 		}
 
-		List<Method> deletes = Java.findAllAnnotatedMethods(controllerClasses, Delete.class);
+		Set<Method> deletes = new HashSet<Method>(Java.findAllAnnotatedMethods(controllerClasses, Delete.class));
 		for (Method delete : deletes) {
 			Delete annotation = delete.getAnnotation(Delete.class);
 			if (annotation != null) {
@@ -78,7 +99,7 @@ public class RouterAnnotationsPlugin extends PlayPlugin {
 			}
 		}
 
-		List<Method> heads = Java.findAllAnnotatedMethods(controllerClasses, Head.class);
+		Set<Method> heads = new HashSet<Method>(Java.findAllAnnotatedMethods(controllerClasses, Head.class));
 		for (Method head : heads) {
 			Head annotation = head.getAnnotation(Head.class);
 			if (annotation != null) {
@@ -90,7 +111,7 @@ public class RouterAnnotationsPlugin extends PlayPlugin {
 			}
 		}
 
-		List<Method> webSockets = Java.findAllAnnotatedMethods(controllerClasses, WS.class);
+		Set<Method> webSockets = new HashSet<Method>(Java.findAllAnnotatedMethods(controllerClasses, WS.class));
 		for (Method ws : webSockets) {
 			WS annotation = ws.getAnnotation(WS.class);
 			if (annotation != null) {
@@ -102,10 +123,16 @@ public class RouterAnnotationsPlugin extends PlayPlugin {
 			}
 		}
 
-	    List<Method> list = Java.findAllAnnotatedMethods(controllerClasses, Any.class);
+        Set<Method> list = new HashSet<Method>(Java.findAllAnnotatedMethods(controllerClasses, Any.class));
 		for (Method any : list) {
 			Any annotation = any.getAnnotation(Any.class);
 			if (annotation != null) {
+                boolean exists = false;
+                for (Router.Route route : Router.routes) {
+                boolean match = route.method.equals(any.getName()) && route.path.equals(annotation.value()) && route.action.equals(getControlerName(any) + "." + any.getName());
+                if (match) exists = true; break;
+                }
+                if (exists) continue;
 				if (annotation.priority() != -1) {
 					Router.addRoute(annotation.priority(), "*", annotation.value(), getControlerName(any) + "." + any.getName(), getFormat(annotation.format()), annotation.accept());
 				} else {
@@ -141,7 +168,6 @@ public class RouterAnnotationsPlugin extends PlayPlugin {
 				}
 			}
 		}
-
 	}
 
 	public List<Class> getControllerClasses() {

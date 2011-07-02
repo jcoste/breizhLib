@@ -9,7 +9,7 @@
         <li><a href="@{tag.Tags.index()}">Tags</a></li>
         #{/secure.check}
         #{secure.check 'public', not:'member'}
-        <li><a href="@{security.Secure.login()}">&{'views.main.menu.login'}</a></li>
+        <li><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></li>
         #{/secure.check}
         #{secure.check 'admin'}
         <li>Admin

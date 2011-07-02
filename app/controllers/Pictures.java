@@ -9,6 +9,7 @@ import controllers.security.Role;
 import models.Picture;
 import play.data.validation.Required;
 import play.modules.router.Get;
+import play.modules.router.Post;
 import play.mvc.Controller;
 
 import java.io.ByteArrayInputStream;
@@ -68,6 +69,7 @@ public class Pictures extends Controller {
 
 
     @Role("admin")
+    @Post("/picture/save")
     public static void save(@Required String name, @Required String path, byte[] imageFile) throws Exception {
         if (validation.hasErrors()) {
             render("Pictures/explore.html");

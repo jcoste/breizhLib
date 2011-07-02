@@ -82,6 +82,7 @@ public class BasicSecure extends Controller implements ISecure {
         authenticate(email, password, false);
     }
 
+    @Get("/user/activate")
     public static void activerCompte(@Required String id) {
         User user = User.find((String) Cache.get(id));
         user.actif = true;
@@ -89,7 +90,7 @@ public class BasicSecure extends Controller implements ISecure {
         Application.index();
     }
 
-
+    @Post("/user/auth")
     public static void authenticate(@Required String username, @Required String password, boolean remember) throws Throwable {
         User user = User.find(username);
         validation.isTrue(user != null).message(Messages.get("error", "Utilisateur inconu"));
@@ -160,6 +161,7 @@ public class BasicSecure extends Controller implements ISecure {
         render();
     }
 
+    @Post("/user/changePassword")
     public static void postChangePassword(@Required @Equals("newPwd2") String newPwd, @Required String newPwd2) {
         validation.isTrue(session.contains("userResetPwd")).message(Messages.get("error", "id inconnu"));
         if (validation.hasErrors()) {
