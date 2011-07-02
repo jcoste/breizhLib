@@ -9,6 +9,8 @@ import models.User;
 import play.Logger;
 import play.data.validation.Email;
 import play.data.validation.Required;
+import play.modules.router.Get;
+import play.modules.router.Post;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class Reservations extends Controller {
 
     @Role("member")
+    @Get("/book/{id}/reservations")
     public static void index(String id) {
         Livre livre = Livre.findByISBN(id);
         if (livre == null) {
@@ -37,6 +40,7 @@ public class Reservations extends Controller {
     }
 
     @Role("admin")
+    @Get("/reservations")
     public static void reservations() {
         Date d = Reservation.getDummyDate();
         List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
@@ -77,6 +81,7 @@ public class Reservations extends Controller {
     }
 
     @Role("member")
+    @Get("/reservation/{id}/annuler")
     public static void annuler(Long id) {
         Reservation reservation = Reservation.findById(id);
         Livre livre = reservation.empruntEncours;
@@ -90,6 +95,7 @@ public class Reservations extends Controller {
     }
 
     @Role("admin")
+    @Get("/reservation/{id}/pret")
     public static void pretLivre(Long id) {
         Reservation reservation = Reservation.findById(id);
         Livre livre = reservation.empruntEncours;
@@ -107,6 +113,7 @@ public class Reservations extends Controller {
     }
 
     @Role("member")
+    @Get("/book/{id}/reserver")
     public static void reserver(String id) {
         if (id == null) {
             render();
@@ -121,6 +128,7 @@ public class Reservations extends Controller {
     }
 
     @Role("member")
+    @Post("/book/{id}/reserver")
     public static void postReservation(String id, @Required String nom, @Required String prenom, @Required @Email String email) {
         if (validation.hasErrors()) {
             render("Reservations/reserver.html");

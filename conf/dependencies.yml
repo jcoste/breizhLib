@@ -6,6 +6,7 @@ require:
     - play -> gae 1.4
     - play -> fbconnect 0.5
     - play -> cloudbees 0.2.1
+    - play -> router head
     - play -> db 1.1.1
 
     - provided -> siena 0.7.6

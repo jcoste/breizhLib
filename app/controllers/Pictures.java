@@ -8,6 +8,8 @@ import com.google.appengine.api.images.Transform;
 import controllers.security.Role;
 import models.Picture;
 import play.data.validation.Required;
+import play.modules.router.Get;
+import play.modules.router.Post;
 import play.mvc.Controller;
 
 import java.io.ByteArrayInputStream;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class Pictures extends Controller {
 
-
+    @Get("/shared/{file}")
     public static void getPicture(String file) {
         Picture picture = Picture.findByNname(file);
         //response.setContentTypeIfNotSet(picture.image.type());
@@ -59,7 +61,7 @@ public class Pictures extends Controller {
         imageFile.update();
     }
 
-
+    @Get("/explorer")
     public static void explore() {
         List<Picture> pictures = Picture.all(Picture.class).order("path").fetch();
         render(pictures);
@@ -67,6 +69,7 @@ public class Pictures extends Controller {
 
 
     @Role("admin")
+    @Post("/picture/save")
     public static void save(@Required String name, @Required String path, byte[] imageFile) throws Exception {
         if (validation.hasErrors()) {
             render("Pictures/explore.html");

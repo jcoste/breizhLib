@@ -4,6 +4,7 @@ import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
 import models.Livre;
+import play.modules.router.Get;
 import play.mvc.Controller;
 import play.mvc.With;
 import siena.Query;
@@ -20,7 +21,7 @@ public class Commentaires extends Controller {
 
     private static int NB_NEWS_PAR_PAGE = 4;
 
-
+    @Get("/commentaires")
     public static void last() {
         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch(NB_NEWS_PAR_PAGE);
         for (Commentaire commentaire : commentaires) {
@@ -30,6 +31,7 @@ public class Commentaires extends Controller {
         render(commentaires);
     }
 
+    @Get("/book/{id}/commentaires")
     public static void commentaires(String id) {
         if (id == null) {
             render();
@@ -45,6 +47,7 @@ public class Commentaires extends Controller {
 
 
     @Role("public")
+    @Get("/commentaires/editeur/{editeur}/{page}")
     public static void editeur(String editeur, int page) {
         int max = 0;
         for (Commentaire commentaire : Commentaire.findAll()) {
@@ -71,6 +74,7 @@ public class Commentaires extends Controller {
         render(page, dept, max, editeur);
     }
 
+    @Get("/commentaires/{page}")
     public static void index(int page) {
         Query<Commentaire> query = Commentaire.all(Commentaire.class).order("-dateAjout");
         Paginator<Commentaire> paginator = new Paginator<Commentaire>(NB_PAR_PAGE, page, "Commentaires.index", query);
@@ -84,6 +88,7 @@ public class Commentaires extends Controller {
     }
 
     @Role("public")
+    @Get(value = "/commentaires.xml",format = "xml")
     public static void all() {
         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
 
