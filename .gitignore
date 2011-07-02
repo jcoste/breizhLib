@@ -6,16 +6,16 @@
 /*.ipr
 /*.iws
 /tmp
+/db/*
 /target
 /precompiled
 /test-result
 *~
-
 cloudbeesCmd
-/conf/cloudbees.conf
 
-/modules/cloudbees-0.2.1
-/modules/fbconnect-0.5
-/modules/gae-1.4
-/modules/siena-2.0.1
-/modules/db-1.1.1
+/modules/cloudbees-*
+/modules/db-*
+/modules/fbconnect-*
+/modules/gae-*
+/modules/siena-*
+/modules/router-*

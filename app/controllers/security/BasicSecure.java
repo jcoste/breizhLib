@@ -13,6 +13,8 @@ import play.i18n.Messages;
 import play.libs.Codec;
 import play.libs.Crypto;
 import play.libs.Images;
+import play.modules.router.Get;
+import play.modules.router.Post;
 import play.mvc.Controller;
 
 import java.io.UnsupportedEncodingException;
@@ -46,11 +48,13 @@ public class BasicSecure extends Controller implements ISecure {
         render();
     }
 
+    @Get("/user/new")
     public static void newuser(String email, String nom, String prenom) {
         String randomID = Codec.UUID();
         render(email, nom, prenom, randomID);
     }
 
+    @Post("/user/new")
     public static void postNewuser(@Required String email, String nom, String prenom, @Required @Equals("passwordconfirm") String password,
                                    @Required String passwordconfirm, @Required String captcha, String randomID) throws Throwable {
         User user = User.find(email);
@@ -78,6 +82,7 @@ public class BasicSecure extends Controller implements ISecure {
         authenticate(email, password, false);
     }
 
+    @Get("/user/activate")
     public static void activerCompte(@Required String id) {
         User user = User.find((String) Cache.get(id));
         user.actif = true;
@@ -85,7 +90,7 @@ public class BasicSecure extends Controller implements ISecure {
         Application.index();
     }
 
-
+    @Post("/user/auth")
     public static void authenticate(@Required String username, @Required String password, boolean remember) throws Throwable {
         User user = User.find(username);
         validation.isTrue(user != null).message(Messages.get("error", "Utilisateur inconu"));
@@ -113,6 +118,7 @@ public class BasicSecure extends Controller implements ISecure {
         Secure.authetification();
     }
 
+    @Get("captcha/{id}")
     public static void captcha(String id) {
         Images.Captcha captcha = Images.captcha();
         String code = captcha.getText("#0000FD");
@@ -133,6 +139,7 @@ public class BasicSecure extends Controller implements ISecure {
         render();
     }
 
+    @Post("/user/resetPassword/{email}")
     public static void sendResetPassword(@Required String email) throws EmailException, UnsupportedEncodingException {
         User user = User.find(email);
         validation.isTrue(user != null).message(Messages.get("error", "email inconnu"));
@@ -148,11 +155,13 @@ public class BasicSecure extends Controller implements ISecure {
         Secure.login(null);
     }
 
+    @Get("/user/resetPassword/{id}")
     public static void changePassword(@Required String id) {
         session.put("userResetPwd", Cache.get(id));
         render();
     }
 
+    @Post("/user/changePassword")
     public static void postChangePassword(@Required @Equals("newPwd2") String newPwd, @Required String newPwd2) {
         validation.isTrue(session.contains("userResetPwd")).message(Messages.get("error", "id inconnu"));
         if (validation.hasErrors()) {

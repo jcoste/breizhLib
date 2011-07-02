@@ -2,77 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                                       Application.index
-GET     /init                                   Application.initDev
-
-GET     /books/{page}                           Livres.index
-GET     /books/editeur/{editeur}/{page}         Livres.editeur
-GET     /book/{id}                              Livres.show
-POST    /book/{bookId}/comment                  Livres.postComment
-GET     /book/{id}/edit                         Livres.edit
-GET     /add                                    Livres.add
-POST    /add                                    Livres.save
-GET     /news                                   Livres.last
-GET     /search                                 Livres.search
-POST    /search                                 Livres.postSearch
-
-POST    /book/{bookId}/tag/{tag}                tag.Tags.addForBook
-GET     /tags                                   tag.Tags.index
-GET     /tag/{tag}                              tag.Tags.tag
-
-GET     /book/{id}/reservations                 Reservations.index
-GET     /reservations                           Reservations.reservations
-GET     /book/{id}/reserver                     Reservations.reserver
-POST    /book/{id}/reserver                     Reservations.postReservation
-
-GET     /commentaires/{page}                    Commentaires.index
-GET     /commentaires                           Commentaires.last
-GET     /commentaires/editeur/{editeur}/{page}  Commentaires.editeur
-GET     /book/{id}/commentaires                 Commentaires.commentaires
-
-GET     /editeur/add                            Editeurs.add
-POST    /editeur/add                            Editeurs.postEditeur
-GET     /editeurs                               Editeurs.index
-GET     /editeurs.json                          Editeurs.index(format:'json')
-
-GET     /explorer                               Pictures.explore
-
-GET     /users                                  Users.index
-GET     /user/infos                             Users.infos
-GET     /user/commentaires                      Users.commentaires
-GET     /user/emprunts                          Users.emprunts
-GET     /user/edit                              Users.edit
-POST    /user/edit                              Users.postEdit
-
-
-GET     /login-{impl}                           security.Secure.login
-GET     /login                                  security.Secure.login
-GET     /user/new                               security.BasicSecure.newuser
-GET     /user/resetPassword/{id}                security.BasicSecure.changePassword
-POST    /user/new                               security.BasicSecure.postNewuser
-GET     /logout                                 security.Secure.logout
-GET     /authentification                       security.Secure.authentification
-GET     /captcha/{id}                           security.BasicSecure.captcha
-*       /                                       security.Secure.checkAccess
-
-#REST
-GET     /ouvrages/                              Livres.allXml(format:'xml')
-#REST
-GET     /ouvrages.json                          livres.allJson(format: 'json')
-
-#RSS
-GET     /books.xml                              Livres.all(format:'xml')
-GET     /commentaires.xml                       Commentaires.all(format:'xml')
-
-*       /textile/renderPreview                  Textile.renderPreview
-
 # Ignore favicon requests
 GET     /favicon.ico                            404
-
-# Map static resources from the /app/public folder to the /public path
-GET     /public/                                staticDir:public
-GET     /shared/{file}                          Pictures.getPicture
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
