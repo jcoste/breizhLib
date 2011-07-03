@@ -120,6 +120,12 @@
           <scope>compile</scope>
         </dependency>
 
+	<dependency>
+		<groupId>org.play</groupId>
+		<artifactId>router</artifactId>
+		<version>breizhLib-head</version>
+	</dependency>
+
 
         <dependency>
             <groupId>signpost</groupId>
