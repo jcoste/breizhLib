@@ -4,8 +4,10 @@ package controllers;
 import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
+import models.Email;
 import models.User;
 import notifiers.Mails;
+import play.Logger;
 import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
@@ -50,7 +52,8 @@ public class Users extends Controller {
     public static void edit() {
         User user = Secure.getUser();
         if (user != null) {
-            render(user);
+            List<Email> emails = Email.findByUser(user);
+            render(user, emails);
         }
         infos();
     }
@@ -63,26 +66,63 @@ public class Users extends Controller {
             user.nom = nom;
             user.prenom = prenom;
             user.update();
+
+            boolean hasnext = true;
+            int i = 1;
+            Logger.info("email+ do");
+            do {
+                String valeurEmail = request.params.get("email" + i);
+                Logger.info("email + "+i +" = "+valeurEmail);
+                if (valeurEmail == null) {
+                    hasnext = false;
+                } else if( !valeurEmail.equals(email) ) {
+                    Email userEmail = Email.find(valeurEmail);
+                    if (userEmail == null) {
+                        userEmail = new Email(valeurEmail);
+                        userEmail.user = user;
+                        userEmail.insert();
+                        validationEmail(userEmail,user);
+                    } else {
+                       error("email déjà utilisé");
+                    }
+                }
+               i++;
+            } while (hasnext);
+
+
             if (email != null && user.email == null) {
                 User anotherUser = User.find(email);
                 if (anotherUser != null) {
                     error("email déjà utilisé par un autre compte");
                     //TODO fusion de comptes
                 }
-
                 boolean validationEmail = Boolean.parseBoolean(Play.configuration.getProperty("authbasic.email.validation"));
                 if (validationEmail) {
                     String validationID = Codec.UUID();
                     Cache.set(validationID, email, "10mn");
-                    Mails.validationEmail(user,email, validationID);
-                }else{
-                   user.email = email;
-                   user.update();
+                    Mails.validationEmail(user, email, validationID);
+                } else {
+                    user.email = email;
+                    user.update();
                 }
+
+
                 edit();
             }
         }
         infos();
+    }
+
+    private static void validationEmail(Email email, User user) throws UnsupportedEncodingException {
+        boolean validationEmail = Boolean.parseBoolean(Play.configuration.getProperty("email.validation"));
+        if (validationEmail) {
+            String validationID = Codec.UUID();
+            Cache.set(validationID, email.email, "10mn");
+            Mails.validationAddEmail(user, email.email, validationID);
+        } else {
+            email.valid = true;
+            email.update();
+        }
     }
 
     @Role("member")
@@ -121,6 +161,27 @@ public class Users extends Controller {
             if (email != null) {
                 user.email = email;
                 user.update();
+            } else {
+                error("le lien a expiré");
+            }
+            edit();
+        }
+
+
+    }
+
+    @Get("/user/validateEmail-{id}")
+    public static void validateAddEmail(@Required String id) {
+        User user = Secure.getUser();
+        if (user != null) {
+            String email = (String) Cache.get(id);
+            if (email != null) {
+                Email userEmail = Email.find(email);
+                if(userEmail != null){
+                   userEmail.valid = true;
+                   userEmail.update();
+                }
+
             } else {
                 error("le lien a expiré");
             }

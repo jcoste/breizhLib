@@ -53,7 +53,7 @@ public class TwitterSecure extends OAuthSecure implements ISecure {
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         // 2: get the access token
         INSTANCE.getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-        session().put(SESSION_EMAIL_KEY, INSTANCE.getConnector().getProvider().getResponseParameters().get("screen_name"));
+        session().put(SESSION_EMAIL_KEY, INSTANCE.getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase());
         redirect(callback);
     }
 

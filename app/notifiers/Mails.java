@@ -23,6 +23,13 @@ public class Mails extends Mailer {
       send(user,randomID);
    }
 
+    public static void validationAddEmail(User user,String email, String randomID) throws UnsupportedEncodingException {
+      setFrom("team@breizhjug.org");
+      setSubject("Validation de l'adresse email");
+      addRecipient(email);
+      send(user,randomID);
+   }
+
 
    public static void lostPassword(User user,String randomID) throws UnsupportedEncodingException {
       setFrom("team@breizhjug.org");
