@@ -113,7 +113,7 @@ public class BasicSecure extends Controller implements ISecure {
         }
 
         session.remove("authfail");
-        session.put(SESSION_EMAIL_KEY, username);
+        session.put(SESSION_EMAIL_KEY, username.toLowerCase());
         session.put(SESSION_IMPL_KEY, "basic");
         Secure.authetification();
     }

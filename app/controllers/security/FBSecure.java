@@ -1,5 +1,6 @@
 package controllers.security;
 
+import models.Email;
 import models.User;
 import play.Play;
 import play.modules.fbconnect.FBConnectPlugin;
@@ -40,11 +41,17 @@ public class FBSecure implements ISecure {
     public User getUser() {
         User user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
-            user = User.find(session().get(SESSION_EMAIL_KEY));
+            user = User.find(session().get(SESSION_EMAIL_KEY).toLowerCase());
             if (user == null) {
-                user = new User(session().get(SESSION_EMAIL_KEY));
-                user.actif = true;
-                user.insert();
+                Email email = Email.find(session().get(SESSION_EMAIL_KEY));
+                if(email == null){
+                    user = new User(session().get(SESSION_EMAIL_KEY));
+                    user.actif = true;
+                    user.insert();
+                }else {
+                    email.user.get();
+                    user = email.user;
+                }
             }
             user.actif = true;
             user.update();
