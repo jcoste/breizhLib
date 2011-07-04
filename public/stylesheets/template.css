@@ -141,6 +141,7 @@ section h1 a {
 
 section img {
     width: 100px;
+	min-height: 150px;
     margin: 0 10px 10px 20px;
     float: left;
 }
