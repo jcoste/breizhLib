@@ -27,11 +27,16 @@ public class Pictures extends Controller {
 
     public static Picture createImage(byte[] bytes, String path, String iSBN, boolean resize) throws Exception {
         if (bytes != null) {
-            Picture imageFile = new Picture();
-            imageFile.image = new Blob(bytes);
-            imageFile.name = iSBN + ".jpg";
-            imageFile.path = path;
-            imageFile.insert();
+		    Picture imageFile = Picture.findByNname(iSBN + ".jpg");
+			if(imageFile == null ) {
+				imageFile = new Picture();
+				imageFile.image = new Blob(bytes);
+				imageFile.name = iSBN + ".jpg";
+				imageFile.path = path;
+				imageFile.insert();
+			} else {
+				//TODO écraser l'image
+			}
             return imageFile;
         }
         return null;
