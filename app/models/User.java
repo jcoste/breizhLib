@@ -93,7 +93,13 @@ public class User extends Model {
      * @param data
      */
      public static void facebookOAuthCallback(JsonObject data){
-        Scope.Session.current().put("userEmail", data.get("email").getAsString());
+	    String email = data.get("email").getAsString();
+		User user = User.find(email);
+        if (user != null) {
+			user.dateConnexion = new Date();
+            user.update();
+		}
+        Scope.Session.current().put("userEmail",email );
     }
 
     public String gravatarhash(String gravatarId){
