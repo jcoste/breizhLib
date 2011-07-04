@@ -47,6 +47,13 @@ public class User extends Model {
 
     public static User find(String email) {
         User user = User.all(User.class).filter("email", email).get();
+		if (user == null) {
+			Email userEmail = Email.find(email);
+			if(userEmail == null){
+				userEmail.user.get();
+				user = userEmail.user;
+			}
+		}
         return user;
     }
 

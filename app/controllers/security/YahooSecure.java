@@ -85,15 +85,9 @@ public class YahooSecure extends OAuthSecure implements ISecure {
         if (session().get(SESSION_EMAIL_KEY) != null) {
             user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
-                Email email = Email.find(session().get(SESSION_EMAIL_KEY));
-                if(email == null){
-                    user = new User(session().get(SESSION_EMAIL_KEY));
-                    user.actif = true;
-                    user.insert();
-                }else {
-                    email.user.get();
-                    user = email.user;
-                }
+                user = new User(session().get(SESSION_EMAIL_KEY));
+                user.actif = true;
+                user.insert();
             }
         }
         return user;
