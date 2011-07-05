@@ -7,6 +7,7 @@ import siena.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@siena.Table("LivreTag")
 public class LivreTag extends Model {
 
     @Id(Generator.AUTO_INCREMENT)

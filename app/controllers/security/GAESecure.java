@@ -3,20 +3,38 @@ package controllers.security;
 
 import models.Email;
 import models.User;
+import play.Play;
+import play.exceptions.UnexpectedException;
 import play.modules.gae.GAE;
+import play.mvc.Router;
 
 public class GAESecure implements ISecure {
 
     public static final GAESecure INSTANCE = new GAESecure();
     public static final String ID = "gae";
 
+    protected String callback;
+
+
+     private GAESecure() {
+        init();
+    }
+
+    public void init() {
+        if (!Play.configuration.containsKey("google.callback")) {
+            throw new UnexpectedException("OAuth google requires that you specify google.callback in your application.conf");
+        }
+        callback = Router.getFullUrl(Play.configuration.getProperty("google.callback"));
+
+    }
+
 
     public void login() {
-        GAE.login("security.secure.authetification");
+        GAE.login(callback);
     }
 
     public void logout() {
-        GAE.logout("security.secure.authetification");
+        GAE.logout(callback);
     }
 
     @Override

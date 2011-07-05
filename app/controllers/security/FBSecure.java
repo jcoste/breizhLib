@@ -24,7 +24,7 @@ public class FBSecure implements ISecure {
     public void logout() {
         session().put(SESSION_EMAIL_KEY, null);
         session().put(SESSION_IMPL_KEY, null);
-        Secure.authetification();
+        Secure.authentification();
     }
 
     @Override

@@ -32,7 +32,7 @@ public class BasicSecure extends Controller implements ISecure {
     public void logout() {
         session.put(SESSION_EMAIL_KEY, null);
         session.put(SESSION_IMPL_KEY, null);
-        Secure.authetification();
+        Secure.authentification();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class BasicSecure extends Controller implements ISecure {
         session.remove("authfail");
         session.put(SESSION_EMAIL_KEY, username.toLowerCase());
         session.put(SESSION_IMPL_KEY, "basic");
-        Secure.authetification();
+        Secure.authentification();
     }
 
     @Get("captcha/{id}")

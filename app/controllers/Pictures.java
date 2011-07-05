@@ -43,7 +43,6 @@ public class Pictures extends Controller {
         for (Picture picture : pictures) {
             resizeImage(picture, 100, 133);
         }
-
         explore();
     }
 

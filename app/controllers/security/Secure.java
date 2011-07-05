@@ -37,7 +37,7 @@ public class Secure extends Controller {
     }
 
     @Get("/authentification")
-    public static void authetification() {
+    public static void authentification() {
         User user = secure.getUser();
         if (user != null) {
             session.put(ISecure.SESSION_EMAIL_KEY, user.email);

@@ -27,7 +27,6 @@ public class Commentaires extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-
         render(commentaires);
     }
 
@@ -41,7 +40,6 @@ public class Commentaires extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-
         render(commentaires, livre);
     }
 

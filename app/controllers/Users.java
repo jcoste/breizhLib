@@ -105,8 +105,6 @@ public class Users extends Controller {
                     user.email = email;
                     user.update();
                 }
-
-
                 edit();
             }
         }
@@ -166,8 +164,6 @@ public class Users extends Controller {
             }
             edit();
         }
-
-
     }
 
     @Get("/user/validateEmail-{id}")
@@ -187,7 +183,5 @@ public class Users extends Controller {
             }
             edit();
         }
-
-
     }
 }

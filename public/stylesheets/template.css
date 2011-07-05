@@ -139,9 +139,15 @@ section h1 a {
     text-shadow: 3px 3px 7px #333;
 }
 
+section.book img {
+    width: 100px;
+	min-height: 140px;
+    margin: 0 10px 10px 20px;
+    float: left;
+}
+
 section img {
     width: 100px;
-	min-height: 150px;
     margin: 0 10px 10px 20px;
     float: left;
 }

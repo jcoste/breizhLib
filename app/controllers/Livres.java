@@ -53,7 +53,6 @@ public class Livres extends Controller {
     public static void allJson() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
-
         render(livres);
     }
 

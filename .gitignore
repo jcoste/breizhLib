@@ -27,3 +27,4 @@ cloudbeesCmd
 /modules/siena-*
 /modules/router-*
 /modules/db-*
+/modules/maven-*
