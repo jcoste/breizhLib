@@ -47,6 +47,13 @@ public class User extends Model {
 
     public static User find(String email) {
         User user = User.all(User.class).filter("email", email).get();
+		if (user == null) {
+			Email userEmail = Email.find(email);
+			if(userEmail == null){
+				userEmail.user.get();
+				user = userEmail.user;
+			}
+		}
         return user;
     }
 
@@ -86,7 +93,13 @@ public class User extends Model {
      * @param data
      */
      public static void facebookOAuthCallback(JsonObject data){
-        Scope.Session.current().put("userEmail", data.get("email").getAsString());
+	    String email = data.get("email").getAsString();
+		User user = User.find(email);
+        if (user != null) {
+			user.dateConnexion = new Date();
+            user.update();
+		}
+        Scope.Session.current().put("userEmail",email );
     }
 
     public String gravatarhash(String gravatarId){

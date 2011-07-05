@@ -10,6 +10,7 @@ import play.exceptions.UnexpectedException;
 import play.mvc.Router;
 import play.mvc.Scope;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +54,13 @@ public class TwitterSecure extends OAuthSecure implements ISecure {
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         // 2: get the access token
         INSTANCE.getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-        session().put(SESSION_EMAIL_KEY, INSTANCE.getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase());
+		String username = getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase();
+		User user = User.findByUsername(username);
+        if (user != null) {
+			user.dateConnexion = new Date();
+            user.update();
+		}
+        session().put(SESSION_EMAIL_KEY, username);
         redirect(callback);
     }
 

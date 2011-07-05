@@ -10,6 +10,7 @@ import play.exceptions.UnexpectedException;
 import play.mvc.Router;
 import play.mvc.Scope;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +62,13 @@ public class YahooSecure extends OAuthSecure implements ISecure {
         // 2: get the access token
         Logger.info("token :" + oauth_token);
         getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-        session().put(SESSION_EMAIL_KEY, getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase());
+		String email = getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase();
+		User user = User.find(email);
+        if (user != null) {
+			user.dateConnexion = new Date();
+            user.update();
+		}
+        session().put(SESSION_EMAIL_KEY, email);
         redirect(callback);
     }
 
@@ -85,15 +92,9 @@ public class YahooSecure extends OAuthSecure implements ISecure {
         if (session().get(SESSION_EMAIL_KEY) != null) {
             user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
-                Email email = Email.find(session().get(SESSION_EMAIL_KEY));
-                if(email == null){
-                    user = new User(session().get(SESSION_EMAIL_KEY));
-                    user.actif = true;
-                    user.insert();
-                }else {
-                    email.user.get();
-                    user = email.user;
-                }
+                user = new User(session().get(SESSION_EMAIL_KEY));
+                user.actif = true;
+                user.insert();
             }
         }
         return user;

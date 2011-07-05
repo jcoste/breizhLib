@@ -43,15 +43,9 @@ public class FBSecure implements ISecure {
         if (session().get(SESSION_EMAIL_KEY) != null) {
             user = User.find(session().get(SESSION_EMAIL_KEY).toLowerCase());
             if (user == null) {
-                Email email = Email.find(session().get(SESSION_EMAIL_KEY));
-                if(email == null){
-                    user = new User(session().get(SESSION_EMAIL_KEY));
-                    user.actif = true;
-                    user.insert();
-                }else {
-                    email.user.get();
-                    user = email.user;
-                }
+                user = new User(session().get(SESSION_EMAIL_KEY));
+                user.actif = true;
+                user.insert();
             }
             user.actif = true;
             user.update();

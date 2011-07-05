@@ -53,15 +53,9 @@ public class GAESecure implements ISecure {
         if (GAE.isLoggedIn()) {
             user = User.find(GAE.getUser().getEmail().toLowerCase());
             if (user == null) {
-                 Email email = Email.find(GAE.getUser().getEmail().toLowerCase());
-                if(email == null){
-                    user = new User(null);
-                    user.actif = true;
-                    user.insert();
-                }else {
-                    email.user.get();
-                    user = email.user;
-                }
+                user = new User(null);
+                user.actif = true;
+                user.insert();
             }
             user.actif = true;
             user.isAdmin = user.isAdmin || GAE.isAdmin();
