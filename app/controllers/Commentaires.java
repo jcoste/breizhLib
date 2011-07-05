@@ -86,7 +86,7 @@ public class Commentaires extends Controller {
     }
 
     @Role("public")
-    @Get(value = "/commentaires.xml",format = "xml")
+    @Get(value = "/commentaires.xml", format = "xml")
     public static void all() {
         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
 

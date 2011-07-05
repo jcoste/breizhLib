@@ -1,6 +1,7 @@
 package models;
 
 import com.google.gson.JsonObject;
+import controllers.security.IUser;
 import play.data.binding.As;
 import play.data.validation.Required;
 import play.libs.Codec;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @siena.Table("User")
-public class User extends Model {
+public class User extends Model implements IUser {
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
@@ -107,5 +108,44 @@ public class User extends Model {
             return Codec.hexMD5(gravatarId.toLowerCase().trim());
          return null;
 
+    }
+
+    @Override
+    public boolean isActif() {
+        return actif;
+    }
+
+    @Override
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
+
+    @Override
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    @Override
+    public void setAdmin(boolean admin) {
+        this.isAdmin = admin;
+    }
+
+    @Override
+    public Date getDateConnexion() {
+        return dateConnexion;
+    }
+
+    @Override
+    public void setDateConnexion(Date dateConnexion) {
+       this.dateConnexion = dateConnexion;
+    }
+
+    @Override
+    public void save() {
+        if(id == null){
+            insert();
+        }else{
+           update();
+        }
     }
 }

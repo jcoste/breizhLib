@@ -84,9 +84,9 @@ public class BasicSecure extends Controller implements ISecure {
 
     @Get("/user/activate")
     public static void activerCompte(@Required String id) {
-        User user = User.find((String) Cache.get(id));
-        user.actif = true;
-        user.update();
+        IUser user = User.find((String) Cache.get(id));
+        user.setActif(true);
+        user.save();
         Application.index();
     }
 
@@ -127,8 +127,8 @@ public class BasicSecure extends Controller implements ISecure {
     }
 
 
-    public User getUser() {
-        User user = null;
+    public IUser getUser() {
+        IUser user = null;
         if (session.get(SESSION_EMAIL_KEY) != null) {
             user = User.find(session.get(SESSION_EMAIL_KEY));
         }

@@ -1,8 +1,6 @@
 package controllers.security;
 
 
-import models.User;
-
 public interface ISecure {
 
     String SESSION_IMPL_KEY = "secureimpl";
@@ -17,5 +15,5 @@ public interface ISecure {
 
     boolean check(String profile);
 
-    User getUser();
+    IUser getUser();
 }

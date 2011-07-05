@@ -1,7 +1,6 @@
 package controllers.security;
 
 
-import models.Email;
 import models.User;
 import play.Play;
 import play.exceptions.UnexpectedException;
@@ -16,7 +15,7 @@ public class GAESecure implements ISecure {
     protected String callback;
 
 
-     private GAESecure() {
+    private GAESecure() {
         init();
     }
 
@@ -48,18 +47,18 @@ public class GAESecure implements ISecure {
     }
 
 
-    public User getUser() {
-        User user = null;
+    public IUser getUser() {
+        IUser user = null;
         if (GAE.isLoggedIn()) {
             user = User.find(GAE.getUser().getEmail().toLowerCase());
             if (user == null) {
                 user = new User(null);
-                user.actif = true;
-                user.insert();
+                user.setActif(true);
+                user.save();
             }
-            user.actif = true;
-            user.isAdmin = user.isAdmin || GAE.isAdmin();
-            user.update();
+            user.setActif(true);
+            user.setAdmin(user.isAdmin() || GAE.isAdmin());
+            user.save();
         }
         return user;
     }

@@ -1,7 +1,6 @@
 package controllers.security;
 
 
-import models.Email;
 import models.User;
 import models.oauthclient.Credentials;
 import play.Logger;
@@ -62,12 +61,12 @@ public class YahooSecure extends OAuthSecure implements ISecure {
         // 2: get the access token
         Logger.info("token :" + oauth_token);
         getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-		String email = getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase();
-		User user = User.find(email);
+        String email = getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase();
+        User user = User.find(email);
         if (user != null) {
-			user.dateConnexion = new Date();
+            user.dateConnexion = new Date();
             user.update();
-		}
+        }
         session().put(SESSION_EMAIL_KEY, email);
         redirect(callback);
     }
@@ -87,14 +86,14 @@ public class YahooSecure extends OAuthSecure implements ISecure {
     }
 
     @Override
-    public User getUser() {
-        User user = null;
+    public IUser getUser() {
+        IUser user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
             user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
                 user = new User(session().get(SESSION_EMAIL_KEY));
-                user.actif = true;
-                user.insert();
+                user.setActif(true);
+                user.save();
             }
         }
         return user;
