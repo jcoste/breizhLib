@@ -14,8 +14,8 @@ import java.util.List;
 
 @With(Secure.class)
 @StaticRoutes({
-    @ServeStatic(value = "/public/", directory = "public"),
-    @ServeStatic(value = "/images/", directory = "images")
+        @ServeStatic(value = "/public/", directory = "public"),
+        @ServeStatic(value = "/images/", directory = "images")
 })
 public class Application extends Controller {
 

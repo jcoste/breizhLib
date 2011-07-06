@@ -29,7 +29,7 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/infos")
     public static void infos() {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
             render(user);
         }
@@ -39,7 +39,7 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/commentaires")
     public static void commentaires() {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         List<Commentaire> commentaires = user.commentaires();
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
@@ -50,7 +50,7 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/edit")
     public static void edit() {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
             List<Email> emails = Email.findByUser(user);
             render(user, emails);
@@ -61,7 +61,7 @@ public class Users extends Controller {
     @Role("member")
     @Post("/user/edit")
     public static void postEdit(@Required String nom, @Required String prenom, String email) throws UnsupportedEncodingException {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
             user.nom = nom;
             user.prenom = prenom;
@@ -72,21 +72,21 @@ public class Users extends Controller {
             Logger.info("email+ do");
             do {
                 String valeurEmail = request.params.get("email" + i);
-                Logger.info("email + "+i +" = "+valeurEmail);
+                Logger.info("email + " + i + " = " + valeurEmail);
                 if (valeurEmail == null) {
                     hasnext = false;
-                } else if( !valeurEmail.equals(email) ) {
+                } else if (!valeurEmail.equals(email)) {
                     Email userEmail = Email.find(valeurEmail);
                     if (userEmail == null) {
                         userEmail = new Email(valeurEmail);
                         userEmail.user = user;
                         userEmail.insert();
-                        validationEmail(userEmail,user);
+                        validationEmail(userEmail, user);
                     } else {
-                       error("email déjà utilisé");
+                        error("email déjà utilisé");
                     }
                 }
-               i++;
+                i++;
             } while (hasnext);
 
 
@@ -105,8 +105,6 @@ public class Users extends Controller {
                     user.email = email;
                     user.update();
                 }
-
-
                 edit();
             }
         }
@@ -127,7 +125,7 @@ public class Users extends Controller {
 
     @Role("member")
     public static void modifPwd(@Required String oldwpd, @Required @Equals("pwdconfirm") String pwd, @Required String pwdconfirm) {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         validation.equals(user.password, Crypto.passwordHash(oldwpd)).message(Messages.get("error", "mot de passe incorrect"));
         if (validation.hasErrors()) {
             render("Users/infos.html");
@@ -155,7 +153,7 @@ public class Users extends Controller {
 
     @Get("/user/validate-{id}")
     public static void validateEmail(@Required String id) {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
             String email = (String) Cache.get(id);
             if (email != null) {
@@ -166,20 +164,18 @@ public class Users extends Controller {
             }
             edit();
         }
-
-
     }
 
     @Get("/user/validateEmail-{id}")
     public static void validateAddEmail(@Required String id) {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
             String email = (String) Cache.get(id);
             if (email != null) {
                 Email userEmail = Email.find(email);
-                if(userEmail != null){
-                   userEmail.valid = true;
-                   userEmail.update();
+                if (userEmail != null) {
+                    userEmail.valid = true;
+                    userEmail.update();
                 }
 
             } else {
@@ -187,7 +183,5 @@ public class Users extends Controller {
             }
             edit();
         }
-
-
     }
 }

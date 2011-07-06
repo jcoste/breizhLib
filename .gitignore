@@ -16,6 +16,8 @@ server.pid
 *.iws
 .idea/
 /target
+/war/WEB-INF/lib
+/war/WEB-INF/classes
 *~
 cloudbeesCmd
 
@@ -27,3 +29,4 @@ cloudbeesCmd
 /modules/siena-*
 /modules/router-*
 /modules/db-*
+/modules/maven-*

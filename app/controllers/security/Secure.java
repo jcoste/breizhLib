@@ -37,13 +37,13 @@ public class Secure extends Controller {
     }
 
     @Get("/authentification")
-    public static void authetification() {
-        User user = secure.getUser();
+    public static void authentification() {
+        IUser user = secure.getUser();
         if (user != null) {
-            session.put(ISecure.SESSION_EMAIL_KEY, user.email);
-            session.put("userIsAdmin", user.isAdmin);
-            user.dateConnexion = new Date();
-            user.update();
+            session.put(ISecure.SESSION_EMAIL_KEY, ((User) user).email);
+            session.put("userIsAdmin", user.isAdmin());
+            user.setDateConnexion(new Date());
+            user.save();
             Application.index();
         } else {
             session.put(ISecure.SESSION_EMAIL_KEY, null);
@@ -54,7 +54,7 @@ public class Secure extends Controller {
 
     @Get("/login-{impl}")
     public static void login(String impl) {
-        if (impl == null || impl.equals("all") ) {
+        if (impl == null || impl.equals("all")) {
             Integer authFailcount = (Integer) Cache.get(session.get("authfail"));
             render(authFailcount);
         } else {
@@ -90,7 +90,7 @@ public class Secure extends Controller {
         forbidden();
     }
 
-    public static User getUser() {
+    public static IUser getUser() {
         return secure.getUser();
     }
 
