@@ -7,12 +7,19 @@
     <name>Breizh Lib</name>
     <packaging>war</packaging>
 
+	<parent>
+		<groupId>org.play</groupId>
+		<artifactId>play-parent</artifactId>
+		<version>1.1</version>
+	</parent>
+	
     <properties>
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
         <maven.compiler.fork>false</maven.compiler.fork>
         <wikitext.version>1.4.0.I20110104-0100-e3x</wikitext.version>
+		<play.version>1.2.1</play.version>
     </properties>
 
     <dependencies>
@@ -105,7 +112,7 @@
         <dependency>
             <groupId>org.play</groupId>
             <artifactId>play</artifactId>
-            <version>1.2.1</version>
+            <version>${play.version}</version>
         </dependency>
 
         <dependency>
@@ -175,6 +182,12 @@
         </resources>
 
         <plugins>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
