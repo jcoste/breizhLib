@@ -20,6 +20,8 @@
         <maven.compiler.fork>false</maven.compiler.fork>
         <wikitext.version>1.4.0.I20110104-0100-e3x</wikitext.version>
 		<play.version>1.2.1</play.version>
+        <gae.version>1.4.0</gae.version>
+        <gae.home>/opt/appengine-java-sdk/${gae.version}/</gae.home>
     </properties>
 
     <dependencies>
@@ -190,12 +192,6 @@
 			</plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-                <inherited>true</inherited>
             </plugin>
 
 
@@ -219,7 +215,7 @@
 
                 </executions>
             </plugin>
-            <plugin>
+            <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
@@ -237,7 +233,15 @@
                     <workDirectory>${basedir}/war</workDirectory>
                     <warSourceDirectory>${basedir}/war</warSourceDirectory>
                 </configuration>
-            </plugin>
+            </plugin-->
+             <plugin>
+               <groupId>net.kindleit</groupId>
+               <artifactId>maven-gae-plugin</artifactId>
+               <version>0.8.4</version>
+               <configuration>
+                   <unpackVersion>${gae.version}</unpackVersion>
+               </configuration>
+           </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -246,10 +250,15 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.0.2</version>
                     <configuration>
-                        <fork>${maven.compiler.fork}</fork>
+                            <fork>${maven.compiler.fork}</fork>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                            <source>${maven.compiler.source}</source>
+                            <target>${maven.compiler.target}</target>
                     </configuration>
+                    <inherited>true</inherited>
                 </plugin>
             </plugins>
+
         </pluginManagement>
     </build>
 
