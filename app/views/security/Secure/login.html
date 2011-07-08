@@ -21,11 +21,11 @@
 </script>
 
 <article>
-    <h1 onclick="display('new',['openid','login']);">Nouveau sur BreizhLib ?</h1>
+    <h1><a href="javascript:display('new',['openid','login']);">Nouveau sur BreizhLib ?</a></h1>
     <div id="new" style="visibility:hidden; display:none;">
     <p><a href="@{security.BasicSecure.newuser()}">Créer un compte</a></p>
     </div>
-    <h1 onclick="display('openid',['login','new']);">Connectez-vous avec l'Open-ID </h1>
+    <h1><a href="javascript:display('openid',['login','new']);">Connectez-vous avec l'Open-ID </a></h1>
     <div id="openid" style="visibility:visible; display:block;">
     <p><a href="@{security.Secure.login('gae')}"><img src="@{'/public/images/openid-provider/google.png'}"
                                                   alt="Google"/></a>

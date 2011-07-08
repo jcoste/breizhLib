@@ -36,7 +36,6 @@ public class Secure extends Controller {
         }
     }
 
-    @Get("/authentification")
     public static void authentification() {
         IUser user = secure.getUser();
         if (user != null) {
