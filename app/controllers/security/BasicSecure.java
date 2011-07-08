@@ -32,7 +32,7 @@ public class BasicSecure extends Controller implements ISecure {
     public void logout() {
         session.put(SESSION_EMAIL_KEY, null);
         session.put(SESSION_IMPL_KEY, null);
-        Secure.authetification();
+        Secure.authentification();
     }
 
     @Override
@@ -84,9 +84,9 @@ public class BasicSecure extends Controller implements ISecure {
 
     @Get("/user/activate")
     public static void activerCompte(@Required String id) {
-        User user = User.find((String) Cache.get(id));
-        user.actif = true;
-        user.update();
+        IUser user = User.find((String) Cache.get(id));
+        user.setActif(true);
+        user.save();
         Application.index();
     }
 
@@ -113,9 +113,9 @@ public class BasicSecure extends Controller implements ISecure {
         }
 
         session.remove("authfail");
-        session.put(SESSION_EMAIL_KEY, username);
+        session.put(SESSION_EMAIL_KEY, username.toLowerCase());
         session.put(SESSION_IMPL_KEY, "basic");
-        Secure.authetification();
+        Secure.authentification();
     }
 
     @Get("captcha/{id}")
@@ -127,8 +127,8 @@ public class BasicSecure extends Controller implements ISecure {
     }
 
 
-    public User getUser() {
-        User user = null;
+    public IUser getUser() {
+        IUser user = null;
         if (session.get(SESSION_EMAIL_KEY) != null) {
             user = User.find(session.get(SESSION_EMAIL_KEY));
         }

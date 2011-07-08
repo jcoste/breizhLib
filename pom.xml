@@ -5,6 +5,7 @@
     <artifactId>breizhlib</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Breizh Lib</name>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>1.6</maven.compiler.source>
@@ -120,6 +121,12 @@
           <scope>compile</scope>
         </dependency>
 
+	<dependency>
+		<groupId>org.play</groupId>
+		<artifactId>router</artifactId>
+		<version>breizhLib-head</version>
+	</dependency>
+
 
         <dependency>
             <groupId>signpost</groupId>
@@ -202,7 +209,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.0</version>
+                <version>2.1.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -211,11 +218,11 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                     <outputDirectory>${basedir}/target</outputDirectory>
                     <webappDirectory>${basedir}/war</webappDirectory>
                     <workDirectory>${basedir}/war</workDirectory>
                     <warSourceDirectory>${basedir}/war</warSourceDirectory>
-                    <webXml>${basedir}/war/WEB-INF/web.xml</webXml>
                 </configuration>
             </plugin>
         </plugins>

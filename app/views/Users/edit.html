@@ -3,7 +3,43 @@
 
 <h1>Edition des informations de votre compte</h1>
 
+<script type="text/javascript">
+var i = ${emails.size()};
+function  addEmail(){
+    var email_tr =document.getElementById('email_'+i);
+    var newTr = document.createElement('tr');
+    i++;
+    newTr.id = 'email_'+i;
+    var newTd = document.createElement('td');
+    newTd.innerHTML = "<label>Email "+i+" : </label>";
+    newTr.appendChild(newTd);
+    var newTd2 = document.createElement('td');
+    newTd2.innerHTML = "<p>#{error 'email"+i+"' /}</p><input type='email' name='email"+i+"' id='email"+i+"' value='' size='20'/><a href='javascript:removeEmail(\"email_"+i+"\","+i+")'>-</a>";
+    newTr.appendChild(newTd2);
+    email_tr.parentNode.insertBefore(newTr,email_tr.nextSibling);
+}
 
+function  removeEmail(id,index){
+  var email_tr =document.getElementById(id);
+  email_tr.parentNode.removeChild(email_tr);
+
+   if(i == index){
+       i--;
+       var dec = 0;
+       for(j=i;j>${emails.size()};j--){
+            var index_tr =document.getElementById('email_'+j);
+            if(index_tr == null){
+               dec++;
+            } else{
+                break;
+            }
+       }
+       i = i-dec;
+   }
+}
+
+
+</script>
 <section class="full">
     #{form @Users.postEdit(),enctype:'multipart/form-data'}
     <table>
@@ -14,10 +50,21 @@
             </tr>
         #{/if}
         #{if user.email != null }
-            <tr>
+            <tr id="email_0">
                 <td><label>Email : </label></td>
-                <td>${user.email}</td>
+                <td>${user.email} <a href="javascript:addEmail()">+</a></td>
             </tr>
+            %{
+                int i=1;
+            }%
+            #{list items:emails, as:'emailp'}
+                <tr id="email_${i}">
+                    <td><label>Email : </label></td>
+                    <td>${emailp.email}</td>
+                </tr>
+                %{i++}%
+            #{/list}
+
         #{/if}
         #{else}
             <tr>

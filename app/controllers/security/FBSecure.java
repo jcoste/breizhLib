@@ -23,7 +23,7 @@ public class FBSecure implements ISecure {
     public void logout() {
         session().put(SESSION_EMAIL_KEY, null);
         session().put(SESSION_IMPL_KEY, null);
-        Secure.authetification();
+        Secure.authentification();
     }
 
     @Override
@@ -37,17 +37,17 @@ public class FBSecure implements ISecure {
     }
 
     @Override
-    public User getUser() {
-        User user = null;
+    public IUser getUser() {
+        IUser user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
-            user = User.find(session().get(SESSION_EMAIL_KEY));
+            user = User.find(session().get(SESSION_EMAIL_KEY).toLowerCase());
             if (user == null) {
                 user = new User(session().get(SESSION_EMAIL_KEY));
-                user.actif = true;
-                user.insert();
+                user.setActif(true);
+                user.save();
             }
-            user.actif = true;
-            user.update();
+            user.setActif(true);
+            user.save();
         }
         return user;
     }

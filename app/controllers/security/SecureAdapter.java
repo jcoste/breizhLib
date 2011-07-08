@@ -1,8 +1,6 @@
 package controllers.security;
 
 
-import models.User;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +56,7 @@ public class SecureAdapter implements ISecure {
             return true;
         }
         if ("admin".equals(profile)) {
-            return secure.getUser() == null ? false : secure.getUser().isAdmin;
+            return secure.getUser() == null ? false : secure.getUser().isAdmin();
         } else if ("member".equals(profile)) {
             return secure.getUser() != null;
         }
@@ -66,7 +64,7 @@ public class SecureAdapter implements ISecure {
     }
 
     @Override
-    public User getUser() {
+    public IUser getUser() {
         if (secureMap.containsKey(Secure.getImpl())) {
             return secureMap.get(Secure.getImpl()).getUser();
         } else {

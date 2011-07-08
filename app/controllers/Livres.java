@@ -33,7 +33,7 @@ public class Livres extends Controller {
     }
 
     @Role("public")
-    @Get(value = "/books.xml",format = "xml")
+    @Get(value = "/books.xml", format = "xml")
     public static void all() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
@@ -41,7 +41,7 @@ public class Livres extends Controller {
     }
 
     @Role("public")
-    @Get(value = "/ouvrages/" ,format = "xml")
+    @Get(value = "/ouvrages/", format = "xml")
     public static void allXml() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
@@ -49,11 +49,10 @@ public class Livres extends Controller {
     }
 
     @Role("public")
-    @Get(value = "/ouvrages.json" ,format = "json")
+    @Get(value = "/ouvrages.json", format = "json")
     public static void allJson() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
-
         render(livres);
     }
 
@@ -83,7 +82,7 @@ public class Livres extends Controller {
             render();
         }
         Livre livre = Livre.findByISBN(id);
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         render(livre, user);
     }
 
@@ -172,7 +171,7 @@ public class Livres extends Controller {
         }
 
 
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         Commentaire commentaire = new Commentaire(livre, user, nom, content, note);
         commentaire.insert();
         show(bookId);
@@ -180,17 +179,17 @@ public class Livres extends Controller {
 
     @Role("member")
     @Post("/search")
-    public static void postSearch(String recherche,String type) {
-       if(recherche != null && recherche.length() >0){
-           List<Livre> livres = Livre.findLikeTitre(recherche);
+    public static void postSearch(String recherche, String type) {
+        if (recherche != null && recherche.length() > 0) {
+            List<Livre> livres = Livre.findLikeTitre(recherche);
 
-           List<Editeur> editeurs = Editeur.findLikeNom(recherche);
+            List<Editeur> editeurs = Editeur.findLikeNom(recherche);
 
-           List<Commentaire> commentaires = Commentaire.findLike(recherche);
+            List<Commentaire> commentaires = Commentaire.findLike(recherche);
 
-           render(livres,recherche,editeurs,commentaires,type);
-       }else{
-          render(recherche,type);
-       }
+            render(livres, recherche, editeurs, commentaires, type);
+        } else {
+            render(recherche, type);
+        }
     }
 }
