@@ -50,7 +50,7 @@ public class User extends Model implements IUser {
         User user = User.all(User.class).filter("email", email).get();
 		if (user == null) {
 			Email userEmail = Email.find(email);
-			if(userEmail == null){
+			if(userEmail != null){
 				userEmail.user.get();
 				user = userEmail.user;
 			}

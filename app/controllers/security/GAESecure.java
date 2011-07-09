@@ -29,11 +29,11 @@ public class GAESecure implements ISecure {
 
 
     public void login() {
-        GAE.login(callback);
+        GAE.login("security.secure.authentification");
     }
 
     public void logout() {
-        GAE.logout(callback);
+        GAE.logout("security.secure.authentification");
     }
 
     @Override
