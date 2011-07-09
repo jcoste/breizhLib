@@ -67,7 +67,7 @@ public class GoogleSecure extends OAuthSecure implements ISecure {
     }
 
     @Override
-    public User getUser() {
+    public IUser getUser() {
         User user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
             user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
@@ -88,7 +88,7 @@ public class GoogleSecure extends OAuthSecure implements ISecure {
     }
 
     public static void informations() {
-        if (Secure.getUser().email == null) {
+        if (((User)Secure.getUser()).email == null) {
             Users.edit();
         } else {
             Application.index();
