@@ -57,18 +57,9 @@ public class GoogleSecure extends OAuthSecure implements ISecure {
         redirect(callback);
     }
 
-    private static ThreadLocal<Credentials> _session = new ThreadLocal<Credentials>();
-
-    public static Credentials getCredentials() {
-        if (_session.get() == null) {
-            _session.set(new Credentials());
-        }
-        return _session.get();
-    }
-
     @Override
     public IUser getUser() {
-        User user = null;
+       User user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
             user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
@@ -83,12 +74,21 @@ public class GoogleSecure extends OAuthSecure implements ISecure {
         return user;
     }
 
+    private static ThreadLocal<Credentials> _session = new ThreadLocal<Credentials>();
+
+    public static Credentials getCredentials() {
+        if (_session.get() == null) {
+            _session.set(new Credentials());
+        }
+        return _session.get();
+    }
+
     protected Scope.Session session() {
         return Scope.Session.current();
     }
 
     public static void informations() {
-        if (((User)Secure.getUser()).email == null) {
+        if (((User) Secure.getUser()).email == null) {
             Users.edit();
         } else {
             Application.index();
