@@ -9,7 +9,6 @@ import play.Logger;
 public class LoadDevData {
 
      public static void doJob() {
-        Logger.info("doJob");
         if(Livre.findAll().size() == 0) {
             Logger.info("load data DEV");
             Editeur editeur = new Editeur("PEARSON","http://www.pearson.fr/");

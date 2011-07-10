@@ -1,15 +1,23 @@
-/eclipse
-/.settings
-/.classpath
+# Ignore Play! working directory #
+db
+eclipse
+log
+logs
+precompiled
+tmp
+test-result
+server.pid
+
+.settings/
+.classpath
 /.project
-/*.iml
-/*.ipr
-/*.iws
-/tmp
-/db/*
+*.iml
+*.ipr
+*.iws
+.idea/
 /target
-/precompiled
-/test-result
+/war/WEB-INF/lib
+/war/WEB-INF/classes
 *~
 cloudbeesCmd
 
@@ -21,3 +29,5 @@ cloudbeesCmd
 /modules/gae-*
 /modules/siena-*
 /modules/router-*
+/modules/db-*
+/modules/maven-*

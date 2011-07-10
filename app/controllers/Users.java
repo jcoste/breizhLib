@@ -4,6 +4,8 @@ package controllers;
 import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
+import models.Email;
+import models.Reservation;
 import models.User;
 import notifiers.Mails;
 import play.Play;
@@ -27,7 +29,7 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/infos")
     public static void infos() {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
             render(user);
         }
@@ -37,7 +39,7 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/commentaires")
     public static void commentaires() {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         List<Commentaire> commentaires = user.commentaires();
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
@@ -48,9 +50,10 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/edit")
     public static void edit() {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
-            render(user);
+            List<Email> emails = Email.findByUser(user);
+            render(user, emails);
         }
         infos();
     }
@@ -58,26 +61,47 @@ public class Users extends Controller {
     @Role("member")
     @Post("/user/edit")
     public static void postEdit(@Required String nom, @Required String prenom, String email) throws UnsupportedEncodingException {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
             user.nom = nom;
             user.prenom = prenom;
             user.update();
+
+            boolean hasnext = true;
+            int i = 1;
+            do {
+                String valeurEmail = request.params.get("email" + i);
+                if (valeurEmail == null) {
+                    hasnext = false;
+                } else if (!valeurEmail.equals(email)) {
+                    Email userEmail = Email.find(valeurEmail);
+                    if (userEmail == null) {
+                        userEmail = new Email(valeurEmail);
+                        userEmail.user = user;
+                        userEmail.insert();
+                        validationEmail(userEmail, user);
+                    } else {
+                        error("email déjà utilisé");
+                    }
+                }
+                i++;
+            } while (hasnext);
+
+
             if (email != null && user.email == null) {
                 User anotherUser = User.find(email);
                 if (anotherUser != null) {
                     error("email déjà utilisé par un autre compte");
                     //TODO fusion de comptes
                 }
-
                 boolean validationEmail = Boolean.parseBoolean(Play.configuration.getProperty("authbasic.email.validation"));
                 if (validationEmail) {
                     String validationID = Codec.UUID();
                     Cache.set(validationID, email, "10mn");
-                    Mails.validationEmail(user,email, validationID);
-                }else{
-                   user.email = email;
-                   user.update();
+                    Mails.validationEmail(user, email, validationID);
+                } else {
+                    user.email = email;
+                    user.update();
                 }
                 edit();
             }
@@ -85,9 +109,21 @@ public class Users extends Controller {
         infos();
     }
 
+    private static void validationEmail(Email email, User user) throws UnsupportedEncodingException {
+        boolean validationEmail = Boolean.parseBoolean(Play.configuration.getProperty("email.validation"));
+        if (validationEmail) {
+            String validationID = Codec.UUID();
+            Cache.set(validationID, email.email, "10mn");
+            Mails.validationAddEmail(user, email.email, validationID);
+        } else {
+            email.valid = true;
+            email.update();
+        }
+    }
+
     @Role("member")
     public static void modifPwd(@Required String oldwpd, @Required @Equals("pwdconfirm") String pwd, @Required String pwdconfirm) {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         validation.equals(user.password, Crypto.passwordHash(oldwpd)).message(Messages.get("error", "mot de passe incorrect"));
         if (validation.hasErrors()) {
             render("Users/infos.html");
@@ -109,13 +145,14 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/emprunts")
     public static void emprunts() {
-        render();
+      List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",(User)Secure.getUser()).filter("dateRetour>", Reservation.getDummyDate()).fetch();
+       render(reservations);
     }
 
 
     @Get("/user/validate-{id}")
     public static void validateEmail(@Required String id) {
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user != null) {
             String email = (String) Cache.get(id);
             if (email != null) {
@@ -126,7 +163,24 @@ public class Users extends Controller {
             }
             edit();
         }
+    }
 
+    @Get("/user/validateEmail-{id}")
+    public static void validateAddEmail(@Required String id) {
+        User user = (User) Secure.getUser();
+        if (user != null) {
+            String email = (String) Cache.get(id);
+            if (email != null) {
+                Email userEmail = Email.find(email);
+                if (userEmail != null) {
+                    userEmail.valid = true;
+                    userEmail.update();
+                }
 
+            } else {
+                error("le lien a expiré");
+            }
+            edit();
+        }
     }
 }

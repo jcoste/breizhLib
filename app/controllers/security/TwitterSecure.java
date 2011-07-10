@@ -10,6 +10,7 @@ import play.exceptions.UnexpectedException;
 import play.mvc.Router;
 import play.mvc.Scope;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +54,13 @@ public class TwitterSecure extends OAuthSecure implements ISecure {
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         // 2: get the access token
         INSTANCE.getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-        session().put(SESSION_EMAIL_KEY, INSTANCE.getConnector().getProvider().getResponseParameters().get("screen_name"));
+        String username = getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase();
+        User user = User.findByUsername(username);
+        if (user != null) {
+            user.dateConnexion = new Date();
+            user.update();
+        }
+        session().put(SESSION_EMAIL_KEY, username);
         redirect(callback);
     }
 
@@ -67,18 +74,18 @@ public class TwitterSecure extends OAuthSecure implements ISecure {
     }
 
     @Override
-    public User getUser() {
+    public IUser getUser() {
         User user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
             user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
                 user = new User(null);
                 user.username = session().get(SESSION_EMAIL_KEY);
-                user.actif = true;
-                user.insert();
+                user.setActif(true);
+                user.save();
             }
-            user.actif = true;
-            user.update();
+            user.setActif(true);
+            user.save();
         }
         return user;
     }
@@ -88,7 +95,7 @@ public class TwitterSecure extends OAuthSecure implements ISecure {
     }
 
     public static void informations() {
-        if (Secure.getUser().email == null) {
+        if (((User)Secure.getUser()).email == null) {
             Users.edit();
         } else {
             Application.index();

@@ -3,12 +3,14 @@ package controllers.security;
 
 import controllers.Application;
 import models.User;
+import models.tag.LivreTag;
 import play.cache.Cache;
 import play.modules.router.Get;
 import play.mvc.Before;
 import play.mvc.Controller;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class Secure extends Controller {
@@ -26,6 +28,11 @@ public class Secure extends Controller {
         if (role != null) {
             checkRole(role);
         }
+         List<LivreTag> tags = LivreTag.all().fetch();
+        for (LivreTag livreTag : tags) {
+            livreTag.tag.get();
+        }
+       renderArgs.put("tags", tags);
     }
 
     public static String getImpl() {
@@ -36,14 +43,13 @@ public class Secure extends Controller {
         }
     }
 
-    @Get("/authentification")
-    public static void authetification() {
-        User user = secure.getUser();
+    public static void authentification() {
+        IUser user = secure.getUser();
         if (user != null) {
-            session.put(ISecure.SESSION_EMAIL_KEY, user.email);
-            session.put("userIsAdmin", user.isAdmin);
-            user.dateConnexion = new Date();
-            user.update();
+            session.put(ISecure.SESSION_EMAIL_KEY, ((User) user).email);
+            session.put("userIsAdmin", user.isAdmin());
+            user.setDateConnexion(new Date());
+            user.save();
             Application.index();
         } else {
             session.put(ISecure.SESSION_EMAIL_KEY, null);
@@ -54,7 +60,7 @@ public class Secure extends Controller {
 
     @Get("/login-{impl}")
     public static void login(String impl) {
-        if (impl == null || impl.equals("all") ) {
+        if (impl == null || impl.equals("all")) {
             Integer authFailcount = (Integer) Cache.get(session.get("authfail"));
             render(authFailcount);
         } else {
@@ -90,7 +96,7 @@ public class Secure extends Controller {
         forbidden();
     }
 
-    public static User getUser() {
+    public static IUser getUser() {
         return secure.getUser();
     }
 

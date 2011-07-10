@@ -35,6 +35,10 @@ header .rss {
     width: 16px;
     float: right;
 }
+footer .rss {
+    height: 16px;
+    width: 16px;
+}
 
 header h1 {
     float: right;
@@ -137,6 +141,13 @@ section h1 a {
     color: white;
     text-decoration: none;
     text-shadow: 3px 3px 7px #333;
+}
+
+section.book img {
+    width: 100px;
+	min-height: 140px;
+    margin: 0 10px 10px 20px;
+    float: left;
 }
 
 section img {

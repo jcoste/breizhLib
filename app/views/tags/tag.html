@@ -9,7 +9,7 @@
         #{script 'jimpl_cloud.js' /}
         <style type="text/css">
             .tagcloud a {
-                color: #92b22c;
+                color: #006699;
             }
 
             .tagcloud {
@@ -19,28 +19,28 @@
             }
 
             .tagcloud a{
-                color: #92b22c;
+                color: #006699;
                 text-decoration:none;
-                border-bottom:1px dotted #92b22c;
+                /*border-bottom:1px dotted #006699;*/
                 padding-bottom:1px;
                 margin: 4px;
             }
 
             .tagcloud a:hover {
                 text-decoration:none;
-                border-bottom:2px solid #92b22c;
+                border-bottom:2px solid #006699;
             }
 
         </style>
         <script type="text/javascript">
             $(function() {
-                $('#tagcloud').tagCloud({separator: '.'});
+                $('#${_tagcloudName}').tagCloud({separator: '.'});
             });
         </script>
 
 
        #{if _as == 'book'}
-        #{if _tags.size()}<p><img src="@{'/public/images/tag_blue.png'}"/><div id="tagcloud" class="tagcloud">
+        #{if _tags.size()}<p><img src="@{'/public/images/tag_blue.png'}"/><div id="${_tagcloudName}" class="tagcloud">
             #{list items:_tags, as:'tag'}
                 #{if tag}
                    ${tag}.
@@ -49,7 +49,7 @@
         #{/if}
        #{/if}
        #{else}
-            #{if _tags.size()}<div id="tagcloud" class="tagcloud">
+            #{if _tags.size()}<div id="${_tagcloudName}" class="tagcloud">
             #{list items:_tags, as:'tag'}
                 #{if tag}
                    ${tag.tag}.

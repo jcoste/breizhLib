@@ -34,7 +34,7 @@ public class Reservations extends Controller {
                 resa.empruntEncours.get();
             }
         }
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
 
         render(livre, emprunts, user);
     }
@@ -120,7 +120,7 @@ public class Reservations extends Controller {
         }
         Livre livre = Livre.findByISBN(id);
         if (livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
-            User user = Secure.getUser();
+            User user = (User) Secure.getUser();
             render(id, user);
         } else {
             error("l'ouvrage " + livre.titre + " n'est pas disponible a la reservation");
@@ -141,7 +141,7 @@ public class Reservations extends Controller {
             throw new IllegalStateException("le livre n'est pas disponible a la réservation");
         }
 
-        User user = Secure.getUser();
+        User user = (User) Secure.getUser();
         if (user.nom == null) {
             user.nom = nom;
         }

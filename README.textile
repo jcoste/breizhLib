@@ -1,0 +1,9 @@
+h1. BreizhLib
+
+
+h1. Web sites
+<a href="http://breizh-lib.appspot.com">BreizhLib sur Appengine</a>
+<a href="http://breizhlib.breizhlib.cloudbees.net/">BreizhLib sur CloudBees</a>
+
+h1. License
+<a href="http://www.gnu.org/licenses/">GNU Affero General Public License</a>

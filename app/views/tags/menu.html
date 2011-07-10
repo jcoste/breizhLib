@@ -3,7 +3,9 @@
         #{secure.check 'public'}
         <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
         <li><a href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
-        <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
+        #{secure.check 'member'}
+            <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
+         #{/secure.check}
         <li><a href="@{Livres.index(0)}">&{'views.main.menu.books'}</a></li>
         <li><a href="@{Editeurs.index()}">Editeurs</a></li>
         <li><a href="@{tag.Tags.index()}">Tags</a></li>
