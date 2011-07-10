@@ -17,6 +17,10 @@
     }
 
 </script>
+#{script 'jquery.bubblepopup.v2.3.1.min.js' /}
+#{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
+#{script 'webwidget_rating_simple.js' /}
+#{stylesheet 'webwidget_rating_simple.css' /}
 <article>
     #{if editeur == null}
     <p>&{'views.livres.index.title'}</p>
@@ -30,11 +34,6 @@
 
     #{if paginator.getElements()}
     #{if paginator.getElements().size()}
-   <div id="popup"> #{list items:paginator.getElements(), as:'livre'}
-    #{if livre}
-    #{livre livre:livre, as:'popup' /}
-    #{/if}
-    #{/list}</div>
     #{list items:paginator.getElements(), as:'livre'}
     #{if livre}
     #{livre livre:livre, as:'summary' /}
