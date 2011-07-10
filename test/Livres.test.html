@@ -1,0 +1,14 @@
+*{ You can use plain selenium command using the selenium tag }*
+
+#{selenium}
+open('/init')
+assertTitle('BreizhLib')
+open('/book/978-2-7440-2452-8')
+assertTitle('BreizhLib Nouveautés')
+assertTextPresent('Développement d'applications professionnelles avec Android 2')
+assertTextPresent('Java')
+assertTextPresent('Android')
+
+clickAndWait('link=Réserver')
+assertTextPresent('Access denied')
+#{/selenium}
