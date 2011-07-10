@@ -35,6 +35,10 @@ header .rss {
     width: 16px;
     float: right;
 }
+footer .rss {
+    height: 16px;
+    width: 16px;
+}
 
 header h1 {
     float: right;

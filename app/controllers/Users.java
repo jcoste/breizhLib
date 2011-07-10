@@ -5,9 +5,9 @@ import controllers.security.Role;
 import controllers.security.Secure;
 import models.Commentaire;
 import models.Email;
+import models.Reservation;
 import models.User;
 import notifiers.Mails;
-import play.Logger;
 import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
@@ -69,10 +69,8 @@ public class Users extends Controller {
 
             boolean hasnext = true;
             int i = 1;
-            Logger.info("email+ do");
             do {
                 String valeurEmail = request.params.get("email" + i);
-                Logger.info("email + " + i + " = " + valeurEmail);
                 if (valeurEmail == null) {
                     hasnext = false;
                 } else if (!valeurEmail.equals(email)) {
@@ -147,7 +145,8 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/emprunts")
     public static void emprunts() {
-        render();
+      List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",(User)Secure.getUser()).filter("dateRetour>", Reservation.getDummyDate()).fetch();
+       render(reservations);
     }
 
 

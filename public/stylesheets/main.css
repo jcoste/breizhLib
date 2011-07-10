@@ -204,3 +204,18 @@
 .star-rating a.five-stars:hover, .five-star-selected {
     width: 100px;
 }
+
+
+
+#footer-area {
+font-size: 90%;
+padding: 18px 0;
+overflow: hidden;
+}
+
+.footer-segment {
+float: left;
+margin-right: 20px;
+margin-left: 20px;
+width: 190px;
+}

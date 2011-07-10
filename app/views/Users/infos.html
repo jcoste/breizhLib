@@ -15,7 +15,7 @@
              <p>Nom d'utilisateur : ${user.username}</p>
         #{/if}
         <footer><a href="@{Users.commentaires()}">Mes commentaires</a> - <a href="@{Users.edit()}">Editer Mes infos</a>
-            - <a href="@{Users.emprunts()}">Mes Emprunts</a></footer>
+           #{if play.mode.name() == 'DEV'} - <a href="@{Users.emprunts()}">Mes Emprunts</a>#{/if}</footer>
     </section>
     #{if session.get("secureimpl") != null && session.get("secureimpl") == "basic"}
     <section class="full">
