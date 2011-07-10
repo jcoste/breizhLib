@@ -3,12 +3,14 @@ package controllers.security;
 
 import controllers.Application;
 import models.User;
+import models.tag.LivreTag;
 import play.cache.Cache;
 import play.modules.router.Get;
 import play.mvc.Before;
 import play.mvc.Controller;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class Secure extends Controller {
@@ -26,6 +28,11 @@ public class Secure extends Controller {
         if (role != null) {
             checkRole(role);
         }
+         List<LivreTag> tags = LivreTag.all().fetch();
+        for (LivreTag livreTag : tags) {
+            livreTag.tag.get();
+        }
+       renderArgs.put("tags", tags);
     }
 
     public static String getImpl() {

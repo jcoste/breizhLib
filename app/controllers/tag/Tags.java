@@ -8,6 +8,7 @@ import models.tag.LivreTag;
 import models.tag.Tag;
 import play.modules.router.Get;
 import play.modules.router.Post;
+import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -15,6 +16,11 @@ import java.util.List;
 
 @With(Secure.class)
 public class Tags extends Controller {
+
+    @Before
+    public static void before(){
+
+    }
 
     @Role("admin")
     @Post("/book/{bookId}/tag/{tag}")

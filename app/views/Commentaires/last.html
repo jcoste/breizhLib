@@ -4,15 +4,15 @@
 <article>
 
     #{if commentaires}
-    <h1>${commentaires.size()} Commentaire${commentaires.pluralize()} </h1>
-    #{if commentaires.size() > 0}
-    #{list items:commentaires, as:'comment'}
-    #{commentaire comment:comment, as:'defaut' /}
-    #{/list}
-    #{/if}
+        <h1>${commentaires.size()} Commentaire${commentaires.pluralize()} </h1>
+        #{if commentaires.size() > 0}
+            #{list items:commentaires, as:'comment'}
+                #{commentaire comment:comment, as:'defaut' /}
+            #{/list}
+        #{/if}
+        <a href="@{Commentaires.index(0)}">&{'views.commentaires.tousLesCommentaires'}</a>
     #{/if}
     #{else}
-    <h1>&{'views.commentaires.aucunCommentaire'}</h1>
+        <h1>&{'views.commentaires.aucunCommentaire'}</h1>
     #{/else}
-    <a href="@{Commentaires.index(0)}">&{'views.commentaires.tousLesCommentaires'}</a>
 </article>
