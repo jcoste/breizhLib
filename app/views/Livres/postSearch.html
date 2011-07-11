@@ -13,14 +13,35 @@
                 </select>
            <input type="submit" value="Rechercher"/></p>
     #{/form}
-
+     #{script 'jquery.bubblepopup.v2.3.1.min.js' /}
+     #{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
      #{list items:livres, as:'livre'}
       #{if type.equals('tout') || type.equals('livres')}
-        <p><a href="@{Livres.show(livre.iSBN)}"> ${livre.titre}</a></p>
+        <script type="text/javascript">
+            $(document).ready(function(){
+               $('.search${livre.id}').CreateBubblePopup();
+               $('.search${livre.id}').mouseover(function(){
+
+                        //show the bubble popup with new options
+                        $(this).ShowBubblePopup({
+                                                    innerHtml:
+                                                                '<section class="book">'+
+                                                                '<img src="${livre.image}"/>'+
+                                                                '</section>',
+                                                    innerHtmlStyle: {
+                                                                        color: ('#333333'),
+                                                                        'text-align':'left'
+                                                                    },
+                                                    themeName: 	'azure',
+                                                    themePath: 	'../public/images/jquerybubblepopup-theme'
+                                              });
+                    });
+            });
+
+            </script>
+        <p><a href="@{Livres.show(livre.iSBN)}"> ${livre.titre}</a><img src="@{'/public/images/loupe.png'}" width="16px" height="16px" class="search${livre.id}"/></p>
       #{/if}
       #{if type.equals('images')}
-        #{script 'jquery.bubblepopup.v2.3.1.min.js' /}
-        #{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
         #{script 'webwidget_rating_simple.js' /}
         #{stylesheet 'webwidget_rating_simple.css' /}
         #{livre livre:livre, as:'summary' /}
@@ -29,7 +50,28 @@
 
      #{list items:editeurs, as:'editeur'}
           #{if type.equals('tout') || type.equals('editeurs')}
-          <p>${editeur.nom} - <a href="${editeur.site}" target="_blank">Site</a> - <a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a></p>
+          <script type="text/javascript">
+            $(document).ready(function(){
+               $('.searchE${livre.id}').CreateBubblePopup();
+               $('.searchE${livre.id}').mouseover(function(){
+
+                        //show the bubble popup with new options
+                        $(this).ShowBubblePopup({
+                                                    innerHtml:
+
+                                                                '<img src="${editeur.image}"/>',
+                                                    innerHtmlStyle: {
+                                                                        color: ('#333333'),
+                                                                        'text-align':'left'
+                                                                    },
+                                                    themeName: 	'azure',
+                                                    themePath: 	'../public/images/jquerybubblepopup-theme'
+                                              });
+                    });
+            });
+
+            </script>
+          <p>${editeur.nom} - <a href="${editeur.site}" target="_blank">Site</a> - <a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a><img src="@{'/public/images/loupe.png'}" width="16px" height="16px" class="searchE${livre.id}"/></p>
           #{/if}
           #{if type.equals('images')}
             <section class="book">
