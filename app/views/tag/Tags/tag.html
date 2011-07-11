@@ -1,37 +1,15 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib Tag' /}
-<script type="text/javascript" >
-
-    function show(id){
-        var divContainer = document.getElementById('popup');
-           for(i=0;i<divContainer.children.length;i++){
-               divContainer.children[i].style.visibility='hidden';
-               divContainer.children[i].style.display = "none";
-           }
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
-
-       }
-    }
-
-</script>
+#{script 'jquery.bubblepopup.v2.3.1.min.js' /}
+#{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
+#{script 'webwidget_rating_simple.js' /}
+#{stylesheet 'webwidget_rating_simple.css' /}
  <article>
-    <h1><a href="@{tag.Tags.index()}" >Tag</a> : ${tag}</h1>
+    <h1><a href="@{tag.Tags.index()}" >Tag</a> : <img src="@{'/public/images/tag_blue.png'}"/>${tag}</h1>
 
  #{list items:livres, as:'livre'}
     #{if livre}
-     <div id="popup"> #{list items:livres, as:'livre'}
-    #{if livre}
-    #{livre livre:livre, as:'popup' /}
-    #{/if}
-    #{/list}</div>
-    #{list items:livres, as:'livre'}
-    #{if livre}
      #{livre livre:livre, as:'summary' /}
-    #{/if}
-    #{/list}
     #{/if}
  #{/list}
 
