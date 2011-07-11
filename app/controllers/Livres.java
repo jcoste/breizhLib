@@ -17,9 +17,9 @@ import java.util.List;
 @With(Secure.class)
 public class Livres extends Controller {
 
-    private static int NB_PAR_PAGE = 12;
+    private static int NB_PAR_PAGE = 10;
 
-    private static int NB_NEWS_PAR_PAGE = 4;
+    private static int NB_NEWS_PAR_PAGE = 5;
 
 
     @Role("public")
@@ -126,7 +126,7 @@ public class Livres extends Controller {
         if (imageFile != null) {
             Picture picture = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);
             image = picture.getUrl();
-            Pictures.resizeImage(picture, 100, 133);
+           // Pictures.resizeImage(picture, 100, 133);
         }
 
         Livre livre = new Livre(titre, editeur, image, iSBN);

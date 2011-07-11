@@ -118,7 +118,7 @@ public class BasicSecure extends Controller implements ISecure {
         Secure.authentification();
     }
 
-    @Get("captcha/{id}")
+    @Get("/captcha/{id}")
     public static void captcha(String id) {
         Images.Captcha captcha = Images.captcha();
         String code = captcha.getText("#0000FD");

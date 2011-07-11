@@ -27,7 +27,7 @@ public class Tags extends Controller {
     public static void addForBook(String bookId, String tag) {
 
         Livre livre = Livre.findByISBN(bookId);
-        livre.addTag(tag);
+        livre.addTag(tag.toUpperCase());
 
         Livres.show(bookId);
     }

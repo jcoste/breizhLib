@@ -1,22 +1,5 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib' /}
-<script type="text/javascript" >
-
-    function show(id){
-        var divContainer = document.getElementById('popup');
-           for(i=0;i<divContainer.children.length;i++){
-               divContainer.children[i].style.visibility='hidden';
-               divContainer.children[i].style.display = "none";
-           }
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
-
-       }
-    }
-
-</script>
 #{script 'jquery.bubblepopup.v2.3.1.min.js' /}
 #{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
 #{script 'webwidget_rating_simple.js' /}

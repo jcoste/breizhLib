@@ -31,11 +31,28 @@
     $(document).ready(function() {
         $('#content').markItUp(mySettings);
     });
-</script>
 
-<article>
-    <h1>&{'views.tags.commentaire.post.title'}</h1>
-    <section class="full">
+    function  display(id,tab){
+       var div = document.getElementById(id);
+       if(div.style.visibility == 'hidden'){
+           div.style.visibility='visible';
+           div.style.display = "block";
+           for (var i=0; i < tab.length; ++i)
+                hide(tab[i]);
+       }else{
+         hide(id);
+       }
+    }
+
+    function  hide(id){
+        var div = document.getElementById(id);
+        div.style.visibility = 'hidden';
+        div.style.display = "none";
+    }
+
+</script>
+    <h1><a href="javascript:display('postComment',null)" class="stack" >&{'views.tags.commentaire.post.title'}</a></h1>
+    <section class="full" id="postComment" style="visibility:hidden; display:none;">
         #{form @Livres.postComment(_bookId)}
         <table>
             <tr>
@@ -64,6 +81,4 @@
         </footer>
         #{/form}
     </section>
-    <article>
-
-        #{/if}
+#{/if}
