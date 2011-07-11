@@ -40,9 +40,9 @@ $(document).ready(function(){
 
 #{if _as == 'full'}
 <article>
-    <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}" >Modifier</a> #{/secure.check}</h1>
+    <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}" ><img src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h1>
     <table> <tr><td>
-        <img src="${_livre.image}"/>
+        <img src="${_livre.image}" width="250px" height="300px"/>
     </td><td>
         <p>
             #{if _livre.reservationEncours == null}

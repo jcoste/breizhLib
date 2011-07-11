@@ -1,7 +1,7 @@
 #{if _as == 'book'}
     #{secure.check 'admin'}
       #{form @tag.Tags.addForbook(_bookId)}
-           <p><input type="text" name="tag" id="tag"/><input type="submit" value="Add Tag"/></p>
+           <p><input type="text" name="tag" id="tag"/><input type="image" src="@{'/public/images/tag_blue_add.png'}" /></p>
       #{/form}
     #{/secure.check}
 #{/if}
