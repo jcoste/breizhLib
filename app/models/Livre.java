@@ -4,7 +4,6 @@ package models;
 import controllers.security.Secure;
 import models.tag.LivreTag;
 import models.tag.Tag;
-import play.Logger;
 import play.data.binding.As;
 import play.data.validation.Required;
 import siena.*;
@@ -37,6 +36,8 @@ public class Livre extends Model {
     public Date dateAjout;
 
     public String etat;
+
+    public Integer popularite = 0;
 
     @Column("reservationEncours")
     public Reservation reservationEncours;

@@ -6,7 +6,7 @@
          #{else}
            <span class="inactif">
          #{/else}
-         <a href="@{Livres.index(0)}">All</a></span>
+         <a href="@{Livres.index(0,_tri)}">All</a></span>
 
         #{list items:_editeurs, as:'editeurFilter'}
                 - #{if _editeur != null && _editeur.equals(editeurFilter)}
@@ -16,7 +16,7 @@
                     #{else}
                         <span class="inactif">
                     #{/else}
-                <a href="@{Livres.editeur(editeurFilter,0)}">${editeurFilter}</a></span>
+                <a href="@{Livres.editeur(editeurFilter,0,_tri)}">${editeurFilter}</a></span>
         #{/list}
 </p>
 
