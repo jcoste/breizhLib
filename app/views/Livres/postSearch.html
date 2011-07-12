@@ -52,8 +52,8 @@
           #{if type.equals('tout') || type.equals('editeurs')}
           <script type="text/javascript">
             $(document).ready(function(){
-               $('.searchE${livre.id}').CreateBubblePopup();
-               $('.searchE${livre.id}').mouseover(function(){
+               $('.searchE${editeur.id}').CreateBubblePopup();
+               $('.searchE${editeur.id}').mouseover(function(){
 
                         //show the bubble popup with new options
                         $(this).ShowBubblePopup({
@@ -71,7 +71,7 @@
             });
 
             </script>
-          <p>${editeur.nom} - <a href="${editeur.site}" target="_blank">Site</a> - <a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a><img src="@{'/public/images/loupe.png'}" width="16px" height="16px" class="searchE${livre.id}"/></p>
+          <p>${editeur.nom} - <a href="${editeur.site}" target="_blank">Site</a> - <a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a><img src="@{'/public/images/loupe.png'}" width="16px" height="16px" class="searchE${editeur.id}"/></p>
           #{/if}
           #{if type.equals('images')}
             <section class="book">
