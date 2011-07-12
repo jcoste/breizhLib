@@ -10,7 +10,8 @@
     <p>Commentaires sur les Ouvrages de l'éditeur ${editeur}</p>
     #{/else}
 
-    #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurCommentaires' /}
+    #{tri editeur:editeur,tri:tri,page:page,as:'commentaire' /}
+    #{editeurs editeur:editeur,editeurs:editeurs,tri:tri, as:'editeurCommentaires' /}
 
     #{if commentaires}
     <h1>${max} Commentaire${commentaires.pluralize()}</h1>

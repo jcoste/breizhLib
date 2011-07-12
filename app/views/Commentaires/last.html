@@ -10,7 +10,7 @@
                 #{commentaire comment:comment, as:'defaut' /}
             #{/list}
         #{/if}
-        <a href="@{Commentaires.index(0)}">&{'views.commentaires.tousLesCommentaires'}</a>
+        <a href="@{Commentaires.index(0,'date')}">&{'views.commentaires.tousLesCommentaires'}</a>
     #{/if}
     #{else}
         <h1>&{'views.commentaires.aucunCommentaire'}</h1>
