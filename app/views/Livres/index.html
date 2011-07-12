@@ -12,8 +12,8 @@
     #{else}
     <p>&{'views.livres.editeur.title'} ${editeur}</p>
     #{/else}
-
-    #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurBook' /}
+    #{tri editeur:editeur,tri:tri,page:paginator.page /}
+    #{editeurs editeur:editeur,editeurs:editeurs,tri:tri, as:'editeurBook' /}
 
     #{if paginator.getElements()}
     #{if paginator.getElements().size()}

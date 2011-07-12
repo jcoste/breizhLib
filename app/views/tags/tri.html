@@ -1,0 +1,39 @@
+<p>
+     #{if _tri.equals('date')}
+             <span class="actif">
+         #{/if}
+         #{else}
+           <span class="inactif">
+         #{/else}
+         #{if _editeur != null}
+            <a href="@{Livres.editeur(_editeur,_page,'date')}">par date</a></span> -
+         #{/if}
+         #{else}
+           <a href="@{Livres.index(_page,'date')}">par date</a></span> -
+         #{/else}
+         #{if _tri.equals('titre')}
+             <span class="actif">
+         #{/if}
+         #{else}
+           <span class="inactif">
+         #{/else}
+
+         #{if _editeur != null}
+            <a href="@{Livres.editeur(_editeur,_page,'titre')}">par titre</a></span> -
+         #{/if}
+         #{else}
+           <a href="@{Livres.index(_page,'titre')}">par titre</a></span> -
+         #{/else}
+         #{if _tri.equals('popularite')}
+             <span class="actif">
+         #{/if}
+         #{else}
+           <span class="inactif">
+         #{/else}
+         #{if _editeur != null}
+            <a href="@{Livres.editeur(_editeur,_page,'popularite')}">par popularite</a></span>
+         #{/if}
+         #{else}
+           <a href="@{Livres.index(_page,'popularite')}">par popularite</a></span>
+         #{/else}
+</p>
