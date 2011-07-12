@@ -69,7 +69,7 @@ public class Commentaires extends Controller {
         }
 
         renderArgs.put("editeurs", Editeurs.initListEditeurs());
-        render(page, dept, max, editeur);
+        render(page, dept, max, editeur,commentaires);
     }
 
     @Get("/commentaires/{page}")
