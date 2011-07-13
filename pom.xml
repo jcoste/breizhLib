@@ -102,9 +102,9 @@
         <dependency>
             <groupId>siena</groupId>
             <artifactId>siena</artifactId>
-            <version>0.7.6</version>
+            <version>1.0.0-b5</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/siena-0.7.6.jar</systemPath>
+            <systemPath>${project.basedir}/lib/siena-1.0.0-b5.jar</systemPath>
         </dependency>
 
         <!--
