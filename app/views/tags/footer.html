@@ -1,0 +1,16 @@
+ <footer>&{'views.main.footer'}
+        <section id="footer-area">
+            <aside class="footer-segment">
+                <h1>Tags</h1>
+                #{tag tags:_tags,tagcloudName:'tagcloudfooter' /}
+            </aside>
+            #{if play.mode.name() == 'DEV'}
+            <aside class="footer-segment">
+                <a href="http://feeds.feedburner.com/Breizhlib" target="_blank"><img class="rss" src="@{'/public/images/rss.png'}"/>Ouvrages</a>
+                   <br/><a href="@{Application.index()}commentaires.xml" target="_blank"><img class="rss" src="@{'/public/images/rss.png'}"/>Commentaires</a>
+
+            </aside>
+            #{/if}
+            <aside class="footer-segment"> </aside>
+    </section>
+</footer>

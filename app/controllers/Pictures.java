@@ -20,13 +20,18 @@ public class Pictures extends Controller {
         renderBinary(new ByteArrayInputStream(picture.image));
     }
 
-    public static Picture createImage(byte[] bytes, String path, String iSBN, boolean resize){
+    public static Picture createImage(byte[] bytes, String path, String iSBN, boolean resize) {
         if (bytes != null) {
-            Picture imageFile = new Picture();
-            imageFile.image = bytes;
-            imageFile.name = iSBN + ".jpg";
-            imageFile.path = path;
-            imageFile.insert();
+            Picture imageFile = Picture.findByNname(iSBN + ".jpg");
+            if (imageFile == null) {
+                imageFile = new Picture();
+                imageFile.image = bytes;
+                imageFile.name = iSBN + ".jpg";
+                imageFile.path = path;
+                imageFile.insert();
+            } else {
+                //TODO �craser l'image
+            }
             return imageFile;
         }
         return null;
