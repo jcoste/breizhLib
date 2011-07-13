@@ -8,6 +8,7 @@ import models.Email;
 import models.Reservation;
 import models.User;
 import notifiers.Mails;
+import play.Logger;
 import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
@@ -145,7 +146,14 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/emprunts")
     public static void emprunts() {
-      List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",(User)Secure.getUser()).filter("dateRetour>", Reservation.getDummyDate()).fetch();
+      User user = (User) Secure.getUser();
+      List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt>",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+      for (Reservation resa : reservations) {
+            if (resa.empruntEncours != null) {
+                resa.empruntEncours.get();
+            }
+       }
+
        render(reservations);
     }
 

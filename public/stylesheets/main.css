@@ -146,3 +146,9 @@ a.stack {
     color: black;
     text-decoration: none;
 }
+
+aside#leftbar {
+	width: 200px;
+    height: 400px;
+    float: left;
+}
