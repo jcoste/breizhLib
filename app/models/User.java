@@ -58,6 +58,10 @@ public class User extends Model implements IUser {
         return user;
     }
 
+    public List<Email> getExtraEmail(){
+        return Email.findByUser(this);
+    }
+
     public static User findByUsername(String username) {
         User user = User.all(User.class).filter("username", username).get();
         return user;

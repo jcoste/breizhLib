@@ -1,0 +1,12 @@
+<aside id="leftbar">
+       <h1>Mon Compte</h1>
+       <ul>
+           <li><a href="@{Users.edit()}">Editer Mes infos</a></li>
+           <li>Supprimer le compte</li>
+       </ul>
+       <h1>Ma bibliothèque</h1>
+       <ul>
+           <li><a href="@{Users.commentaires()}">Mes commentaires</a></li>
+           <li>#{if play.mode.name() == 'DEV'}<a href="@{Users.emprunts()}">Mes Emprunts</a>#{/if}</li>
+       </ul>
+</aside>

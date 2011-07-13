@@ -10,6 +10,7 @@ import siena.Model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @siena.Table("Reservation")
@@ -57,6 +58,13 @@ public class Reservation extends Model {
 
     public boolean isDateEmpruntNull() {
         return dateEmprunt.equals(getDummyDate());
+    }
+
+    public Date getDateRetourIdeal(){
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(dateEmprunt);
+        c1.add(Calendar.MONTH,1);
+        return c1.getTime();
     }
 
     public static Reservation findById(Long id) {
