@@ -42,9 +42,10 @@ $(document).ready(function(){
 <article>
     <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}" ><img src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h1>
 
-    #{if _user.username != null}
+    #{if _user != null &&  _user.username != null}
        <a href="http://twitter.com/share" class="twitter-share-button" data-text="Avis sur l'ouvrage ${_livre.titre}" data-count="horizontal" data-via="${_user.username}" data-lang="fr">Tweeter</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     #{/if}
+    <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=178515308872430&amp;xfbml=1"></script><fb:like href="@@{Livres.show(_livre.iSBN)}" send="true" layout="button_count" width="450" show_faces="true" font=""></fb:like>
     <table> <tr><td>
         <img src="${_livre.image}" width="250px" height="300px"/>
     </td><td>
