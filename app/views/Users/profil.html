@@ -14,7 +14,8 @@
         <table>
         <tr><td></td><td>${user.nom} ${user.prenom}</td></tr>
         #{if user.username != null }
-              <tr><td></td><td><a href="https://twitter.com/#!/${user.username}" target="_blank">@${user.username}</a></td></tr>
+              <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+              <tr><td></td><td><a href="https://twitter.com/${user.username}" class="twitter-follow-button">Follow @${user.username}</a></td></tr>
         #{/if}
         #{if commentaires}
         <tr><td></td><td>${commentaires.size()} Commentaire${commentaires.pluralize()}</td></tr>
