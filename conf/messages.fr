@@ -43,7 +43,7 @@ validation.required= <span class="error">le champ %s est obligatoire </span>
 #
 # views/Application/index.html
 #
-views.application.index.title = La bibliothèque du BreizhJug.
+views.application.index.title = Nous tenons gratuitement à votre disposition quelques ouvrages que vous pouvez emprunter. Nous vous demandons simplement : <ul><li>d'en prendre soin, </li><li>de nous les rapporter lors de la session suivante du BreizhJug (le prêt étant valable pendant deux mois maximum),</li><li>de nous donner votre avis, sous forme d'une note et/ou d'un commentaire qui viendra enrichir le site.</li><li>Évidemment, si l'un de ces tires vous a particulièrement emballé, nous ne pouvons que vous encourager à vous le procurer chez votre libraire préféré !</li><ul>
 
 #
 # views/Livres/*.html
