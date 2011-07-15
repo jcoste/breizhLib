@@ -41,6 +41,10 @@ $(document).ready(function(){
 #{if _as == 'full'}
 <article>
     <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}" ><img src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h1>
+
+    #{if _user.username != null}
+       <a href="http://twitter.com/share" class="twitter-share-button" data-text="Avis sur l'ouvrage ${_livre.titre}" data-count="horizontal" data-via="${_user.username}" data-lang="fr">Tweeter</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    #{/if}
     <table> <tr><td>
         <img src="${_livre.image}" width="250px" height="300px"/>
     </td><td>
@@ -63,7 +67,7 @@ $(document).ready(function(){
     <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
     #{if _livre.commentaires.size() > 0}
     #{list items:_livre.commentaires, as:'comment'}
-    #{commentaire comment:comment, as:'summary' /}
+    #{commentaire comment:comment,user:user, as:'summary' /}
     #{/list}
     #{/if}
     #{/if}
