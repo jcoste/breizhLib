@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+#{set title:'Google Book Api preview' /}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      function alertNotFound() {
+          document.getElementById('viewerCanvas').innerHTML = "<h1>Preview non disponnible</h1>"
+
+      }
+      google.load("books", "0");
+
+      function initialize() {
+        var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+        viewer.load('ISBN:${iSBN}',alertNotFound);
+      }
+
+      google.setOnLoadCallback(initialize);
+</script>
+
+<article>
+    <div id="viewerCanvas" style="width: 600px; height: 600px"></div>
+</article>
