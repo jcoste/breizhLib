@@ -1,34 +1,38 @@
-#{if _as == 'popup'}
-<div id="popup${_livre.id}" style="visibility:hidden;display:none; ">
-   <section class="full"> <h1><a href="@{Livres.show(_livre.iSBN)}" >${_livre.titre}</a></h1>
-    <p><a href="@{Livres.editeur(_livre.editeur,0)}">${_livre.editeur}</a></p>
-        <p>
-            #{if _livre.reservationEncours == null}
-            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
-            #{/if}
-        </p>
-
-        <p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'static' /}</p>
-   </section>
-</div>
-#{/if}
 #{if _as == 'summary'}
-#{script 'webwidget_rating_simple.js' /}
-#{stylesheet 'webwidget_rating_simple.css' /}
+<script type="text/javascript">
+$(document).ready(function(){
+   $('.popup${_livre.id}').CreateBubblePopup();
+   $('.popup${_livre.id}').mouseover(function(){
 
+			//show the bubble popup with new options
+			$(this).ShowBubblePopup({
+										innerHtml: "${_livre.titre}"+
+                                                   "<p>${_livre.editeur}</p>"+
+                                                   '<p>'+
+                                                        #{if _livre.reservationEncours == null}
+                                                        '<span class="${_livre.getEtat().getClasseCss()}">${_livre.getEtat().getClasseCss()}</span>'+
+                                                        #{/if}
+                                                    '</p>'+
+                                                     #{if _livre.getCommentaires().size() > 0}
+                                                    '${_livre.getCommentaires().size()} Commentaire${_livre.getCommentaires().pluralize()}'+
+                                                    #{/if}
+                                                     #{else}
+                                                    '&{"views.commentaires.aucunCommentaire"}'+
+                                                     #{/else}
+                                                    '<p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'script' /}</p>',
+										innerHtmlStyle: {
+															color: ('#333333'),
+															'text-align':'left'
+														},
+										themeName: 	'azure',
+										themePath: 	'../public/images/jquerybubblepopup-theme'
+								  });
+		});
+});
+
+</script>
 <section class="book">
-
-    <a href="#" onclick="show('popup${_livre.id}');"/> <img src="${_livre.image}"/></a>
-
-
-    <footer>
-         #{if _livre.getCommentaires().size() > 0}
-            <a href="@{Commentaires.commentaires(_livre.iSBN)}">${_livre.getCommentaires().size()} Commentaire${_livre.getCommentaires().pluralize()} </a>
-        #{/if}
-        #{else}
-            &{'views.commentaires.aucunCommentaire'}
-        #{/else}
-    </footer>
+    <a href="@{Livres.show(_livre.iSBN)}"  class="popup${_livre.id}"/> <img src="${_livre.image}"/></a>
 </section>
 
 #{/if}
@@ -36,16 +40,20 @@
 
 #{if _as == 'full'}
 <article>
-    <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}" >Modifier</a> #{/secure.check}</h1>
+    <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}" ><img src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h1>
+
+    #{if _user != null &&  _user.username != null}
+       #{social.tweeter text:"Avis sur l'ouvrage ${_livre.titre}",via:_user.username /}
+    #{/if}
+    #{social.like url:_livre.iSBN,as:'book' /}
     <table> <tr><td>
-        <img src="${_livre.image}"/>
+        <img src="${_livre.image}" width="250px" height="300px"/>
     </td><td>
-        <p>
+        #{secure.check 'member'}<p>
             #{if _livre.reservationEncours == null}
             <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
             #{/if}
         </p>
-        #{secure.check 'member'}
             <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
         #{/secure.check}
 
@@ -59,7 +67,7 @@
     <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
     #{if _livre.commentaires.size() > 0}
     #{list items:_livre.commentaires, as:'comment'}
-    #{commentaire comment:comment, as:'summary' /}
+    #{commentaire comment:comment,user:user, as:'summary' /}
     #{/list}
     #{/if}
     #{/if}

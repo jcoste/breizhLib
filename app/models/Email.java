@@ -36,4 +36,8 @@ public class Email  extends Model {
         return email;
     }
 
+    @Override
+    public String toString() {
+        return email;
+    }
 }

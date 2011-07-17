@@ -17,19 +17,25 @@ import java.util.List;
 @With(Secure.class)
 public class Livres extends Controller {
 
-    private static int NB_PAR_PAGE = 12;
+    private static int NB_PAR_PAGE = 10;
 
-    private static int NB_NEWS_PAR_PAGE = 4;
+    private static int NB_NEWS_PAR_PAGE = 5;
 
 
     @Role("public")
-    @Get("/books/{page}")
-    public static void index(int page) {
-        Query<Livre> query = Livre.all(Livre.class).order("-dateAjout");
+    @Get("/books/{tri}/{page}")
+    public static void index(int page, String tri) {
+        String triSearch = tri;
+        if (triSearch == null || tri.equals("date")) {
+            triSearch = "-dateAjout";
+        } else if (tri.equals("popularite")) {
+            triSearch = "-popularite";
+        }
+        Query<Livre> query = Livre.all(Livre.class).order(triSearch);
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.index", query);
 
         renderArgs.put("editeurs", Editeurs.initListEditeurs());
-        render(paginator);
+        render(paginator, tri);
     }
 
     @Role("public")
@@ -37,6 +43,11 @@ public class Livres extends Controller {
     public static void all() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
+        for (Livre livre : livres) {
+            livre.popularite = livre.getCommentaires().size();
+            livre.update();
+        }
+
         render(livres);
     }
 
@@ -58,13 +69,20 @@ public class Livres extends Controller {
 
 
     @Role("public")
-    @Get("/books/editeur/{editeur}/{page}")
-    public static void editeur(String editeur, int page) {
-        Query<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order("-dateAjout");
+    @Get("/books/editeur/{editeur}/{tri}/{page}")
+    public static void editeur(String editeur, int page, String tri) {
+        String triSearch = tri;
+        if (triSearch == null || tri.equals("date")) {
+            triSearch = "-dateAjout";
+        } else if (tri.equals("popularite")) {
+            triSearch = "-popularite";
+        }
+
+        Query<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order(triSearch);
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.editeur", livres);
 
         renderArgs.put("editeurs", Editeurs.initListEditeurs());
-        render(editeur, paginator);
+        render(editeur, paginator, tri);
     }
 
 
@@ -126,7 +144,7 @@ public class Livres extends Controller {
         if (imageFile != null) {
             Picture picture = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);
             image = picture.getUrl();
-            Pictures.resizeImage(picture, 100, 133);
+            // Pictures.resizeImage(picture, 100, 133);
         }
 
         Livre livre = new Livre(titre, editeur, image, iSBN);
@@ -174,6 +192,8 @@ public class Livres extends Controller {
         User user = (User) Secure.getUser();
         Commentaire commentaire = new Commentaire(livre, user, nom, content, note);
         commentaire.insert();
+        livre.popularite = livre.getCommentaires().size();
+        livre.update();
         show(bookId);
     }
 

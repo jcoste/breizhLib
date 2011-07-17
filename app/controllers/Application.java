@@ -22,7 +22,7 @@ public class Application extends Controller {
     @Get("/")
     public static void index() {
         if (Secure.getUser() != null) {
-            Livres.index(0);
+            Livres.index(0,"date");
         }
         List<Livre> livres = Livre.all(Livre.class).fetch();
         render(livres);

@@ -117,11 +117,7 @@ article p {
 
 .book {
     float: left;
-    background: #CCCCCC;
-    background-image: -moz-linear-gradient(top, #888888, #CCCCCC 50%, #EEEEEE);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#888888), color-stop(0.5, #CCCCCC), to(#EEEEEE));
-    border-radius: 5px 20px 0 10px;
-    width: 14%;
+    width: 15%;
     margin: 10px 15px 10px 14px;
 }
 
@@ -145,7 +141,7 @@ section h1 a {
 
 section.book img {
     width: 100px;
-	min-height: 140px;
+	height: 140px;
     margin: 0 10px 10px 20px;
     float: left;
 }

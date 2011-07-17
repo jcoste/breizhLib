@@ -1,21 +1,27 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib' /}
 
-<article>
-    <section class="full">
+#{include 'Users/menu.html' /}
+<div>
+
+    <section>
         <h1>Mes infos</h1>
         <img src="http://www.gravatar.com/avatar/${user.gravatarhash(user.email).raw()}"/>
-        <p>Nom : ${user.nom}</p>
+        <table>
+        <tr><td>Nom : </td><td>${user.nom}</td></tr>
 
-        <p>Prénom : ${user.prenom}</p>
+         <tr><td>Prénom : </td><td>${user.prenom}</td></tr>
 
-        <p>Email : ${user.email}</p>
+
+         <tr><td>Email : </td><td>${user.email}</td></tr>
+        #{list items:user.getExtraEmail(), as:'email'}
+            <tr><td></td><td>${email}</td></tr>
+        #{/list}
 
         #{if user.username != null }
-             <p>Nom d'utilisateur : ${user.username}</p>
+              <tr><td>Nom d'utilisateur :</td><td> ${user.username}</td></tr>
         #{/if}
-        <footer><a href="@{Users.commentaires()}">Mes commentaires</a> - <a href="@{Users.edit()}">Editer Mes infos</a>
-           #{if play.mode.name() == 'DEV'} - <a href="@{Users.emprunts()}">Mes Emprunts</a>#{/if}</footer>
+        </table>
     </section>
     #{if session.get("secureimpl") != null && session.get("secureimpl") == "basic"}
     <section class="full">
@@ -43,4 +49,4 @@
         #{/form}
     </section>
     #{/if}
-</article>
+</div>

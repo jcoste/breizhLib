@@ -8,6 +8,7 @@ import models.Email;
 import models.Reservation;
 import models.User;
 import notifiers.Mails;
+import play.Logger;
 import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
@@ -31,10 +32,25 @@ public class Users extends Controller {
     public static void infos() {
         User user = (User) Secure.getUser();
         if (user != null) {
-            render(user);
+             render(user);
         }
         Application.index();
     }
+
+    @Role("member")
+    @Get("/user/profil/{id}")
+    public static void profil(Long id) {
+        User user = User.findById(id);
+        if (user != null) {
+            List<Commentaire> commentaires = user.commentaires();
+            for (Commentaire commentaire : commentaires) {
+                commentaire.livre.get();
+            }
+            render(user,commentaires);
+        }
+        Application.index();
+    }
+
 
     @Role("member")
     @Get("/user/commentaires")
@@ -44,7 +60,7 @@ public class Users extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-        render(commentaires);
+        render(user,commentaires);
     }
 
     @Role("member")
@@ -145,8 +161,15 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/emprunts")
     public static void emprunts() {
-      List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",(User)Secure.getUser()).filter("dateRetour>", Reservation.getDummyDate()).fetch();
-       render(reservations);
+      User user = (User) Secure.getUser();
+      List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt>",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+      for (Reservation resa : reservations) {
+            if (resa.empruntEncours != null) {
+                resa.empruntEncours.get();
+            }
+       }
+
+       render(user,reservations);
     }
 
 

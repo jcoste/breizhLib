@@ -1,9 +1,11 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib' /}
 
-<article>
+#{include 'Users/menu.html' /}
+<div>
+    <h1>Mes Commentaires</h1>
     #{if commentaires}
-    <h1>${commentaires.size()} Commentaire${commentaires.pluralize()}</h1>
+    <p>${commentaires.size()} Commentaire${commentaires.pluralize()}</p>
     #{if commentaires.size() > 0}
     #{list items:commentaires, as:'comment'}
     #{commentaire comment:comment, as:'defaut' /}
@@ -11,6 +13,6 @@
     #{/if}
     #{/if}
     #{else}
-    <h1>&{'views.commentaires.aucunCommentaire'}</h1>
+    <p>&{'views.commentaires.aucunCommentaire'}</p>
     #{/else}
-</article>
+</div>

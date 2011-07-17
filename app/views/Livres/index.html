@@ -1,22 +1,9 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib' /}
-<script type="text/javascript" >
-
-    function show(id){
-        var divContainer = document.getElementById('popup');
-           for(i=0;i<divContainer.children.length;i++){
-               divContainer.children[i].style.visibility='hidden';
-               divContainer.children[i].style.display = "none";
-           }
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
-
-       }
-    }
-
-</script>
+#{script 'jquery.bubblepopup.v2.3.1.min.js' /}
+#{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
+#{script 'webwidget_rating_simple.js' /}
+#{stylesheet 'webwidget_rating_simple.css' /}
 <article>
     #{if editeur == null}
     <p>&{'views.livres.index.title'}</p>
@@ -25,16 +12,11 @@
     #{else}
     <p>&{'views.livres.editeur.title'} ${editeur}</p>
     #{/else}
-
-    #{editeurs editeur:editeur,editeurs:editeurs, as:'editeurBook' /}
+    #{tri editeur:editeur,tri:tri,page:paginator.page /}
+    #{editeurs editeur:editeur,editeurs:editeurs,tri:tri, as:'editeurBook' /}
 
     #{if paginator.getElements()}
     #{if paginator.getElements().size()}
-   <div id="popup"> #{list items:paginator.getElements(), as:'livre'}
-    #{if livre}
-    #{livre livre:livre, as:'popup' /}
-    #{/if}
-    #{/list}</div>
     #{list items:paginator.getElements(), as:'livre'}
     #{if livre}
     #{livre livre:livre, as:'summary' /}
