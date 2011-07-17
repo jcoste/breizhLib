@@ -10,7 +10,7 @@
 #{/else}
 
     <section>
-        #{social.gravatar email:user.email  /}
+        #{social.gravatar user:user  /}
         <table>
         <tr><td></td><td>${user.nom} ${user.prenom}</td></tr>
         #{if user.username != null }
