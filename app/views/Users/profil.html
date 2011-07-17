@@ -23,6 +23,24 @@
         #{else}
             <tr><td></td><td>&{'views.commentaires.aucunCommentaire'}</td></tr>
         #{/else}
+         #{if reservations}
+            <tr><td></td><td>${reservations.size()} Ouvrage${reservations.pluralize()} Réservé${reservations.pluralize()}</td></tr>
+        #{/if}
+        #{else}
+            <tr><td></td><td>Aucun ouvrage réservé</td></tr>
+        #{/else}
+        #{if ouvragesEncours}
+            <tr><td></td><td>${ouvragesEncours.size()} Ouvrage${ouvragesEncours.pluralize()} en cours de lecture</td></tr>
+        #{/if}
+        #{else}
+            <tr><td></td><td>Aucun ouvrage en cours de lecture</td></tr>
+        #{/else}
+        #{if ouvrages}
+            <tr><td></td><td>${ouvrages.size()} Ouvrage${ouvrages.pluralize()} Lus</td></tr>
+        #{/if}
+        #{else}
+            <tr><td></td><td>Aucun ouvrage lus</td></tr>
+        #{/else}
         </table>
     </section>
 

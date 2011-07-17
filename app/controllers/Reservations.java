@@ -75,6 +75,7 @@ public class Reservations extends Controller {
         resa.dateRetour = new Date();
         livre.reservationEncours = null;
         resa.update();
+        //TODO envoyer un email au lecteur pour l'inviter a ajouter un commentaire sur le livre
         livre.setEtat(livre.getEtat().getNextState());
         livre.update();
         reservations();
@@ -149,6 +150,9 @@ public class Reservations extends Controller {
             user.prenom = prenom;
         }
         user.update();
+
+        // TODO contrôller le nombre de réservation déjà en cours pour l'utilisateur
+
         Reservation reservation = new Reservation(livre, user, nom, prenom, email);
         reservation.insert();
         livre.reservationEncours = reservation;
