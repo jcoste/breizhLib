@@ -212,4 +212,11 @@ public class Livres extends Controller {
             render(recherche, type);
         }
     }
+
+    @Role("member")
+    @Get("/book/{iSBN}/preview")
+    public static void preview(String iSBN){
+       iSBN = iSBN.replaceAll("-","");
+       render(iSBN);
+    }
 }

@@ -23,30 +23,7 @@
         #{/if}
         </table>
     </section>
-    #{if session.get("secureimpl") != null && session.get("secureimpl") == "basic"}
-    <section class="full">
-        <h1>Modifier mon mot de passe</h1>
 
-        #{form @Users.postEdit(),enctype:'multipart/form-data'}
-        <table>
-            <tr>
-                <td><label for="oldpwd">ancien mot de passe : </label></td>
-                <td><input type="password" name="nom" id="oldpwd" size="20"/></td>
-            </tr>
-            <tr>
-                <td><label for="pwd">mot de passe : </label></td>
-                <td><p>#{error 'pwd' /}</p><input type="password" name="pwd" id="pwd" size="20"/></td>
-            </tr>
-            <tr>
-                <td><label for="pwdconfirm">confirmation du mot de passe : </label></td>
-                <td><p>#{error 'pwdconfirm' /}</p><input type="password" name="pwdconfirm" id="pwdconfirm" size="20"/>
-                </td>
-            </tr>
-        </table>
-        <footer>
-            <input type="submit" value="Modifier"/>
-        </footer>
-        #{/form}
-    </section>
-    #{/if}
+     #{include 'Users/editPassword.html' /}
+
 </div>

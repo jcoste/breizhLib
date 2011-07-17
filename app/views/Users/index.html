@@ -6,7 +6,7 @@
     #{if users.size() > 0}
     #{list items:users, as:'user'}
     <section class="miniature">
-        <img src="http://www.gravatar.com/avatar/${user.gravatarhash(user.email).raw()}"/>
+        #{social.gravatar email:user.email  /}
         <p>${user.nom} ${user.prenom}</p>
 
         <p>${user.commentaires().size()} commentaire${user.commentaires().pluralize()}</p>
