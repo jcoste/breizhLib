@@ -5,19 +5,28 @@
     <script type="text/javascript">
 
       function alertNotFound() {
-          document.getElementById('viewerCanvas').innerHTML = "<h1>Preview non disponnible</h1>"
+          document.getElementById('viewerCanvas').innerHTML = "<h1>Preview non disponnible</h1>";
+          document.getElementById('valid').value = false;
 
       }
       google.load("books", "0");
 
       function initialize() {
         var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-        viewer.load('ISBN:${iSBN}',alertNotFound);
+        viewer.load('ISBN:${iSBN13}',alertNotFound);
       }
 
       google.setOnLoadCallback(initialize);
 </script>
 
 <article>
+    #{secure.check 'admin'}
+        #{form @Livres.validPreview(),enctype:'multipart/form-data'}
+          <input type="hidden" name="iSBN" id="iSBN" value="${iSBN}" />
+          <input type="hidden" name="valid" id="valid" value="true" />
+          <input type="submit" value="Valid Preview"/>
+        #{/form}
+    #{/secure.check}
     <div id="viewerCanvas" style="width: 600px; height: 600px"></div>
+
 </article>

@@ -70,7 +70,9 @@ $(document).ready(function(){
         <img src="${_livre.image}" width="250px" height="300px"/>
     </td><td>
         #{secure.check 'member'}
-            <p><img src="@{'/public/images/loupe.png'}" width="16px" height="16px" /><a href="@{Livres.preview(_livre.iSBN)}" target="_blank">Preview</a></p>
+            #{if _livre.preview == null || _livre.preview }
+                <p><img src="@{'/public/images/loupe.png'}" width="16px" height="16px" /><a href="@{Livres.preview(_livre.iSBN)}" target="_blank">Preview</a></p>
+            #{/if}
             #{if play.mode.name() == 'DEV'}
 
                 <p><a href="javascript:display('addBiblio',null)" class="stack" >Ajouter à ma bibliothèque</a>
