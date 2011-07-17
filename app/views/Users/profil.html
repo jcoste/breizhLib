@@ -10,18 +10,36 @@
 #{/else}
 
     <section>
-        <img src="http://www.gravatar.com/avatar/${user.gravatarhash(user.email).raw()}"/>
+        #{social.gravatar user:user  /}
         <table>
         <tr><td></td><td>${user.nom} ${user.prenom}</td></tr>
         #{if user.username != null }
-              <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
-              <tr><td></td><td><a href="https://twitter.com/${user.username}" class="twitter-follow-button">Follow @${user.username}</a></td></tr>
+
+              <tr><td></td><td>#{social.follow username:user.username /}</td></tr>
         #{/if}
         #{if commentaires}
-        <tr><td></td><td>${commentaires.size()} Commentaire${commentaires.pluralize()}</td></tr>
+            <tr><td></td><td>${commentaires.size()} Commentaire${commentaires.pluralize()}</td></tr>
         #{/if}
         #{else}
-        <tr><td></td><td>&{'views.commentaires.aucunCommentaire'}</td></tr>
+            <tr><td></td><td>&{'views.commentaires.aucunCommentaire'}</td></tr>
+        #{/else}
+         #{if reservations}
+            <tr><td></td><td>${reservations.size()} Ouvrage${reservations.pluralize()} Réservé${reservations.pluralize()}</td></tr>
+        #{/if}
+        #{else}
+            <tr><td></td><td>Aucun ouvrage réservé</td></tr>
+        #{/else}
+        #{if ouvragesEncours}
+            <tr><td></td><td>${ouvragesEncours.size()} Ouvrage${ouvragesEncours.pluralize()} en cours de lecture</td></tr>
+        #{/if}
+        #{else}
+            <tr><td></td><td>Aucun ouvrage en cours de lecture</td></tr>
+        #{/else}
+        #{if ouvrages}
+            <tr><td></td><td>${ouvrages.size()} Ouvrage${ouvrages.pluralize()} Lus</td></tr>
+        #{/if}
+        #{else}
+            <tr><td></td><td>Aucun ouvrage lus</td></tr>
         #{/else}
         </table>
     </section>

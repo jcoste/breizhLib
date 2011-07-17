@@ -39,6 +39,8 @@ public class Livre extends Model {
 
     public Integer popularite = 0;
 
+    public Boolean preview;
+
     @Column("reservationEncours")
     public Reservation reservationEncours;
 

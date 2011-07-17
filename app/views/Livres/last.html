@@ -25,17 +25,17 @@
     <p>&{'views.livres.last.title'}</p>
 
     #{if livres}
-    #{if livres.size()}
-    #{list items:livres, as:'livre'}
-    #{if livre}
-    #{livre livre:livre, page:0,redirect:'last', as:'summary' /}
-    #{/if}
-    #{/list}
-    #{/if}
+        #{if livres.size()}
+            #{list items:livres, as:'livre'}
+                #{if livre}
+                    #{livre livre:livre, page:0,redirect:'last', as:'summary' /}
+                #{/if}
+            #{/list}
+        #{/if}
     #{/if}
 
     #{else}
-    <p>&{'views.livres.noBookRecorded'}</p>
+        <p>&{'views.livres.noBookRecorded'}</p>
     #{/else}
 
 </article>

@@ -8,7 +8,6 @@ import models.Email;
 import models.Reservation;
 import models.User;
 import notifiers.Mails;
-import play.Logger;
 import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
@@ -43,10 +42,10 @@ public class Users extends Controller {
         User user = User.findById(id);
         if (user != null) {
             List<Commentaire> commentaires = user.commentaires();
-            for (Commentaire commentaire : commentaires) {
-                commentaire.livre.get();
-            }
-            render(user,commentaires);
+            List<Reservation> ouvrages =  Reservation.all(Reservation.class).filter("user",user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
+            List<Reservation> ouvragesEncours =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt>",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+            List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+            render(user,commentaires,ouvrages,ouvragesEncours,reservations);
         }
         Application.index();
     }
