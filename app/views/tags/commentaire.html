@@ -5,7 +5,13 @@
         <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</p>
 
         <p>${_comment.commentaire}</p>
-        <footer>${_comment.nom} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
+        <footer>
+            #{secure.check 'member'}
+                <a href="@{Users.profil(_comment.user.id)}">${_comment.nom}</a>
+            #{/secure.check}
+            #{secure.check 'public', not:'member'}
+                 ${_comment.nom}
+            #{/secure.check} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
     </section>
 #{/if}
 
@@ -17,7 +23,13 @@
         <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</p>
 
         <p>${_comment.commentaire}</p>
-        <footer>${_comment.nom} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
+        <footer>
+            #{secure.check 'member'}
+                <a href="@{Users.profil(_comment.user.id)}">${_comment.nom}</a>
+            #{/secure.check}
+            #{secure.check 'public', not:'member'}
+                 ${_comment.nom}
+            #{/secure.check}le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
     </section>
 #{/if}
 

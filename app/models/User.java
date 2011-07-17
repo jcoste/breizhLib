@@ -67,6 +67,12 @@ public class User extends Model implements IUser {
         return user;
     }
 
+    public static User findById(Long id) {
+           User user = User.all(User.class).filter("id", id).get();
+           return user;
+       }
+
+
     public String toString() {
         if (prenom != null && nom != null) {
             return nom + " " + prenom;
