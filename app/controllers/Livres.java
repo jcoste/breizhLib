@@ -216,7 +216,20 @@ public class Livres extends Controller {
     @Role("member")
     @Get("/book/{iSBN}/preview")
     public static void preview(String iSBN){
-       iSBN = iSBN.replaceAll("-","");
-       render(iSBN);
+       String iSBN13 = iSBN.replaceAll("-","");
+       render(iSBN13,iSBN);
+    }
+
+    @Role("admin")
+    @Post("/book/{iSBN}/validPreview")
+    public static void validPreview(String iSBN,boolean valid){
+        Livre livre = Livre.findByISBN(iSBN);
+        if (livre == null) {
+            render("Livres/preview.html", iSBN);
+        }
+
+        livre.preview = valid;
+        livre.update();
+         show(iSBN);
     }
 }
