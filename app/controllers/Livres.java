@@ -140,6 +140,7 @@ public class Livres extends Controller {
             error("le livre existe déja en base");
         }
 
+        //TODO contrôle de l'image, pour ne pas créer une image vide
         String image = null;
         if (imageFile != null) {
             Picture picture = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);

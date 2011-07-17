@@ -7,31 +7,6 @@
 #{/if}
     #{if _tags}
         #{script 'jimpl_cloud.js' /}
-        <style type="text/css">
-            .tagcloud a {
-                color: #006699;
-            }
-
-            .tagcloud {
-                width: 50px;
-                height: 50px;
-                margin-left: 40px;
-            }
-
-            .tagcloud a{
-                color: #006699;
-                text-decoration:none;
-                /*border-bottom:1px dotted #006699;*/
-                padding-bottom:1px;
-                margin: 4px;
-            }
-
-            .tagcloud a:hover {
-                text-decoration:none;
-                border-bottom:2px solid #006699;
-            }
-
-        </style>
         <script type="text/javascript">
             $(function() {
                 $('#${_tagcloudName}').tagCloud({separator: '.'});

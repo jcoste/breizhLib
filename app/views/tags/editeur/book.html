@@ -1,0 +1,20 @@
+<p>
+    #{if _editeur == null}
+             <span class="actif">
+         #{/if}
+         #{else}
+           <span class="inactif">
+         #{/else}
+         <a href="@{Livres.index(0,_tri)}">All</a></span>
+
+        #{list items:_editeurs, as:'editeurFilter'}
+                - #{if _editeur != null && _editeur.equals(editeurFilter)}
+                      <span class="actif">
+
+                    #{/if}
+                    #{else}
+                        <span class="inactif">
+                    #{/else}
+                <a href="@{Livres.editeur(editeurFilter,0,_tri)}">${editeurFilter}</a></span>
+        #{/list}
+</p>

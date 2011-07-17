@@ -1,0 +1,18 @@
+<script type="text/javascript">
+$(document).ready(function(){
+   $('.${_id}').CreateBubblePopup();
+   $('.${_id}').mouseover(function(){
+
+			//show the bubble popup with new options
+			$(this).ShowBubblePopup({
+										innerHtml: '${_text}',
+										innerHtmlStyle: {
+															color: ('${_color}'),
+															'text-align':'left'
+														},
+										themeName: 	'azure',
+										themePath: 	'../public/images/jquerybubblepopup-theme'
+								  });
+		});
+});
+</script>
