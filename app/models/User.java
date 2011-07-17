@@ -113,7 +113,7 @@ public class User extends Model implements IUser {
         Scope.Session.current().put("userEmail",email );
     }
 
-    public String gravatarhash(String gravatarId){
+    public static String gravatarhash(String gravatarId){
         if(gravatarId != null)
             return Codec.hexMD5(gravatarId.toLowerCase().trim());
          return null;
