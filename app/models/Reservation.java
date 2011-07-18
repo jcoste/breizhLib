@@ -3,6 +3,7 @@ package models;
 import play.data.binding.As;
 import play.data.validation.Email;
 import play.data.validation.Required;
+import play.mvc.Router;
 import siena.Column;
 import siena.Generator;
 import siena.Id;
@@ -63,7 +64,7 @@ public class Reservation extends Model {
     public Date getDateRetourIdeal(){
         Calendar c1 = Calendar.getInstance();
         c1.setTime(dateEmprunt);
-        c1.add(Calendar.MONTH,1);
+        c1.add(Calendar.MONTH,2);
         return c1.getTime();
     }
 

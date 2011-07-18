@@ -8,7 +8,6 @@ import models.Email;
 import models.Reservation;
 import models.User;
 import notifiers.Mails;
-import play.Logger;
 import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
@@ -32,10 +31,25 @@ public class Users extends Controller {
     public static void infos() {
         User user = (User) Secure.getUser();
         if (user != null) {
-            render(user);
+             render(user);
         }
         Application.index();
     }
+
+    @Role("member")
+    @Get("/user/profil/{id}")
+    public static void profil(Long id) {
+        User user = User.findById(id);
+        if (user != null) {
+            List<Commentaire> commentaires = user.commentaires();
+            List<Reservation> ouvrages =  Reservation.all(Reservation.class).filter("user",user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
+            List<Reservation> ouvragesEncours =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt>",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+            List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+            render(user,commentaires,ouvrages,ouvragesEncours,reservations);
+        }
+        Application.index();
+    }
+
 
     @Role("member")
     @Get("/user/commentaires")
@@ -45,7 +59,7 @@ public class Users extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-        render(commentaires);
+        render(user,commentaires);
     }
 
     @Role("member")
@@ -154,7 +168,7 @@ public class Users extends Controller {
             }
        }
 
-       render(reservations);
+       render(user,reservations);
     }
 
 

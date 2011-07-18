@@ -24,18 +24,18 @@ public class Livres extends Controller {
 
     @Role("public")
     @Get("/books/{tri}/{page}")
-    public static void index(int page,String tri) {
+    public static void index(int page, String tri) {
         String triSearch = tri;
-        if(triSearch == null || tri.equals("date")){
+        if (triSearch == null || tri.equals("date")) {
             triSearch = "-dateAjout";
-        } else if(tri.equals("popularite")){
+        } else if (tri.equals("popularite")) {
             triSearch = "-popularite";
         }
         Query<Livre> query = Livre.all(Livre.class).order(triSearch);
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.index", query);
 
         renderArgs.put("editeurs", Editeurs.initListEditeurs());
-        render(paginator,tri);
+        render(paginator, tri);
     }
 
     @Role("public")
@@ -43,10 +43,10 @@ public class Livres extends Controller {
     public static void all() {
         Query<Livre> query = Livre.all(Livre.class);
         List<Livre> livres = query.order("-dateAjout").fetch();
-       for(Livre livre : livres) {
-         livre.popularite = livre.getCommentaires().size();
-         livre.update();
-       }
+        for (Livre livre : livres) {
+            livre.popularite = livre.getCommentaires().size();
+            livre.update();
+        }
 
         render(livres);
     }
@@ -70,11 +70,11 @@ public class Livres extends Controller {
 
     @Role("public")
     @Get("/books/editeur/{editeur}/{tri}/{page}")
-    public static void editeur(String editeur, int page,String tri) {
+    public static void editeur(String editeur, int page, String tri) {
         String triSearch = tri;
-        if(triSearch == null || tri.equals("date")){
+        if (triSearch == null || tri.equals("date")) {
             triSearch = "-dateAjout";
-        } else if(tri.equals("popularite")){
+        } else if (tri.equals("popularite")) {
             triSearch = "-popularite";
         }
 
@@ -82,7 +82,7 @@ public class Livres extends Controller {
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.editeur", livres);
 
         renderArgs.put("editeurs", Editeurs.initListEditeurs());
-        render(editeur, paginator,tri);
+        render(editeur, paginator, tri);
     }
 
 
@@ -144,7 +144,7 @@ public class Livres extends Controller {
         if (imageFile != null) {
             Picture picture = Pictures.createImage(imageFile, "ouvrages/", iSBN, true);
             image = picture.getUrl();
-           // Pictures.resizeImage(picture, 100, 133);
+            // Pictures.resizeImage(picture, 100, 133);
         }
 
         Livre livre = new Livre(titre, editeur, image, iSBN);
@@ -211,5 +211,25 @@ public class Livres extends Controller {
         } else {
             render(recherche, type);
         }
+    }
+
+    @Role("member")
+    @Get("/book/{iSBN}/preview")
+    public static void preview(String iSBN){
+       String iSBN13 = iSBN.replaceAll("-","");
+       render(iSBN13,iSBN);
+    }
+
+    @Role("admin")
+    @Post("/book/{iSBN}/validPreview")
+    public static void validPreview(String iSBN,boolean valid){
+        Livre livre = Livre.findByISBN(iSBN);
+        if (livre == null) {
+            render("Livres/preview.html", iSBN);
+        }
+
+        livre.preview = valid;
+        livre.update();
+         show(iSBN);
     }
 }

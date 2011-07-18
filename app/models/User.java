@@ -67,6 +67,12 @@ public class User extends Model implements IUser {
         return user;
     }
 
+    public static User findById(Long id) {
+           User user = User.all(User.class).filter("id", id).get();
+           return user;
+       }
+
+
     public String toString() {
         if (prenom != null && nom != null) {
             return nom + " " + prenom;
@@ -107,7 +113,7 @@ public class User extends Model implements IUser {
         Scope.Session.current().put("userEmail",email );
     }
 
-    public String gravatarhash(String gravatarId){
+    public static String gravatarhash(String gravatarId){
         if(gravatarId != null)
             return Codec.hexMD5(gravatarId.toLowerCase().trim());
          return null;

@@ -4,14 +4,14 @@
 <article>
 
     #{if commentaires}
-    <h1>${commentaires.size()} Commentaire${commentaires.pluralize()} du livre ${livre.titre} </h1>
-    #{if commentaires.size() > 0}
-    #{list items:commentaires, as:'comment'}
-    #{commentaire comment:comment, as:'defaut' /}
-    #{/list}
-    #{/if}
+        <h1>${commentaires.size()} Commentaire${commentaires.pluralize()} du livre ${livre.titre} </h1>
+        #{if commentaires.size() > 0}
+            #{list items:commentaires, as:'comment'}
+                #{commentaire comment:comment, as:'defaut' /}
+            #{/list}
+        #{/if}
     #{/if}
     #{else}
-    <h1>&{'views.commentaires.aucunCommentaire'}</h1>
+        <h1>&{'views.commentaires.aucunCommentaire'}</h1>
     #{/else}
 </article>

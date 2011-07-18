@@ -3,40 +3,39 @@
 
 <article>
     #{if editeur == null}
-    <p>&{'views.livres.index.title'}</p>
-
+        <p>&{'views.livres.index.title'}</p>
     #{/if}
     #{else}
-    <p>Commentaires sur les Ouvrages de l'éditeur ${editeur}</p>
+        <p>Commentaires sur les Ouvrages de l'éditeur ${editeur}</p>
     #{/else}
 
     #{tri editeur:editeur,tri:tri,page:page,as:'commentaire' /}
-    #{editeurs editeur:editeur,editeurs:editeurs,tri:tri, as:'editeurCommentaires' /}
+        #{editeurs editeur:editeur,editeurs:editeurs,tri:tri, as:'editeurCommentaires' /}
 
     #{if commentaires}
-    <h1>${max} Commentaire${commentaires.pluralize()}</h1>
-    #{if commentaires.size() > 0}
-    #{list items:commentaires, as:'comment'}
-    #{commentaire comment:comment, as:'defaut' /}
-    #{/list}
-    #{/if}
+        <h1>${max} Commentaire${commentaires.pluralize()}</h1>
+        #{if commentaires.size() > 0}
+            #{list items:commentaires, as:'comment'}
+                #{commentaire comment:comment, as:'defaut' /}
+            #{/list}
+        #{/if}
 
-    <ul id="pagination">
-        #{if page > 0}
-        <li id="previous">
-            <a href="@{Commentaires.editeur(editeur,page-1)}">
-                ${((page*dept)-dept)+1} - ${(page*dept)}
-            </a>
-        </li>
-        #{/if}
-        #{if max > ((page+1)*dept) }
-        <li id="next">
-            <a href="@{Commentaires.editeur(editeur,page+1)}">
-                ${((page+1)*dept)+1} - ${((page+1)*dept)+dept}
-            </a>
-        </li>
-        #{/if}
-    </ul>
+        <ul id="pagination">
+            #{if page > 0}
+            <li id="previous">
+                <a href="@{Commentaires.editeur(editeur,page-1)}">
+                    ${((page*dept)-dept)+1} - ${(page*dept)}
+                </a>
+            </li>
+            #{/if}
+            #{if max > ((page+1)*dept) }
+            <li id="next">
+                <a href="@{Commentaires.editeur(editeur,page+1)}">
+                    ${((page+1)*dept)+1} - ${((page+1)*dept)+dept}
+                </a>
+            </li>
+            #{/if}
+        </ul>
     #{/if}
     #{else}
         <h1>&{'views.commentaires.aucunCommentaire'}</h1>

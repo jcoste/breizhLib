@@ -48,9 +48,9 @@ public class Commentaires extends Controller {
 
     @Role("public")
     @Get("/commentaires/editeur/{editeur}/{tri}-{page}")
-    public static void editeur(String editeur, int page,String tri) {
+    public static void editeur(String editeur, int page, String tri) {
         String triSearch = tri;
-        if(triSearch == null || tri.equals("date")){
+        if (triSearch == null || tri.equals("date")) {
             tri = "date";
             triSearch = "-dateAjout";
         } else {
@@ -71,19 +71,20 @@ public class Commentaires extends Controller {
         List<Commentaire> commentairesAllByPage = Commentaire.all(Commentaire.class).order(triSearch).fetch(dept, debut);
 
         final String triCmp = tri;
-       Collections.sort(commentairesAllByPage,new Comparator<Commentaire>() {
-           @Override
-           public int compare(Commentaire commentaire, Commentaire commentaire1) {
-               commentaire.livre.get();
-               commentaire1.livre.get();
-               if(triCmp.equals("titre")){
+        Collections.sort(commentairesAllByPage, new Comparator<Commentaire>() {
+            @Override
+            public int compare(Commentaire commentaire, Commentaire commentaire1) {
+                commentaire.livre.get();
+                commentaire1.livre.get();
+                if (triCmp.equals("titre")) {
                     return commentaire.livre.titre.compareTo(commentaire1.livre.titre);
-               }else if(triCmp.equals("popularite")){
-                    return commentaire.livre.popularite.compareTo(commentaire1.livre.popularite);
-               }
-               return 0;
-           }
-       });
+                } else if (triCmp.equals("popularite")) {
+                    // -popularite
+                    return commentaire1.livre.popularite.compareTo(commentaire.livre.popularite);
+                }
+                return 0;
+            }
+        });
 
         List<Commentaire> commentaires = new ArrayList<Commentaire>();
         for (Commentaire commentaire : commentairesAllByPage) {
@@ -94,13 +95,13 @@ public class Commentaires extends Controller {
         }
 
         renderArgs.put("editeurs", Editeurs.initListEditeurs());
-        render(page, dept, max, editeur,commentaires,tri);
+        render(page, dept, max, editeur, commentaires, tri);
     }
 
     @Get("/commentaires/{tri}-{page}")
-    public static void index(int page,String tri) {
+    public static void index(int page, String tri) {
         String triSearch = tri;
-        if(triSearch == null || tri.equals("date")){
+        if (triSearch == null || tri.equals("date")) {
             tri = "date";
             triSearch = "-dateAjout";
         } else {
@@ -112,26 +113,27 @@ public class Commentaires extends Controller {
         Paginator<Commentaire> paginator = new Paginator<Commentaire>(NB_PAR_PAGE, page, "Commentaires.index", query);
 
         final String triCmp = tri;
-        Collections.sort(paginator.getElements(),new Comparator<Commentaire>() {
-           @Override
-           public int compare(Commentaire commentaire, Commentaire commentaire1) {
-               commentaire.livre.get();
-               commentaire1.livre.get();
-               if(triCmp.equals("titre")){
+        Collections.sort(paginator.getElements(), new Comparator<Commentaire>() {
+            @Override
+            public int compare(Commentaire commentaire, Commentaire commentaire1) {
+                commentaire.livre.get();
+                commentaire1.livre.get();
+                if (triCmp.equals("titre")) {
                     return commentaire.livre.titre.compareTo(commentaire1.livre.titre);
-               }else if(triCmp.equals("popularite")){
-                    return commentaire.livre.popularite.compareTo(commentaire1.livre.popularite);
-               }
-               return 0;
-           }
-       });
+                } else if (triCmp.equals("popularite")) {
+                    // -popularite
+                    return commentaire1.livre.popularite.compareTo(commentaire.livre.popularite);
+                }
+                return 0;
+            }
+        });
 
         for (Commentaire commentaire : paginator.getElements()) {
             commentaire.livre.get();
         }
 
         renderArgs.put("editeurs", Editeurs.initListEditeurs());
-        render(paginator,tri);
+        render(paginator, tri);
     }
 
     @Role("public")
