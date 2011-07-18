@@ -17,11 +17,8 @@
 
 #{if _as == 'defaut'}
     <section class="miniature">
-        <h1><a href="@{Livres.show(_comment.livre.iSBN)}">${_comment.livre.titre}</a></h1>
+        <h1><a href="@{Livres.show(_comment.livre.iSBN)}">${_comment.livre.titre}</a> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</h1>
         <img src="${_comment.livre.image}"/>
-
-        <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</p>
-
         <p>${_comment.commentaire}</p>
         <footer>
             #{secure.check 'member'}
