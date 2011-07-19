@@ -1,0 +1,58 @@
+#{script '../markitup/jquery.markitup.js' /}
+#{script '../markitup/sets/textile/set.js' /}
+#{stylesheet '../markitup/skins/markitup/style.css' /}
+#{stylesheet '../markitup/sets/textile/style.css' /}
+<script language="javascript">
+    $(document).ready(function() {
+        $('#content').markItUp(mySettings);
+    });
+
+    function  display(id,tab){
+       var div = document.getElementById(id);
+       if(div.style.visibility == 'hidden'){
+           div.style.visibility='visible';
+           div.style.display = "block";
+           for (var i=0; i < tab.length; ++i)
+                hide(tab[i]);
+       }else{
+         hide(id);
+       }
+    }
+
+    function  hide(id){
+        var div = document.getElementById(id);
+        div.style.visibility = 'hidden';
+        div.style.display = "none";
+    }
+
+</script>
+    <h1><a href="javascript:display('postComment',null)" class="stack" >&{'views.tags.commentaire.post.title'}</a></h1>
+    <section class="full" id="postComment" style="visibility:hidden; display:none;">
+        #{form @Livres.postComment(_bookId)}
+        <table>
+            <tr>
+                <td></td>
+                <td>#{error 'nom' /}</td>
+            </tr>
+            <tr>
+                <td><label>&{'views.tags.commentaire.post.note.label'}</label></td>
+                <td>#{stars max:5, value:_note,id:'note',as:'note' /}</td>
+            </tr>
+            <tr>
+                <td><label for="nom">&{'views.tags.commentaire.post.nom.label'}</label></td>
+                <td><input type="text" name="nom" id="nom" value="${_user.toString()}"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>#{error 'content' /}</td>
+            </tr>
+            <tr>
+                <td><label for="content">&{'views.tags.commentaire.post.content.label'}</label></td>
+                <td><textarea name="content" id="content" rows="5" cols="40">${params.content}</textarea></td>
+            <tr>
+        </table>
+        <footer>
+            <input type="submit" value="&{'views.tags.commentaire.post.submit'}"/>
+        </footer>
+        #{/form}
+    </section>

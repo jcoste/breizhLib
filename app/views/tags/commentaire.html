@@ -1,93 +1,14 @@
 #{script 'webwidget_rating_simple.js' /}
 #{stylesheet 'webwidget_rating_simple.css' /}
 #{if _as == 'summary'}
-    <section class="miniature">
-        <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</p>
-
-        <p>${_comment.commentaire}</p>
-        <footer>
-            #{secure.check 'member'}
-                <a href="@{Users.profil(_comment.user.id)}">${_comment.nom}</a>
-            #{/secure.check}
-            #{secure.check 'public', not:'member'}
-                 ${_comment.nom}
-            #{/secure.check} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
-    </section>
+    #{include 'tags/commentaire/summary.html' /}
 #{/if}
 
 #{if _as == 'defaut'}
-    <section class="miniature">
-        <h1><a href="@{Livres.show(_comment.livre.iSBN)}">${_comment.livre.titre}</a> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</h1>
-        <img src="${_comment.livre.image}"/>
-        <p>${_comment.commentaire}</p>
-        <footer>
-            #{secure.check 'member'}
-                <a href="@{Users.profil(_comment.user.id)}">${_comment.nom}</a>
-            #{/secure.check}
-            #{secure.check 'public', not:'member'}
-                 ${_comment.nom}
-            #{/secure.check}le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}</footer>
-    </section>
+    #{include 'tags/commentaire/defaut.html' /}
 #{/if}
 
 
 #{if _as == 'post'}
-#{script '../markitup/jquery.markitup.js' /}
-#{script '../markitup/sets/textile/set.js' /}
-#{stylesheet '../markitup/skins/markitup/style.css' /}
-#{stylesheet '../markitup/sets/textile/style.css' /}
-<script language="javascript">
-    $(document).ready(function() {
-        $('#content').markItUp(mySettings);
-    });
-
-    function  display(id,tab){
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
-           for (var i=0; i < tab.length; ++i)
-                hide(tab[i]);
-       }else{
-         hide(id);
-       }
-    }
-
-    function  hide(id){
-        var div = document.getElementById(id);
-        div.style.visibility = 'hidden';
-        div.style.display = "none";
-    }
-
-</script>
-    <h1><a href="javascript:display('postComment',null)" class="stack" >&{'views.tags.commentaire.post.title'}</a></h1>
-    <section class="full" id="postComment" style="visibility:hidden; display:none;">
-        #{form @Livres.postComment(_bookId)}
-        <table>
-            <tr>
-                <td></td>
-                <td>#{error 'nom' /}</td>
-            </tr>
-            <tr>
-                <td><label>&{'views.tags.commentaire.post.note.label'}</label></td>
-                <td>#{stars max:5, value:_note,id:'note',as:'note' /}</td>
-            </tr>
-            <tr>
-                <td><label for="nom">&{'views.tags.commentaire.post.nom.label'}</label></td>
-                <td><input type="text" name="nom" id="nom" value="${_user.toString()}"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>#{error 'content' /}</td>
-            </tr>
-            <tr>
-                <td><label for="content">&{'views.tags.commentaire.post.content.label'}</label></td>
-                <td><textarea name="content" id="content" rows="5" cols="40">${params.content}</textarea></td>
-            <tr>
-        </table>
-        <footer>
-            <input type="submit" value="&{'views.tags.commentaire.post.submit'}"/>
-        </footer>
-        #{/form}
-    </section>
+    #{include 'tags/commentaire/post.html' /}
 #{/if}
