@@ -61,12 +61,16 @@ public class Editeurs extends Controller {
     }
 
     @Role("public")
-    //@Get(value= "/editeurs/{format}" ,format = "json")
     @Get("/editeurs")
     public static void index() {
         List<Editeur> editeurs = Editeur.findAll();
-        if (request.format.equals("json"))
-            renderJSON(editeurs);
         render(editeurs);
+    }
+
+    @Role("public")
+    @Get(value = "/editeurs.json", format = "json")
+    public static void allJson() {
+        List<Editeur> editeurs = Editeur.findAll();
+        renderJSON(editeurs);
     }
 }
