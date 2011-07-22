@@ -1,10 +1,9 @@
 package controllers.security;
 
 
-import controllers.multioauth.UserManagement;
-import models.User;
-import models.multioauth.ISecure;
-import models.multioauth.IUser;
+import controllers.socialoauth.UserManagement;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
 import play.Play;
 import play.exceptions.UnexpectedException;
 import play.modules.gae.GAE;

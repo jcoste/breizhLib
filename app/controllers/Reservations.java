@@ -1,6 +1,6 @@
 package controllers;
 
-import models.multioauth.Role;
+import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.EtatLivre;
 import models.Livre;

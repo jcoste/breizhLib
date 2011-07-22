@@ -1,12 +1,12 @@
 package controllers.security;
 
 
-import controllers.multioauth.FBSecure;
-import controllers.multioauth.TwitterSecure;
-import controllers.multioauth.UserManagement;
+import controllers.socialoauth.FBSecure;
+import controllers.socialoauth.TwitterSecure;
+import controllers.socialoauth.UserManagement;
 import models.User;
-import models.multioauth.ISecure;
-import models.multioauth.IUser;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +34,7 @@ public class SecureAdapter implements ISecure,UserManagement {
 
     public void logout() {
         getSecure().logout();
+        Secure.authentification();
     }
 
     private ISecure getSecure(){

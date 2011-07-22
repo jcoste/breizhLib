@@ -1,7 +1,7 @@
 package controllers;
 
 
-import models.multioauth.Role;
+import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.*;
 import play.data.validation.Required;

@@ -1,10 +1,10 @@
 # Here you can create play commands that are specific to the module, and extend existing commands
 
-MODULE = 'multioauth'
+MODULE = 'socialoauth'
 
 # Commands that are specific to your module
 
-COMMANDS = ['multioauth:hello']
+COMMANDS = ['socialoauth:hello']
 
 def execute(**kargs):
     command = kargs.get("command")
@@ -12,7 +12,7 @@ def execute(**kargs):
     args = kargs.get("args")
     env = kargs.get("env")
 
-    if command == "multioauth:hello":
+    if command == "socialoauth:hello":
         print "~ Hello"
 
 

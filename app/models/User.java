@@ -1,7 +1,7 @@
 package models;
 
 import com.google.gson.JsonObject;
-import models.multioauth.IUser;
+import models.socialoauth.IUser;
 import play.data.binding.As;
 import play.data.validation.Required;
 import play.libs.Codec;

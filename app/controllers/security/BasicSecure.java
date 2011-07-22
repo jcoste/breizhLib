@@ -3,8 +3,8 @@ package controllers.security;
 
 import controllers.Application;
 import models.User;
-import models.multioauth.ISecure;
-import models.multioauth.IUser;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
 import notifiers.Mails;
 import org.apache.commons.mail.EmailException;
 import play.Play;
@@ -34,7 +34,6 @@ public class BasicSecure extends Controller implements ISecure {
     public void logout() {
         session.put(SESSION_EMAIL_KEY, null);
         session.put(SESSION_IMPL_KEY, null);
-        Secure.authentification();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package models.multioauth;
+package models.socialoauth;
 
 
 import java.lang.annotation.ElementType;

@@ -1,7 +1,7 @@
 package controllers.tag;
 
 import controllers.Livres;
-import models.multioauth.Role;
+import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.Livre;
 import models.tag.LivreTag;

@@ -1,8 +1,7 @@
-package controllers.multioauth;
+package controllers.socialoauth;
 
 
-import controllers.security.Secure;
-import models.multioauth.ISecure;
+import models.socialoauth.ISecure;
 import play.Logger;
 import play.modules.oauthclient.OAuthClient;
 import play.mvc.Controller;
@@ -57,7 +56,6 @@ public abstract class OAuthSecure extends Controller implements ISecure {
     public void logout() {
         session().put(SESSION_EMAIL_KEY, null);
         session().put(SESSION_IMPL_KEY, null);
-        Secure.authentification();
     }
 
     public abstract void authenticate(String callback) throws Exception;

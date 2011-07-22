@@ -1,4 +1,4 @@
-self: play -> multioauth 0.1
+self: play -> socialoauth 0.1
 
 require:
     - play

@@ -5,7 +5,7 @@ import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
-import models.multioauth.Role;
+import models.socialoauth.Role;
 import models.Picture;
 import play.data.validation.Required;
 import play.modules.router.Get;

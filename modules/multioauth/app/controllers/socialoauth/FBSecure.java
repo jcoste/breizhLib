@@ -1,8 +1,8 @@
-package controllers.multioauth;
+package controllers.socialoauth;
 
 import controllers.security.Secure;
-import models.multioauth.ISecure;
-import models.multioauth.IUser;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
 import play.Play;
 import play.modules.fbconnect.FBConnectPlugin;
 import play.mvc.Scope;

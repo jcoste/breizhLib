@@ -1,12 +1,12 @@
 package controllers.security;
 
 
-import controllers.multioauth.OAuthSecure;
-import controllers.multioauth.UserManagement;
+import controllers.socialoauth.OAuthSecure;
+import controllers.socialoauth.UserManagement;
 import models.User;
-import models.multioauth.Credentials;
-import models.multioauth.ISecure;
-import models.multioauth.IUser;
+import models.socialoauth.Credentials;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
 import play.Logger;
 import play.Play;
 import play.exceptions.UnexpectedException;

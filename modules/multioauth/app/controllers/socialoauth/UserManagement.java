@@ -1,6 +1,6 @@
-package controllers.multioauth;
+package controllers.socialoauth;
 
-import models.multioauth.IUser;
+import models.socialoauth.IUser;
 
 
 public interface UserManagement {
