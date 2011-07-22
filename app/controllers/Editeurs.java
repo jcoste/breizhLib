@@ -1,6 +1,6 @@
 package controllers;
 
-import controllers.security.Role;
+import models.multioauth.Role;
 import controllers.security.Secure;
 import models.Editeur;
 import models.Picture;

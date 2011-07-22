@@ -1,8 +1,12 @@
 package controllers.security;
 
 
+import controllers.multioauth.OAuthSecure;
+import controllers.multioauth.UserManagement;
 import models.User;
-import models.oauthclient.Credentials;
+import models.multioauth.Credentials;
+import models.multioauth.ISecure;
+import models.multioauth.IUser;
 import play.Logger;
 import play.Play;
 import play.exceptions.UnexpectedException;
@@ -15,13 +19,15 @@ import java.util.Map;
 
 public class YahooSecure extends OAuthSecure implements ISecure {
 
-    public static final YahooSecure INSTANCE = new YahooSecure();
     public static final String ID = "yahoo";
 
-    private YahooSecure() {
+    UserManagement um;
+
+    public YahooSecure(UserManagement um) {
         super("https://api.login.yahoo.com/oauth/v2/get_request_token",
                 "https://api.login.yahoo.com/oauth/v2/request_auth",
                 "https://api.login.yahoo.com/oauth/v2/get_token");
+        this.um = um;
         init();
     }
 
@@ -41,10 +47,6 @@ public class YahooSecure extends OAuthSecure implements ISecure {
 
     }
 
-    public static void authenticate() throws Exception {
-        INSTANCE.authenticate(INSTANCE.callback);
-    }
-
     public void authenticate(String callback) throws Exception {
         // 1: get the request token
         Map<String, Object> args = new HashMap<String, Object>();
@@ -53,7 +55,7 @@ public class YahooSecure extends OAuthSecure implements ISecure {
         getConnector().authenticate(getCredentials(), callbackURL);
     }
 
-    protected Scope.Session session() {
+    public Scope.Session session() {
         return Scope.Session.current();
     }
 
@@ -89,9 +91,9 @@ public class YahooSecure extends OAuthSecure implements ISecure {
     public IUser getUser() {
         IUser user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
-            user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
+            user = um.getByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
-                user = new User(session().get(SESSION_EMAIL_KEY));
+                user = um.createUser(session().get(SESSION_EMAIL_KEY),null);
                 user.setActif(true);
                 user.save();
             }

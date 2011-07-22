@@ -1,10 +1,9 @@
-package controllers.security;
+package controllers.multioauth;
 
 
-import controllers.Application;
-import controllers.Users;
-import models.User;
-import models.oauthclient.Credentials;
+import models.multioauth.Credentials;
+import models.multioauth.ISecure;
+import models.multioauth.IUser;
 import play.Play;
 import play.exceptions.UnexpectedException;
 import play.mvc.Router;
@@ -16,13 +15,15 @@ import java.util.Map;
 
 public class TwitterSecure extends OAuthSecure implements ISecure {
 
-    public static final TwitterSecure INSTANCE = new TwitterSecure();
     public static final String ID = "twitter";
 
-    private TwitterSecure() {
+    UserManagement um;
+
+    public TwitterSecure(UserManagement um) {
         super("http://twitter.com/oauth/request_token",
                 "http://twitter.com/oauth/access_token",
                 "http://twitter.com/oauth/authorize");
+         this.um = um;
         init();
     }
 
@@ -48,17 +49,17 @@ public class TwitterSecure extends OAuthSecure implements ISecure {
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("callback", callback);
         String callbackURL = Router.getFullUrl(request.controller + ".oauthCallback", args);
-        INSTANCE.getConnector().authenticate(getCredentials(), callbackURL);
+        getConnector().authenticate(getCredentials(), callbackURL);
     }
 
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         // 2: get the access token
-        INSTANCE.getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
+        getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
         String username = getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase();
-        User user = User.findByUsername(username);
+        IUser user = um.getByUsername(username);
         if (user != null) {
-            user.dateConnexion = new Date();
-            user.update();
+            user.setDateConnexion(new Date());
+            user.save();
         }
         session().put(SESSION_EMAIL_KEY, username);
         redirect(callback);
@@ -73,14 +74,12 @@ public class TwitterSecure extends OAuthSecure implements ISecure {
         return _session.get();
     }
 
-    @Override
     public IUser getUser() {
-        User user = null;
+        IUser user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
-            user = User.findByUsername(session().get(SESSION_EMAIL_KEY));
+            user = um.getByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
-                user = new User(null);
-                user.username = session().get(SESSION_EMAIL_KEY);
+                user = um.createUser(null,session().get(SESSION_EMAIL_KEY));
                 user.setActif(true);
                 user.save();
             }
@@ -90,16 +89,8 @@ public class TwitterSecure extends OAuthSecure implements ISecure {
         return user;
     }
 
-    protected Scope.Session session() {
+    public Scope.Session session() {
         return Scope.Session.current();
-    }
-
-    public static void informations() {
-        if (((User)Secure.getUser()).email == null) {
-            Users.edit();
-        } else {
-            Application.index();
-        }
     }
 
 }

@@ -1,4 +1,4 @@
-package controllers.security;
+package models.multioauth;
 
 
 import java.lang.annotation.ElementType;

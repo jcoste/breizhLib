@@ -1,10 +1,17 @@
 package controllers.security;
 
 
+import controllers.multioauth.FBSecure;
+import controllers.multioauth.TwitterSecure;
+import controllers.multioauth.UserManagement;
+import models.User;
+import models.multioauth.ISecure;
+import models.multioauth.IUser;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class SecureAdapter implements ISecure {
+public class SecureAdapter implements ISecure,UserManagement {
 
     public static final SecureAdapter INSTANCE = new SecureAdapter();
 
@@ -14,44 +21,35 @@ public class SecureAdapter implements ISecure {
 
     private SecureAdapter() {
         secureMap.put(BasicSecure.ID, BasicSecure.INSTANCE);
-        secureMap.put(GAESecure.ID, GAESecure.INSTANCE);
-        secureMap.put(FBSecure.ID, FBSecure.INSTANCE);
-        secureMap.put(TwitterSecure.ID, TwitterSecure.INSTANCE);
-        secureMap.put(YahooSecure.ID, YahooSecure.INSTANCE);
+        secureMap.put(GAESecure.ID, new GAESecure(this));
+        secureMap.put(FBSecure.ID, new FBSecure(this));
+        secureMap.put(TwitterSecure.ID, new TwitterSecure(this));
+        secureMap.put(YahooSecure.ID, new YahooSecure(this));
     }
 
 
-    @Override
     public void login() {
-        if (secureMap.containsKey(Secure.getImpl())) {
-            secureMap.get(Secure.getImpl()).login();
-        } else {
-            secureMap.get(DEFAULT_IMPL).login();
-        }
+        getSecure().login();
     }
 
-    @Override
     public void logout() {
-        if (secureMap.containsKey(Secure.getImpl())) {
-            secureMap.get(Secure.getImpl()).logout();
+        getSecure().logout();
+    }
+
+    private ISecure getSecure(){
+       if (secureMap.containsKey(Secure.getImpl())) {
+           return secureMap.get(Secure.getImpl());
         } else {
-            secureMap.get(DEFAULT_IMPL).logout();
+            return secureMap.get(DEFAULT_IMPL);
         }
     }
 
-    @Override
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
-        secureMap.get(Secure.getImpl()).oauthCallback(callback, oauth_token, oauth_verifier);
+        getSecure().oauthCallback(callback, oauth_token, oauth_verifier);
     }
 
-    @Override
     public boolean check(String profile) {
-        ISecure secure = null;
-        if (secureMap.containsKey(Secure.getImpl())) {
-            secure = secureMap.get(Secure.getImpl());
-        } else {
-            secure = secureMap.get(DEFAULT_IMPL);
-        }
+        ISecure secure = getSecure();
 
         if ("public".equals(profile)) {
             return true;
@@ -64,13 +62,19 @@ public class SecureAdapter implements ISecure {
         return false;
     }
 
-    @Override
     public IUser getUser() {
-        if (secureMap.containsKey(Secure.getImpl())) {
-            return secureMap.get(Secure.getImpl()).getUser();
-        } else {
-            return secureMap.get(DEFAULT_IMPL).getUser();
-        }
+        return getSecure().getUser();
+    }
 
+    public IUser getByUsername(String username) {
+        return User.findByUsername(username);
+    }
+
+    public IUser getByEmail(String email) {
+       return User.find(email);
+    }
+
+    public IUser createUser(String email, String username) {
+        return new User(email,username);
     }
 }

@@ -3,6 +3,9 @@ package controllers.security;
 
 import controllers.Application;
 import models.User;
+import models.multioauth.ISecure;
+import models.multioauth.IUser;
+import models.multioauth.Role;
 import models.tag.LivreTag;
 import play.cache.Cache;
 import play.modules.router.Get;

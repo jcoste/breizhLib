@@ -4,9 +4,9 @@ require:
     - play
     - play -> siena 2.0.1
     - play -> gae 1.4
-    - play -> fbconnect 0.5
     - play -> cloudbees 0.2.1
     - play -> router head
+    - play -> multioauth 0.1
 
     - provided -> siena 0.7.6
     - provided -> org.eclipse.mylyn.wikitext.twiki.core_1.4.0.I20110104 0100-e3x
@@ -30,3 +30,10 @@ repositories:
        artifact:   "${application.path}/lib/[module]-[revision].jar"
        contains:
          - provided -> *
+
+    - MyModules:
+       type:       local
+       artifact:   "${application.path}/modules/[module]-[revision]"
+       contains:
+         - org.breizhlib -> *
+

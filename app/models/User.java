@@ -1,7 +1,7 @@
 package models;
 
 import com.google.gson.JsonObject;
-import controllers.security.IUser;
+import models.multioauth.IUser;
 import play.data.binding.As;
 import play.data.validation.Required;
 import play.libs.Codec;
@@ -40,9 +40,10 @@ public class User extends Model implements IUser {
     public Boolean actif;
 
 
-    public User(String email) {
+    public User(String email,String username) {
         this.dateCreation = new Date();
         this.email = email;
+        this.username = username;
     }
 
 

@@ -1,6 +1,8 @@
-package controllers.security;
+package controllers.multioauth;
 
 
+import controllers.security.Secure;
+import models.multioauth.ISecure;
 import play.Logger;
 import play.modules.oauthclient.OAuthClient;
 import play.mvc.Controller;
@@ -40,7 +42,6 @@ public abstract class OAuthSecure extends Controller implements ISecure {
         return connector;
     }
 
-    @Override
     public void login() {
         try {
             authenticate(callback);
@@ -49,19 +50,17 @@ public abstract class OAuthSecure extends Controller implements ISecure {
         }
     }
 
-    @Override
     public boolean check(String profile) {
         return false;
     }
 
-    @Override
     public void logout() {
         session().put(SESSION_EMAIL_KEY, null);
         session().put(SESSION_IMPL_KEY, null);
         Secure.authentification();
     }
 
-    abstract void authenticate(String callback) throws Exception;
+    public abstract void authenticate(String callback) throws Exception;
 
-    abstract Scope.Session session();
+    public abstract Scope.Session session();
 }

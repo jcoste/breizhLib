@@ -3,6 +3,8 @@ package controllers.security;
 
 import controllers.Application;
 import models.User;
+import models.multioauth.ISecure;
+import models.multioauth.IUser;
 import notifiers.Mails;
 import org.apache.commons.mail.EmailException;
 import play.Play;
@@ -63,7 +65,7 @@ public class BasicSecure extends Controller implements ISecure {
         if (validation.hasErrors()) {
             render("security/BasicSecure/newuser.html", email, nom, prenom, randomID);
         }
-        user = new User(email);
+        user = new User(email,null);
         user.nom = nom;
         user.prenom = prenom;
         user.password = Crypto.passwordHash(password);

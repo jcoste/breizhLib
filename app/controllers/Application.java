@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.security.Secure;
 import models.Livre;
+import models.User;
 import play.Play;
 import play.modules.router.Get;
 import play.modules.router.ServeStatic;
@@ -34,6 +35,14 @@ public class Application extends Controller {
             LoadDevData.doJob();
         }
         index();
+    }
+
+    public static void informations() {
+        if (((User)Secure.getUser()).email == null) {
+            Users.edit();
+        } else {
+            Application.index();
+        }
     }
 
 }
