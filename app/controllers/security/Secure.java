@@ -2,9 +2,7 @@ package controllers.security;
 
 
 import controllers.Application;
-import controllers.socialoauth.FBSecure;
-import controllers.socialoauth.TwitterSecure;
-import controllers.socialoauth.YahooSecure;
+import controllers.socialoauth.*;
 import models.socialoauth.ISecure;
 import models.socialoauth.IUser;
 import models.socialoauth.Role;
@@ -14,7 +12,6 @@ import play.mvc.Before;
 import play.mvc.Controller;
 
 import java.util.Date;
-import java.util.List;
 
 
 public class Secure extends Controller {
@@ -27,6 +24,8 @@ public class Secure extends Controller {
         secure.registerSecure(FBSecure.ID, new FBSecure(secure));
         secure.registerSecure(TwitterSecure.ID, new TwitterSecure(secure));
         secure.registerSecure(YahooSecure.ID, new YahooSecure(secure));
+        secure.registerSecure(LinkedInSecure.ID, new LinkedInSecure(secure));
+        secure.registerSecure(GoogleSecure.ID, new GoogleSecure(secure));
     }
 
     @Before(unless = {"login", "logout", "oauthCallback"})

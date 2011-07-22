@@ -1,8 +1,5 @@
 package controllers.socialoauth;
 
-
-import controllers.socialoauth.OAuthSecure;
-import controllers.socialoauth.UserManagement;
 import models.User;
 import models.socialoauth.Credentials;
 import models.socialoauth.ISecure;
@@ -17,36 +14,37 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
  * TODO  en cours
  */
-public class YahooSecure extends OAuthSecure implements ISecure {
+public class LinkedInSecure  extends OAuthSecure implements ISecure {
 
-    public static final String ID = "yahoo";
+    public static final String ID = "linkedin";
 
     UserManagement um;
 
-    public YahooSecure(UserManagement um) {
-        super("https://api.login.yahoo.com/oauth/v2/get_request_token",
-                "https://api.login.yahoo.com/oauth/v2/request_auth",
-                "https://api.login.yahoo.com/oauth/v2/get_token");
+    public LinkedInSecure(UserManagement um) {
+        super(" https://api.linkedin.com/uas/oauth/requestToken",
+                "https://www.linkedin.com/uas/oauth/authenticate",
+                "https://api.linkedin.com/uas/oauth/accessToken");
         this.um = um;
         init();
     }
 
     public void init() {
-        if (!Play.configuration.containsKey("yahoo.consumerKey")) {
-            throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.consumerKey in your application.conf");
+        if (!Play.configuration.containsKey("linkedin.consumerKey")) {
+            throw new UnexpectedException("OAuth linkedin requires that you specify linkedin.consumerKey in your application.conf");
         }
-        if (!Play.configuration.containsKey("yahoo.consumerSecret")) {
-            throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.consumerSecret in your application.conf");
+        if (!Play.configuration.containsKey("google.consumerSecret")) {
+            throw new UnexpectedException("OAuth linkedin requires that you specify linkedin.consumerSecret in your application.conf");
         }
-        if (!Play.configuration.containsKey("yahoo.callback")) {
-            throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.callback in your application.conf");
+        if (!Play.configuration.containsKey("google.callback")) {
+            throw new UnexpectedException("OAuth linkedin requires that you specify linkedin.callback in your application.conf");
         }
-        consumerKey = Play.configuration.getProperty("yahoo.consumerKey");
-        consumerSecret = Play.configuration.getProperty("yahoo.consumerSecret");
-        callback = Router.getFullUrl(Play.configuration.getProperty("yahoo.callback"));
+        consumerKey = Play.configuration.getProperty("linkedin.consumerKey");
+        consumerSecret = Play.configuration.getProperty("linkedin.consumerSecret");
+        callback = Router.getFullUrl(Play.configuration.getProperty("linkedin.callback"));
 
     }
 
@@ -66,7 +64,7 @@ public class YahooSecure extends OAuthSecure implements ISecure {
         // 2: get the access token
         Logger.info("token :" + oauth_token);
         getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-        String email = getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase();
+        String email = getConnector().getProvider().getResponseParameters().get("email").toLowerCase();
         User user = User.find(email);
         if (user != null) {
             user.dateConnexion = new Date();

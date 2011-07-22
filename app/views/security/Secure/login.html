@@ -29,10 +29,8 @@
     <div id="openid" style="visibility:visible; display:block;">
     <p>#{social.login id:'gae',image:'google.png'/}#{social.login id:'fbconnect',image:'facebook.png'/}</p>
 
-    <p>#{social.login id:'twitter',image:'twitter.png'/}
-
-    #{if play.mode.name() == 'DEV'}#{social.login id:'yahoo',image:'yahoo.png'/}#{/if}</p>
-
+    <p>#{social.login id:'twitter',image:'twitter.png'/}#{if play.mode.name() == 'DEV'}#{social.login id:'yahoo',image:'yahoo.png'/}#{/if}</p>
+    <p>#{if play.mode.name() == 'DEV'}#{social.login id:'linkedin',image:'linkedin.png'/}#{social.login id:'google',image:'google.png'/}#{/if}</p>
      </div>
 
     #{include 'security/BasicSecure/basiclogin.html' /}

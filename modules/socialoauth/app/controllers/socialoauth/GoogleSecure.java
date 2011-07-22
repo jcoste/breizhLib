@@ -1,8 +1,6 @@
 package controllers.socialoauth;
 
 
-import controllers.socialoauth.OAuthSecure;
-import controllers.socialoauth.UserManagement;
 import models.User;
 import models.socialoauth.Credentials;
 import models.socialoauth.ISecure;
@@ -20,39 +18,42 @@ import java.util.Map;
 /**
  * TODO  en cours
  */
-public class YahooSecure extends OAuthSecure implements ISecure {
+public class GoogleSecure extends OAuthSecure implements ISecure {
 
-    public static final String ID = "yahoo";
+    public static final String ID = "google";
 
     UserManagement um;
 
-    public YahooSecure(UserManagement um) {
-        super("https://api.login.yahoo.com/oauth/v2/get_request_token",
-                "https://api.login.yahoo.com/oauth/v2/request_auth",
-                "https://api.login.yahoo.com/oauth/v2/get_token");
+    public GoogleSecure(UserManagement um) {
+        super(" https://www.google.com/accounts/OAuthGetRequestToken",
+                "https://www.google.com/accounts/OAuthAuthorizeToken",
+                "https://www.google.com/accounts/OAuthGetAccessToken");
         this.um = um;
         init();
     }
 
     public void init() {
-        if (!Play.configuration.containsKey("yahoo.consumerKey")) {
-            throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.consumerKey in your application.conf");
+        if (!Play.configuration.containsKey("google.consumerKey")) {
+            throw new UnexpectedException("OAuth google requires that you specify google.consumerKey in your application.conf");
         }
-        if (!Play.configuration.containsKey("yahoo.consumerSecret")) {
-            throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.consumerSecret in your application.conf");
+        if (!Play.configuration.containsKey("google.consumerSecret")) {
+            throw new UnexpectedException("OAuth google requires that you specify google.consumerSecret in your application.conf");
         }
-        if (!Play.configuration.containsKey("yahoo.callback")) {
-            throw new UnexpectedException("OAuth yahoo requires that you specify yahoo.callback in your application.conf");
+        if (!Play.configuration.containsKey("google.callback")) {
+            throw new UnexpectedException("OAuth google requires that you specify google.callback in your application.conf");
         }
-        consumerKey = Play.configuration.getProperty("yahoo.consumerKey");
-        consumerSecret = Play.configuration.getProperty("yahoo.consumerSecret");
-        callback = Router.getFullUrl(Play.configuration.getProperty("yahoo.callback"));
+        consumerKey = Play.configuration.getProperty("google.consumerKey");
+        consumerSecret = Play.configuration.getProperty("google.consumerSecret");
+        callback = Router.getFullUrl(Play.configuration.getProperty("google.callback"));
 
     }
 
     public void authenticate(String callback) throws Exception {
         // 1: get the request token
         Map<String, Object> args = new HashMap<String, Object>();
+        args.put("oauth_consumer_key",consumerKey);
+        args.put("oauth_signature_method","HMAC-SHA1");
+        args.put("oauth_timestamp", System.currentTimeMillis()/1000 + "");
         args.put("callback", callback);
         String callbackURL = Router.getFullUrl(request.controller + ".oauthCallback", args);
         getConnector().authenticate(getCredentials(), callbackURL);
@@ -66,7 +67,7 @@ public class YahooSecure extends OAuthSecure implements ISecure {
         // 2: get the access token
         Logger.info("token :" + oauth_token);
         getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
-        String email = getConnector().getProvider().getResponseParameters().get("screen_name").toLowerCase();
+        String email = getConnector().getProvider().getResponseParameters().get("email").toLowerCase();
         User user = User.find(email);
         if (user != null) {
             user.dateConnexion = new Date();
