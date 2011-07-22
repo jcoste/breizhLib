@@ -3,6 +3,8 @@ package controllers.security;
 
 import controllers.Application;
 import models.User;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
 import notifiers.Mails;
 import org.apache.commons.mail.EmailException;
 import play.Play;
@@ -32,10 +34,8 @@ public class BasicSecure extends Controller implements ISecure {
     public void logout() {
         session.put(SESSION_EMAIL_KEY, null);
         session.put(SESSION_IMPL_KEY, null);
-        Secure.authentification();
     }
 
-    @Override
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         throw new IllegalAccessException();
     }
@@ -63,7 +63,7 @@ public class BasicSecure extends Controller implements ISecure {
         if (validation.hasErrors()) {
             render("security/BasicSecure/newuser.html", email, nom, prenom, randomID);
         }
-        user = new User(email);
+        user = new User(email,null);
         user.nom = nom;
         user.prenom = prenom;
         user.password = Crypto.passwordHash(password);

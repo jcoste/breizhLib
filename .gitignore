@@ -30,3 +30,4 @@ cloudbeesCmd
 /modules/router-*
 /modules/db-*
 /modules/maven-*
+/modules/oauth-*

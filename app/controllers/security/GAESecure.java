@@ -1,7 +1,9 @@
 package controllers.security;
 
 
-import models.User;
+import controllers.socialoauth.UserManagement;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
 import play.Play;
 import play.exceptions.UnexpectedException;
 import play.modules.gae.GAE;
@@ -9,14 +11,15 @@ import play.mvc.Router;
 
 public class GAESecure implements ISecure {
 
-    public static final GAESecure INSTANCE = new GAESecure();
     public static final String ID = "gae";
 
     protected String callback;
 
+    private  UserManagement um;
 
-    private GAESecure() {
+    public GAESecure(UserManagement um) {
         init();
+        this.um = um;
     }
 
     public void init() {
@@ -36,12 +39,10 @@ public class GAESecure implements ISecure {
         GAE.logout("security.secure.authentification");
     }
 
-    @Override
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         throw new IllegalAccessException();
     }
 
-    @Override
     public boolean check(String profile) {
         return false;
     }
@@ -50,9 +51,9 @@ public class GAESecure implements ISecure {
     public IUser getUser() {
         IUser user = null;
         if (GAE.isLoggedIn()) {
-            user = User.find(GAE.getUser().getEmail().toLowerCase());
+            user = um.getByEmail(GAE.getUser().getEmail().toLowerCase());
             if (user == null) {
-                user = new User(null);
+                user = um.createUser(GAE.getUser().getEmail().toLowerCase(),null);
                 user.setActif(true);
                 user.save();
             }
