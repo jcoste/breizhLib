@@ -121,34 +121,32 @@ public class User extends Model implements IUser {
 
     }
 
-    @Override
     public boolean isActif() {
         return actif;
     }
 
-    @Override
     public void setActif(boolean actif) {
         this.actif = actif;
     }
 
-    @Override
     public boolean isAdmin() {
         return isAdmin;
     }
 
-    @Override
     public void setAdmin(boolean admin) {
         this.isAdmin = admin;
     }
 
-    @Override
     public Date getDateConnexion() {
         return dateConnexion;
     }
 
-    @Override
     public void setDateConnexion(Date dateConnexion) {
        this.dateConnexion = dateConnexion;
+    }
+
+    public String getEmail(){
+        return email;
     }
 
     @Override

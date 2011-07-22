@@ -36,7 +36,6 @@ public class BasicSecure extends Controller implements ISecure {
         session.put(SESSION_IMPL_KEY, null);
     }
 
-    @Override
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
         throw new IllegalAccessException();
     }

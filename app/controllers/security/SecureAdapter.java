@@ -1,8 +1,6 @@
 package controllers.security;
 
 
-import controllers.socialoauth.FBSecure;
-import controllers.socialoauth.TwitterSecure;
 import controllers.socialoauth.UserManagement;
 import models.User;
 import models.socialoauth.ISecure;
@@ -13,20 +11,17 @@ import java.util.Map;
 
 public class SecureAdapter implements ISecure,UserManagement {
 
-    public static final SecureAdapter INSTANCE = new SecureAdapter();
-
     private Map<String, ISecure> secureMap = new HashMap<String, ISecure>();
 
-    private static String DEFAULT_IMPL = GAESecure.ID;
+    private static String DEFAULT_IMPL;
 
-    private SecureAdapter() {
-        secureMap.put(BasicSecure.ID, BasicSecure.INSTANCE);
-        secureMap.put(GAESecure.ID, new GAESecure(this));
-        secureMap.put(FBSecure.ID, new FBSecure(this));
-        secureMap.put(TwitterSecure.ID, new TwitterSecure(this));
-        secureMap.put(YahooSecure.ID, new YahooSecure(this));
+    public SecureAdapter(String defaultId) {
+        DEFAULT_IMPL = defaultId;
     }
 
+    public void registerSecure(String id,ISecure secure){
+         secureMap.put(id,secure);
+    }
 
     public void login() {
         getSecure().login();
@@ -37,7 +32,7 @@ public class SecureAdapter implements ISecure,UserManagement {
         Secure.authentification();
     }
 
-    private ISecure getSecure(){
+    public ISecure getSecure(){
        if (secureMap.containsKey(Secure.getImpl())) {
            return secureMap.get(Secure.getImpl());
         } else {
@@ -50,16 +45,6 @@ public class SecureAdapter implements ISecure,UserManagement {
     }
 
     public boolean check(String profile) {
-        ISecure secure = getSecure();
-
-        if ("public".equals(profile)) {
-            return true;
-        }
-        if ("admin".equals(profile)) {
-            return secure.getUser() == null ? false : secure.getUser().isAdmin();
-        } else if ("member".equals(profile)) {
-            return secure.getUser() != null;
-        }
         return false;
     }
 

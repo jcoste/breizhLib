@@ -1,4 +1,4 @@
-package controllers.security;
+package controllers.socialoauth;
 
 
 import controllers.socialoauth.OAuthSecure;

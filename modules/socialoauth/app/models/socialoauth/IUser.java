@@ -17,5 +17,7 @@ public interface IUser {
 
     void setDateConnexion(Date dateConnexion);
 
+    String getEmail();
+
     void save();
 }
