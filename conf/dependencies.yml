@@ -7,6 +7,8 @@ require:
     - play -> cloudbees 0.2.1
     - play -> router head
     - play -> multioauth 0.1
+    - play -> fbconnect 0.5
+    - play -> oauth 1.0
 
     - provided -> siena 0.7.6
     - provided -> org.eclipse.mylyn.wikitext.twiki.core_1.4.0.I20110104 0100-e3x

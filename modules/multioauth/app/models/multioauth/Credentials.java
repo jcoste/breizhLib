@@ -24,4 +24,4 @@ public class Credentials implements ICredentials {
 	public String getSecret() {
 		return secret;
 	}
-
+}
