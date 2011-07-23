@@ -39,6 +39,8 @@ public class User extends Model implements IUser {
 
     public Boolean actif;
 
+    public Boolean publicUsername;
+
 
     public User(String email,String username) {
         this.dateCreation = new Date();

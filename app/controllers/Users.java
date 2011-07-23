@@ -75,11 +75,18 @@ public class Users extends Controller {
 
     @Role("member")
     @Post("/user/edit")
-    public static void postEdit(@Required String nom, @Required String prenom, String email) throws UnsupportedEncodingException {
+    public static void postEdit(@Required String nom, @Required String prenom, String email,String publicUsername) throws UnsupportedEncodingException {
         User user = (User) Secure.getUser();
         if (user != null) {
             user.nom = nom;
             user.prenom = prenom;
+
+            if(publicUsername.equals("oui")){
+                user.publicUsername = true;
+            }else{
+                user.publicUsername = false;
+            }
+
             user.update();
 
             boolean hasnext = true;
