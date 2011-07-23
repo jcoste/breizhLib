@@ -208,9 +208,15 @@ public class Livres extends Controller {
 
             List<Commentaire> commentaires = Commentaire.findLike(recherche);
 
-            render(livres, recherche, editeurs, commentaires, type);
+            String message = null;
+            if(livres.size() == 0 && editeurs.size() == 0 && commentaires.size() == 0){
+              message = "Aucun résultat";
+            }
+
+            render(livres, recherche, editeurs, commentaires, type,message);
         } else {
-            render(recherche, type);
+            String message = "Aucun résultat";
+            render(recherche, type,message);
         }
     }
 

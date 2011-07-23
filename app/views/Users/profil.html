@@ -4,6 +4,12 @@
 #{if session.get("userEmail").equals(user.email) || session.get("userEmail").equals(user.username)}
     #{include 'Users/menu.html' /}
     <div>
+                #{if user.isPublic}
+                    <p>Votre profil est public</p>
+                #{/if}
+                #{else}
+                     <p>Votre profil est privé</p>
+                #{/else}
 #{/if}
 #{else}
 <article>

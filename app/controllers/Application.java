@@ -41,6 +41,11 @@ public class Application extends Controller {
         render(livres);
     }
 
+    @Get("/contact")
+    public static void contact(){
+        index();
+    }
+
     @Get("/init")
     public static void initDev() {
         if (Play.mode.equals(Play.Mode.DEV)) {

@@ -40,7 +40,7 @@ public class Users extends Controller {
     @Get("/user/profil/{id}")
     public static void profil(Long id) {
         User user = User.findById(id);
-        if (user != null) {
+        if (user != null && (user.isPublic || Secure.getUser().equals(user) )) {
             List<Commentaire> commentaires = user.commentaires();
             List<Reservation> ouvrages =  Reservation.all(Reservation.class).filter("user",user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
             List<Reservation> ouvragesEncours =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt>",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
@@ -75,7 +75,7 @@ public class Users extends Controller {
 
     @Role("member")
     @Post("/user/edit")
-    public static void postEdit(@Required String nom, @Required String prenom, String email,String publicUsername) throws UnsupportedEncodingException {
+    public static void postEdit(@Required String nom, @Required String prenom, String email,String publicUsername,String profil) throws UnsupportedEncodingException {
         User user = (User) Secure.getUser();
         if (user != null) {
             user.nom = nom;
@@ -85,6 +85,12 @@ public class Users extends Controller {
                 user.publicUsername = true;
             }else{
                 user.publicUsername = false;
+            }
+
+            if(profil.equals("oui")){
+                user.isPublic = true;
+            }else{
+                user.isPublic = false;
             }
 
             user.update();
