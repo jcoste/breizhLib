@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<cloudbees-web-app xmlns="http://www.cloudbees.com/xml/webapp/1">
- <resource name="jdbc/breizhlib" auth="Container" type="javax.sql.DataSource">
-  <param name="username" value="breizhlib" />
-  <param name="password" value="breizhlib00" />
-  <param name="url" value="jdbc:cloudbees://breizhlib" />
- </resource>
-</cloudbees-web-app>
