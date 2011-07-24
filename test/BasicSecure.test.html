@@ -1,0 +1,24 @@
+*{ You can use plain selenium command using the selenium tag }*
+
+#{selenium 'admin login'}
+open('/login-all')
+assertTitle('Login')
+type('username', 'admin@breizhlib.org')
+type('password', '1234')
+
+clickAndWait('signin')
+assertTextPresent('Déconnexion')
+assertTextPresent('Admin')
+assertTextPresent('Mes Infos')
+#{/selenium}
+
+
+#{selenium 'admin logout'}
+open('/')
+assertTextPresent('Déconnexion')
+assertTextPresent('Admin')
+assertTextPresent('Mes Infos')
+open('/logout')
+
+assertTextPresent('Se Connecter')
+#{/selenium}
