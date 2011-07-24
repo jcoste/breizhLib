@@ -1,9 +1,13 @@
 package utils;
 
+import models.Commentaire;
 import models.Editeur;
 import models.Livre;
+import models.User;
 import play.Logger;
+import play.libs.Crypto;
 
+import java.util.Date;
 
 
 public class LoadDevData {
@@ -30,6 +34,22 @@ public class LoadDevData {
             livre.insert();
             livre.addTag("Java");
             livre.addTag("Android");
+
+            User devAdminUser = new User("admin@breizhlib.org",null);
+            devAdminUser.isAdmin = true;
+            devAdminUser.isPublic = true;
+            devAdminUser.dateConnexion = new Date();
+            devAdminUser.dateCreation = new Date();
+            devAdminUser.password = Crypto.passwordHash("1234");
+            devAdminUser.nom = "Guernion";
+            devAdminUser.prenom = "Sylvain";
+            devAdminUser.save();
+
+
+            Commentaire commentaire = new Commentaire(livre, devAdminUser, "Guernion Sylvain", "test commentaire", 5);
+            commentaire.insert();
+            livre.popularite = livre.getCommentaires().size();
+            livre.update();
         }
     }
 }
