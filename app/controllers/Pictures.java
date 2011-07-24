@@ -1,18 +1,17 @@
 package controllers;
 
 import com.google.appengine.api.datastore.Blob;
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.Transform;
-import models.socialoauth.Role;
 import models.Picture;
+import models.socialoauth.Role;
 import play.data.validation.Required;
+import play.libs.Images;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
 
-import java.io.ByteArrayInputStream;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 
@@ -35,7 +34,8 @@ public class Pictures extends Controller {
                 imageFile.path = path;
                 imageFile.insert();
             } else {
-                //TODO �craser l'image
+                imageFile.image = new Blob(bytes);
+                imageFile.update();
             }
             return imageFile;
         }
@@ -52,16 +52,37 @@ public class Pictures extends Controller {
     }
 
     public static void resizeImage(Picture imageFile, int width, int heigth) {
-        ImagesService imagesService = ImagesServiceFactory.getImagesService();
+        File old = null;
+        File newImage = new File("tmp.jpg");
+        try {
+            old = new File(new URI(imageFile.getUrl()));
+        } catch (URISyntaxException e) {
+            error("erreur lors de la création de l'image");
+        }
 
-        Image oldImage = ImagesServiceFactory.makeImage(imageFile.image.getBytes());
-        Transform resize = ImagesServiceFactory.makeResize(width, heigth);
+        Images.resize(old, newImage, width, heigth);
+        byte[] bytes = new byte[(int) newImage.length()];
 
-        Image newImage = imagesService.applyTransform(resize, oldImage);
+        InputStream is = null;
+        try {
+            is = new FileInputStream(newImage);
+            int offset = 0;
+            int numRead = 0;
+            while (offset < bytes.length
+                    && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+                offset += numRead;
+            }
+            if (offset < bytes.length) {
+                throw new IOException("Could not completely read file " + newImage.getName());
+            }
+             is.close();
+        } catch (FileNotFoundException e) {
+            error("erreur lors de la création de l'image");
+        } catch (IOException e) {
+            error("erreur lors de la création de l'image");
+        }
 
-        byte[] newImageData = newImage.getImageData();
-
-        imageFile.image = new Blob(newImageData);
+        imageFile.image = new Blob(bytes);
         imageFile.update();
     }
 
