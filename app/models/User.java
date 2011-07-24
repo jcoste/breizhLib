@@ -27,6 +27,8 @@ public class User extends Model implements IUser {
 
     public boolean isAdmin;
 
+    public Boolean isPublic;
+
     public String password;
 
     @As("yyyy-MM-dd")
@@ -35,9 +37,15 @@ public class User extends Model implements IUser {
     @As("yyyy-MM-dd")
     public Date dateConnexion;
 
+    public Boolean actif;
+
+
+    /**
+     * Twitter username
+     */
     public String username;
 
-    public Boolean actif;
+    public Boolean publicUsername;
 
 
     public User(String email,String username) {

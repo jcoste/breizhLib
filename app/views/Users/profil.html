@@ -4,6 +4,12 @@
 #{if session.get("userEmail").equals(user.email) || session.get("userEmail").equals(user.username)}
     #{include 'Users/menu.html' /}
     <div>
+                #{if user.isPublic}
+                    <p>Votre profil est public</p>
+                #{/if}
+                #{else}
+                     <p>Votre profil est privé</p>
+                #{/else}
 #{/if}
 #{else}
 <article>
@@ -13,7 +19,7 @@
         #{social.gravatar user:user  /}
         <table>
         <tr><td></td><td>${user.nom} ${user.prenom}</td></tr>
-        #{if user.username != null }
+        #{if user.username != null && user.publicUsername}
 
               <tr><td></td><td>#{social.follow username:user.username /}</td></tr>
         #{/if}

@@ -58,8 +58,8 @@ public class BasicSecure extends Controller implements ISecure {
     public static void postNewuser(@Required String email, String nom, String prenom, @Required @Equals("passwordconfirm") String password,
                                    @Required String passwordconfirm, @Required String captcha, String randomID) throws Throwable {
         User user = User.find(email);
-        validation.isTrue(user == null).message(Messages.get("error", "email déjà enregistré"));
-        validation.equals(captcha, Cache.get(randomID)).message(Messages.get("error", "Invalid captcha. Please type it again"));
+        validation.isTrue(user == null).message(Messages.get("error", Messages.get("email_already_register")));
+        validation.equals(captcha, Cache.get(randomID)).message(Messages.get("error", Messages.get("invalid_captcha")));
         if (validation.hasErrors()) {
             render("security/BasicSecure/newuser.html", email, nom, prenom, randomID);
         }
@@ -93,10 +93,10 @@ public class BasicSecure extends Controller implements ISecure {
     @Post("/user/auth")
     public static void authenticate(@Required String username, @Required String password, boolean remember) throws Throwable {
         User user = User.find(username);
-        validation.isTrue(user != null).message(Messages.get("error", "Utilisateur inconu"));
+        validation.isTrue(user != null).message(Messages.get("error", Messages.get("unknown_user")));
         if (user != null) {
-            validation.isTrue(user.password != null).message(Messages.get("error", "Type de compte non valide"));
-            validation.equals(user.password, Crypto.passwordHash(password)).message(Messages.get("error", "mot de passe incorrect"));
+            validation.isTrue(user.password != null).message(Messages.get("error", Messages.get("type_compte_invalide")));
+            validation.equals(user.password, Crypto.passwordHash(password)).message(Messages.get("error", Messages.get("error_password")));
         }
         if (validation.hasErrors()) {
             if (session.get("authfail") == null) {
@@ -142,8 +142,8 @@ public class BasicSecure extends Controller implements ISecure {
     @Post("/user/resetPassword/{email}")
     public static void sendResetPassword(@Required String email) throws EmailException, UnsupportedEncodingException {
         User user = User.find(email);
-        validation.isTrue(user != null).message(Messages.get("error", "email inconnu"));
-        validation.isTrue(user != null && user.password != null).message(Messages.get("error", "Compte non valide pour un changement de mot de passe"));
+        validation.isTrue(user != null).message(Messages.get("error", Messages.get("unknown_email")));
+        validation.isTrue(user != null && user.password != null).message(Messages.get("error", Messages.get("type_compte_invalide_chg_pwd")));
         if (validation.hasErrors()) {
             render("security/BasicSecure/resetPassword.html");
         }

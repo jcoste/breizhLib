@@ -72,7 +72,7 @@ public class Commentaires extends Controller {
 
         final String triCmp = tri;
         Collections.sort(commentairesAllByPage, new Comparator<Commentaire>() {
-            @Override
+
             public int compare(Commentaire commentaire, Commentaire commentaire1) {
                 commentaire.livre.get();
                 commentaire1.livre.get();
@@ -114,7 +114,7 @@ public class Commentaires extends Controller {
 
         final String triCmp = tri;
         Collections.sort(paginator.getElements(), new Comparator<Commentaire>() {
-            @Override
+
             public int compare(Commentaire commentaire, Commentaire commentaire1) {
                 commentaire.livre.get();
                 commentaire1.livre.get();

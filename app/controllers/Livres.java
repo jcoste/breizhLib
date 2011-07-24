@@ -5,6 +5,7 @@ import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.*;
 import play.data.validation.Required;
+import play.i18n.Messages;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
@@ -137,7 +138,7 @@ public class Livres extends Controller {
         }
 
         if (Livre.all(Livre.class).filter("iSBN", iSBN).get() != null) {
-            error("le livre existe déja en base");
+            error(Messages.get("book_already_exist"));
         }
 
         //TODO contrôle de l'image, pour ne pas créer une image vide
@@ -164,7 +165,7 @@ public class Livres extends Controller {
         }
 
         if (livre == null) {
-            error("le livre n'existe pas en base");
+            error(Messages.get("book_not_exist"));
         }
 
         String image = null;
@@ -208,9 +209,15 @@ public class Livres extends Controller {
 
             List<Commentaire> commentaires = Commentaire.findLike(recherche);
 
-            render(livres, recherche, editeurs, commentaires, type);
+            String message = null;
+            if(livres.size() == 0 && editeurs.size() == 0 && commentaires.size() == 0){
+              message = Messages.get("no_result");
+            }
+
+            render(livres, recherche, editeurs, commentaires, type,message);
         } else {
-            render(recherche, type);
+            String message = Messages.get("no_result");
+            render(recherche, type,message);
         }
     }
 
