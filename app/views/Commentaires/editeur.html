@@ -6,7 +6,7 @@
         <p>&{'views.livres.index.title'}</p>
     #{/if}
     #{else}
-        <p>Commentaires sur les Ouvrages de l'éditeur ${editeur}</p>
+        <p>&{'views.commentaires.title_editeur'} ${editeur}</p>
     #{/else}
 
     #{tri editeur:editeur,tri:tri,page:page,as:'commentaire' /}

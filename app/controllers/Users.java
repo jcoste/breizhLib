@@ -12,6 +12,7 @@ import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
 import play.data.validation.Required;
+import play.i18n.Lang;
 import play.i18n.Messages;
 import play.libs.Codec;
 import play.libs.Crypto;
@@ -70,6 +71,7 @@ public class Users extends Controller {
             List<Email> emails = Email.findByUser(user);
             render(user, emails);
         }
+
         infos();
     }
 
@@ -109,7 +111,7 @@ public class Users extends Controller {
                         userEmail.insert();
                         validationEmail(userEmail, user);
                     } else {
-                        error("email déjà utilisé");
+                        error(Messages.get("email_already_use"));
                     }
                 }
                 i++;
@@ -119,7 +121,7 @@ public class Users extends Controller {
             if (email != null && user.email == null) {
                 User anotherUser = User.find(email);
                 if (anotherUser != null) {
-                    error("email déjà utilisé par un autre compte");
+                    error(Messages.get("email_already_use_by_other"));
                     //TODO fusion de comptes
                 }
                 boolean validationEmail = Boolean.parseBoolean(Play.configuration.getProperty("authbasic.email.validation"));

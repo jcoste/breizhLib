@@ -5,6 +5,7 @@ import controllers.security.Secure;
 import models.Editeur;
 import models.Picture;
 import play.data.validation.Required;
+import play.i18n.Messages;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
@@ -40,7 +41,7 @@ public class Editeurs extends Controller {
         }
         Editeur editeur = Editeur.findByNom(nom);
         if (editeur != null) {
-            error("l'éditeur existe déja en base");
+            error(Messages.get("editeur_already_exist"));
         }
 
         String image = null;
