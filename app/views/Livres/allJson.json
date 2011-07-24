@@ -12,7 +12,7 @@
 {
 "editeur":"${livre.editeur}",
 "titre":"${livre.iSBN}",
-"image":"${livre.image}"
+"image":"@@{Pictures.getPicture(livre.iSBN+'.jpg')}"
 }
 
 #{/list}
