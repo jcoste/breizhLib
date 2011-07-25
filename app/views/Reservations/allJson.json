@@ -10,9 +10,9 @@
 {
 "nom":"${reservation.nom}",
 "prenom":"${reservation.prenom}",
-"livre":"${reservation.livre.titre}",
-"isbn":"${reservation.livre.iSBN}",
-"image":"@@{Pictures.getPicture(reservation.livre.iSBN+'.jpg')}",
+"livre":"${reservation.empruntEncours.titre}",
+"isbn":"${reservation.empruntEncours.iSBN}",
+"image":"@@{Pictures.getPicture(reservation.empruntEncours.iSBN+'.jpg')}"
 }
 #{/list}
 ]

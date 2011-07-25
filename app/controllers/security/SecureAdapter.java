@@ -69,11 +69,11 @@ public class SecureAdapter implements ISecure, UserManagement {
     }
 
     private void initUser(User user) {
-        if (user.isPublic = null) {
+        if (user.isPublic == null) {
             user.isPublic = Boolean.FALSE;
         }
 
-        if (user.publicUsername = null) {
+        if (user.publicUsername == null) {
             user.publicUsername = Boolean.FALSE;
         }
         user.update();
