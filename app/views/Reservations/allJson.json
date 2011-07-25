@@ -1,0 +1,18 @@
+%{
+  last = null;
+}%
+[
+#{list items:reservations, as:'reservation'}
+#{if last != null},#{/if}
+%{
+   last=reservation;
+}%
+{
+"nom":"${reservation.nom}",
+"prenom":"${reservation.prenom}",
+"livre":"${reservation.livre.titre}",
+"isbn":"${reservation.livre.iSBN}",
+"image":"@@{Pictures.getPicture(reservation.livre.iSBN+'.jpg')}",
+}
+#{/list}
+]

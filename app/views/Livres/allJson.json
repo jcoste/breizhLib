@@ -11,7 +11,8 @@
 
 {
 "editeur":"${livre.editeur}",
-"titre":"${livre.iSBN}",
+"titre":"${livre.titre}",
+"isbn":"${livre.iSBN}",
 "image":"@@{Pictures.getPicture(livre.iSBN+'.jpg')}"
 }
 
