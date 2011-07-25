@@ -145,6 +145,15 @@
         </dependency>
 
         <dependency>
+                   <groupId>play</groupId>
+                   <artifactId>socialoauth</artifactId>
+                   <version>0.1</version>
+                   <scope>system</scope>
+                   <systemPath>${project.basedir}/modules/socialoauth/lib/play-socialoauth.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.play</groupId>
 	        <artifactId>fbconnect</artifactId>
 	        <version>0.5</version>
