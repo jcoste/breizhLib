@@ -29,4 +29,11 @@ cloudbeesCmd
 /modules/router-*
 /modules/db-*
 /modules/maven-*
-/modules/oauth-*
+/modules/oauth-1.0/app
+/modules/oauth-1.0/conf
+/modules/oauth-1.0/documentation
+/modules/oauth-1.0/public
+/modules/oauth-1.0/src
+/modules/oauth-1.0/build.xml
+/modules/oauth-1.0/manifest
+/modules/oauth-1.0/commands.py
