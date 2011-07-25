@@ -18,23 +18,11 @@
                 text-decoration:none;
                 color:white;
             }
-            ul {list-style-type:none;}
+            #tagwidget ul {list-style-type:none;}
         </style>
 
 
-       #{if _as == 'book'}
-        #{if _tags.size()}<p><img src="@{'/public/images/tag_blue.png'}"/>
-            <div id="ts1" style="width:280px; height:280px; ">
-            <ul>
 
-            #{list items:_tags, as:'tag'}
-                #{if tag}
-                   <li><a href="/tag/${tag}" style="color:#f00;" rel="3">${tag}</a></li>
-                #{/if}
-            #{/list} </ul></div></p>
-        #{/if}
-       #{/if}
-       #{else}
             #{if _tags.size()}<div id="tagwidget" style="width:280px; height:280px; ">
             <ul>
             #{list items:_tags, as:'tag'}
@@ -43,5 +31,4 @@
                 #{/if}
             #{/list} </ul></div>
             #{/if}
-       #{/else}
     #{/if}

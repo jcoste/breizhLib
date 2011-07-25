@@ -111,6 +111,7 @@ views.add.nom.label = Nom :
 views.add.site.label = Site :
 views.add.image.label = Image :
 views.add.create.button = Créer
+views.editeurs.ouvrage = Ouvrages
 
 views.ouvrage = Ouvrage
 views.no_editor = Aucun Editeur
