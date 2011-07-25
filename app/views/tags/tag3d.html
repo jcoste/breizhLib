@@ -1,0 +1,47 @@
+#{if _as == 'book'}
+    #{secure.check 'admin'}
+      #{form @tag.Tags.addForbook(_bookId)}
+           <p><input type="text" name="tag" id="tag"/><input type="image" src="@{'/public/images/tag_blue_add.png'}" /></p>
+      #{/form}
+    #{/secure.check}
+#{/if}
+    #{if _tags}
+        #{script 'jquery.tagsphere.js' /}
+        <script type="text/javascript">
+          $(function(){
+                $('#tagwidget').tagcloud({centrex:140, centrey:100});
+            });
+        </script>
+         <style type="text/css">
+            body {font-family:arial, sans-serif;}
+            #tagwidget li a{
+                text-decoration:none;
+                color:white;
+            }
+            ul {list-style-type:none;}
+        </style>
+
+
+       #{if _as == 'book'}
+        #{if _tags.size()}<p><img src="@{'/public/images/tag_blue.png'}"/>
+            <div id="ts1" style="width:280px; height:280px; ">
+            <ul>
+
+            #{list items:_tags, as:'tag'}
+                #{if tag}
+                   <li><a href="/tag/${tag}" style="color:#f00;" rel="3">${tag}</a></li>
+                #{/if}
+            #{/list} </ul></div></p>
+        #{/if}
+       #{/if}
+       #{else}
+            #{if _tags.size()}<div id="tagwidget" style="width:280px; height:280px; ">
+            <ul>
+            #{list items:_tags, as:'tag'}
+                #{if tag}
+                   <li><a href="/tag/${tag.name}" style="color:#6666ff;" rel="${tag.nb}">${tag.name}</a></li>
+                #{/if}
+            #{/list} </ul></div>
+            #{/if}
+       #{/else}
+    #{/if}

@@ -166,9 +166,8 @@ width: 190px;
 }
 
 .tagcloud {
-    width: 50px;
-    height: 50px;
-    margin-left: 40px;
+    width: 10px;
+    height: 100px;
 }
 
 .tagcloud a{
