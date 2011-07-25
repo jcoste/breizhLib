@@ -1,6 +1,5 @@
 package controllers.socialoauth;
 
-import models.User;
 import models.socialoauth.Credentials;
 import models.socialoauth.ISecure;
 import models.socialoauth.IUser;
@@ -65,10 +64,10 @@ public class LinkedInSecure  extends OAuthSecure implements ISecure {
         Logger.info("token :" + oauth_token);
         getConnector().retrieveAccessToken(getCredentials(), oauth_verifier);
         String email = getConnector().getProvider().getResponseParameters().get("email").toLowerCase();
-        User user = User.find(email);
+        IUser user = um.getByEmail(email);
         if (user != null) {
-            user.dateConnexion = new Date();
-            user.update();
+            user.setDateConnexion(new Date());
+            user.save();
         }
         session().put(SESSION_EMAIL_KEY, email);
         redirect(callback);
