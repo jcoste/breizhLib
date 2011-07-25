@@ -92,6 +92,17 @@ display: block;
 position: absolute;
 }
 
+#main {
+     float: left;
+     width: 70%;
+}
+
+#sidebar1 {
+    float: left;
+    padding-left: 25px;
+    width: 120px;
+}
+
 article {
     clear: left;
     margin: 10px 0 10px 0;
