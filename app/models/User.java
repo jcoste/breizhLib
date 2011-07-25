@@ -52,6 +52,8 @@ public class User extends Model implements IUser {
         this.dateCreation = new Date();
         this.email = email;
         this.username = username;
+        this.isPublic = Boolean.FALSE;
+        this.publicUsername = Boolean.FALSE;
     }
 
 
