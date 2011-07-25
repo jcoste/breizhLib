@@ -9,7 +9,7 @@ import models.socialoauth.IUser;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SecureAdapter implements ISecure,UserManagement {
+public class SecureAdapter implements ISecure, UserManagement {
 
     private Map<String, ISecure> secureMap = new HashMap<String, ISecure>();
 
@@ -19,8 +19,8 @@ public class SecureAdapter implements ISecure,UserManagement {
         DEFAULT_IMPL = defaultId;
     }
 
-    public void registerSecure(String id,ISecure secure){
-         secureMap.put(id,secure);
+    public void registerSecure(String id, ISecure secure) {
+        secureMap.put(id, secure);
     }
 
     public void login() {
@@ -32,9 +32,9 @@ public class SecureAdapter implements ISecure,UserManagement {
         Secure.authentification();
     }
 
-    public ISecure getSecure(){
-       if (secureMap.containsKey(Secure.getImpl())) {
-           return secureMap.get(Secure.getImpl());
+    public ISecure getSecure() {
+        if (secureMap.containsKey(Secure.getImpl())) {
+            return secureMap.get(Secure.getImpl());
         } else {
             return secureMap.get(DEFAULT_IMPL);
         }
@@ -53,14 +53,31 @@ public class SecureAdapter implements ISecure,UserManagement {
     }
 
     public IUser getByUsername(String username) {
-        return User.findByUsername(username);
+        User user = User.findByUsername(username);
+        initUser(user);
+        return user;
     }
 
     public IUser getByEmail(String email) {
-       return User.find(email);
+        User user = User.find(email);
+        initUser(user);
+        return user;
     }
 
     public IUser createUser(String email, String username) {
-        return new User(email,username);
+        return new User(email, username);
     }
+
+    private void initUser(User user) {
+        if (user.isPublic = null) {
+            user.isPublic = Boolean.FALSE;
+        }
+
+        if (user.publicUsername = null) {
+            user.publicUsername = Boolean.FALSE;
+        }
+        user.update();
+    }
+
+
 }
