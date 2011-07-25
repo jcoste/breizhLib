@@ -13,6 +13,26 @@ views.main.footer = Copyleft - breizhjug.org
  #error=<span class="error">%s</span>
 error=%s
 
+##
+# errors messages
+##
+unknown_user = Utilisateur inconnu
+unknown_email = email inconnu
+type_compte_invalide = Type de compte non valide
+type_compte_invalide_chg_pwd = Compte non valide pour un changement de mot de passe
+error_password = Mot de passe incorrect
+invalid_captcha = Code captcha invalide.
+email_already_register = email déjà enregistré
+email_already_use = email déjà utilisé
+email_already_use_by_other = email déjà utilisé par un autre compte
+editeur_already_exist = l'éditeur existe déja en base
+book_already_exist = le livre existe déja en base
+book_not_exist = le livre n'existe pas en base
+no_result = Aucun résultat
+bookid_not_exist = le livre {} n'existe pas en base
+book_not_available = l'ouvrage {} n'est pas disponible a la reservation
+reservation_save = Réservation enregistré!
+
 #
 # views/tags/menu.html
 #
@@ -81,6 +101,19 @@ views.livres.editeur.title= Ouvrages de l'éditeur
 #
 views.commentaires.aucunCommentaire = 0 Commentaire
 views.commentaires.tousLesCommentaires = Tous les Commentaires
+views.commentaires.title_editeur = Commentaires sur les Ouvrages de l'éditeur
+
+#
+# views/Editeurs/*.html
+#
+views.add.editeur = Ajouter un Editeur
+views.add.nom.label = Nom :
+views.add.site.label = Site :
+views.add.image.label = Image :
+views.add.create.button = Créer
+
+views.ouvrage = Ouvrage
+views.no_editor = Aucun Editeur
 
 #
 # views/Reservations/*.html

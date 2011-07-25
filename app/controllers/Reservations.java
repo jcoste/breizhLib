@@ -1,6 +1,6 @@
 package controllers;
 
-import controllers.security.Role;
+import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.EtatLivre;
 import models.Livre;
@@ -9,6 +9,7 @@ import models.User;
 import play.Logger;
 import play.data.validation.Email;
 import play.data.validation.Required;
+import play.i18n.Messages;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
@@ -26,7 +27,7 @@ public class Reservations extends Controller {
         Livre livre = Livre.findByISBN(id);
         if (livre == null) {
             Logger.warn("l'ouvrage d'id {} n'existe pas en base", id);
-            error("l'ouvrage d'id " + id + " n'existe pas en base");
+            error(Messages.get("bookid_not_exist",id));
         }
         List<Reservation> emprunts = livre.getHistoriqueReservation();
         for (Reservation resa : emprunts) {
@@ -124,7 +125,7 @@ public class Reservations extends Controller {
             User user = (User) Secure.getUser();
             render(id, user);
         } else {
-            error("l'ouvrage " + livre.titre + " n'est pas disponible a la reservation");
+            error(Messages.get("book_not_available",livre.titre));
         }
     }
 
@@ -158,7 +159,7 @@ public class Reservations extends Controller {
         livre.reservationEncours = reservation;
         livre.setEtat(livre.getEtat().getNextState());
         livre.update();
-        flash.success("Réservation enregistré!");
+        flash.success(Messages.get("reservation_save"));
         Livres.show(id);
     }
 }

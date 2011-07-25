@@ -7,6 +7,8 @@ require:
     - play -> cloudbees 0.2.1
     - play -> db 1.1.1
     - play -> router head
+    - play -> socialoauth 0.1
+    - play -> oauth 1.0
 
     - provided -> siena 1.0.0-b5
     - provided -> org.eclipse.mylyn.wikitext.twiki.core_1.4.0.I20110104 0100-e3x
@@ -30,3 +32,5 @@ repositories:
        artifact:   "${application.path}/lib/[module]-[revision].jar"
        contains:
          - provided -> *
+
+

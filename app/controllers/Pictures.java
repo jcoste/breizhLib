@@ -1,13 +1,16 @@
 package controllers;
 
-import controllers.security.Role;
 import models.Picture;
+import models.socialoauth.Role;
 import play.data.validation.Required;
+import play.libs.Images;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
 
-import java.io.ByteArrayInputStream;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 
@@ -20,7 +23,7 @@ public class Pictures extends Controller {
         renderBinary(new ByteArrayInputStream(picture.image));
     }
 
-    public static Picture createImage(byte[] bytes, String path, String iSBN, boolean resize) {
+    public static Picture createImage(byte[] bytes, String path, String iSBN, boolean resize) throws Exception {
         if (bytes != null) {
             Picture imageFile = Picture.findByNname(iSBN + ".jpg");
             if (imageFile == null) {
@@ -30,7 +33,8 @@ public class Pictures extends Controller {
                 imageFile.path = path;
                 imageFile.insert();
             } else {
-                //TODO �craser l'image
+                imageFile.image = bytes;
+                imageFile.update();
             }
             return imageFile;
         }
@@ -43,12 +47,42 @@ public class Pictures extends Controller {
         for (Picture picture : pictures) {
             resizeImage(picture, 100, 133);
         }
-
         explore();
     }
 
     public static void resizeImage(Picture imageFile, int width, int heigth) {
-        //TODO
+        File old = null;
+        File newImage = new File("tmp.jpg");
+        try {
+            old = new File(new URI(imageFile.getUrl()));
+        } catch (URISyntaxException e) {
+            error("erreur lors de la création de l'image");
+        }
+
+        Images.resize(old, newImage, width, heigth);
+        byte[] bytes = new byte[(int) newImage.length()];
+
+        InputStream is = null;
+        try {
+            is = new FileInputStream(newImage);
+            int offset = 0;
+            int numRead = 0;
+            while (offset < bytes.length
+                    && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+                offset += numRead;
+            }
+            if (offset < bytes.length) {
+                throw new IOException("Could not completely read file " + newImage.getName());
+            }
+             is.close();
+        } catch (FileNotFoundException e) {
+            error("erreur lors de la création de l'image");
+        } catch (IOException e) {
+            error("erreur lors de la création de l'image");
+        }
+
+        imageFile.image = bytes;
+        imageFile.update();
     }
 
     @Get("/explorer")

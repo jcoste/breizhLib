@@ -10,13 +10,13 @@
                 <h1>${editeur.nom}</h1>
                 <span><img src="${editeur.image}"/></span>
 
-                <p><a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a></p>
+                <p><a href="@{Livres.editeur(editeur.nom,0)}">&{'views.editeurs.ouvrage'}</a></p>
                 <footer><a href="${editeur.site}" target="_blank">${editeur.site}</a></footer>
             </section>
             #{/list}
         #{/if}
     #{/if}
     #{else}
-        <h1>Aucun Editeur</h1>
+        <h1>&{'views.no_editor'}</h1>
     #{/else}
 </article>

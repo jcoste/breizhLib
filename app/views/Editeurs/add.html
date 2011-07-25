@@ -2,27 +2,27 @@
 #{set title:'BreizhLib Ajout Editeur' /}
 
 <article>
-    <h1>Ajouter un Editeur</h1>
+    <h1>&{'views.add.editeur'}</h1>
     <section class="full">
         <table>
             #{form @Editeurs.postEditeur(),enctype:'multipart/form-data'}
             <tr>
-                <td><label for="nom">Nom :</label></td>
+                <td><label for="nom">&{'views.add.nom'}</label></td>
                 <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${params.nom}"/></td>
             </tr>
             <tr>
-                <td><label for="site">Site :</label></td>
+                <td><label for="site">&{'views.add.site.label'}</label></td>
                 <td><input type="text" name="site" id="site" value="${params.site}" size="50"/>#{error 'site' /}</td>
             </tr>
             <tr>
-                <td><label for="imageFile.image">Image : </label></td>
+                <td><label for="imageFile.image">&{'views.add.image.label'}</label></td>
                 <td><input type="file" name="imageFile" id="imageFile.image" multiple="false"
                            accept="image/gif, image/jpeg, image/png"/>
                 </td>
             </tr>
         </table>
         <footer>
-            <input type="submit" value="Créer"/>
+            <input type="submit" value="&{'views.add.create.button'}"/>
         </footer>
         #{/form}
 

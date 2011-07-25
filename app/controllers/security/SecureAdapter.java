@@ -1,75 +1,83 @@
 package controllers.security;
 
 
+import controllers.socialoauth.UserManagement;
+import models.User;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class SecureAdapter implements ISecure {
-
-    public static final SecureAdapter INSTANCE = new SecureAdapter();
+public class SecureAdapter implements ISecure, UserManagement {
 
     private Map<String, ISecure> secureMap = new HashMap<String, ISecure>();
 
-    public static String DEFAULT_IMPL = TwitterSecure.ID;
+    private static String DEFAULT_IMPL;
 
-    private SecureAdapter() {
-        secureMap.put(BasicSecure.ID, BasicSecure.INSTANCE);
-        secureMap.put(FBSecure.ID, FBSecure.INSTANCE);
-        secureMap.put(TwitterSecure.ID, TwitterSecure.INSTANCE);
-        secureMap.put(YahooSecure.ID, YahooSecure.INSTANCE);
+    public SecureAdapter(String defaultId) {
+        DEFAULT_IMPL = defaultId;
     }
 
+    public void registerSecure(String id, ISecure secure) {
+        secureMap.put(id, secure);
+    }
 
-    @Override
     public void login() {
-        if (secureMap.containsKey(Secure.getImpl())) {
-            secureMap.get(Secure.getImpl()).login();
-        } else {
-            secureMap.get(DEFAULT_IMPL).login();
-        }
+        getSecure().login();
     }
 
-    @Override
     public void logout() {
+        getSecure().logout();
+        Secure.authentification();
+    }
+
+    public ISecure getSecure() {
         if (secureMap.containsKey(Secure.getImpl())) {
-            secureMap.get(Secure.getImpl()).logout();
+            return secureMap.get(Secure.getImpl());
         } else {
-            secureMap.get(DEFAULT_IMPL).logout();
+            return secureMap.get(DEFAULT_IMPL);
         }
     }
 
-    @Override
     public void oauthCallback(String callback, String oauth_token, String oauth_verifier) throws Exception {
-        secureMap.get(Secure.getImpl()).oauthCallback(callback, oauth_token, oauth_verifier);
+        getSecure().oauthCallback(callback, oauth_token, oauth_verifier);
     }
 
-    @Override
     public boolean check(String profile) {
-        ISecure secure = null;
-        if (secureMap.containsKey(Secure.getImpl())) {
-            secure = secureMap.get(Secure.getImpl());
-        } else {
-            secure = secureMap.get(DEFAULT_IMPL);
-        }
-
-        if ("public".equals(profile)) {
-            return true;
-        }
-        if ("admin".equals(profile)) {
-            return secure.getUser() == null ? false : secure.getUser().isAdmin();
-        } else if ("member".equals(profile)) {
-            return secure.getUser() != null;
-        }
         return false;
     }
 
-    @Override
     public IUser getUser() {
-        if (secureMap.containsKey(Secure.getImpl())) {
-            return secureMap.get(Secure.getImpl()).getUser();
-        } else {
-            return secureMap.get(DEFAULT_IMPL).getUser();
+        return getSecure().getUser();
+    }
+
+    public IUser getByUsername(String username) {
+        User user = User.findByUsername(username);
+        initUser(user);
+        return user;
+    }
+
+    public IUser getByEmail(String email) {
+        User user = User.find(email);
+        initUser(user);
+        return user;
+    }
+
+    public IUser createUser(String email, String username) {
+        return new User(email, username);
+    }
+
+    private void initUser(User user) {
+        if (user.isPublic == null) {
+            user.isPublic = Boolean.FALSE;
         }
 
+        if (user.publicUsername == null) {
+            user.publicUsername = Boolean.FALSE;
+        }
+        user.update();
     }
+
+
 }

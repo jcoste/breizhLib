@@ -1,10 +1,11 @@
 package controllers;
 
-import controllers.security.Role;
+import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.Editeur;
 import models.Picture;
 import play.data.validation.Required;
+import play.i18n.Messages;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
@@ -40,7 +41,7 @@ public class Editeurs extends Controller {
         }
         Editeur editeur = Editeur.findByNom(nom);
         if (editeur != null) {
-            error("l'éditeur existe déja en base");
+            error(Messages.get("editeur_already_exist"));
         }
 
         String image = null;
@@ -61,12 +62,16 @@ public class Editeurs extends Controller {
     }
 
     @Role("public")
-    //@Get(value= "/editeurs/{format}" ,format = "json")
     @Get("/editeurs")
     public static void index() {
         List<Editeur> editeurs = Editeur.findAll();
-        if (request.format.equals("json"))
-            renderJSON(editeurs);
         render(editeurs);
+    }
+
+    @Role("public")
+    @Get(value = "/editeurs.json", format = "json")
+    public static void allJson() {
+        List<Editeur> editeurs = Editeur.findAll();
+        renderJSON(editeurs);
     }
 }

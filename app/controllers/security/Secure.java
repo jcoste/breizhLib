@@ -2,20 +2,30 @@ package controllers.security;
 
 
 import controllers.Application;
-import models.User;
-import models.tag.LivreTag;
+import controllers.socialoauth.*;
+import models.socialoauth.ISecure;
+import models.socialoauth.IUser;
+import models.socialoauth.Role;
 import play.cache.Cache;
 import play.modules.router.Get;
 import play.mvc.Before;
 import play.mvc.Controller;
 
 import java.util.Date;
-import java.util.List;
 
 
 public class Secure extends Controller {
 
-    private static ISecure secure = SecureAdapter.INSTANCE;
+    private static SecureAdapter secure = new SecureAdapter(TwitterSecure.ID);
+
+    static {
+        secure.registerSecure(BasicSecure.ID, BasicSecure.INSTANCE);
+        secure.registerSecure(FBSecure.ID, new FBSecure(secure));
+        secure.registerSecure(TwitterSecure.ID, new TwitterSecure(secure));
+        secure.registerSecure(YahooSecure.ID, new YahooSecure(secure));
+        secure.registerSecure(LinkedInSecure.ID, new LinkedInSecure(secure));
+        secure.registerSecure(GoogleSecure.ID, new GoogleSecure(secure));
+    }
 
     @Before(unless = {"login", "logout", "oauthCallback"})
     public static void checkAccess() throws Throwable {
@@ -28,11 +38,6 @@ public class Secure extends Controller {
         if (role != null) {
             checkRole(role);
         }
-         List<LivreTag> tags = LivreTag.all().fetch();
-        for (LivreTag livreTag : tags) {
-            livreTag.tag.get();
-        }
-       renderArgs.put("tags", tags);
     }
 
     public static String getImpl() {
@@ -46,7 +51,7 @@ public class Secure extends Controller {
     public static void authentification() {
         IUser user = secure.getUser();
         if (user != null) {
-            session.put(ISecure.SESSION_EMAIL_KEY, ((User) user).email);
+            session.put(ISecure.SESSION_EMAIL_KEY, user.getEmail());
             session.put("userIsAdmin", user.isAdmin());
             user.setDateConnexion(new Date());
             user.save();
@@ -89,7 +94,17 @@ public class Secure extends Controller {
     }
 
     public static boolean check(String profile) {
-        return secure.check(profile);
+         ISecure isecure = secure.getSecure();
+
+        if ("public".equals(profile)) {
+            return true;
+        }
+        if ("admin".equals(profile)) {
+            return isecure.getUser() == null ? false : isecure.getUser().isAdmin();
+        } else if ("member".equals(profile)) {
+            return isecure.getUser() != null;
+        }
+        return false;
     }
 
     private static void onCheckFailed(String profile) {

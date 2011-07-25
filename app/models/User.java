@@ -1,7 +1,7 @@
 package models;
 
 import com.google.gson.JsonObject;
-import controllers.security.IUser;
+import models.socialoauth.IUser;
 import play.data.binding.As;
 import play.data.validation.Required;
 import play.libs.Codec;
@@ -27,6 +27,8 @@ public class User extends Model implements IUser {
 
     public boolean isAdmin;
 
+    public Boolean isPublic;
+
     public String password;
 
     @As("yyyy-MM-dd")
@@ -35,14 +37,23 @@ public class User extends Model implements IUser {
     @As("yyyy-MM-dd")
     public Date dateConnexion;
 
-    public String username;
-
     public Boolean actif;
 
 
-    public User(String email) {
+    /**
+     * Twitter username
+     */
+    public String username;
+
+    public Boolean publicUsername;
+
+
+    public User(String email,String username) {
         this.dateCreation = new Date();
         this.email = email;
+        this.username = username;
+        this.isPublic = Boolean.FALSE;
+        this.publicUsername = Boolean.FALSE;
     }
 
 
@@ -120,34 +131,32 @@ public class User extends Model implements IUser {
 
     }
 
-    @Override
     public boolean isActif() {
         return actif;
     }
 
-    @Override
     public void setActif(boolean actif) {
         this.actif = actif;
     }
 
-    @Override
     public boolean isAdmin() {
         return isAdmin;
     }
 
-    @Override
     public void setAdmin(boolean admin) {
         this.isAdmin = admin;
     }
 
-    @Override
     public Date getDateConnexion() {
         return dateConnexion;
     }
 
-    @Override
     public void setDateConnexion(Date dateConnexion) {
        this.dateConnexion = dateConnexion;
+    }
+
+    public String getEmail(){
+        return email;
     }
 
     @Override

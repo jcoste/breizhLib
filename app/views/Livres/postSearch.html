@@ -13,6 +13,9 @@
                 </select>
            <input type="submit" value="Rechercher"/></p>
     #{/form}
+    #{if message}
+        <p>${message}</p>
+    #{/if}
      #{script 'jquery.bubblepopup.v2.3.1.min.js' /}
      #{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
      #{list items:livres, as:'livre'}
