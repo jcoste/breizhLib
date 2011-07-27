@@ -167,4 +167,12 @@ public class User extends Model implements IUser {
            update();
         }
     }
+
+    @Override
+    public boolean equals(Object that) {
+         if(that != null){
+             return((User)that).id.equals(this.id);
+         }
+        return super.equals(that);
+    }
 }

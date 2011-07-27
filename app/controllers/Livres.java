@@ -1,15 +1,16 @@
 package controllers;
 
 
-import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.*;
+import models.socialoauth.Role;
 import play.data.validation.Required;
 import play.i18n.Messages;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
 import play.mvc.With;
+import remote.IsbnExtractor;
 import siena.Query;
 import utils.Paginator;
 
@@ -226,6 +227,26 @@ public class Livres extends Controller {
     public static void preview(String iSBN){
        String iSBN13 = iSBN.replaceAll("-","");
        render(iSBN13,iSBN);
+    }
+
+
+    @Role("public")
+    @Post("/findisbn")
+    public static void findisbn(String iSBN){
+       String iSBN13 = iSBN.replaceAll("-","");
+
+       List<Livre> livres =  Livre.findAll();
+       for (Livre livre : livres) {
+            if(livre.iSBN.replaceAll("-","").equals(iSBN13)){
+                request.format = "json";
+                render(livre);
+            }
+       }
+
+       Livre livre = IsbnExtractor.getLivre(iSBN);
+       livre.isNotPresent = true;
+        request.format = "json";
+        render(livre);
     }
 
     @Role("admin")
