@@ -10,7 +10,7 @@ import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
 import play.mvc.With;
-import remote.IsbnExtractor;
+import remote.Isbn13Extractor;
 import siena.Query;
 import utils.Paginator;
 
@@ -243,7 +243,7 @@ public class Livres extends Controller {
             }
        }
 
-       Livre livre = IsbnExtractor.getLivre(iSBN);
+       Livre livre = Isbn13Extractor.getLivre(iSBN);
        livre.isNotPresent = true;
         request.format = "json";
         render(livre);
