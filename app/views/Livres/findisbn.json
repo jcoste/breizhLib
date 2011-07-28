@@ -5,6 +5,7 @@
 "titre":"${livre.titre}",
 "isbn":"${livre.iSBN}",
 "aAjouter":"${livre.isNotPresent}",
+"etat":"${livre.etat}",
 "image":"@@{Pictures.getPicture(livre.iSBN+'.jpg')}"
 }
 ]
