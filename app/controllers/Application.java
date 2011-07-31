@@ -34,6 +34,11 @@ public class Application extends Controller {
         index();
     }
 
+     @Get("/android")
+    public static void android(){
+        render();
+    }
+
     @Get("/init")
     public static void initDev() {
         if (Play.mode.equals(Play.Mode.DEV)) {

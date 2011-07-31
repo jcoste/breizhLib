@@ -1,0 +1,15 @@
+[
+#{if user}
+{
+"commentaires":"${commentaires.size()} Commentaire${commentaires.pluralize()}",
+"reservations":"${reservations.size()} Ouvrage${reservations.pluralize()} Réservé${reservations.pluralize()}",
+"ouvragesEncours":"${ouvragesEncours.size()} Ouvrage${ouvragesEncours.pluralize()} en cours de lecture",
+"ouvrages":"${ouvrages.size()} Ouvrage${ouvrages.pluralize()} Lus",
+"username":"${user.username}",
+"nom":"${user.nom}",
+"isAdmin":"${user.isAdmin}",
+"prenom":"${user.prenom}",
+"email":"${user.email}"
+}
+#{/if}
+]

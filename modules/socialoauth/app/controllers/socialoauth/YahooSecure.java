@@ -1,8 +1,6 @@
 package controllers.socialoauth;
 
 
-import controllers.socialoauth.OAuthSecure;
-import controllers.socialoauth.UserManagement;
 import models.User;
 import models.socialoauth.Credentials;
 import models.socialoauth.ISecure;
@@ -28,8 +26,8 @@ public class YahooSecure extends OAuthSecure implements ISecure {
 
     public YahooSecure(UserManagement um) {
         super("https://api.login.yahoo.com/oauth/v2/get_request_token",
-                "https://api.login.yahoo.com/oauth/v2/request_auth",
-                "https://api.login.yahoo.com/oauth/v2/get_token");
+                "https://api.login.yahoo.com/oauth/v2/get_auth",
+                "https://api.login.yahoo.com/oauth/v2/request_token");
         this.um = um;
         init();
     }
@@ -90,13 +88,12 @@ public class YahooSecure extends OAuthSecure implements ISecure {
         return _session.get();
     }
 
-    @Override
     public IUser getUser() {
         IUser user = null;
         if (session().get(SESSION_EMAIL_KEY) != null) {
             user = um.getByUsername(session().get(SESSION_EMAIL_KEY));
             if (user == null) {
-                user = um.createUser(session().get(SESSION_EMAIL_KEY),null);
+                user = um.createUser(session().get(SESSION_EMAIL_KEY), null);
                 user.setActif(true);
                 user.save();
             }
