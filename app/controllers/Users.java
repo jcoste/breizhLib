@@ -1,17 +1,20 @@
 package controllers;
 
 
+import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.Commentaire;
 import models.Email;
 import models.Reservation;
 import models.User;
-import models.socialoauth.Role;
+
 import notifiers.Mails;
+import play.Logger;
 import play.Play;
 import play.cache.Cache;
 import play.data.validation.Equals;
 import play.data.validation.Required;
+import play.i18n.Lang;
 import play.i18n.Messages;
 import play.libs.Codec;
 import play.libs.Crypto;
@@ -31,21 +34,37 @@ public class Users extends Controller {
     public static void infos() {
         User user = (User) Secure.getUser();
         if (user != null) {
-             render(user);
+            render(user);
         }
         Application.index();
     }
+
+    @Get("/userprofil")
+    @Role("member")
+    public static void userprofil() {
+        User user = (User) Secure.getUser();
+        if (user != null) {
+           List<Commentaire> commentaires = user.commentaires();
+           List<Reservation> ouvrages = Reservation.all(Reservation.class).filter("user", user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
+           List<Reservation> ouvragesEncours = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+           List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+           request.format = "json";
+           render(user, commentaires, ouvrages, ouvragesEncours, reservations);
+        }
+        renderText("ERROR");
+    }
+
 
     @Role("member")
     @Get("/user/profil/{id}")
     public static void profil(Long id) {
         User user = User.findById(id);
-        if (user != null && (user.isPublic || user.equals(Secure.getUser()) )) {
+        if (user != null && (user.isPublic || Secure.getUser().equals(user) )) {
             List<Commentaire> commentaires = user.commentaires();
-            List<Reservation> ouvrages =  Reservation.all(Reservation.class).filter("user",user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
-            List<Reservation> ouvragesEncours =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt>",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
-            List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
-            render(user,commentaires,ouvrages,ouvragesEncours,reservations);
+            List<Reservation> ouvrages = Reservation.all(Reservation.class).filter("user", user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
+            List<Reservation> ouvragesEncours = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+            List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+            render(user, commentaires, ouvrages, ouvragesEncours, reservations);
         }
         Application.index();
     }
@@ -59,7 +78,7 @@ public class Users extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-        render(user,commentaires);
+        render(user, commentaires);
     }
 
     @Role("member")
@@ -76,30 +95,31 @@ public class Users extends Controller {
 
     @Role("member")
     @Post("/user/edit")
-    public static void postEdit(@Required String nom, @Required String prenom, String email,String publicUsername,String profil) throws UnsupportedEncodingException {
+    public static void postEdit(@Required String nom, @Required String prenom, String email, String publicUsername, String profil) throws UnsupportedEncodingException {
         User user = (User) Secure.getUser();
         if (user != null) {
             user.nom = nom;
             user.prenom = prenom;
 
-            if(publicUsername.equals("oui")){
+            if (publicUsername == null || publicUsername.equals("oui")) {
                 user.publicUsername = true;
-            }else{
+            } else {
                 user.publicUsername = false;
             }
 
-            if(profil.equals("oui")){
+            if (profil.equals("oui")) {
                 user.isPublic = true;
-            }else{
+            } else {
                 user.isPublic = false;
             }
 
             user.update();
 
             boolean hasnext = true;
-            int i = 1;
+            int i = user.getExtraEmail().size() +1;
             do {
                 String valeurEmail = request.params.get("email" + i);
+           
                 if (valeurEmail == null) {
                     hasnext = false;
                 } else if (!valeurEmail.equals(email)) {
@@ -174,15 +194,15 @@ public class Users extends Controller {
     @Role("member")
     @Get("/user/emprunts")
     public static void emprunts() {
-      User user = (User) Secure.getUser();
-      List<Reservation> reservations =  Reservation.all(Reservation.class).filter("user",user).filter("dateEmprunt>",  Reservation.getDummyDate()).filter("dateRetour", null).fetch();
-      for (Reservation resa : reservations) {
+        User user = (User) Secure.getUser();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+        for (Reservation resa : reservations) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
             }
-       }
+        }
 
-       render(user,reservations);
+        render(user, reservations);
     }
 
 
