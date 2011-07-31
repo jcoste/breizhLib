@@ -27,6 +27,7 @@ public class Commentaire extends Model {
     @Column("livre")
     public Livre livre;
 
+    @Column("user")
     public User user;
 
     @As("yyyy-MM-dd")
