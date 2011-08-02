@@ -59,18 +59,7 @@ public class Reservations extends Controller {
     }
 
 
-     @Role("public")
-    @Get(value = "/reservations.json", format = "json")
-    public static void allJson() {
-         Date d = Reservation.getDummyDate();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
-        for (Reservation resa : reservations) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
-            }
-        }
-        render(reservations);
-    }
+
 
     @Role("admin")
     public static void rendreLivre(Long id) {
@@ -173,4 +162,8 @@ public class Reservations extends Controller {
         flash.success(Messages.get("reservation_save"));
         Livres.show(id);
     }
+
+
+
+
 }

@@ -1,23 +1,18 @@
 package controllers;
 
 
-import com.google.appengine.api.datastore.Blob;
 import controllers.security.Secure;
 import models.*;
 import models.socialoauth.Role;
-import play.Logger;
 import play.data.validation.Required;
 import play.i18n.Messages;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
 import play.mvc.With;
-import remote.Isbn13Extractor;
 import siena.Query;
-import utils.ImagesUtils;
 import utils.Paginator;
 
-import java.util.Date;
 import java.util.List;
 
 @With(Secure.class)
@@ -65,13 +60,7 @@ public class Livres extends Controller {
         render(livres);
     }
 
-    @Role("public")
-    @Get(value = "/ouvrages.json", format = "json")
-    public static void allJson() {
-        Query<Livre> query = Livre.all(Livre.class);
-        List<Livre> livres = query.order("-dateAjout").fetch();
-        render(livres);
-    }
+
 
 
     @Role("public")
@@ -233,62 +222,6 @@ public class Livres extends Controller {
         render(iSBN13, iSBN);
     }
 
-
-    @Role("public")
-    @Post("/findisbn")
-    public static void findisbn(String iSBN) {
-        String iSBN13 = iSBN.replaceAll("-", "");
-
-        List<Livre> livres = Livre.findAll();
-        for (Livre livre : livres) {
-            if (livre.iSBN.replaceAll("-", "").equals(iSBN13)) {
-                request.format = "json";
-                render(livre);
-            }
-        }
-
-        Livre livre = Isbn13Extractor.getLivre(iSBN);
-        livre.isNotPresent = true;
-        request.format = "json";
-        render(livre);
-    }
-
-    @Role("public")
-    @Post("/addbyisbn")
-    public static void addByisbn(String iSBN) {
-        String iSBN13 = iSBN.replaceAll("-", "");
-        boolean exist = false;
-        List<Livre> livres = Livre.findAll();
-        for (Livre livre : livres) {
-            if (livre.iSBN.replaceAll("-", "").equals(iSBN13)) {
-                exist = true;
-            }
-        }
-        Livre livre = null;
-        if (!exist) {
-            livre = Isbn13Extractor.getLivre(iSBN);
-            if(iSBN.length() == 13){
-              livre.iSBN = iSBN.substring(0,3)+"-"+iSBN.substring(3,4)+"-"+iSBN.substring(4,8)+"-"+iSBN.substring(8,12)+"-"+iSBN.substring(12,13);
-            }
-            livre.isNotPresent = false;
-            livre.dateAjout = new Date();
-
-            if(livre.image != null && livre.image.length() > 0) {
-                Logger.debug(livre.image);
-                Picture imageFile = new Picture();
-                imageFile.image = new Blob(ImagesUtils.getByteFromUrl(livre.image));
-                imageFile.name = livre.iSBN + ".jpg";
-                imageFile.path = "ouvrages/";
-                imageFile.insert();
-                livre.image = imageFile.getUrl();
-            }
-
-            livre.insert();
-        }
-
-        request.format = "json";
-        render(livre, exist);
-    }
 
     @Role("admin")
     @Post("/book/{iSBN}/validPreview")
