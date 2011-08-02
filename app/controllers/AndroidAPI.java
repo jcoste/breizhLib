@@ -1,6 +1,5 @@
 package controllers;
 
-import com.google.appengine.api.datastore.Blob;
 import controllers.security.Secure;
 import models.*;
 import models.socialoauth.Role;
@@ -70,7 +69,7 @@ public class AndroidAPI extends Controller {
 
     @Role("public")
     @Post("/api/add")
-    public static void addByisbn(String iSBN) {
+    public static void addByisbn(String iSBN)  throws Exception {
         String iSBN13 = iSBN.replaceAll("-", "");
         boolean exist = false;
         List<Livre> livres = Livre.findAll();
@@ -88,14 +87,13 @@ public class AndroidAPI extends Controller {
             livre.isNotPresent = false;
             livre.dateAjout = new Date();
 
+
+                    String image = null;
             if(livre.image != null && livre.image.length() > 0) {
                 Logger.debug(livre.image);
-                Picture imageFile = new Picture();
-                imageFile.image = new Blob(ImagesUtils.getByteFromUrl(livre.image));
-                imageFile.name = livre.iSBN + ".jpg";
-                imageFile.path = "ouvrages/";
-                imageFile.insert();
-                livre.image = imageFile.getUrl();
+                Picture picture = Pictures.createImage(ImagesUtils.getByteFromUrl(livre.image), "ouvrages/", iSBN, true);
+                image = picture.getUrl();
+                livre.image = image;
             }
 
             livre.insert();
