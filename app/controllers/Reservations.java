@@ -1,11 +1,8 @@
 package controllers;
 
+import models.*;
 import models.socialoauth.Role;
 import controllers.security.Secure;
-import models.EtatLivre;
-import models.Livre;
-import models.Reservation;
-import models.User;
 import play.Logger;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -60,6 +57,9 @@ public class Reservations extends Controller {
         }
         render(reservations, emprunts);
     }
+
+
+
 
     @Role("admin")
     public static void rendreLivre(Long id) {
@@ -162,4 +162,8 @@ public class Reservations extends Controller {
         flash.success(Messages.get("reservation_save"));
         Livres.show(id);
     }
+
+
+
+
 }
