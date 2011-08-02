@@ -6,12 +6,16 @@ import controllers.socialoauth.*;
 import models.socialoauth.ISecure;
 import models.socialoauth.IUser;
 import models.socialoauth.Role;
+import models.tag.LivreTag;
+import models.tag.Tag;
 import play.cache.Cache;
 import play.modules.router.Get;
 import play.mvc.Before;
 import play.mvc.Controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class Secure extends Controller {
@@ -38,6 +42,20 @@ public class Secure extends Controller {
         if (role != null) {
             checkRole(role);
         }
+
+        List<LivreTag> tagLivres = LivreTag.all().fetch();
+         List<Tag> tags = new ArrayList<Tag>();
+        for (LivreTag livreTag : tagLivres) {
+            livreTag.tag.get();
+            if(!tags.contains(livreTag.tag)){
+                livreTag.tag.nb = 1;
+                tags.add(livreTag.tag);
+            }else{
+              int i = tags.indexOf(livreTag.tag);
+              tags.get(i).nb++;
+            }
+        }
+        renderArgs.put("tags", tags);
     }
 
     public static String getImpl() {

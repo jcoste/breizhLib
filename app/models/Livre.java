@@ -44,6 +44,8 @@ public class Livre extends Model {
     @Column("reservationEncours")
     public Reservation reservationEncours;
 
+    public transient boolean isNotPresent;
+
 
     public Livre() {
         super();

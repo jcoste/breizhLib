@@ -7,6 +7,7 @@ precompiled
 tmp
 test-result
 server.pid
+out/
 
 .settings/
 .classpath
@@ -20,6 +21,7 @@ server.pid
 /war/WEB-INF/lib
 *~
 cloudbeesCmd
+out/
 
 /modules/cloudbees-*
 /modules/db-*

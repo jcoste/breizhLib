@@ -8,7 +8,6 @@
          #{/secure.check}
         <li><a href="@{Livres.index(0,'date')}">&{'views.main.menu.books'}</a></li>
         <li><a href="@{Editeurs.index()}">Editeurs</a></li>
-        <li><a href="@{tag.Tags.index()}">Tags</a></li>
         #{/secure.check}
         #{secure.check 'public', not:'member'}
         <li><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></li>
