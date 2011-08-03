@@ -22,8 +22,13 @@
     <body>
         #{header /}
         #{menu user:session.user /}
+        <div id="main">
         #{doLayout /}
-        #{footer tags:tags /}
+        </div>
+        <aside id="sidebar1">
+        #{widget tags:tags /}
+        </aside>
+        #{footer /}
 
     </body>
 </html>

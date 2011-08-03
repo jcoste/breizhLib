@@ -1,9 +1,9 @@
 package controllers;
 
 
-import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.*;
+import models.socialoauth.Role;
 import play.data.validation.Required;
 import play.i18n.Messages;
 import play.modules.router.Get;
@@ -60,13 +60,7 @@ public class Livres extends Controller {
         render(livres);
     }
 
-    @Role("public")
-    @Get(value = "/ouvrages.json", format = "json")
-    public static void allJson() {
-        Query<Livre> query = Livre.all(Livre.class);
-        List<Livre> livres = query.order("-dateAjout").fetch();
-        render(livres);
-    }
+
 
 
     @Role("public")
@@ -210,27 +204,28 @@ public class Livres extends Controller {
             List<Commentaire> commentaires = Commentaire.findLike(recherche);
 
             String message = null;
-            if(livres.size() == 0 && editeurs.size() == 0 && commentaires.size() == 0){
-              message = Messages.get("no_result");
+            if (livres.size() == 0 && editeurs.size() == 0 && commentaires.size() == 0) {
+                message = Messages.get("no_result");
             }
 
-            render(livres, recherche, editeurs, commentaires, type,message);
+            render(livres, recherche, editeurs, commentaires, type, message);
         } else {
             String message = Messages.get("no_result");
-            render(recherche, type,message);
+            render(recherche, type, message);
         }
     }
 
     @Role("member")
     @Get("/book/{iSBN}/preview")
-    public static void preview(String iSBN){
-       String iSBN13 = iSBN.replaceAll("-","");
-       render(iSBN13,iSBN);
+    public static void preview(String iSBN) {
+        String iSBN13 = iSBN.replaceAll("-", "");
+        render(iSBN13, iSBN);
     }
+
 
     @Role("admin")
     @Post("/book/{iSBN}/validPreview")
-    public static void validPreview(String iSBN,boolean valid){
+    public static void validPreview(String iSBN, boolean valid) {
         Livre livre = Livre.findByISBN(iSBN);
         if (livre == null) {
             render("Livres/preview.html", iSBN);
@@ -238,6 +233,6 @@ public class Livres extends Controller {
 
         livre.preview = valid;
         livre.update();
-         show(iSBN);
+        show(iSBN);
     }
 }

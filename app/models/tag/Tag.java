@@ -12,6 +12,8 @@ public class Tag extends Model implements Comparable<Tag> {
 
     public String name;
 
+    public transient int nb;
+
     private Tag(String name) {
         this.name = name;
     }
@@ -37,4 +39,20 @@ public class Tag extends Model implements Comparable<Tag> {
         return Tag.all(Tag.class).filter("id", tagId).get();
     }
 
+    @Override
+    public boolean equals(Object that) {
+        if(that == null){
+            return false;
+        }
+        if(((Tag)that).name == null){
+            return false;
+        }
+
+        if(((Tag)that).name.equals(this.name)){
+            return true;
+        }
+
+        return false;
+
+    }
 }

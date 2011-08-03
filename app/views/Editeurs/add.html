@@ -7,7 +7,7 @@
         <table>
             #{form @Editeurs.postEditeur(),enctype:'multipart/form-data'}
             <tr>
-                <td><label for="nom">&{'views.add.nom'}</label></td>
+                <td><label for="nom">&{'views.add.nom.label'}</label></td>
                 <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${params.nom}"/></td>
             </tr>
             <tr>

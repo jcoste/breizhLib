@@ -146,4 +146,15 @@ public class Commentaires extends Controller {
         }
         render(commentaires);
     }
+
+    @Role("public")
+    @Get(value = "/commentaires.json", format = "json")
+    public static void allJson() {
+         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
+
+        for (Commentaire commentaire : commentaires) {
+            commentaire.livre.get();
+        }
+        render(commentaires);
+    }
 }
