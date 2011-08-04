@@ -100,6 +100,18 @@ public class User extends Model implements IUser {
         return Commentaire.all(Commentaire.class).filter("user", this).fetch();
     }
 
+    public List<Reservation> ouvrages() {
+        return Reservation.all(Reservation.class).filter("user", this).filter("dateRetour>", Reservation.getDummyDate()).fetch();
+    }
+
+    public List<Reservation> ouvragesEncours() {
+        return Reservation.all(Reservation.class).filter("user", this).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+    }
+
+    public List<Reservation> reservations() {
+        return Reservation.all(Reservation.class).filter("user", this).filter("dateEmprunt", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+    }
+
     public Livre getLastEmprunt() {
         Reservation reservation = Reservation.all(Reservation.class).filter("user", this).filter("dateRetour>", Reservation.getDummyDate()).get();
         if (reservation != null) {

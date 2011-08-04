@@ -13,6 +13,8 @@ import play.mvc.With;
 import remote.Isbn13Extractor;
 import serializers.CommentaireSerializer;
 import serializers.LivreSerializer;
+import serializers.ProfilSerializer;
+import serializers.ReservationSerializer;
 import siena.Query;
 import utils.ImagesUtils;
 
@@ -38,14 +40,9 @@ public class AndroidAPI extends Controller {
     public static void userprofil() {
         User user = (User) Secure.getUser();
         if (user != null) {
-           List<Commentaire> commentaires = user.commentaires();
-           List<Reservation> ouvrages = Reservation.all(Reservation.class).filter("user", user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
-           List<Reservation> ouvragesEncours = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
-           List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
-           request.format = "json";
-           render(user, commentaires, ouvrages, ouvragesEncours, reservations);
+           renderJSON(user, new ProfilSerializer());
         }
-        renderText("ERROR");
+        renderJSON(new Result("Utilisateur inconnue", "UNKNOW_USER"));
     }
 
 
@@ -57,15 +54,13 @@ public class AndroidAPI extends Controller {
         List<Livre> livres = Livre.findAll();
         for (Livre livre : livres) {
             if (livre.iSBN.replaceAll("-", "").equals(iSBN13)) {
-                request.format = "json";
-                render(livre);
+                renderJSON(livre, new LivreSerializer());
             }
         }
 
         Livre livre = Isbn13Extractor.getLivre(iSBN);
         livre.isNotPresent = true;
-        request.format = "json";
-        render(livre);
+        renderJSON(livre, new LivreSerializer());
     }
 
     @Role("public")
@@ -121,7 +116,7 @@ public class AndroidAPI extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-        renderJSON(commentaires, new CommentaireSerializer());
+        renderJSON(commentaires, new CommentaireSerializer(),new LivreSerializer());
     }
 
     @Role("public")
@@ -134,7 +129,7 @@ public class AndroidAPI extends Controller {
                 resa.empruntEncours.get();
             }
         }
-        render(reservations);
+        renderJSON(reservations, new ReservationSerializer(),new LivreSerializer());
     }
 
     @Role("member")
