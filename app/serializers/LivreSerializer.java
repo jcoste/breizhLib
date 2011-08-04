@@ -20,6 +20,7 @@ public class LivreSerializer implements JsonSerializer<Livre> {
          obj.addProperty("editeur", livre.editeur);
          obj.addProperty("titre", livre.titre);
          obj.addProperty("isbn", livre.iSBN);
+         obj.addProperty("aAjouter", ""+livre.isNotPresent);
          obj.addProperty("etat", livre.getEtat().toString());
          Map<String,Object> param = new HashMap<String,Object>();
          param.put("file",livre.iSBN+".jpg");

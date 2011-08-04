@@ -1,6 +1,6 @@
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
     <application>breizh-lib</application>
- 		<version>3</version>
+ 		<version>0-1-2</version>
     <static-files>
         <include path="/images/**/*.png" expiration="4d 5h" />
         <include path="/public/stylesheets/*.css" expiration="4d 5h" />
