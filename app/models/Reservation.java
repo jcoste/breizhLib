@@ -30,6 +30,7 @@ public class Reservation extends Model {
     @Email
     public String email;
 
+    @Column("user")
     public User user;
 
     @As("yyyy-MM-dd")

@@ -101,7 +101,7 @@ public class User extends Model implements IUser {
     }
 
     public Livre getLastEmprunt() {
-        Reservation reservation = Reservation.all(Reservation.class).filter("dateRetour>", Reservation.getDummyDate()).get();
+        Reservation reservation = Reservation.all(Reservation.class).filter("user", this).filter("dateRetour>", Reservation.getDummyDate()).get();
         if (reservation != null) {
             reservation.emprunt.get();
             return reservation.emprunt;
