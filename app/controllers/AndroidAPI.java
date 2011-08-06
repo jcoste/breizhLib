@@ -35,6 +35,16 @@ public class AndroidAPI extends Controller {
         render();
     }
 
+    @Get("/android/version")
+    public static void version(){
+        Version version = Version.find();
+         if(version == null){
+             version = new Version("0.1.0");
+             version.insert();
+         }
+        renderText(version.version);
+    }
+
     @Role("member")
     @Get("/api/profil")
     public static void userprofil() {
