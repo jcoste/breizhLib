@@ -39,10 +39,10 @@ public class AndroidAPI extends Controller {
     public static void version(){
         Version version = Version.find();
          if(version == null){
-             version = new Version("0.1.0");
+             version = new Version("0.1.0",1000);
              version.insert();
          }
-        renderText(version.version);
+        renderText(version.versionCode+"\n"+version.version);
     }
 
     @Role("member")

@@ -15,10 +15,18 @@ public class Version extends Model {
     @Required
     public String version;
 
+    @Required
+    public int versionCode;
+
+    public boolean last;
+
+    public String serverUrl;
 
 
-    public Version(String version) {
+
+    public Version(String version,int code) {
            this.version = version;
+           this.versionCode = code;
     }
 
     public static Version find() {

@@ -14,6 +14,15 @@
         <property name="dateRetour" direction="asc"/>
         <property name="dateEmprunt" direction="asc"/>
     </datastore-index>
+    <datastore-index kind="Reservation" ancestor="false" source="manual">
+        <property name="id" direction="asc"/>
+        <property name="dateRetour" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Reservation" ancestor="false" source="manual">
+        <property name="dateRetour" direction="asc"/>
+        <property name="id" direction="asc"/>
+        <property name="dateEmprunt" direction="asc"/>
+    </datastore-index>
     <datastore-index kind="Livre" ancestor="false" source="manual">
         <property name="editeur" direction="asc"/>
         <property name="dateAjout" direction="desc"/>
@@ -26,4 +35,5 @@
         <property name="editeur" direction="asc"/>
         <property name="popularite" direction="desc"/>
     </datastore-index>
+    
 </datastore-indexes>

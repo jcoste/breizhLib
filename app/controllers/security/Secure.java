@@ -60,7 +60,7 @@ public class Secure extends Controller {
     }
 
     public static String getImpl() {
-        if (session.get(ISecure.SESSION_IMPL_KEY) != null) {
+        if (session != null && session.get(ISecure.SESSION_IMPL_KEY) != null) {
             return session.get(ISecure.SESSION_IMPL_KEY);
         } else {
             return GAESecure.ID;

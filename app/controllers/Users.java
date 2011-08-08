@@ -44,9 +44,9 @@ public class Users extends Controller {
         User user = User.findById(id);
         if (user != null && (user.isPublic || Secure.getUser().equals(user) )) {
             List<Commentaire> commentaires = user.commentaires();
-            List<Reservation> ouvrages = Reservation.all(Reservation.class).filter("user", user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
-            List<Reservation> ouvragesEncours = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
-            List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+            List<Reservation> ouvrages = user.ouvrages();
+            List<Reservation> ouvragesEncours = user.ouvragesEncours();
+            List<Reservation> reservations = user.reservations();
             render(user, commentaires, ouvrages, ouvragesEncours, reservations);
         }
         Application.index();
