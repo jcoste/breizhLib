@@ -1,4 +1,29 @@
-<!-- Indices written at Thu, 4 Aug 2011 20:38:35 CEST -->
+<!-- Indices written at Thu, 4 Aug 2011 21:15:53 CEST -->
 
-<datastore-indexes/>
-
+<datastore-indexes>
+    <datastore-index kind="Reservation" ancestor="false" source="manual">
+        <property name="user" direction="asc"/>
+        <property name="dateRetour" direction="asc"/>
+    </datastore-index>
+	<datastore-index kind="Reservation" ancestor="false" source="manual">
+        <property name="dateRetour" direction="asc"/>
+        <property name="user" direction="asc"/>
+        <property name="dateEmprunt" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Reservation" ancestor="false" source="manual">
+        <property name="dateRetour" direction="asc"/>
+        <property name="dateEmprunt" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Livre" ancestor="false" source="manual">
+        <property name="editeur" direction="asc"/>
+        <property name="dateAjout" direction="desc"/>
+    </datastore-index>
+    <datastore-index kind="Livre" ancestor="false" source="manual">
+        <property name="editeur" direction="asc"/>
+        <property name="titre" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="Livre" ancestor="false" source="manual">
+        <property name="editeur" direction="asc"/>
+        <property name="popularite" direction="desc"/>
+    </datastore-index>
+</datastore-indexes>

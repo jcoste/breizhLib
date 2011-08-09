@@ -9,6 +9,9 @@ import models.socialoauth.Role;
 import play.modules.router.Get;
 import play.mvc.Controller;
 import play.mvc.With;
+import serializers.CommentaireSerializer;
+import serializers.LivreSerializer;
+import serializers.ReservationSerializer;
 import siena.Query;
 
 import java.util.List;
@@ -27,7 +30,7 @@ public class Export extends Controller{
             livre.update();
         }
 
-        renderJSON(livres);
+        renderJSON(livres,new LivreSerializer());
     }
 
     @Role("admin")
@@ -38,7 +41,7 @@ public class Export extends Controller{
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-        renderJSON(commentaires);
+        renderJSON(commentaires,new LivreSerializer(),new CommentaireSerializer());
     }
 
     @Role("admin")
@@ -58,6 +61,6 @@ public class Export extends Controller{
                 resa.empruntEncours.get();
             }
         }
-        renderJSON(reservations);
+        renderJSON(reservations,new LivreSerializer(),new ReservationSerializer());
     }
 }
