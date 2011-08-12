@@ -24,6 +24,8 @@ cloudbeesCmd
 
 /conf/cloudbees.conf
 
+/lib/router-*
+
 /modules/cloudbees-*
 /modules/fbconnect-*
 /modules/gae-*
