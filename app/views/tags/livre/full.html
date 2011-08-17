@@ -22,9 +22,11 @@
     <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}" ><img src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h1>
 
     #{if _user != null &&  _user.username != null}
-       #{social.tweeter text:"Avis sur l'ouvrage ${_livre.titre}",via:_user.username /}
+       <p>#{social.tweeter text:"Avis sur l'ouvrage ${_livre.titre}",via:_user.username /}</p>
     #{/if}
-    #{social.like url:_livre.iSBN,as:'book' /}
+    <p>#{social.like url:_livre.iSBN,as:'book' /}</p>
+    <p><g:plusone  size="medium"></g:plusone></p>
+
     <table> <tr><td>
         <img src="${_livre.image}" width="250px" height="300px"/>
     </td><td>
@@ -70,3 +72,13 @@
     #{commentaire bookId:_livre.iSBN,user:_user,note:_livre.getNote(), as:'post' /}
     #{/if}
 </article>
+
+<script type="text/javascript">
+  window.___gcfg = {lang: 'fr'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
