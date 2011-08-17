@@ -61,7 +61,7 @@ public class AndroidAPI extends Controller {
             }
            renderJSON(user, new ProfilSerializer());
         }
-        renderJSON(new Result("Utilisateur inconnue", "UNKNOW_USER"));
+        renderJSON(new Result("Utilisateur inconnu", "UNKNOW_USER"));
     }
 
 
@@ -155,14 +155,14 @@ public class AndroidAPI extends Controller {
     @Post("/api/book/reserver")
     public static void postReservation(String id, @Required String nom, @Required String prenom, @Required @play.data.validation.Email String email) {
         if (validation.hasErrors()) {
-            renderText("ERROR");
+             renderJSON(new Result("informations manquantes","ERROR"));
         }
         if (id == null) {
-            renderText("ERROR");
+            renderJSON(new Result("Ouvrages inconnu","ERROR"));
         }
         Livre livre = Livre.findByISBN(id);
         if (!livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
-            throw new IllegalStateException("le livre n'est pas disponible a la réservation");
+            renderJSON(new Result("le livre n'est pas disponible a la réservation","NON_DISPONIBLE"));
         }
 
         User user = (User) Secure.getUser();
