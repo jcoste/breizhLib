@@ -30,7 +30,7 @@ public class Version extends Model {
     }
 
     public static Version find() {
-        Version version = Version.all(Version.class).get();
+        Version version = Version.all(Version.class).filter("last",true).get();
         return version;
     }
 
