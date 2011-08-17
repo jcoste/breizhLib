@@ -78,8 +78,13 @@ public class AndroidAPI extends Controller {
         }
 
         Livre livre = Isbn13Extractor.getLivre(iSBN);
-        livre.isNotPresent = true;
-        renderJSON(livre, new LivreSerializer());
+
+        if(livre != null){
+            livre.isNotPresent = true;
+            renderJSON(livre, new LivreSerializer());
+        } else {
+            renderJSON(new Result("isbn non trouvé sur les sites d'ouvrages", "UNKNOW_ISBN"));
+        }
     }
 
     @Role("public")
