@@ -5,10 +5,11 @@ require:
     - play -> siena 2.0.1
     - play -> gae 1.4
     - play -> cloudbees 0.2.1
-    - play -> router head
-    - play -> multioauth 0.1
+    - localmodule -> socialoauth 0.1
     - play -> fbconnect 0.5
     - play -> oauth 1.0
+
+    - play -> router head
 
     - provided -> siena 1.0.0-b5
     - provided -> org.eclipse.mylyn.wikitext.twiki.core_1.4.0.I20110104 0100-e3x
@@ -25,9 +26,17 @@ require:
 # repositories
 repositories:
 
-    - gsylvain35:
+    - maven:
         type:       http
-        artifact:   "http://gsylvain35.googlecode.com/svn/repository/"
+        artifact:   "http://maven.gsylvain35.googlecode.com/git/"
+        contains:
+                    - org.play -> *
+
+    - localmodule:
+       type:       local
+       artifact:   "${application.path}/srcmodules/[module]/dist/[module]-[revision].zip"
+       contains:
+         - localmodule -> socialoauth
 
     - provided:
        type:       local
