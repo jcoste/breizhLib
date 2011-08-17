@@ -50,6 +50,15 @@ public class AndroidAPI extends Controller {
     public static void userprofil() {
         User user = (User) Secure.getUser();
         if (user != null) {
+            if(user.nom == null){
+                user.nom = "";
+            }
+            if(user.prenom == null){
+                user.prenom = "";
+            }
+            if(user.username == null){
+                user.username = "";
+            }
            renderJSON(user, new ProfilSerializer());
         }
         renderJSON(new Result("Utilisateur inconnue", "UNKNOW_USER"));
