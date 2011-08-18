@@ -15,6 +15,8 @@ public class Commentaire extends Model {
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
 
+    public String uid;
+
     @Required
     public String nom;
     @Required
@@ -45,6 +47,10 @@ public class Commentaire extends Model {
     @Override
     public String toString() {
         return nom + " : " + commentaire;
+    }
+
+    public String getUid(){
+        return "C"+id;
     }
 
     public static List<Commentaire> findAll() {

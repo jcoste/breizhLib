@@ -18,6 +18,7 @@ public class CommentaireSerializer implements JsonSerializer<Commentaire> {
         obj.addProperty("avis", commentaire.commentaire);
         obj.addProperty("nom", commentaire.nom+" le "+new SimpleDateFormat("dd MMMM yyyy").format(commentaire.dateAjout));
         obj.addProperty("note", commentaire.note);
+        obj.addProperty("uid", commentaire.getUid());
         obj.add("livre",jsonSerializationContext.serialize(commentaire.livre));
 
         // pour etre compatible avec les versions 0.1.0 et 0.1.1 de l'application android
