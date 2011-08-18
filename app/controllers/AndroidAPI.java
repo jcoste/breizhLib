@@ -6,11 +6,12 @@ import models.*;
 import models.socialoauth.Role;
 import play.Logger;
 import play.data.validation.Required;
+import play.modules.router.Any;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
 import play.mvc.With;
-import remote.Isbn13Extractor;
+import remote.IsbnNicebooksExtractor;
 import serializers.CommentaireSerializer;
 import serializers.LivreSerializer;
 import serializers.ProfilSerializer;
@@ -66,7 +67,7 @@ public class AndroidAPI extends Controller {
 
 
     @Role("public")
-    @Post("/api/find")
+    @Any("/api/find")
     public static void findisbn(String iSBN) {
         String iSBN13 = iSBN.replaceAll("-", "");
 
@@ -77,7 +78,7 @@ public class AndroidAPI extends Controller {
             }
         }
 
-        Livre livre = Isbn13Extractor.getLivre(iSBN);
+        Livre livre = IsbnNicebooksExtractor.getLivre(iSBN);
 
         if(livre != null){
             livre.isNotPresent = true;
@@ -100,7 +101,7 @@ public class AndroidAPI extends Controller {
         }
         Livre livre = null;
         if (!exist) {
-            livre = Isbn13Extractor.getLivre(iSBN);
+            livre = IsbnNicebooksExtractor.getLivre(iSBN);
             if(iSBN.length() == 13){
               livre.iSBN = iSBN.substring(0,3)+"-"+iSBN.substring(3,4)+"-"+iSBN.substring(4,8)+"-"+iSBN.substring(8,12)+"-"+iSBN.substring(12,13);
             }

@@ -16,16 +16,21 @@ public class LivreSerializer implements JsonSerializer<Livre> {
 
 
     public JsonElement serialize(Livre livre, Type type, JsonSerializationContext jsonSerializationContext) {
-         JsonObject obj = new JsonObject();
-         obj.addProperty("editeur", livre.editeur);
-         obj.addProperty("titre", livre.titre);
-         obj.addProperty("isbn", livre.iSBN);
-         obj.addProperty("note", livre.getNote());
-         obj.addProperty("aAjouter", livre.isNotPresent);
-         obj.addProperty("etat", livre.getEtat().toString());
-         Map<String,Object> param = new HashMap<String,Object>();
-         param.put("file",livre.iSBN+".jpg");
-         obj.addProperty("image", Router.getFullUrl("Pictures.getPicture",param)) ;
+        JsonObject obj = new JsonObject();
+        obj.addProperty("editeur", livre.editeur);
+        obj.addProperty("titre", livre.titre);
+        obj.addProperty("isbn", livre.iSBN);
+        obj.addProperty("note", livre.getNote());
+        obj.addProperty("aAjouter", livre.isNotPresent);
+        obj.addProperty("etat", livre.getEtat().toString());
+
+        if (livre.image == null || livre.image.contains("/shared/")) {
+            Map<String, Object> param = new HashMap<String, Object>();
+            param.put("file", livre.iSBN + ".jpg");
+            obj.addProperty("image", Router.getFullUrl("Pictures.getPicture", param));
+        } else {
+            obj.addProperty("image", livre.image);
+        }
         return obj;
     }
 }

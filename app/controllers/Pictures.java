@@ -21,7 +21,7 @@ public class Pictures extends Controller {
     public static void getPicture(String file) {
         Picture picture = Picture.findByNname(file);
         //response.setContentTypeIfNotSet(picture.image.type());
-        if(picture != null) {
+        if(picture != null && picture.image != null) {
             renderBinary(new ByteArrayInputStream(picture.image.getBytes()));
         }
         else
