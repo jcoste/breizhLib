@@ -5,6 +5,9 @@ import controllers.Application;
 import models.User;
 import models.socialoauth.ISecure;
 import models.socialoauth.IUser;
+import net.tanesha.recaptcha.ReCaptchaFactory;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 import notifiers.Mails;
 import org.apache.commons.mail.EmailException;
 import play.Play;
@@ -14,7 +17,6 @@ import play.data.validation.Required;
 import play.i18n.Messages;
 import play.libs.Codec;
 import play.libs.Crypto;
-import play.libs.Images;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
@@ -50,18 +52,29 @@ public class BasicSecure extends Controller implements ISecure {
 
     @Get("/user/new")
     public static void newuser(String email, String nom, String prenom) {
-        String randomID = Codec.UUID();
-        render(email, nom, prenom, randomID);
+        String  captcha =ReCaptchaFactory.newReCaptcha("6LcyNccSAAAAAFgrBNO5Nsu1yF3ykiY5uj0v11F6", "6LcyNccSAAAAALycebaVRr6Hi5ZiELwW9OEskbkB", false).createRecaptchaHtml(null, null);
+        render(email, nom, prenom, captcha);
     }
 
     @Post("/user/new")
     public static void postNewuser(@Required String email, String nom, String prenom, @Required @Equals("passwordconfirm") String password,
-                                   @Required String passwordconfirm, @Required String captcha, String randomID) throws Throwable {
+                                   @Required String passwordconfirm) throws Throwable {
         User user = User.find(email);
         validation.isTrue(user == null).message(Messages.get("error", Messages.get("email_already_register")));
-        validation.equals(captcha, Cache.get(randomID)).message(Messages.get("error", Messages.get("invalid_captcha")));
+
+        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+        reCaptcha.setPrivateKey("6LcyNccSAAAAALycebaVRr6Hi5ZiELwW9OEskbkB");
+        String challenge = params.get("recaptcha_challenge_field");
+        String uresponse = params.get("recaptcha_response_field");
+        ReCaptchaResponse reCaptchaResponse =
+        reCaptcha.checkAnswer("127.0.0.1", challenge, uresponse);
+
+        validation.isTrue(reCaptchaResponse.isValid()).message(Messages.get("error", Messages.get("invalid_captcha")));
+
         if (validation.hasErrors()) {
-            render("security/BasicSecure/newuser.html", email, nom, prenom, randomID);
+            String  captcha =ReCaptchaFactory.newReCaptcha("6LcyNccSAAAAAFgrBNO5Nsu1yF3ykiY5uj0v11F6", "6LcyNccSAAAAALycebaVRr6Hi5ZiELwW9OEskbkB", false).createRecaptchaHtml(null, null);
+
+            render("security/BasicSecure/newuser.html", email, nom, prenom, captcha);
         }
         user = new User(email,null);
         user.nom = nom;
@@ -116,14 +129,6 @@ public class BasicSecure extends Controller implements ISecure {
         session.put(SESSION_EMAIL_KEY, username.toLowerCase());
         session.put(SESSION_IMPL_KEY, "basic");
         Secure.authentification();
-    }
-
-    @Get("/captcha/{id}")
-    public static void captcha(String id) {
-        Images.Captcha captcha = Images.captcha();
-        String code = captcha.getText("#0000FD");
-        Cache.set(id, code, "10mn");
-        renderBinary(captcha);
     }
 
 

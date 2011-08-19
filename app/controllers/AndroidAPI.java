@@ -12,6 +12,8 @@ import play.mvc.With;
 import remote.Isbn13Extractor;
 import serializers.CommentaireSerializer;
 import serializers.LivreSerializer;
+import serializers.ProfilSerializer;
+import serializers.ReservationSerializer;
 import siena.Query;
 import utils.ImagesUtils;
 
@@ -32,19 +34,33 @@ public class AndroidAPI extends Controller {
         render();
     }
 
+    @Get("/android/version")
+    public static void version(){
+        Version version = Version.find();
+         if(version == null){
+             version = new Version("0.1.0",1000);
+             version.insert();
+         }
+        renderText(version.versionCode+"\n"+version.version);
+    }
+
     @Role("member")
     @Get("/api/profil")
     public static void userprofil() {
         User user = (User) Secure.getUser();
         if (user != null) {
-           List<Commentaire> commentaires = user.commentaires();
-           List<Reservation> ouvrages = Reservation.all(Reservation.class).filter("user", user).filter("dateRetour>", Reservation.getDummyDate()).fetch();
-           List<Reservation> ouvragesEncours = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
-           List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
-           request.format = "json";
-           render(user, commentaires, ouvrages, ouvragesEncours, reservations);
+            if(user.nom == null){
+                user.nom = "";
+            }
+            if(user.prenom == null){
+                user.prenom = "";
+            }
+            if(user.username == null){
+                user.username = "";
+            }
+           renderJSON(user, new ProfilSerializer());
         }
-        renderText("ERROR");
+        renderJSON(new Result("Utilisateur inconnu", "UNKNOW_USER"));
     }
 
 
@@ -56,15 +72,18 @@ public class AndroidAPI extends Controller {
         List<Livre> livres = Livre.findAll();
         for (Livre livre : livres) {
             if (livre.iSBN.replaceAll("-", "").equals(iSBN13)) {
-                request.format = "json";
-                render(livre);
+                renderJSON(livre, new LivreSerializer());
             }
         }
 
         Livre livre = Isbn13Extractor.getLivre(iSBN);
-        livre.isNotPresent = true;
-        request.format = "json";
-        render(livre);
+
+        if(livre != null){
+            livre.isNotPresent = true;
+            renderJSON(livre, new LivreSerializer());
+        } else {
+            renderJSON(new Result("isbn non trouvé sur les sites d'ouvrages", "UNKNOW_ISBN"));
+        }
     }
 
     @Role("public")
@@ -119,7 +138,7 @@ public class AndroidAPI extends Controller {
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-        renderJSON(commentaires, new CommentaireSerializer());
+        renderJSON(commentaires, new CommentaireSerializer(),new LivreSerializer());
     }
 
     @Role("public")
@@ -132,21 +151,21 @@ public class AndroidAPI extends Controller {
                 resa.empruntEncours.get();
             }
         }
-        render(reservations);
+        renderJSON(reservations, new ReservationSerializer(),new LivreSerializer());
     }
 
     @Role("member")
     @Post("/api/book/reserver")
     public static void postReservation(String id, @Required String nom, @Required String prenom, @Required @play.data.validation.Email String email) {
         if (validation.hasErrors()) {
-            renderText("ERROR");
+             renderJSON(new Result("informations manquantes","ERROR"));
         }
         if (id == null) {
-            renderText("ERROR");
+            renderJSON(new Result("Ouvrages inconnu","ERROR"));
         }
         Livre livre = Livre.findByISBN(id);
         if (!livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
-            throw new IllegalStateException("le livre n'est pas disponible a la réservation");
+            renderJSON(new Result("le livre n'est pas disponible a la réservation","NON_DISPONIBLE"));
         }
 
         User user = (User) Secure.getUser();
@@ -174,7 +193,7 @@ public class AndroidAPI extends Controller {
     public static void postComment(String bookId, @Required String nom, @Required String content, @Required int note) {
         Livre livre = Livre.findByISBN(bookId);
         if (validation.hasErrors()) {
-            render("Livres/show.html", livre);
+            renderJSON(new Result("paramètres incorrect","DATA_INVALID"));
         }
 
 
@@ -183,7 +202,8 @@ public class AndroidAPI extends Controller {
         commentaire.insert();
         livre.popularite = livre.getCommentaires().size();
         livre.update();
-        renderText("OK");
+
+        renderJSON(commentaire, new CommentaireSerializer(),new LivreSerializer());
     }
 
 
