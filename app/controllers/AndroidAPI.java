@@ -196,7 +196,7 @@ public class AndroidAPI extends Controller {
     public static void postComment(String bookId, @Required String nom, @Required String content, @Required int note) {
         Livre livre = Livre.findByISBN(bookId);
         if (validation.hasErrors()) {
-            render("Livres/show.html", livre);
+            renderJSON(new Result("paramètres incorrect","DATA_INVALID"));
         }
 
 
@@ -205,7 +205,8 @@ public class AndroidAPI extends Controller {
         commentaire.insert();
         livre.popularite = livre.getCommentaires().size();
         livre.update();
-        renderText("OK");
+
+        renderJSON(commentaire, new CommentaireSerializer(),new LivreSerializer());
     }
 
 

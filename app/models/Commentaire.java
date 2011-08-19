@@ -15,7 +15,7 @@ public class Commentaire extends Model {
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
 
-    public String uid;
+    public transient String uid;
 
     @Required
     public String nom;
