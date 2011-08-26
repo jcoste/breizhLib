@@ -30,7 +30,7 @@ public class IsbnNicebooksExtractor {
                 if (line.contains("<h1>")) {
                     livre.titre = line.substring(line.indexOf("<h1>") + "<h1>".length(), line.indexOf("</h1>"));
                 }
-                if (line.contains("<dt>Éditeur</dt>")) {
+                if (line.contains("diteur</dt>")) {
                     line = reader.readLine();
                     livre.editeur = line.substring(line.indexOf("\">") + 2, line.indexOf("</a></dd>"));
                 }

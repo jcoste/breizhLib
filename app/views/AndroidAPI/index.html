@@ -1,10 +1,108 @@
 #{extends 'mainFull.html' /}
-#{set title:'BreizhLib Android API' /}
+#{set title:'BreizhLib API' /}
+
+
+<script type="text/javascript">
+    function display(id, tab) {
+        var div = document.getElementById(id);
+        var li = document.getElementById('li'+id);
+        li.className = "active";
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
+            for (var i = 0; i < tab.length; ++i)
+                hide(tab[i]);
+        }
+    }
+
+    function hide(id) {
+        var div = document.getElementById(id);
+        var li = document.getElementById('li'+id);
+        li.className = "";
+        div.style.visibility = 'hidden';
+        div.style.display = "none";
+    }
+
+</script>
 
 <article>
-       <h1>Android API</h1>
+    <h1>BreizhLib API</h1>
 
-        <h2>Liste des Ouvrages</h2>
-        <h2>Liste des Commentaires</h2>
-        <h2>Liste des Réservations</h2>
+    <div id="menu">
+        <ul id="onglets">
+            <li id="limethod" class="active"><a class="stack" href="javascript:display('method',['formats','errors'])">Méthodes</a></li>
+            <li id="liformats"><a class="stack" href="javascript:display('formats',['method','errors'])">Format des réponses</a></li>
+            <li id="lierrors"><a class="stack" href="javascript:display('errors',['method','formats'])">Codes d'erreurs</a></li>
+        </ul>
+        <div id="errors" style="visibility:hidden; display:none;"><p>TODO</p></div>
+    <div id="method" style="visibility:visible; display:block;">
+        <p>Voici les diffèrentes méthodes de l'api.
+            les réponses sont au format json.</p>
+
+        <h3>Méthodes Utilisateur</h3>
+
+        <p><span class="method">GET</span> /api/profil/ informations du profil </p>
+
+        <h3>Méthodes Ouvrage</h3>
+
+        <p><span class="method">GET</span> /api/ouvrages </p>
+
+        <p><span class="method">GET</span> /api/find?iSBN={iSBN} recherche des informations d'un ouvrage à partir du
+            isbn </p>
+
+        <p><span class="method">POST</span> /api/add?iSBN={iSBN} ajout d'un ouvrage à partir du isbn </p>
+
+        <h3>Méthodes Commentaire</h3>
+
+        <p><span class="method">GET</span> /api/commentaire </p>
+
+        <p><span class="method">POST</span> /api/comment?bookId={isbn}&nom={nom}&content={commentaire}&note={note} </p>
+
+        <h3>Méthodes Réservation</h3>
+
+        <p><span class="method">GET</span> /api/reservations </p>
+
+        <p><span class="method">POST</span> /api/book/reserver?id={isbn}&nom={nom}&prenom={prenom}&email={email}</p>
+    </div>
+
+    <div id="formats" style="visibility:hidden; display:none;">
+        <h3>Utilisateur</h3>
+        <ul>
+            <li>nom</li>
+            <li>prenom</li>
+            <li>email</li>
+            <li>username</li>
+            <li>commentaires</li>
+            <li>reservations</li>
+            <li>ouvragesEncours</li>
+        </ul>
+        <h3>Ouvrage</h3>
+        <ul>
+            <li>editeur</li>
+            <li>titre</li>
+            <li>isbn</li>
+            <li>note</li>
+            <li>etat</li>
+            <li>image</li>
+        </ul>
+        <h3>Commentaire</h3>
+        <ul>
+            <li>avis</li>
+            <li>nom</li>
+            <li>titre</li>
+            <li>note</li>
+            <li>uid</li>
+            <li>livre</li>
+        </ul>
+        <h3>Reservation</h3>
+        <ul>
+            <li>nom</li>
+            <li>prenom</li>
+            <li>livre</li>
+        </ul>
+    </div>
+
+
+
+    </div>
 </article>
