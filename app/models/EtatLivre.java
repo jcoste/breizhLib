@@ -22,6 +22,13 @@ public enum EtatLivre {
         public EtatLivre getNextState() {
             return INSDIPONIBLE;
         }
+    },
+
+    NON_PRESENT("non-present", "models.EtatLivre.nonpresent") {
+        @Override
+        public EtatLivre getNextState() {
+            return DISP0NIBLE;
+        }
     };
 
     private String classeCss;

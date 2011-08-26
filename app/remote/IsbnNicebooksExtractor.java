@@ -13,7 +13,7 @@ public class IsbnNicebooksExtractor {
 
     public static Livre getLivre(String isbn) {
 
-        isbn = isbn.replaceAll("[- ]", "");
+        isbn =  isbn.replaceAll("-", "");
 
         try {
             Livre livre = new Livre();
