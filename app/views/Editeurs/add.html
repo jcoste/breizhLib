@@ -1,9 +1,7 @@
 #{extends 'main.html' /}
-#{set title:'BreizhLib Ajout Editeur' /}
 
 <article>
     <h1>&{'views.add.editeur'}</h1>
-    <section class="full">
         <table>
             #{form @Editeurs.postEditeur(),enctype:'multipart/form-data'}
             <tr>
@@ -21,10 +19,6 @@
                 </td>
             </tr>
         </table>
-        <footer>
             <input type="submit" value="&{'views.add.create.button'}"/>
-        </footer>
         #{/form}
-
-    </section>
 </article>

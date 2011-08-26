@@ -1,6 +1,17 @@
 <header>
     <a href="http://www.breizhjug.org/" target="_blank"><img src="@{'/public/images/customLogo.gif'}"/></a>
 
-    <h1>&{'views.main.title'}#{if play.mode.name() == 'DEV'}<a href="@{Application.initDev()}" ><span class="indice">${play.mode.name()}</span></a>#{/if}
-    <a href="http://feeds.feedburner.com/Breizhlib" target="_blank"><img class="rss" src="@{'/public/images/rss.png'}"/></a></h1>
+    <aside class="footer-segment-right">
+    <h1>&{'views.main.title'}#{if play.mode.name() == 'DEV'}<a href="@{Application.initDev()}" >
+        <span class="indice">${play.mode.name()}</span></a>#{/if}</h1>
+
+
+        #{secure.check 'public', not:'member'}
+            <p><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></p>
+        #{/secure.check}
+        #{secure.check 'member'}
+            <p><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></p>
+        #{/secure.check}
+    </aside>
+
 </header>
