@@ -1,19 +1,21 @@
 package controllers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import controllers.security.Secure;
 import models.Livre;
 import models.socialoauth.Role;
 import play.modules.router.Get;
 import play.mvc.Controller;
 import play.mvc.With;
+import serializers.LivreSerializer;
 
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 @With(Secure.class)
@@ -26,25 +28,21 @@ public class Import extends Controller {
     @Get(value = "/import/books.json", format = "json")
     public static void books() {
         try {
-            URL url = new URL(SERVER_URL + "/export/books.json");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            StringBuffer sb = new StringBuffer();
-            String line = reader.readLine();
-            sb.append(line);
-            while (line != null) {
-              line = reader.readLine();
-                sb.append(line);
-            }
-
-
-            Gson gson = new Gson();
-            Type collectionType = new TypeToken<Collection<Livre>>(){}.getType();
-            Collection<Livre> livres = (List<Livre>) gson.fromJson(sb.toString(),collectionType);
+            Type type = new TypeToken<Livre>(){}.getType();
+            Gson gson = new GsonBuilder().registerTypeAdapter(type,new LivreSerializer()).create();
+            URL url = new URL(SERVER_URL + "export/books.json");
+            JsonReader reader = new JsonReader(new InputStreamReader(url.openStream()));
+            reader.beginArray();
+            List<Livre> livres = new ArrayList<Livre>();
+              while (reader.hasNext()) {
+                livres.add(gson.<Livre>fromJson(reader,type));
+              }
+              reader.endArray();
             renderText(livres.size());
         } catch (Exception ex) {
-
+            renderText("KO"+ex);
         }
-        renderText("");
+        renderText("OK");
     }
 
     @Role("admin")
