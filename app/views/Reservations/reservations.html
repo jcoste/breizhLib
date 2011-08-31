@@ -1,41 +1,75 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib' /}
 
+<script type="text/javascript">
+    function display(id, tab) {
+        var div = document.getElementById(id);
+        var li = document.getElementById('li' + id);
+        li.className = "active";
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
+            for (var i = 0; i < tab.length; ++i)
+                hide(tab[i]);
+        }
+    }
+
+    function hide(id) {
+        var div = document.getElementById(id);
+        var li = document.getElementById('li' + id);
+        li.className = "";
+        div.style.visibility = 'hidden';
+        div.style.display = "none";
+    }
+
+</script>
+
 <article>
-    <h1>&{'views.reservations.reservations.title'}</h1>
-    #{if reservations.size() > 0}
-        #{list items:reservations, as:'emprunt'}
-        <section class="miniature">
-            <h1><a href="@{Livres.show(emprunt.empruntEncours.iSBN)}">${emprunt.empruntEncours.titre}</a>
+    <div id="menu">
+        <ul id="onglets">
+            <li id="lireservations" class="active"><a class="stack"
+                                                      href="javascript:display('reservations',['emprunts'])">&{'views.reservations.reservations.title'}</a>
+            </li>
+            <li id="liemprunts"><a class="stack" href="javascript:display('emprunts',['reservations'])">&{'views.reservations.reservations.title2'}</a>
+            </li>
+        </ul>
+        <div id="reservations" style="visibility:visible; display:block;">
+            #{if reservations.size() > 0}
+            #{list items:reservations, as:'emprunt'}
+            <section class="miniature">
+                <h1><a href="@{Livres.show(emprunt.empruntEncours.iSBN)}">${emprunt.empruntEncours.titre}</a>
 
-                <p>&{'views.reservations.reservations.reservePar'} ${emprunt.nom} ${emprunt.prenom}</p></h1>
-            <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-            <footer><span class="indisponible"><a href="@{Reservations.pretLivre(emprunt.id)}">&{'views.reservations.reservations.emprunt.submit'}</a></span>
-            </footer>
-        </section>
-        #{/list}
-    #{/if}
-    #{else}
-        <p>&{'views.reservations.aucuneReservation'}</p>
-    #{/else}
+                    <p>&{'views.reservations.reservations.reservePar'} ${emprunt.nom} ${emprunt.prenom}</p></h1>
+                <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+                <footer><span class="indisponible"><a href="@{Reservations.pretLivre(emprunt.id)}">&{'views.reservations.reservations.emprunt.submit'}</a></span>
+                </footer>
+            </section>
+            #{/list}
+            #{/if}
+            #{else}
+            <p>&{'views.reservations.aucuneReservation'}</p>
+            #{/else}
+        </div>
 
-    <h1>&{'views.reservations.reservations.title2'}</h1>
-    #{if emprunts.size() > 0}
-        #{list items:emprunts, as:'emprunt'}
-        <section class="miniature">
-            <h1><a href="@{Livres.show(emprunt.empruntEncours.iSBN)}">${emprunt.empruntEncours.titre}</a>
+        <div id="emprunts" style="visibility:hidden; display:none;">
+            #{if emprunts.size() > 0}
+            #{list items:emprunts, as:'emprunt'}
+            <section class="miniature">
+                <h1><a href="@{Livres.show(emprunt.empruntEncours.iSBN)}">${emprunt.empruntEncours.titre}</a>
 
-                <p>&{'views.reservations.reservations.empruntePar'} ${emprunt.nom} ${emprunt.prenom}</p></h1>
-            <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+                    <p>&{'views.reservations.reservations.empruntePar'} ${emprunt.nom} ${emprunt.prenom}</p></h1>
+                <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
 
-            <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-            <footer><span class="indisponible"><a href="@{Reservations.rendreLivre(emprunt.id)}">&{'views.reservations.reservations.rendu.submit'}</a></span>
-            </footer>
-        </section>
-        #{/list}
+                <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+                <footer><span class="indisponible"><a href="@{Reservations.rendreLivre(emprunt.id)}">&{'views.reservations.reservations.rendu.submit'}</a></span>
+                </footer>
+            </section>
+            #{/list}
 
-    #{/if}
-    #{else}
-        <p>&{'views.reservations.aucunEmprunt'}</p>
-    #{/else}
+            #{/if}
+            #{else}
+            <p>&{'views.reservations.aucunEmprunt'}</p>
+            #{/else}
+        </div>
+    </div>
 </article>

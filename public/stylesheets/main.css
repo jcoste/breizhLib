@@ -157,9 +157,7 @@ a.stack {
  *
  ******************************************/
 
-#footer-area {
-font-size: 90%;
-padding: 18px 0;
+#footer-area {;
 overflow: hidden;
 }
 
@@ -168,6 +166,12 @@ float: left;
 margin-right: 20px;
 margin-left: 20px;
 width: 190px;
+}
+
+.footer-segment-right {
+float: right;
+margin-right: 20px;
+margin-left: 10px;
 }
 
 /******************************************
