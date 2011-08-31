@@ -50,4 +50,13 @@ public enum EtatLivre {
         }
         return null;
     }
+
+    public static EtatLivre fromString(String etat) {
+        for (EtatLivre e : values()) {
+            if (e.name().equals(etat)) {
+                return e;
+            }
+        }
+        return null;
+    }
 }
