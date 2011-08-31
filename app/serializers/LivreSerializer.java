@@ -1,10 +1,8 @@
 package serializers;
 
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
+import models.EtatLivre;
 import models.Livre;
 import play.mvc.Router;
 
@@ -12,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LivreSerializer implements JsonSerializer<Livre> {
+public class LivreSerializer implements JsonSerializer<Livre>, JsonDeserializer<Livre> {
 
 
     public JsonElement serialize(Livre livre, Type type, JsonSerializationContext jsonSerializationContext) {
@@ -32,5 +30,18 @@ public class LivreSerializer implements JsonSerializer<Livre> {
             obj.addProperty("image", livre.image);
         }
         return obj;
+    }
+
+    //TODO gestion des images
+    public Livre deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        Livre livre = Livre.findByISBN(jsonObject.get("isbn").getAsString());
+        if (livre == null) {
+            livre = new Livre(jsonObject.get("titre").getAsString(), jsonObject.get("editeur").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("isbn").getAsString());
+        }
+
+        livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
+         livre.save();
+        return livre;
     }
 }

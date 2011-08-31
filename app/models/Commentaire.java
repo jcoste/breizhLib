@@ -57,6 +57,10 @@ public class Commentaire extends Model {
         return Commentaire.all(Commentaire.class).fetch();
     }
 
+    public static Commentaire findByUID(String uid) {
+        return Commentaire.all(Commentaire.class).filter("id",uid.substring(1)).get();
+    }
+
 
     public static List<Commentaire> findLike(String recherche) {
        List<Commentaire> allCommetairess = findAll();

@@ -150,11 +150,24 @@ public class AndroidAPI extends Controller {
         renderJSON(commentaires, new CommentaireSerializer(), new LivreSerializer());
     }
 
-    @Role("public")
+    @Role("admin")
     @Get(value = "/api/reservations", format = "json")
     public static void reservations() {
         Date d = Reservation.getDummyDate();
         List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
+        for (Reservation resa : reservations) {
+            if (resa.empruntEncours != null) {
+                resa.empruntEncours.get();
+            }
+        }
+        renderJSON(reservations, new ReservationSerializer(), new LivreSerializer());
+    }
+
+    @Role("admin")
+    @Get(value = "/api/emprunts", format = "json")
+    public static void emprunts() {
+        Date d = Reservation.getDummyDate();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
         for (Reservation resa : reservations) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
