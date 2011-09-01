@@ -1,7 +1,6 @@
 package serializers;
 
 
-import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.gson.*;
 import models.EtatLivre;
 import models.Livre;
@@ -44,7 +43,7 @@ public class LivreSerializer implements JsonSerializer<Livre>, JsonDeserializer<
         }
 
         livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
-         livre.save();
+        livre.save();
         return livre;
     }
 

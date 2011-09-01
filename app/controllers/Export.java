@@ -1,15 +1,13 @@
 package controllers;
 
 import controllers.security.Secure;
-import models.Commentaire;
-import models.Livre;
-import models.Reservation;
-import models.User;
+import models.*;
 import models.socialoauth.Role;
 import play.modules.router.Get;
 import play.mvc.Controller;
 import play.mvc.With;
 import serializers.CommentaireSerializer;
+import serializers.EditeurSerializer;
 import serializers.LivreSerializer;
 import serializers.ReservationSerializer;
 import siena.Query;
@@ -31,6 +29,14 @@ public class Export extends Controller{
         }
 
         renderJSON(livres,new LivreSerializer());
+    }
+
+    @Role("public")
+    @Get(value = "/export/editeurs.json", format = "json")
+    public static void editeurs() {
+        Query<Editeur> query = Editeur.all(Editeur.class);
+        List<Editeur> editeurs = query.order("-nom").fetch();
+        renderJSON(editeurs,new EditeurSerializer());
     }
 
     @Role("admin")
