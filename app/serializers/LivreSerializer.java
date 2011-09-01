@@ -1,6 +1,7 @@
 package serializers;
 
 
+import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.gson.*;
 import models.EtatLivre;
 import models.Livre;
@@ -37,11 +38,21 @@ public class LivreSerializer implements JsonSerializer<Livre>, JsonDeserializer<
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         Livre livre = Livre.findByISBN(jsonObject.get("isbn").getAsString());
         if (livre == null) {
-            livre = new Livre(jsonObject.get("titre").getAsString(), jsonObject.get("editeur").getAsString(), jsonObject.get("image").getAsString(), jsonObject.get("isbn").getAsString());
+
+            String editeur = getFacultatifString(jsonObject,"editeur");
+            livre = new Livre(jsonObject.get("titre").getAsString(), editeur, jsonObject.get("image").getAsString(), jsonObject.get("isbn").getAsString());
         }
 
         livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
          livre.save();
         return livre;
+    }
+
+    private String getFacultatifString(JsonObject item, String name) {
+        try {
+            return item.get(name).getAsString();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

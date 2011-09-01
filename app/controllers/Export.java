@@ -20,7 +20,7 @@ import java.util.List;
 public class Export extends Controller{
 
 
-    @Role("admin")
+    @Role("public")
     @Get(value = "/export/books.json", format = "json")
     public static void books() {
         Query<Livre> query = Livre.all(Livre.class);
