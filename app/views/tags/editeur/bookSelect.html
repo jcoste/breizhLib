@@ -1,0 +1,37 @@
+<script type="text/javascript">
+
+    function nav() {
+        var w = document.myform.editeurList.selectedIndex;
+        var url_add = document.myform.editeurList.options[w].value;
+        window.location.href = url_add;
+    }
+
+</script>
+
+<p>
+
+<FORM NAME="myform">
+    <select name="editeurList" onChange="nav()">
+        #{if _editeur == null}
+        <option selected value="@{Livres.index(0,_tri)}">
+            #{/if}
+            #{else}
+        <option value="@{Livres.index(0,_tri)}">
+            #{/else}
+            All
+        </option>
+
+
+        #{list items:_editeurs, as:'editeurFilter'}
+        #{if _editeur != null && _editeur.equals(editeurFilter)}
+        <option selected value="@{Livres.editeur(editeurFilter,0,_tri)}">
+
+            #{/if}
+            #{else}
+        <option value="@{Livres.editeur(editeurFilter,0,_tri)}">
+            #{/else}
+            ${editeurFilter}
+        </option>
+
+        #{/list}
+    </select></FORM></p>
