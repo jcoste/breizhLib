@@ -12,6 +12,7 @@ import serializers.LivreSerializer;
 import serializers.ReservationSerializer;
 import siena.Query;
 
+import java.util.Date;
 import java.util.List;
 
 @With(Secure.class)
@@ -46,6 +47,7 @@ public class Export extends Controller{
 
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
+            commentaire.user.get();
         }
         renderJSON(commentaires,new LivreSerializer(),new CommentaireSerializer());
     }
@@ -60,11 +62,13 @@ public class Export extends Controller{
 
     @Role("api")
     @Get(value = "/export/reservations.json", format = "json")
-    public static void allJson() {
-        List<Reservation> reservations = Reservation.all(Reservation.class).fetch();
+    public static void reservations() {
+        Date d = Reservation.getDummyDate();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
         for (Reservation resa : reservations) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
+                resa.user.get();
             }
         }
         renderJSON(reservations,new LivreSerializer(),new ReservationSerializer());

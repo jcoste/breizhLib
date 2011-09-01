@@ -47,7 +47,7 @@ public class Import extends Controller {
             Type type = new TypeToken<Livre>() {
             }.getType();
             Gson gson = new GsonBuilder().registerTypeAdapter(type, new LivreSerializer()).create();
-            URL url = new URL(SERVER_URL + "export/books.json");
+            URL url = new URL(SERVER_URL + "export/books.json?apicode="+API_CODE);
             JsonReader reader = new JsonReader(new InputStreamReader(url.openStream()));
             reader.beginArray();
             List<Livre> livres = new ArrayList<Livre>();
@@ -74,7 +74,7 @@ public class Import extends Controller {
             Type type = new TypeToken<Editeur>() {
             }.getType();
             Gson gson = new GsonBuilder().registerTypeAdapter(type, new EditeurSerializer()).create();
-            URL url = new URL(SERVER_URL + "export/editeurs.json");
+            URL url = new URL(SERVER_URL + "export/editeurs.json?apicode="+API_CODE);
             JsonReader reader = new JsonReader(new InputStreamReader(url.openStream()));
             reader.beginArray();
             List<Editeur> editeurs = new ArrayList<Editeur>();
@@ -98,17 +98,13 @@ public class Import extends Controller {
     @Get(value = "/import/commentaires.json", format = "json")
     public static void all() {
         try {
-            Type type = new TypeToken<Commentaire>() {
-            }.getType();
-            Gson gson = new GsonBuilder().registerTypeAdapter(type, new CommentaireSerializer())
-                    .registerTypeAdapter(new TypeToken<Livre>() {
-                    }.getType(), new LivreSerializer()).create();
+            Gson gson = new GsonBuilder().registerTypeAdapter(Commentaire.class, new CommentaireSerializer()).create();
             URL url = new URL(SERVER_URL + "export/commentaires.json?apicode="+API_CODE);
             JsonReader reader = new JsonReader(new InputStreamReader(url.openStream()));
             reader.beginArray();
             List<Commentaire> commentaires = new ArrayList<Commentaire>();
             while (reader.hasNext()) {
-                commentaires.add(gson.<Commentaire>fromJson(reader, type));
+                commentaires.add(gson.<Commentaire>fromJson(reader, Commentaire.class));
             }
             reader.endArray();
             renderText(commentaires.size());
@@ -129,12 +125,8 @@ public class Import extends Controller {
     @Get(value = "/import/reservations.json", format = "json")
     public static void reservations() {
         try {
-            Type type = new TypeToken<Reservation>() {
-            }.getType();
             Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(type, new ReservationSerializer())
-                    .registerTypeAdapter(new TypeToken<Livre>() {
-                    }.getType(), new LivreSerializer()).create();
+                    .registerTypeAdapter(Reservation.class, new ReservationSerializer()).create();
             URL url = new URL(SERVER_URL + "export/reservations.json?apicode="+API_CODE);
             URLConnection urlConn = url.openConnection();
             urlConn.setRequestProperty("Cookie", "");
@@ -143,7 +135,7 @@ public class Import extends Controller {
             reader.beginArray();
             List<Reservation> reservations = new ArrayList<Reservation>();
             while (reader.hasNext()) {
-                reservations.add(gson.<Reservation>fromJson(reader, type));
+                reservations.add(gson.<Reservation>fromJson(reader, Reservation.class));
             }
             reader.endArray();
             renderText(reservations.size());

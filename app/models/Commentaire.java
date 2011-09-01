@@ -15,7 +15,7 @@ public class Commentaire extends Model {
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
 
-    public transient String uid;
+    public String uid;
 
     @Required
     public String nom;
@@ -50,7 +50,10 @@ public class Commentaire extends Model {
     }
 
     public String getUid(){
-        return "C"+id;
+        if(uid == null){
+            uid = "C"+id;
+        }
+        return uid;
     }
 
     public static List<Commentaire> findAll() {
@@ -58,7 +61,7 @@ public class Commentaire extends Model {
     }
 
     public static Commentaire findByUID(String uid) {
-        return Commentaire.all(Commentaire.class).filter("id",uid.substring(1)).get();
+        return Commentaire.all(Commentaire.class).filter("uid",uid.substring(1,uid.length())).get();
     }
 
 

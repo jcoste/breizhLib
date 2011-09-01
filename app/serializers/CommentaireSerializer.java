@@ -19,6 +19,7 @@ public class CommentaireSerializer implements JsonSerializer<Commentaire>,JsonDe
         obj.addProperty("titre", commentaire.nom+" le "+new SimpleDateFormat("dd MMMM yyyy").format(commentaire.dateAjout));
         obj.addProperty("note", commentaire.note);
         obj.addProperty("uid", commentaire.getUid());
+        obj.addProperty("user", commentaire.user.email);
         obj.add("livre",jsonSerializationContext.serialize(commentaire.livre));
         return obj;
     }
@@ -29,7 +30,10 @@ public class CommentaireSerializer implements JsonSerializer<Commentaire>,JsonDe
         if(commentaire == null){
             commentaire = new Commentaire(null,null,jsonObject.get("nom").getAsString(),jsonObject.get("avis").getAsString(),jsonObject.get("note").getAsInt());
             commentaire.uid = jsonObject.get("uid").getAsString();
-            commentaire.livre = jsonDeserializationContext.deserialize(jsonObject.get("livre"), Livre.class);
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(Livre.class, new LivreSerializer());
+            Gson gson = builder.create();
+            commentaire.livre = gson.fromJson(jsonObject.get("livre"), Livre.class);
             commentaire.user = User.find(jsonObject.get("user").getAsString());
             commentaire.save();
         }
