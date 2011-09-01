@@ -21,6 +21,7 @@ import serializers.ReservationSerializer;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +31,18 @@ public class Import extends Controller {
     //TODO a ajouter dans les propriétés
     public static final String SERVER_URL = "http://breizh-lib.appspot.com/";
 
+    public static final String API_CODE = "1234";
+
+    @Role("admin")
+    @Get(value = "/import")
+    public static void index() {
+
+        render();
+    }
+
     @Role("admin")
     @Get(value = "/import/books.json", format = "json")
-    public static void books() {
+    public static void books(boolean display) {
         try {
             Type type = new TypeToken<Livre>() {
             }.getType();
@@ -45,7 +55,12 @@ public class Import extends Controller {
                 livres.add(gson.<Livre>fromJson(reader, type));
             }
             reader.endArray();
-            renderText(livres.size());
+            if (display) {
+                int ouvragesNb = livres.size();
+                render("Import/index.html", ouvragesNb);
+            } else {
+                renderText(livres.size());
+            }
         } catch (Exception ex) {
             renderText("KO" + ex);
         }
@@ -54,7 +69,7 @@ public class Import extends Controller {
 
     @Role("admin")
     @Get(value = "/import/editeurs.json", format = "json")
-    public static void editeurs() {
+    public static void editeurs(boolean display) {
         try {
             Type type = new TypeToken<Editeur>() {
             }.getType();
@@ -67,7 +82,12 @@ public class Import extends Controller {
                 editeurs.add(gson.<Editeur>fromJson(reader, type));
             }
             reader.endArray();
-            renderText(editeurs.size());
+            if (display) {
+                int editeursNb = editeurs.size();
+                render("Import/index.html", editeursNb);
+            } else {
+                renderText(editeurs.size());
+            }
         } catch (Exception ex) {
             renderText("KO" + ex);
         }
@@ -78,10 +98,12 @@ public class Import extends Controller {
     @Get(value = "/import/commentaires.json", format = "json")
     public static void all() {
         try {
-            Type type = new TypeToken<Commentaire>() {}.getType();
+            Type type = new TypeToken<Commentaire>() {
+            }.getType();
             Gson gson = new GsonBuilder().registerTypeAdapter(type, new CommentaireSerializer())
-                            .registerTypeAdapter(new TypeToken<Livre>() {}.getType(), new LivreSerializer()).create();
-            URL url = new URL(SERVER_URL + "export/commentaires.json");
+                    .registerTypeAdapter(new TypeToken<Livre>() {
+                    }.getType(), new LivreSerializer()).create();
+            URL url = new URL(SERVER_URL + "export/commentaires.json?apicode="+API_CODE);
             JsonReader reader = new JsonReader(new InputStreamReader(url.openStream()));
             reader.beginArray();
             List<Commentaire> commentaires = new ArrayList<Commentaire>();
@@ -107,11 +129,16 @@ public class Import extends Controller {
     @Get(value = "/import/reservations.json", format = "json")
     public static void reservations() {
         try {
-            Type type = new TypeToken<Reservation>() {}.getType();
+            Type type = new TypeToken<Reservation>() {
+            }.getType();
             Gson gson = new GsonBuilder()
-                            .registerTypeAdapter(type, new ReservationSerializer())
-                            .registerTypeAdapter(new TypeToken<Livre>() {}.getType(), new LivreSerializer()).create();
-            URL url = new URL(SERVER_URL + "export/commentaires.json");
+                    .registerTypeAdapter(type, new ReservationSerializer())
+                    .registerTypeAdapter(new TypeToken<Livre>() {
+                    }.getType(), new LivreSerializer()).create();
+            URL url = new URL(SERVER_URL + "export/reservations.json?apicode="+API_CODE);
+            URLConnection urlConn = url.openConnection();
+            urlConn.setRequestProperty("Cookie", "");
+            urlConn.connect();
             JsonReader reader = new JsonReader(new InputStreamReader(url.openStream()));
             reader.beginArray();
             List<Reservation> reservations = new ArrayList<Reservation>();

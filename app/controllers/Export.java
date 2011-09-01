@@ -18,7 +18,7 @@ import java.util.List;
 public class Export extends Controller{
 
 
-    @Role("public")
+    @Role("api")
     @Get(value = "/export/books.json", format = "json")
     public static void books() {
         Query<Livre> query = Livre.all(Livre.class);
@@ -31,7 +31,7 @@ public class Export extends Controller{
         renderJSON(livres,new LivreSerializer());
     }
 
-    @Role("public")
+    @Role("api")
     @Get(value = "/export/editeurs.json", format = "json")
     public static void editeurs() {
         Query<Editeur> query = Editeur.all(Editeur.class);
@@ -39,7 +39,7 @@ public class Export extends Controller{
         renderJSON(editeurs,new EditeurSerializer());
     }
 
-    @Role("admin")
+    @Role("api")
     @Get(value = "/export/commentaires.json", format = "json")
     public static void all() {
         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
@@ -50,7 +50,7 @@ public class Export extends Controller{
         renderJSON(commentaires,new LivreSerializer(),new CommentaireSerializer());
     }
 
-    @Role("admin")
+    @Role("api")
     @Get("/export/users.json")
     public static void users() {
         List<User> users = User.findAll();
@@ -58,7 +58,7 @@ public class Export extends Controller{
     }
 
 
-    @Role("admin")
+    @Role("api")
     @Get(value = "/export/reservations.json", format = "json")
     public static void allJson() {
         List<Reservation> reservations = Reservation.all(Reservation.class).fetch();
