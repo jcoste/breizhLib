@@ -122,6 +122,8 @@ public class Secure extends Controller {
             return isecure.getUser() == null ? false : isecure.getUser().isAdmin();
         } else if ("member".equals(profile)) {
             return isecure.getUser() != null;
+        } else if ("api".equals(profile)) {
+            return Application.API_CODE.equals(params.get("apicode"));
         }
         return false;
     }

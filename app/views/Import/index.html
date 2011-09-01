@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib Import' /}
+
+<article>
+    <h1>Import Public</h1>
+<p><a href="@{Import.books(true)}">Import Ouvrages</a>
+    #{if ouvragesNb}
+    -> ${ouvragesNb} Ouvrages importés
+    #{/if}</p>
+<p><a href="@{Import.editeurs(true)}">Import Editeurs</a>
+    #{if editeursNb}
+    -> ${editeursNb} Editeurs importés
+    #{/if}</p>
+   <h1>Import Admin</h1>
+</article>
+
+
