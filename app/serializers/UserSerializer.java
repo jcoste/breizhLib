@@ -23,8 +23,12 @@ public class UserSerializer implements JsonSerializer<User>,JsonDeserializer<Use
         obj.addProperty("username", user.username);
         obj.addProperty("publicUsername", user.publicUsername);
         obj.addProperty("password", user.password);
-        obj.addProperty("dateConnexion", user.dateConnexion.getTime());
-        obj.addProperty("dateCreation", user.dateCreation.getTime());
+        if( user.dateConnexion != null){
+            obj.addProperty("dateConnexion", user.dateConnexion.getTime());
+        }
+        if( user.dateCreation != null){
+            obj.addProperty("dateCreation", user.dateCreation.getTime());
+        }
         return obj;
     }
 }

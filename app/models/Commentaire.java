@@ -61,7 +61,7 @@ public class Commentaire extends Model {
     }
 
     public static Commentaire findByUID(String uid) {
-        return Commentaire.all(Commentaire.class).filter("uid",uid.substring(1,uid.length())).get();
+        return Commentaire.all(Commentaire.class).filter("uid",uid).get();
     }
 
 

@@ -2,6 +2,13 @@
 #{set title:'BreizhLib Import' /}
 
 <article>
+
+    <p>Mise a jour de l'apicode pour le serveur par défaut</p>
+    #{form @Import.code(),enctype:'multipart/form-data'}
+     <input type="text" name="apicode" id="apicode" value="${apicode}" size="50"/>
+     <input type="submit" value="update"/>
+    #{/form}
+
     <h1>Import Public</h1>
 <p><a href="@{Import.books(true)}">Import Ouvrages</a>
     #{if ouvragesNb}
@@ -12,6 +19,14 @@
     -> ${editeursNb} Editeurs importés
     #{/if}</p>
    <h1>Import Admin</h1>
+   <p><a href="@{Import.commentaires(true)}">Import Commentaires</a>
+    #{if commentairesNb}
+    -> ${commentairesNb} Commentaires importés
+    #{/if}</p>
+    <p><a href="@{Import.users(true)}">Import Utilisateurs</a>
+    #{if usersNb}
+    -> ${usersNb} Utilisateurs importés
+    #{/if}</p>
 </article>
 
 

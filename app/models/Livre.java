@@ -4,6 +4,7 @@ package models;
 import controllers.security.Secure;
 import models.tag.LivreTag;
 import models.tag.Tag;
+import models.tag.Taggable;
 import play.data.binding.As;
 import play.data.validation.Required;
 import siena.*;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @siena.Table("Livre")
-public class Livre extends Model {
+public class Livre extends Model implements Taggable {
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
