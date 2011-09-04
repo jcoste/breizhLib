@@ -1,19 +1,19 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib Nouveautés' /}
- <script type="text/javascript" >
+<script type="text/javascript">
 
-    function show(id){
+    function show(id) {
         var divContainer = document.getElementById('popup');
-           for(i=0;i<divContainer.children.length;i++){
-               divContainer.children[i].style.visibility='hidden';
-               divContainer.children[i].style.display = "none";
-           }
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
+        for (i = 0; i < divContainer.children.length; i++) {
+            divContainer.children[i].style.visibility = 'hidden';
+            divContainer.children[i].style.display = "none";
+        }
+        var div = document.getElementById(id);
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
 
-       }
+        }
     }
 
 </script>
@@ -25,17 +25,17 @@
     <p>&{'views.livres.last.title'}</p>
 
     #{if livres}
-        #{if livres.size()}
-            #{list items:livres, as:'livre'}
-                #{if livre}
-                    #{livre livre:livre, page:0,redirect:'last', as:'summary' /}
-                #{/if}
-            #{/list}
-        #{/if}
+    #{if livres.size()}
+    #{list items:livres, as:'livre'}
+    #{if livre}
+    #{livre livre:livre, page:0,redirect:'last', as:'summary' /}
+    #{/if}
+    #{/list}
+    #{/if}
     #{/if}
 
     #{else}
-        <p>&{'views.livres.noBookRecorded'}</p>
+    <p>&{'views.livres.noBookRecorded'}</p>
     #{/else}
 
 </article>

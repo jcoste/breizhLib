@@ -52,7 +52,7 @@ public class BasicSecure extends Controller implements ISecure {
 
     @Get("/user/new")
     public static void newuser(String email, String nom, String prenom) {
-        String  captcha =ReCaptchaFactory.newReCaptcha("6LcyNccSAAAAAFgrBNO5Nsu1yF3ykiY5uj0v11F6", "6LcyNccSAAAAALycebaVRr6Hi5ZiELwW9OEskbkB", false).createRecaptchaHtml(null, null);
+        String captcha = ReCaptchaFactory.newReCaptcha("6LcyNccSAAAAAFgrBNO5Nsu1yF3ykiY5uj0v11F6", "6LcyNccSAAAAALycebaVRr6Hi5ZiELwW9OEskbkB", false).createRecaptchaHtml(null, null);
         render(email, nom, prenom, captcha);
     }
 
@@ -67,16 +67,16 @@ public class BasicSecure extends Controller implements ISecure {
         String challenge = params.get("recaptcha_challenge_field");
         String uresponse = params.get("recaptcha_response_field");
         ReCaptchaResponse reCaptchaResponse =
-        reCaptcha.checkAnswer("127.0.0.1", challenge, uresponse);
+                reCaptcha.checkAnswer("127.0.0.1", challenge, uresponse);
 
         validation.isTrue(reCaptchaResponse.isValid()).message(Messages.get("error", Messages.get("invalid_captcha")));
 
         if (validation.hasErrors()) {
-            String  captcha =ReCaptchaFactory.newReCaptcha("6LcyNccSAAAAAFgrBNO5Nsu1yF3ykiY5uj0v11F6", "6LcyNccSAAAAALycebaVRr6Hi5ZiELwW9OEskbkB", false).createRecaptchaHtml(null, null);
+            String captcha = ReCaptchaFactory.newReCaptcha("6LcyNccSAAAAAFgrBNO5Nsu1yF3ykiY5uj0v11F6", "6LcyNccSAAAAALycebaVRr6Hi5ZiELwW9OEskbkB", false).createRecaptchaHtml(null, null);
 
             render("security/BasicSecure/newuser.html", email, nom, prenom, captcha);
         }
-        user = new User(email,null);
+        user = new User(email, null);
         user.nom = nom;
         user.prenom = prenom;
         user.password = Crypto.passwordHash(password);

@@ -12,7 +12,7 @@ import models.User;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class ProfilSerializer implements JsonSerializer<User> {
+public class ProfilSerializer extends AbstractSerializer implements JsonSerializer<User> {
 
 
     public JsonElement serialize(User user, Type type, JsonSerializationContext jsonSerializationContext) {

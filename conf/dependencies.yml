@@ -45,4 +45,9 @@ repositories:
        contains:
          - provided -> *
 
+    - MyModules:
+       type:       local
+       artifact:   "${application.path}/modules/[module]-[revision]"
+       contains:
+         - org.breizhlib -> *
 

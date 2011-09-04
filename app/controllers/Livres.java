@@ -61,8 +61,6 @@ public class Livres extends Controller {
     }
 
 
-
-
     @Role("public")
     @Get("/books/editeur/{editeur}/{tri}/{page}")
     public static void editeur(String editeur, int page, String tri) {
@@ -73,7 +71,7 @@ public class Livres extends Controller {
             triSearch = "-popularite";
         }
 
-        Query<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur).order(triSearch);
+        Query<Livre> livres = Livre.all(Livre.class).filter("editeur", editeur.replace("+", " ")).order(triSearch);
         Paginator<Livre> paginator = new Paginator<Livre>(NB_PAR_PAGE, page, "Livres.editeur", livres);
 
         renderArgs.put("editeurs", Editeurs.initListEditeurs());

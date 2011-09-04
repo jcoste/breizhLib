@@ -5,15 +5,15 @@
     #{tri editeur:editeur,tri:tri,page:page,as:'commentaire' /}
     #{editeurs editeur:editeur,editeurs:editeurs,tri:tri, as:'editeurCommentaires' /}
     #{if paginator.getElements()}
-        <h1>${paginator.max} Commentaire${paginator.getElements().pluralize()} </h1>
-        #{if paginator.getElements().size() > 0}
-            #{list items:paginator.getElements(), as:'comment'}
-                #{commentaire comment:comment, as:'defaut' /}
-            #{/list}
-        #{/if}
-        #{paginate.controls paginator:paginator /}
+    <h1>${paginator.max} Commentaire${paginator.getElements().pluralize()} </h1>
+    #{if paginator.getElements().size() > 0}
+    #{list items:paginator.getElements(), as:'comment'}
+    #{commentaire comment:comment, as:'defaut' /}
+    #{/list}
+    #{/if}
+    #{paginate.controls paginator:paginator /}
     #{/if}
     #{else}
-        <h1>&{'views.commentaires.aucunCommentaire'}</h1>
+    <h1>&{'views.commentaires.aucunCommentaire'}</h1>
     #{/else}
 </article>

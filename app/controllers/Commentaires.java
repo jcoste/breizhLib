@@ -1,9 +1,9 @@
 package controllers;
 
-import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.Commentaire;
 import models.Livre;
+import models.socialoauth.Role;
 import play.modules.router.Get;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -139,6 +139,17 @@ public class Commentaires extends Controller {
     @Role("public")
     @Get(value = "/commentaires.xml", format = "xml")
     public static void all() {
+        List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
+
+        for (Commentaire commentaire : commentaires) {
+            commentaire.livre.get();
+        }
+        render(commentaires);
+    }
+
+    @Role("public")
+    @Get(value = "/commentaires.json", format = "json")
+    public static void allJson() {
         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
 
         for (Commentaire commentaire : commentaires) {

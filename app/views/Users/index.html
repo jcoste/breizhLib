@@ -6,7 +6,7 @@
     #{if users.size() > 0}
     #{list items:users, as:'user'}
     <section class="miniature">
-        #{social.gravatar user:user  /}
+        #{social.gravatar user:user /}
         <p>${user.nom} ${user.prenom}</p>
 
         <p>${user.commentaires().size()} commentaire${user.commentaires().pluralize()}</p>

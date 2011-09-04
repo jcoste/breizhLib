@@ -1,9 +1,9 @@
 package controllers;
 
-import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.Editeur;
 import models.Picture;
+import models.socialoauth.Role;
 import play.data.validation.Required;
 import play.i18n.Messages;
 import play.modules.router.Get;

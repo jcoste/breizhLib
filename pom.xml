@@ -203,7 +203,7 @@
             </plugin>
 
 
-            <plugin>
+            <!--plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <version>1.1</version>
@@ -222,7 +222,7 @@
                     </execution>
 
                 </executions>
-            </plugin>
+            </plugin -->
             <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -248,7 +248,7 @@
                <version>0.8.4</version>
                <configuration>
                    <unpackVersion>${gae.version}</unpackVersion>
-		   <serverId>appengine.google.com</serverId>
+		           <serverId>appengine.google.com</serverId>
                </configuration>
            </plugin>
         </plugins>

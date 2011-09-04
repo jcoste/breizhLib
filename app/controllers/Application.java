@@ -20,17 +20,19 @@ import java.util.List;
 })
 public class Application extends Controller {
 
+    public static final String API_CODE = "1234";
+
     @Get("/")
     public static void index() {
         if (Secure.getUser() != null) {
-            Livres.index(0,"date");
+            Livres.index(0, "date");
         }
         List<Livre> livres = Livre.all(Livre.class).fetch();
         render(livres);
     }
 
     @Get("/contact")
-    public static void contact(){
+    public static void contact() {
         index();
     }
 
@@ -42,8 +44,12 @@ public class Application extends Controller {
         index();
     }
 
+    public static void empty() {
+        render();
+    }
+
     public static void informations() {
-        if (((User)Secure.getUser()).email == null) {
+        if (((User) Secure.getUser()).email == null) {
             Users.edit();
         } else {
             Application.index();

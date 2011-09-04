@@ -17,11 +17,14 @@ out/
 *.iws
 .idea/
 /target
+/war/WEB-INF/lib
 /war/WEB-INF/classes
 /war/WEB-INF/lib
 *~
 cloudbeesCmd
 out/
+
+/conf/cloudbees.conf
 
 /lib/router-*
 

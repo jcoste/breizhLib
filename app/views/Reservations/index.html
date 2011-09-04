@@ -15,39 +15,39 @@
         <p>&{'views.reservations.date'}
             ${livre.reservationEncours.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
         #{if livre.reservationEncours.isDateEmpruntNull()}
-            #{if livre.reservationEncours.user.equals(user)}
-            <footer>
+        #{if livre.reservationEncours.user.equals(user)}
+        <footer>
                     <span class="indisponible">
                         <a href="@{Reservations.annuler(livre.reservationEncours.id)}">&{'views.reservations.index.annuler'}</a>
                     </span>
-            </footer>
-            #{/if}
+        </footer>
+        #{/if}
         #{/if}
         #{else}
-            <p>&{'views.reservations.dateEmprunt'}
+        <p>&{'views.reservations.dateEmprunt'}
             ${livre.reservationEncours.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
         #{/else}
-        </section>
+    </section>
     #{/if}
     #{else}
-        <p>&{'views.reservations.aucuneReservation'}</p>
+    <p>&{'views.reservations.aucuneReservation'}</p>
     #{/else}
     <h1>&{'views.reservations.index.title3'}</h1>
 
     #{if emprunts.size() > 0}
-        #{list items:emprunts, as:'emprunt'}
-            <section class="miniature">
-                <h1>${emprunt.nom} ${emprunt.prenom}</h1>
+    #{list items:emprunts, as:'emprunt'}
+    <section class="miniature">
+        <h1>${emprunt.nom} ${emprunt.prenom}</h1>
 
-                <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+        <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
 
-                <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+        <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
 
-                <p>&{'views.reservations.dateRetour'} ${emprunt.dateRetour.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-            </section>
-        #{/list}
+        <p>&{'views.reservations.dateRetour'} ${emprunt.dateRetour.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+    </section>
+    #{/list}
     #{/if}
     #{else}
-        <p>&{'views.reservations.index.aucunEmprunt'}</p>
+    <p>&{'views.reservations.index.aucunEmprunt'}</p>
     #{/else}
 </article>

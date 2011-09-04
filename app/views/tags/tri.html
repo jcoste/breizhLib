@@ -1,6 +1,6 @@
 #{if _as != 'commentaire'}
 <p>
-     #{if _tri.equals('date')}
+    #{if _tri.equals('date')}
          <span class="actif">
          #{/if}
          #{else}
@@ -11,8 +11,8 @@
          #{/if}
          #{else}
            <a href="@{Livres.index(_page,'date')}">par date</a></span> -
-         #{/else}
-         #{if _tri.equals('titre')}
+    #{/else}
+    #{if _tri.equals('titre')}
              <span class="actif">
          #{/if}
          #{else}
@@ -24,8 +24,8 @@
          #{/if}
          #{else}
            <a href="@{Livres.index(_page,'titre')}">par titre</a></span> -
-         #{/else}
-         #{if _tri.equals('popularite')}
+    #{/else}
+    #{if _tri.equals('popularite')}
              <span class="actif">
          #{/if}
          #{else}
@@ -36,12 +36,12 @@
          #{/if}
          #{else}
            <a href="@{Livres.index(_page,'popularite')}">par popularite</a></span>
-         #{/else}
+    #{/else}
 </p>
 #{/if}
 #{else}
-         #{if _tri.equals('date')}
-            <span class="actif">
+#{if _tri.equals('date')}
+<span class="actif">
          #{/if}
          #{else}
            <span class="inactif">
@@ -51,9 +51,9 @@
          #{/if}
          #{else}
            <a href="@{Commentaires.index(_page,'date')}">par date</a></span> -
-         #{/else}
-         #{if _tri.equals('titre')}
-             <span class="actif">
+#{/else}
+#{if _tri.equals('titre')}
+<span class="actif">
          #{/if}
          #{else}
            <span class="inactif">
@@ -64,11 +64,11 @@
          #{/if}
          #{else}
            <a href="@{Commentaires.index(_page,'titre')}">par titre</a></span>
-         #{/else}
-         -
+#{/else}
+-
 
-        #{if _tri.equals('popularite')}
-             <span class="actif">
+#{if _tri.equals('popularite')}
+<span class="actif">
          #{/if}
          #{else}
            <span class="inactif">
@@ -78,5 +78,5 @@
          #{/if}
          #{else}
            <a href="@{Commentaires.index(_page,'popularite')}">par popularite</a></span>
-         #{/else}
+#{/else}
 #{/else}

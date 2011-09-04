@@ -42,7 +42,7 @@ public class Users extends Controller {
     @Get("/user/profil/{id}")
     public static void profil(Long id) {
         User user = User.findById(id);
-        if (user != null && (user.isPublic || Secure.getUser().equals(user) )) {
+        if (user != null && (user.isPublic || Secure.getUser().equals(user))) {
             List<Commentaire> commentaires = user.commentaires();
             List<Reservation> ouvrages = user.ouvrages();
             List<Reservation> ouvragesEncours = user.ouvragesEncours();
@@ -99,10 +99,10 @@ public class Users extends Controller {
             user.update();
 
             boolean hasnext = true;
-            int i = user.getExtraEmail().size() +1;
+            int i = user.getExtraEmail().size() + 1;
             do {
                 String valeurEmail = request.params.get("email" + i);
-           
+
                 if (valeurEmail == null) {
                     hasnext = false;
                 } else if (!valeurEmail.equals(email)) {

@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta http-equiv="Content-Type" Content="text/html; charset=UTF-8"/>
-        <meta charset="utf-8"/>
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}"/>
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/template.css'}"/>
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}"/>
-        <link rel="alternate" type="application/rss+xml" title="All Books - RSS 2.0"
-              href="@@{Application.index()}books.xml"/>
-        <link rel="alternate" type="application/rss+xml" title="All Comments - RSS 2.0"
-              href="@@{Commentaires.index()}.xml"/>
-        <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
-        #{get 'moreScripts' /}
-        <!--[if lt IE 9]>
-        <script src="@{'/public/javascripts/html5-ie.js'}" type="text/javascript" charset="utf-8"></script>
-        <link rel="stylesheet" media="all" href="@{'/public/stylesheets/template-ie.css'}"/>
-        <![endif]-->
-    </head>
-    <body>
-        #{header /}
-        #{menu user:session.user /}
-        <div id="main">
-        #{doLayout /}
-        </div>
-        #{footer /}
+<head>
+    <title>#{get 'title' /}</title>
+    <meta http-equiv="Content-Type" Content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}"/>
+    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/template.css'}"/>
+    #{get 'moreStyles' /}
+    #{if play.mode.name() == 'PROD'}
+    #{google.analytics UAaccount:'UA-25249240-2' /}
+    #{/ if}
+    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}"/>
+    <link rel="alternate" type="application/rss+xml" title="All Books - RSS 2.0"
+          href="@@{Application.index()}books.xml"/>
+    <link rel="alternate" type="application/rss+xml" title="All Comments - RSS 2.0"
+          href="@@{Commentaires.index()}.xml"/>
+    <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+    #{get 'moreScripts' /}
+    <!--[if lt IE 9]>
+    <script src="@{'/public/javascripts/html5-ie.js'}" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" media="all" href="@{'/public/stylesheets/template-ie.css'}"/>
+    <![endif]-->
+</head>
+<body>
+#{header /}
+#{menu user:session.user /}
+<div id="main">
+    #{doLayout /}
+</div>
+#{footer /}
 
-    </body>
+</body>
 </html>

@@ -64,6 +64,21 @@
     vertical-align: sub;
 }
 
+.method {
+    background: #3366ff;
+    color: #fff;
+    font-size: 90%;
+    padding: 3px 5px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #006600;
+}
+
+.method a {
+    color: white;
+    text-decoration: none;
+}
+
 .actif {
     background: #ff9933;
     color: #fff;
@@ -142,9 +157,7 @@ a.stack {
  *
  ******************************************/
 
-#footer-area {
-font-size: 90%;
-padding: 18px 0;
+#footer-area {;
 overflow: hidden;
 }
 
@@ -153,6 +166,12 @@ float: left;
 margin-right: 20px;
 margin-left: 20px;
 width: 190px;
+}
+
+.footer-segment-right {
+float: right;
+margin-right: 20px;
+margin-left: 10px;
 }
 
 /******************************************
@@ -195,3 +214,62 @@ aside#leftbar {
     height: 400px;
     float: left;
 }
+
+
+
+#onglets
+{
+    font : bold 11px Batang, arial, serif;
+    list-style-type : none;
+    padding-bottom : 24px; /* à modifier suivant la taille de la police ET de la hauteur de l'onglet dans #onglets li */
+    border-bottom : 1px solid #9EA0A1;
+    margin-left : 0;
+}
+
+#onglets li
+{
+    float : left;
+    height : 21px; /* à modifier suivant la taille de la police pour centrer le texte dans l'onglet */
+    background-color: #ffffff;
+    margin : 2px 2px 0 2px !important;  /* Pour les navigateurs autre que IE */
+    margin : 1px 2px 0 2px;  /* Pour IE  */
+    border : 1px solid #9EA0A1;
+}
+
+#onglets li.active
+{
+    border-bottom: 1px solid #fff;
+    background-color: #fff;
+}
+
+#onglets a
+{
+    display : block;
+    color : #000000;
+    text-decoration : none;
+    padding : 4px;
+}
+
+#menu
+{
+        padding-bottom : 25px;
+}
+
+   /***
+        TWEETS
+
+   ****/
+
+
+/* TWEETS */
+#tweets { position: relative; width: 376px; height:250px; overflow:auto; }
+#tweets p { font-size: 14px; margin-bottom: 10px; padding: 10px; color: #7a8a99; background: url("../images/transpBlue.png"); }
+#tweets p a { padding-left:2px; }
+#tweets p a img { border:none; }
+
+.big { font-size:20px; }
+.big span { color: #bfe1f1; font-size:24px; }
+
+/* OVERLAY */
+#overlay {  width: 408px; height:386px; background: url("../images/transpBlue_overlay.png"); }
+#overlay img { position:relative; left:200px; top:189px; }

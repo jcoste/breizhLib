@@ -1,21 +1,23 @@
 #{extends 'mainFull.html' /}
 #{set title:'BreizhLib Android' /}
 
-<script type="text/javascript" >
-    function  display(id){
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
-       }
-       else
-       {
-          hide(id);
-       }
+<script type="text/javascript">
+    function display(id, tab) {
+        var div = document.getElementById(id);
+        var li = document.getElementById('li' + id);
+        li.className = "active";
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
+            for (var i = 0; i < tab.length; ++i)
+                hide(tab[i]);
+        }
     }
 
-    function  hide(id){
+    function hide(id) {
         var div = document.getElementById(id);
+        var li = document.getElementById('li' + id);
+        li.className = "";
         div.style.visibility = 'hidden';
         div.style.display = "none";
     }
@@ -25,58 +27,71 @@
 
 <article>
     <h1>Application Android</h1>
+
     <p>Découvrez l'application Android BreizhLib</p>
-    <p>Bientôt disponible sur l'Android Market</p>
-    <p>Sources : <a href="https://github.com/BreizhJUG/breizhLib-android" target="_blank">https://github.com/BreizhJUG/breizhLib-android</a></p>
 
-    <h1><a class="stack" href="javascript:display('fonctionnalites');">Fonctionnalités :</a></h1>
-    <div id="fonctionnalites" style="visibility:hidden; display:none;">
-        <ul>
-            <li>Afficher les ouvrages de la bibliothèque du BreizhJug</li>
-            <li>Afficher les derniers commentaires</li>
-            <li>Afficher les informations de votre compte</li>
-            <li>Recherche d'ouvrage par lecture de code barre</li>
-            <li>Ajout d'ouvrage par lecture de code barre</li>
-        </ul>
-        <p><h2>Prochainement :</h2></p>
-        <ul>
-           <li>Réservation d'ouvrage</li>
-           <li>Ajout de commentaires</li>
-           <li>...</li>
+    <p>Disponible sur l'Android Market <a href="https://market.android.com/details?id=org.breizhjug.breizhlib"
+                                          target="_blank">BreizhLib</a></p>
+
+    <p>Sources : <a href="https://github.com/BreizhJUG/breizhLib-android" target="_blank">https://github.com/BreizhJUG/breizhLib-android</a>
+    </p>
+
+    <div id="menu">
+        <ul id="onglets">
+            <li id="lifonctionnalites" class="active"><a class="stack"
+                                                         href="javascript:display('fonctionnalites',['capture','errors'])">Fonctionnalités</a>
+            </li>
+            <li id="licapture"><a class="stack" href="javascript:display('capture',['fonctionnalites','errors'])">Captures</a>
+            </li>
         </ul>
 
+        <div id="fonctionnalites" style="visibility:visible; display:block;">
+            <ul>
+                <li>Afficher les ouvrages de la bibliothèque du BreizhJug</li>
+                <li>Afficher les derniers commentaires</li>
+                <li>Afficher les informations de votre compte</li>
+                <li>Recherche d'ouvrage par lecture de code barre</li>
+                <li>Ajout d'ouvrage par lecture de code barre</li>
+                <li>Réservation d'ouvrage</li>
+                <li>Ajout de commentaires</li>
+            </ul>
+            <p>
+
+            <h3>Prochainement :</h3></p>
+            <ul>
+                <li>...</li>
+            </ul>
+
+        </div>
+        <div id="capture" style="visibility:hidden; display:none;">
+            <table>
+                <tr>
+                    <td><img src="@{'/public/images/capture/splashscreen.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/submenu.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/commentaires.png'}" alt=""></td>
+                </tr>
+                <tr>
+                    <td><img src="@{'/public/images/capture/grid.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/ouvrage.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/reservation_send.png'}" alt=""></td>
+                </tr>
+                <tr>
+                    <td><img src="@{'/public/images/capture/ouvrages.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/avis.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/configuration.png'}" alt=""></td>
+                </tr>
+                <tr>
+                    <td><img src="@{'/public/images/capture/reservation.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/scan.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/scan_ok.png'}" alt=""></td>
+                </tr>
+                <tr>
+                    <td><img src="@{'/public/images/capture/connexion1.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/connexion2.png'}" alt=""></td>
+                    <td><img src="@{'/public/images/capture/profil.png'}" alt=""></td>
+                </tr>
+            </table>
+
+        </div>
     </div>
-
-    <h1><a class="stack" href="javascript:display('capture');" >Captures :</a></h1>
-    <div id="capture" style="visibility:hidden; display:none;">
-        <table>
-            <tr>
-                <td><img src="@{'/public/images/capture/splashscreen.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/submenu.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/commentaires.png'}" alt=""></td>
-            </tr>
-             <tr>
-                <td><img src="@{'/public/images/capture/grid.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/ouvrage.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/reservation_send.png'}" alt=""></td>
-            </tr>
-            <tr>
-                <td><img src="@{'/public/images/capture/ouvrages.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/avis.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/configuration.png'}" alt=""></td>
-            </tr>
-            <tr>
-                <td><img src="@{'/public/images/capture/reservation.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/scan.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/scan_ok.png'}" alt=""></td>
-            </tr>
-            <tr>
-                <td><img src="@{'/public/images/capture/connexion1.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/connexion2.png'}" alt=""></td>
-                <td><img src="@{'/public/images/capture/profil.png'}" alt=""></td>
-            </tr>
-        </table>
-
-    </div>
-
 </article>

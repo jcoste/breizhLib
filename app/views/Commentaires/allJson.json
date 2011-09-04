@@ -1,0 +1,18 @@
+%{
+last = null;
+}%
+[
+#{list items:commentaires, as:'comment'}
+#{if last != null},#{/if}
+%{
+last=comment;
+}%
+{
+"description":"${comment.commentaire}",
+"livre":"${comment.livre.titre}",
+"nom":"${comment.nom} le ${comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}",
+"image":"@@{Pictures.getPicture(comment.livre.iSBN+'.jpg')}",
+"note":"${comment.note}"
+}
+#{/list}
+]

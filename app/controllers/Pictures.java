@@ -74,7 +74,7 @@ public class Pictures extends Controller {
             if (offset < bytes.length) {
                 throw new IOException("Could not completely read file " + newImage.getName());
             }
-             is.close();
+            is.close();
         } catch (FileNotFoundException e) {
             error("erreur lors de la création de l'image");
         } catch (IOException e) {

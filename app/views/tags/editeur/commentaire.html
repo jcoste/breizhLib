@@ -1,20 +1,37 @@
+<script type="text/javascript">
+
+    function nav() {
+        var w = document.myform.editeurList.selectedIndex;
+        var url_add = document.myform.editeurList.options[w].value;
+        window.location.href = url_add;
+    }
+
+</script>
+
 <p>
-    #{if _editeur == null}
-             <span class="actif">
-         #{/if}
-         #{else}
-           <span class="inactif">
-         #{/else}
-         <a href="@{Commentaires.index(0,_tri)}">All</a></span>
+
+<FORM NAME="myform">
+    <select name="editeurList" onChange="nav()">
+        #{if _editeur == null}
+        <option selected value="@{Commentaires.index(0,_tri)}">
+            #{/if}
+            #{else}
+        <option value="@{Commentaires.index(0,_tri)}">
+            #{/else}
+            All
+        </option>
+
 
         #{list items:_editeurs, as:'editeurFilter'}
-                - #{if _editeur != null && _editeur.equals(editeurFilter)}
-                      <span class="actif">
+        #{if _editeur != null && _editeur.equals(editeurFilter)}
+        <option selected value="@{Commentaires.editeur(editeurFilter,0,_tri)}">
 
-                    #{/if}
-                    #{else}
-                        <span class="inactif">
-                    #{/else}
-                <a href="@{Commentaires.editeur(editeurFilter,0,_tri)}">${editeurFilter}</a></span>
+            #{/if}
+            #{else}
+        <option value="@{Commentaires.editeur(editeurFilter,0,_tri)}">
+            #{/else}
+            ${editeurFilter}
+        </option>
+
         #{/list}
-</p>
+    </select></FORM></p>
