@@ -48,9 +48,6 @@ public class ReservationSerializer extends AbstractSerializer implements JsonSer
             reservation = new Reservation(null, null, jsonObject.get("nom").getAsString(), jsonObject.get("prenom").getAsString(), jsonObject.get("user").getAsString());
             reservation.uid = jsonObject.get("uid").getAsString();
         }
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Livre.class, new LivreSerializer());
-        Gson gson = builder.create();
         if (getFacultatifObject(jsonObject, "livreEmprunt") != null) {
             reservation.emprunt = Livre.findByISBN(getFacultatifObject(jsonObject, "livreEmprunt").get("isbn").getAsString());
         }
