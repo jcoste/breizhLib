@@ -3,7 +3,6 @@
 require:
     - play
     - play -> siena 2.0.1
-    - play -> gae 1.4
     - play -> cloudbees 0.2.1
     - localmodule -> socialoauth 0.1
     - play -> fbconnect 0.5
