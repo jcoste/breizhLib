@@ -9,11 +9,11 @@ import java.net.URL;
 
 public class IsbnNicebooksExtractor {
 
-     private static final String URL = "http://fr.nicebooks.com/ISBN/";
+    private static final String URL = "http://fr.nicebooks.com/ISBN/";
 
     public static Livre getLivre(String isbn) {
 
-        isbn =  isbn.replaceAll("-", "");
+        isbn = isbn.replaceAll("-", "");
 
         try {
             Livre livre = new Livre();
@@ -25,7 +25,7 @@ public class IsbnNicebooksExtractor {
             String line = null;
             while ((line = reader.readLine()) != null) {
                 if (line.contains("/data/covers/medium/")) {
-                    livre.image = line.substring(line.indexOf("<img src=") + 10   , line.indexOf("alt=")-2);
+                    livre.image = line.substring(line.indexOf("<img src=") + 10, line.indexOf("alt=") - 2);
                 }
                 if (line.contains("<h1>")) {
                     livre.titre = line.substring(line.indexOf("<h1>") + "<h1>".length(), line.indexOf("</h1>"));

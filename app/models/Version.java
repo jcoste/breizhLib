@@ -23,14 +23,13 @@ public class Version extends Model {
     public String serverUrl;
 
 
-
-    public Version(String version,int code) {
-           this.version = version;
-           this.versionCode = code;
+    public Version(String version, int code) {
+        this.version = version;
+        this.versionCode = code;
     }
 
     public static Version find() {
-        Version version = Version.all(Version.class).filter("last",true).get();
+        Version version = Version.all(Version.class).filter("last", true).get();
         return version;
     }
 

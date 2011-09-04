@@ -21,11 +21,9 @@ public class Pictures extends Controller {
     public static void getPicture(String file) {
         Picture picture = Picture.findByNname(file);
         //response.setContentTypeIfNotSet(picture.image.type());
-        if(picture != null && picture.image != null) {
+        if (picture != null && picture.image != null) {
             renderBinary(new ByteArrayInputStream(picture.image.getBytes()));
-        }
-        else
-        {
+        } else {
             // TODO not found image
         }
     }
@@ -81,7 +79,7 @@ public class Pictures extends Controller {
             if (offset < bytes.length) {
                 throw new IOException("Could not completely read file " + newImage.getName());
             }
-             is.close();
+            is.close();
         } catch (FileNotFoundException e) {
             error("erreur lors de la création de l'image");
         } catch (IOException e) {

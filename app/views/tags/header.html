@@ -2,15 +2,15 @@
     <a href="http://www.breizhjug.org/" target="_blank"><img src="@{'/public/images/customLogo.gif'}"/></a>
 
     <aside class="footer-segment-right">
-    <h1>&{'views.main.title'}#{if play.mode.name() == 'DEV'}<a href="@{Application.initDev()}" >
-        <span class="indice">${play.mode.name()}</span></a>#{/if}</h1>
+        <h1>&{'views.main.title'}#{if play.mode.name() == 'DEV'}<a href="@{Application.initDev()}">
+            <span class="indice">${play.mode.name()}</span></a>#{/if}</h1>
 
 
         #{secure.check 'public', not:'member'}
-            <p><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></p>
+        <p><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></p>
         #{/secure.check}
         #{secure.check 'member'}
-            <p><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></p>
+        <p><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></p>
         #{/secure.check}
     </aside>
 

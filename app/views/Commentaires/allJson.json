@@ -1,11 +1,11 @@
 %{
-  last = null;
+last = null;
 }%
 [
 #{list items:commentaires, as:'comment'}
 #{if last != null},#{/if}
 %{
-   last=comment;
+last=comment;
 }%
 {
 "description":"${comment.commentaire}",

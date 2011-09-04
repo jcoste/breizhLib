@@ -28,27 +28,27 @@ public class Tag extends Model implements Comparable<Tag> {
 
     public static Tag findOrCreateByName(String name) {
         Tag tag = Tag.all(Tag.class).filter("name", name).get();
-        if(tag == null) {
+        if (tag == null) {
             tag = new Tag(name);
             tag.insert();
         }
         return tag;
     }
 
-     public static Tag findById(Long tagId) {
+    public static Tag findById(Long tagId) {
         return Tag.all(Tag.class).filter("id", tagId).get();
     }
 
     @Override
     public boolean equals(Object that) {
-        if(that == null){
+        if (that == null) {
             return false;
         }
-        if(((Tag)that).name == null){
+        if (((Tag) that).name == null) {
             return false;
         }
 
-        if(((Tag)that).name.equals(this.name)){
+        if (((Tag) that).name.equals(this.name)) {
             return true;
         }
 

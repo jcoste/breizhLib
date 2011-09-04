@@ -38,13 +38,13 @@ public class Editeur extends Model {
     }
 
     public static List<Editeur> findLikeNom(String recherche) {
-         List<Editeur> allEditeurs = findAll();
-        List<Editeur> editeurs    = new ArrayList<Editeur>();
-       for(Editeur editeur : allEditeurs){
-            if(editeur.nom.toLowerCase().contains(recherche.toLowerCase())) {
-              editeurs.add(editeur);
+        List<Editeur> allEditeurs = findAll();
+        List<Editeur> editeurs = new ArrayList<Editeur>();
+        for (Editeur editeur : allEditeurs) {
+            if (editeur.nom.toLowerCase().contains(recherche.toLowerCase())) {
+                editeurs.add(editeur);
             }
-       }
+        }
         return editeurs;
     }
 }

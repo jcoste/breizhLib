@@ -3,7 +3,6 @@ package models;
 import play.data.binding.As;
 import play.data.validation.Email;
 import play.data.validation.Required;
-import play.mvc.Router;
 import siena.Column;
 import siena.Generator;
 import siena.Id;
@@ -29,6 +28,8 @@ public class Reservation extends Model {
     @Required
     @Email
     public String email;
+
+    public String uid;
 
     @Column("user")
     public User user;
@@ -58,14 +59,21 @@ public class Reservation extends Model {
         this.user = user;
     }
 
+    public String getUid() {
+        if (uid == null) {
+            uid = "R" + id;
+        }
+        return uid;
+    }
+
     public boolean isDateEmpruntNull() {
         return dateEmprunt.equals(getDummyDate());
     }
 
-    public Date getDateRetourIdeal(){
+    public Date getDateRetourIdeal() {
         Calendar c1 = Calendar.getInstance();
         c1.setTime(dateEmprunt);
-        c1.add(Calendar.MONTH,2);
+        c1.add(Calendar.MONTH, 2);
         return c1.getTime();
     }
 
@@ -81,5 +89,9 @@ public class Reservation extends Model {
         } catch (ParseException e) {
         }
         return d;
+    }
+
+    public static Reservation findByUID(String uid) {
+        return Reservation.all(Reservation.class).filter("uid", uid).get();
     }
 }

@@ -9,7 +9,7 @@ import siena.Model;
 import java.util.List;
 
 @siena.Table("Email")
-public class Email  extends Model {
+public class Email extends Model {
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
@@ -23,7 +23,7 @@ public class Email  extends Model {
 
 
     public Email(String email) {
-           this.email = email;
+        this.email = email;
     }
 
     public static Email find(String nom) {
@@ -31,7 +31,7 @@ public class Email  extends Model {
         return email;
     }
 
-    public static List<Email>  findByUser(User user) {
+    public static List<Email> findByUser(User user) {
         List<Email> email = Email.all(Email.class).filter("user", user).fetch();
         return email;
     }

@@ -8,13 +8,14 @@
             div.style.display = "block";
             var img = document.getElementById(id + '_img');
             img.src = '/public/images/moins.png';
-        }else{
+        } else {
             moins(id);
         }
     }
 
-     function moins(id) {
-          var div = document.getElementById(id);;
+    function moins(id) {
+        var div = document.getElementById(id);
+        ;
         if (div.style.visibility == 'hidden') {
             div.style.visibility = 'visible';
             div.style.display = "block";
@@ -23,7 +24,7 @@
             img.src = '/public/images/moins.png';
         }
 
-     }
+    }
 
     function display(id, tab) {
         var div = document.getElementById(id);
@@ -79,7 +80,7 @@
                         </div>
                         #{/if}
                         <p onclick="plus('${picture.path}');"><img id="${picture.path}_img"
-                                                                      src="@{'/public/images/plus.png'}"/> <img
+                                                                   src="@{'/public/images/plus.png'}"/> <img
                                 src="@{'/public/images/folder.png'}"/> ${picture.path}</p>
                         %{
                         lastPath = picture.path;
@@ -94,17 +95,17 @@
                             #{/if}
                             #{/list}
                         </div>
-        </td>
-        <td width="70%" align="center">
+                    </td>
+                    <td width="70%" align="center">
 
-            <img id="displayImg" src="" alt="No Image Selected"/>
-        </td>
-        </tr>
-        </table>
-    </div>
-    <div id="add" style="visibility:hidden; display:none;margin-left: 10px;">
-        #{include 'Pictures/add.html' /}
-    </div>
+                        <img id="displayImg" src="" alt="No Image Selected"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="add" style="visibility:hidden; display:none;margin-left: 10px;">
+            #{include 'Pictures/add.html' /}
+        </div>
 
     </div>
 </article>

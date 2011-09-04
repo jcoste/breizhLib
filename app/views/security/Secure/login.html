@@ -1,18 +1,18 @@
 #{extends 'main.html' /}
 #{set title:'Login' /}
 
-<script type="text/javascript" >
-    function  display(id,tab){
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
-           for (var i=0; i < tab.length; ++i)
+<script type="text/javascript">
+    function display(id, tab) {
+        var div = document.getElementById(id);
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
+            for (var i = 0; i < tab.length; ++i)
                 hide(tab[i]);
-       }
+        }
     }
 
-    function  hide(id){
+    function hide(id) {
         var div = document.getElementById(id);
         div.style.visibility = 'hidden';
         div.style.display = "none";
@@ -22,16 +22,21 @@
 
 <article>
     <h1><a class="stack" href="javascript:display('new',['openid','login']);">Nouveau sur BreizhLib ?</a></h1>
+
     <div id="new" style="visibility:hidden; display:none;">
-    <p><a href="@{security.BasicSecure.newuser()}">Créer un compte</a></p>
+        <p><a href="@{security.BasicSecure.newuser()}">Créer un compte</a></p>
     </div>
     <h1><a class="stack" href="javascript:display('openid',['login','new']);">Connectez-vous avec l'Open-ID </a></h1>
-    <div id="openid" style="visibility:visible; display:block;">
-    <p>#{social.login id:'gae',image:'google.png'/}#{social.login id:'fbconnect',image:'facebook.png'/}</p>
 
-    <p>#{social.login id:'twitter',image:'twitter.png'/}#{if play.mode.name() == 'DEV'}#{social.login id:'yahoo',image:'yahoo.png'/}#{/if}</p>
-    <p>#{if play.mode.name() == 'DEV'}#{social.login id:'linkedin',image:'linkedin.png'/}#{social.login id:'google',image:'google.png'/}#{/if}</p>
-     </div>
+    <div id="openid" style="visibility:visible; display:block;">
+        <p>#{social.login id:'gae',image:'google.png'/}#{social.login id:'fbconnect',image:'facebook.png'/}</p>
+
+        <p>#{social.login id:'twitter',image:'twitter.png'/}#{if play.mode.name() == 'DEV'}#{social.login
+            id:'yahoo',image:'yahoo.png'/}#{/if}</p>
+
+        <p>#{if play.mode.name() == 'DEV'}#{social.login id:'linkedin',image:'linkedin.png'/}#{social.login
+            id:'google',image:'google.png'/}#{/if}</p>
+    </div>
 
     #{include 'security/BasicSecure/basiclogin.html' /}
 </article>

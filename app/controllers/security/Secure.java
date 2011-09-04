@@ -2,22 +2,22 @@ package controllers.security;
 
 
 import controllers.Application;
+import controllers.WidgetController;
 import controllers.socialoauth.*;
+import models.ServerType;
+import models.Serveur;
 import models.socialoauth.ISecure;
 import models.socialoauth.IUser;
 import models.socialoauth.Role;
-import models.tag.LivreTag;
-import models.tag.Tag;
 import play.cache.Cache;
 import play.modules.router.Get;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.With;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-
+@With(WidgetController.class)
 public class Secure extends Controller {
 
     private static SecureAdapter secure = new SecureAdapter(GAESecure.ID);
@@ -43,20 +43,6 @@ public class Secure extends Controller {
         if (role != null) {
             checkRole(role);
         }
-
-        List<LivreTag> tagLivres = LivreTag.all().fetch();
-         List<Tag> tags = new ArrayList<Tag>();
-        for (LivreTag livreTag : tagLivres) {
-            livreTag.tag.get();
-            if(!tags.contains(livreTag.tag)){
-                livreTag.tag.nb = 1;
-                tags.add(livreTag.tag);
-            }else{
-              int i = tags.indexOf(livreTag.tag);
-              tags.get(i).nb++;
-            }
-        }
-        renderArgs.put("tags", tags);
     }
 
     public static String getImpl() {
@@ -113,7 +99,7 @@ public class Secure extends Controller {
     }
 
     public static boolean check(String profile) {
-         ISecure isecure = secure.getSecure();
+        ISecure isecure = secure.getSecure();
 
         if ("public".equals(profile)) {
             return true;
@@ -123,7 +109,8 @@ public class Secure extends Controller {
         } else if ("member".equals(profile)) {
             return isecure.getUser() != null;
         } else if ("api".equals(profile)) {
-            return Application.API_CODE.equals(params.get("apicode"));
+            Serveur serveur = Serveur.findByType(ServerType.EXPORT);
+            return serveur.code.equals(params.get("apicode"));
         }
         return false;
     }
