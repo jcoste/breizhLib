@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 
 
-public class CommentaireSerializer implements JsonSerializer<Commentaire>,JsonDeserializer<Commentaire> {
+public class CommentaireSerializer extends AbstractSerializer implements JsonSerializer<Commentaire>,JsonDeserializer<Commentaire> {
 
 
     public JsonElement serialize(Commentaire commentaire, Type type, JsonSerializationContext jsonSerializationContext) {

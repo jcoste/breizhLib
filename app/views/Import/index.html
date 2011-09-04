@@ -19,14 +19,19 @@
     -> ${editeursNb} Editeurs importés
     #{/if}</p>
    <h1>Import Admin</h1>
-   <p><a href="@{Import.commentaires(true)}">Import Commentaires</a>
-    #{if commentairesNb}
-    -> ${commentairesNb} Commentaires importés
-    #{/if}</p>
-    <p><a href="@{Import.users(true)}">Import Utilisateurs</a>
+    <p> 1 : <a href="@{Import.users(true)}">Import Utilisateurs</a>
     #{if usersNb}
     -> ${usersNb} Utilisateurs importés
     #{/if}</p>
+   <p> 2 : <a href="@{Import.commentaires(true)}">Import Commentaires</a>
+    #{if commentairesNb}
+    -> ${commentairesNb} Commentaires importés
+    #{/if}</p>
+    <p> 3 : <a href="@{Import.reservations(true)}">Import Reservations</a>
+    #{if reservationsNb}
+    -> ${reservationsNb} Reservations importés
+    #{/if}</p>
+
 </article>
 
 

@@ -156,7 +156,7 @@ public class Import extends Controller {
 
     @Role("admin")
     @Get(value = "/import/reservations.json", format = "json")
-    public static void reservations() {
+    public static void reservations(boolean display) {
         try {
             Serveur serveur = Serveur.findDefaut();
             Gson gson = new GsonBuilder()
@@ -169,7 +169,13 @@ public class Import extends Controller {
                 reservations.add(gson.<Reservation>fromJson(reader, Reservation.class));
             }
             reader.endArray();
-            renderText(reservations.size());
+            if (display) {
+                int reservationsNb = reservations.size();
+                String apicode = serveur.code;
+                render("Import/index.html", reservationsNb,apicode);
+            } else {
+                renderText(reservations.size());
+            }
         } catch (Exception ex) {
             renderText("KO" + ex);
         }

@@ -96,7 +96,7 @@ public class Export extends Controller {
     @Get(value = "/export/reservations.json", format = "json")
     public static void reservations() {
         Date d = Reservation.getDummyDate();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
+        List<Reservation> reservations = Reservation.all(Reservation.class).fetch();
         for (Reservation resa : reservations) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
