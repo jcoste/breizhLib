@@ -5,23 +5,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import controllers.security.Secure;
-import models.Commentaire;
-import models.Editeur;
-import models.Livre;
-import models.Reservation;
+import models.*;
 import models.socialoauth.Role;
 import play.modules.router.Get;
 import play.mvc.Controller;
 import play.mvc.With;
-import serializers.CommentaireSerializer;
-import serializers.EditeurSerializer;
-import serializers.LivreSerializer;
-import serializers.ReservationSerializer;
+import serializers.*;
 
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +110,22 @@ public class Import extends Controller {
     @Role("admin")
     @Get("/import/users.json")
     public static void users() {
-        renderText("");
+       try {
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(User.class, new UserSerializer()).create();
+            URL url = new URL(SERVER_URL + "export/users.json?apicode="+API_CODE);
+            JsonReader reader = new JsonReader(new InputStreamReader(url.openStream()));
+            reader.beginArray();
+            List<User> users = new ArrayList<User>();
+            while (reader.hasNext()) {
+                users.add(gson.<User>fromJson(reader, User.class));
+            }
+            reader.endArray();
+            renderText(users.size());
+        } catch (Exception ex) {
+            renderText("KO" + ex);
+        }
+        renderText("OK");
     }
 
 
@@ -128,9 +136,6 @@ public class Import extends Controller {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(Reservation.class, new ReservationSerializer()).create();
             URL url = new URL(SERVER_URL + "export/reservations.json?apicode="+API_CODE);
-            URLConnection urlConn = url.openConnection();
-            urlConn.setRequestProperty("Cookie", "");
-            urlConn.connect();
             JsonReader reader = new JsonReader(new InputStreamReader(url.openStream()));
             reader.beginArray();
             List<Reservation> reservations = new ArrayList<Reservation>();

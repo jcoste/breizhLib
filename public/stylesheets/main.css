@@ -254,3 +254,22 @@ aside#leftbar {
 {
         padding-bottom : 25px;
 }
+
+   /***
+        TWEETS
+
+   ****/
+
+
+/* TWEETS */
+#tweets { position: relative; width: 376px; height:250px; overflow:auto; }
+#tweets p { font-size: 14px; margin-bottom: 10px; padding: 10px; color: #7a8a99; background: url("../images/transpBlue.png"); }
+#tweets p a { padding-left:2px; }
+#tweets p a img { border:none; }
+
+.big { font-size:20px; }
+.big span { color: #bfe1f1; font-size:24px; }
+
+/* OVERLAY */
+#overlay {  width: 408px; height:386px; background: url("../images/transpBlue_overlay.png"); }
+#overlay img { position:relative; left:200px; top:189px; }

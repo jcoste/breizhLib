@@ -6,10 +6,7 @@ import models.socialoauth.Role;
 import play.modules.router.Get;
 import play.mvc.Controller;
 import play.mvc.With;
-import serializers.CommentaireSerializer;
-import serializers.EditeurSerializer;
-import serializers.LivreSerializer;
-import serializers.ReservationSerializer;
+import serializers.*;
 import siena.Query;
 
 import java.util.Date;
@@ -56,7 +53,7 @@ public class Export extends Controller{
     @Get("/export/users.json")
     public static void users() {
         List<User> users = User.findAll();
-        renderJSON(users);
+        renderJSON(users,new UserSerializer());
     }
 
 

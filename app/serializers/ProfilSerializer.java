@@ -48,7 +48,7 @@ public class ProfilSerializer implements JsonSerializer<User> {
             reservationsSuffix += " Réservé";
         }
 
-        obj.addProperty("reservations", reservations.size() + reservationsSuffix);
+        obj.add("reservations", jsonSerializationContext.serialize(reservations) );
 
         List<Reservation> ouvragesEncours = user.ouvragesEncours();
         String ouvragesEncoursSuffix = " Ouvrage";
