@@ -34,21 +34,26 @@ public class LivreTag extends Model {
     }
 
     public static List<Tag> findByLivre(Livre livre) {
-        List<LivreTag> livreTags =  all().filter("livre", livre).fetch();
+        List<LivreTag> livreTags = all().filter("livre", livre).fetch();
         List<Tag> tags = new ArrayList<Tag>();
-        for(LivreTag livreTag : livreTags) {
+        for (LivreTag livreTag : livreTags) {
             tags.add(Tag.findById(livreTag.tag.id));
         }
 
         return tags;
     }
+
     public static List<Livre> findByTag(Tag tag) {
-        List<LivreTag> livreTags =  all().filter("tag", tag).fetch();
+        List<LivreTag> livreTags = all().filter("tag", tag).fetch();
         List<Livre> links = new ArrayList<Livre>();
-        for(LivreTag livreTag : livreTags) {
+        for (LivreTag livreTag : livreTags) {
             links.add(Livre.findById(livreTag.livre.id));
         }
 
         return links;
+    }
+
+    public static LivreTag findByTagAndLivre(Tag tag, Livre livre) {
+        return all().filter("tag", tag).filter("livre", livre).get();
     }
 }

@@ -99,7 +99,7 @@ public class Secure extends Controller {
     }
 
     public static boolean check(String profile) {
-         ISecure isecure = secure.getSecure();
+        ISecure isecure = secure.getSecure();
 
         if ("public".equals(profile)) {
             return true;

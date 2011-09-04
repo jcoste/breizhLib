@@ -18,7 +18,7 @@ public class Picture extends Model {
     public String path;
 
     public String getUrl() {
-        return "/shared/"+ name;
+        return "/shared/" + name;
     }
 
 

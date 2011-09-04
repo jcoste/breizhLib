@@ -139,19 +139,22 @@ public class Livre extends Model implements Taggable {
     }
 
     public void addTag(String tag) {
-      Tag newTag = Tag.findOrCreateByName(tag);
-      LivreTag livreTag = new LivreTag(this, newTag);
-      livreTag.insert();
+        Tag newTag = Tag.findOrCreateByName(tag);
+        LivreTag livreTag = LivreTag.findByTagAndLivre(newTag, this);
+        if (livreTag == null) {
+            livreTag = new LivreTag(this, newTag);
+            livreTag.insert();
+        }
     }
 
     public static List<Livre> findLikeTitre(String text) {
-       List<Livre> allLivres = findAll();
-       List<Livre> livres    = new ArrayList<Livre>();
-       for(Livre livre : allLivres){
-            if(livre.titre.toLowerCase().contains(text.toLowerCase())) {
-              livres.add(livre);
+        List<Livre> allLivres = findAll();
+        List<Livre> livres = new ArrayList<Livre>();
+        for (Livre livre : allLivres) {
+            if (livre.titre.toLowerCase().contains(text.toLowerCase())) {
+                livres.add(livre);
             }
-       }
+        }
         return livres;
     }
 }

@@ -4,13 +4,13 @@
         <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
         <li><a href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
         #{secure.check 'member'}
-            <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
-         #{/secure.check}
+        <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
+        #{/secure.check}
         <li><a href="@{Livres.index(0,'date')}">&{'views.main.menu.books'}</a></li>
         <li><a href="@{Editeurs.index()}">Editeurs</a></li>
         #{/secure.check}
         #{secure.check 'public', not:'member'}
-         <!-- li><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></li -->
+        <!-- li><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></li -->
         #{/secure.check}
         #{secure.check 'admin'}
         <li>Admin

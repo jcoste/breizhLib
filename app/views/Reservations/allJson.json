@@ -1,11 +1,11 @@
 %{
-  last = null;
+last = null;
 }%
 [
 #{list items:reservations, as:'reservation'}
 #{if last != null},#{/if}
 %{
-   last=reservation;
+last=reservation;
 }%
 {
 "nom":"${reservation.nom}",

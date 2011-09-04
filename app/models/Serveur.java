@@ -33,12 +33,12 @@ public class Serveur extends Model {
         super();
     }
 
-    public Serveur(String name, String url,String code,ServerType type) {
+    public Serveur(String name, String url, String code, ServerType type) {
         this();
         this.name = name;
         this.url = url;
-        if(type.equals(ServerType.EXPORT)){
-           this.code = generateCode();
+        if (type.equals(ServerType.EXPORT)) {
+            this.code = generateCode();
         }
         this.type = type;
 
@@ -57,12 +57,12 @@ public class Serveur extends Model {
         return Serveur.all(Serveur.class).fetch();
     }
 
-     public static Serveur findByType(ServerType type) {
-        return Serveur.all(Serveur.class).filter("type",type).get();
+    public static Serveur findByType(ServerType type) {
+        return Serveur.all(Serveur.class).filter("type", type).get();
     }
 
     public static Serveur findDefaut() {
-        return Serveur.all(Serveur.class).filter("type",ServerType.IMPORT).filter("defaut",true).get();
+        return Serveur.all(Serveur.class).filter("type", ServerType.IMPORT).filter("defaut", true).get();
     }
 }
 

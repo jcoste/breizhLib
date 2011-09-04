@@ -21,10 +21,10 @@ public class Export extends Controller {
     public static void index() {
         Serveur serveur = Serveur.findByType(ServerType.EXPORT);
         String apicode = null;
-        if(serveur != null){
+        if (serveur != null) {
             apicode = serveur.code;
         }
-        render(serveur,apicode);
+        render(serveur, apicode);
     }
 
     @Role("admin")
@@ -47,7 +47,7 @@ public class Export extends Controller {
             serveur.save();
         }
         String apicode = serveur.code;
-        render("Export/index.html", serveur,apicode);
+        render("Export/index.html", serveur, apicode);
     }
 
 
@@ -102,7 +102,7 @@ public class Export extends Controller {
                 resa.empruntEncours.get();
                 resa.user.get();
             }
-            if(resa.emprunt != null){
+            if (resa.emprunt != null) {
                 resa.emprunt.get();
             }
         }

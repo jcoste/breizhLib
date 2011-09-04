@@ -24,7 +24,7 @@ public class ReservationSerializer extends AbstractSerializer implements JsonSer
             obj.add("livreEmprunt", jsonSerializationContext.serialize(reservation.emprunt));
         }
         obj.addProperty("user", reservation.email);
-        if (reservation.dateEmprunt != null &&  !DateUtils.isSameDay(reservation.dateEmprunt,Reservation.getDummyDate())) {
+        if (reservation.dateEmprunt != null && !DateUtils.isSameDay(reservation.dateEmprunt, Reservation.getDummyDate())) {
             obj.addProperty("dateEmprunt", reservation.dateEmprunt.getTime());
         }
         if (reservation.dateReservation != null) {

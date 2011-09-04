@@ -4,7 +4,7 @@
 <script type="text/javascript">
     function display(id, tab) {
         var div = document.getElementById(id);
-        var li = document.getElementById('li'+id);
+        var li = document.getElementById('li' + id);
         li.className = "active";
         if (div.style.visibility == 'hidden') {
             div.style.visibility = 'visible';
@@ -16,7 +16,7 @@
 
     function hide(id) {
         var div = document.getElementById(id);
-        var li = document.getElementById('li'+id);
+        var li = document.getElementById('li' + id);
         li.className = "";
         div.style.visibility = 'hidden';
         div.style.display = "none";
@@ -29,44 +29,46 @@
 
     <div id="menu">
         <ul id="onglets">
-            <li id="liadd" class="active"><a class="stack" href="javascript:display('add',['addediteur'])">Ouvrage</a></li>
+            <li id="liadd" class="active"><a class="stack" href="javascript:display('add',['addediteur'])">Ouvrage</a>
+            </li>
             <li id="liaddediteur"><a class="stack" href="javascript:display('addediteur',['add'])">Editeur</a></li>
         </ul>
         <div id="add" style="visibility:visible; display:block;">
-        <table>
-            #{form @Livres.save(),enctype:'multipart/form-data'}
-            <tr>
-                <td><label for="titre">&{'views.livres.add.titre.label'}</label></td>
-                <td><p>#{error 'titre' /}</p><input type="text" name="titre" id="titre" value="${params.titre}"
-                                                    size="50"/></td>
-            </tr>
-            <tr>
-                <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
-                <td><select name="editeur" id="editeur">
-                    #{list items:editeurs, as:'editeur'}
-                    <option value="${editeur}">${editeur}</option>
-                    #{/list}
-                </select><!-- a href="@{Editeurs.add()}">Nouveau</a --> #{error 'editeur' /}
-                </td>
-            </tr>
-            <tr>
-                <td><label for="imageFile">&{'views.livres.add.image.label'}</label></td>
-                <td><input type="file" name="imageFile" id="imageFile" multiple="false"
-                           accept="image/gif, image/jpeg, image/png"/>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="iSBN">&{'views.livres.add.iSBN.label'}</label></td>
-                <td><input type="text" name="iSBN" id="iSBN" value="${params.iSBN}"
-                           pattern="[0-9]{3}-[0-9]{1}-[0-9]{4}-[0-9]{4}-[0-9]{1}"  size="13" maxlength="17"/>#{error 'iSBN' /}
-                </td>
-            </tr>
-        </table>
+            <table>
+                #{form @Livres.save(),enctype:'multipart/form-data'}
+                <tr>
+                    <td><label for="titre">&{'views.livres.add.titre.label'}</label></td>
+                    <td><p>#{error 'titre' /}</p><input type="text" name="titre" id="titre" value="${params.titre}"
+                                                        size="50"/></td>
+                </tr>
+                <tr>
+                    <td><label for="editeur">&{'views.livres.add.editeur.label'}</label></td>
+                    <td><select name="editeur" id="editeur">
+                        #{list items:editeurs, as:'editeur'}
+                        <option value="${editeur}">${editeur}</option>
+                        #{/list}
+                    </select><!-- a href="@{Editeurs.add()}">Nouveau</a --> #{error 'editeur' /}
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="imageFile">&{'views.livres.add.image.label'}</label></td>
+                    <td><input type="file" name="imageFile" id="imageFile" multiple="false"
+                               accept="image/gif, image/jpeg, image/png"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="iSBN">&{'views.livres.add.iSBN.label'}</label></td>
+                    <td><input type="text" name="iSBN" id="iSBN" value="${params.iSBN}"
+                               pattern="[0-9]{3}-[0-9]{1}-[0-9]{4}-[0-9]{4}-[0-9]{1}" size="13" maxlength="17"/>#{error
+                        'iSBN' /}
+                    </td>
+                </tr>
+            </table>
             <input type="submit" value="&{'views.livres.add.submit'}"/>
-        #{/form}
-    </div>
-    <div id="addediteur" style="visibility:hidden; display:none;">
-         #{include 'Editeurs/add.html' /}
-    </div>
+            #{/form}
+        </div>
+        <div id="addediteur" style="visibility:hidden; display:none;">
+            #{include 'Editeurs/add.html' /}
+        </div>
     </div>
 </article>

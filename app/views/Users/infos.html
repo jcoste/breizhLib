@@ -6,24 +6,39 @@
 
     <section>
         <h1>Mes infos</h1>
-         #{social.gravatar user:user  /}
+        #{social.gravatar user:user /}
         <table>
-        <tr><td>Nom : </td><td>${user.nom}</td></tr>
+            <tr>
+                <td>Nom :</td>
+                <td>${user.nom}</td>
+            </tr>
 
-         <tr><td>Prénom : </td><td>${user.prenom}</td></tr>
+            <tr>
+                <td>Prénom :</td>
+                <td>${user.prenom}</td>
+            </tr>
 
 
-         <tr><td>Email : </td><td>${user.email}</td></tr>
-        #{list items:user.getExtraEmail(), as:'email'}
-            <tr><td></td><td>${email}</td></tr>
-        #{/list}
+            <tr>
+                <td>Email :</td>
+                <td>${user.email}</td>
+            </tr>
+            #{list items:user.getExtraEmail(), as:'email'}
+            <tr>
+                <td></td>
+                <td>${email}</td>
+            </tr>
+            #{/list}
 
-        #{if user.username != null }
-              <tr><td>Nom d'utilisateur :</td><td> ${user.username}</td></tr>
-        #{/if}
+            #{if user.username != null }
+            <tr>
+                <td>Nom d'utilisateur :</td>
+                <td> ${user.username}</td>
+            </tr>
+            #{/if}
         </table>
     </section>
 
-     #{include 'Users/editPassword.html' /}
+    #{include 'Users/editPassword.html' /}
 
 </div>

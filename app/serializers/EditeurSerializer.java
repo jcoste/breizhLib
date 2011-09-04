@@ -9,12 +9,11 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditeurSerializer extends AbstractSerializer implements JsonSerializer<Editeur>,JsonDeserializer<Editeur> {
-
+public class EditeurSerializer extends AbstractSerializer implements JsonSerializer<Editeur>, JsonDeserializer<Editeur> {
 
 
     public Editeur deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-       JsonObject jsonObject = jsonElement.getAsJsonObject();
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
         Editeur editeur = Editeur.findByNom(jsonObject.get("nom").getAsString());
         if (editeur == null) {
             editeur = new Editeur(jsonObject.get("nom").getAsString(), jsonObject.get("site").getAsString());

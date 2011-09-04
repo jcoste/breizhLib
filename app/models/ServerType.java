@@ -3,5 +3,5 @@ package models;
 
 public enum ServerType {
 
-    EXPORT,IMPORT;
+    EXPORT, IMPORT;
 }

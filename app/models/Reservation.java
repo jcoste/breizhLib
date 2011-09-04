@@ -59,9 +59,9 @@ public class Reservation extends Model {
         this.user = user;
     }
 
-    public String getUid(){
-        if(uid == null){
-            uid = "R"+id;
+    public String getUid() {
+        if (uid == null) {
+            uid = "R" + id;
         }
         return uid;
     }
@@ -70,10 +70,10 @@ public class Reservation extends Model {
         return dateEmprunt.equals(getDummyDate());
     }
 
-    public Date getDateRetourIdeal(){
+    public Date getDateRetourIdeal() {
         Calendar c1 = Calendar.getInstance();
         c1.setTime(dateEmprunt);
-        c1.add(Calendar.MONTH,2);
+        c1.add(Calendar.MONTH, 2);
         return c1.getTime();
     }
 
@@ -91,7 +91,7 @@ public class Reservation extends Model {
         return d;
     }
 
-     public static Reservation findByUID(String uid) {
-        return Reservation.all(Reservation.class).filter("uid",uid).get();
+    public static Reservation findByUID(String uid) {
+        return Reservation.all(Reservation.class).filter("uid", uid).get();
     }
 }

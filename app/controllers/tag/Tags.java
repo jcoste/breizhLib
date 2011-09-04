@@ -1,9 +1,9 @@
 package controllers.tag;
 
 import controllers.Livres;
-import models.socialoauth.Role;
 import controllers.security.Secure;
 import models.Livre;
+import models.socialoauth.Role;
 import models.tag.LivreTag;
 import models.tag.Tag;
 import play.modules.router.Get;
@@ -18,7 +18,7 @@ import java.util.List;
 public class Tags extends Controller {
 
     @Before
-    public static void before(){
+    public static void before() {
 
     }
 

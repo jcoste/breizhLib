@@ -60,8 +60,8 @@ public class Import extends Controller {
             reader.endArray();
             if (display) {
                 int ouvragesNb = livres.size();
-                 String apicode = serveur.code;
-                render("Import/index.html", ouvragesNb,apicode);
+                String apicode = serveur.code;
+                render("Import/index.html", ouvragesNb, apicode);
             } else {
                 renderText(livres.size());
             }
@@ -87,8 +87,8 @@ public class Import extends Controller {
             reader.endArray();
             if (display) {
                 int editeursNb = editeurs.size();
-                 String apicode = serveur.code;
-                render("Import/index.html", editeursNb,apicode);
+                String apicode = serveur.code;
+                render("Import/index.html", editeursNb, apicode);
             } else {
                 renderText(editeurs.size());
             }
@@ -114,8 +114,8 @@ public class Import extends Controller {
             reader.endArray();
             if (display) {
                 int commentairesNb = commentaires.size();
-                 String apicode = serveur.code;
-                render("Import/index.html", commentairesNb,apicode);
+                String apicode = serveur.code;
+                render("Import/index.html", commentairesNb, apicode);
             } else {
                 renderText(commentaires.size());
             }
@@ -143,7 +143,7 @@ public class Import extends Controller {
             if (display) {
                 int usersNb = users.size();
                 String apicode = serveur.code;
-                render("Import/index.html", usersNb,apicode);
+                render("Import/index.html", usersNb, apicode);
             } else {
                 renderText(users.size());
             }
@@ -172,7 +172,7 @@ public class Import extends Controller {
             if (display) {
                 int reservationsNb = reservations.size();
                 String apicode = serveur.code;
-                render("Import/index.html", reservationsNb,apicode);
+                render("Import/index.html", reservationsNb, apicode);
             } else {
                 renderText(reservations.size());
             }

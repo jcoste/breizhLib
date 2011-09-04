@@ -4,101 +4,112 @@
 #{include 'Users/menu.html' /}
 <div>
 
-<h1>Edition des informations de votre compte</h1>
+    <h1>Edition des informations de votre compte</h1>
 
-<script type="text/javascript">
-var i = ${emails.size()};
-function  addEmail(){
-    var email_tr =document.getElementById('email_'+i);
-    var newTr = document.createElement('tr');
-    i++;
-    newTr.id = 'email_'+i;
-    var newTd = document.createElement('td');
-    newTd.innerHTML = "";
-    newTr.appendChild(newTd);
-    var newTd2 = document.createElement('td');
-    newTd2.innerHTML = "<p>#{error 'email"+i+"' /}</p><input type='email' name='email"+i+"' id='email"+i+"' value='' size='20'/><a href='javascript:removeEmail(\"email_"+i+"\","+i+")' class='stack'>-</a>";
-    newTr.appendChild(newTd2);
-    email_tr.parentNode.insertBefore(newTr,email_tr.nextSibling);
-}
+    <script type="text/javascript">
+        var i = ${emails.size()};
+        function addEmail() {
+            var email_tr = document.getElementById('email_' + i);
+            var newTr = document.createElement('tr');
+            i++;
+            newTr.id = 'email_' + i;
+            var newTd = document.createElement('td');
+            newTd.innerHTML = "";
+            newTr.appendChild(newTd);
+            var newTd2 = document.createElement('td');
+            newTd2.innerHTML = "<p>#{error 'email"+i+"' /}</p><input type='email' name='email" + i + "' id='email" + i + "' value='' size='20'/><a href='javascript:removeEmail(\"email_" + i + "\"," + i + ")' class='stack'>-</a>";
+            newTr.appendChild(newTd2);
+            email_tr.parentNode.insertBefore(newTr, email_tr.nextSibling);
+        }
 
-function  removeEmail(id,index){
-  var email_tr =document.getElementById(id);
-  email_tr.parentNode.removeChild(email_tr);
+        function removeEmail(id, index) {
+            var email_tr = document.getElementById(id);
+            email_tr.parentNode.removeChild(email_tr);
 
-   if(i == index){
-       i--;
-       var dec = 0;
-       for(j=i;j>${emails.size()};j--){
-            var index_tr =document.getElementById('email_'+j);
-            if(index_tr == null){
-               dec++;
-            } else{
-                break;
+            if (i == index) {
+                i--;
+                var dec = 0;
+                for (j = i; j >${emails.size()}; j--) {
+                    var index_tr = document.getElementById('email_' + j);
+                    if (index_tr == null) {
+                        dec++;
+                    } else {
+                        break;
+                    }
+                }
+                i = i - dec;
             }
-       }
-       i = i-dec;
-   }
-}
+        }
 
 
-</script>
-<section>
-    #{form @Users.postEdit(),enctype:'multipart/form-data'}
-    <table>
-        #{if user.username != null }
-             <tr>
+    </script>
+    <section>
+        #{form @Users.postEdit(),enctype:'multipart/form-data'}
+        <table>
+            #{if user.username != null }
+            <tr>
                 <td><label>Nom d'utilisateur : </label></td>
-                <td><p><input type="text" name="username" disabled value="${user.username}" size="20"/></p><p><input type="radio" name="publicUsername" value="oui" #{if user.publicUsername}checked  #{/if}>public <input type="radio" name="publicUsername" value="non" #{if !user.publicUsername}checked  #{/if}>privé</p></td>
+                <td><p><input type="text" name="username" disabled value="${user.username}" size="20"/></p>
+
+                    <p><input type="radio" name="publicUsername" value="oui" #{if user.publicUsername}checked
+                        #{/if}>public <input type="radio" name="publicUsername" value="non" #{if
+                        !user.publicUsername}checked #{/if}>privé</p></td>
             </tr>
-        #{/if}
-        #{if user.email != null }
+            #{/if}
+            #{if user.email != null }
             <tr id="email_0">
                 <td><label>Email : </label></td>
                 <td>${user.email}</td>
             </tr>
             %{
-                int i=1;
+            int i=1;
             }%
             #{list items:emails, as:'emailp'}
-                <tr id="email_${i}">
-                    <td></td>
-                    <td>${emailp.email}</td>
-                </tr>
-                %{i++}%
+            <tr id="email_${i}">
+                <td></td>
+                <td>${emailp.email}</td>
+            </tr>
+            %{i++}%
             #{/list}
             <tr>
                 <td></td>
                 <td><a href="javascript:addEmail()" class="stack">+</a></td>
             </tr>
-        #{/if}
-        #{else}
+            #{/if}
+            #{else}
             <tr>
                 <td><label for="email">Email : </label></td>
-                <td><p>#{error 'email' /}</p><input type="email" name="email" id="email" value="${email}" size="20"/></td>
+                <td><p>#{error 'email' /}</p><input type="email" name="email" id="email" value="${email}" size="20"/>
+                </td>
             </tr>
-        #{/else}
-        <tr>
-            <td><label for="nom">Nom : </label></td>
-            <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${user.nom}" size="20"/></td>
-        </tr>
-        <tr>
-            <td><label for="prenom">Prénom : </label></td>
-            <td><p>#{error 'prenom' /}</p><input type="text" name="prenom" id="prenom" value="${user.prenom}"
-                                                 size="20"/>
-            </td>
-        </tr>
-         <tr>
-            <td><label for="profil">Profil : </label></td>
-            <td><p>#{error 'profil' /}</p><input type="radio" name="profil" value="oui" #{if user.isPublic}checked  #{/if}>public <input type="radio" name="profil" value="non" #{if !user.isPublic}checked  #{/if}>privé
-            </td>
-        </tr>
-        <tr>
-            <td> #{social.gravatar user:user,width:'50px',height:'90px' /}</td>
-            <td>Modifier votre avatar sur <a class="stack" href="http://fr.gravatar.com/" target="_blank">gravatar</a></td>
-        </tr>
-        <tr><td></td><td><input type="submit" value="Modifier"/></td></tr>
-    </table>
-    #{/form}
+            #{/else}
+            <tr>
+                <td><label for="nom">Nom : </label></td>
+                <td><p>#{error 'nom' /}</p><input type="text" name="nom" id="nom" value="${user.nom}" size="20"/></td>
+            </tr>
+            <tr>
+                <td><label for="prenom">Prénom : </label></td>
+                <td><p>#{error 'prenom' /}</p><input type="text" name="prenom" id="prenom" value="${user.prenom}"
+                                                     size="20"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="profil">Profil : </label></td>
+                <td><p>#{error 'profil' /}</p><input type="radio" name="profil" value="oui" #{if user.isPublic}checked
+                    #{/if}>public <input type="radio" name="profil" value="non" #{if !user.isPublic}checked #{/if}>privé
+                </td>
+            </tr>
+            <tr>
+                <td> #{social.gravatar user:user,width:'50px',height:'90px' /}</td>
+                <td>Modifier votre avatar sur <a class="stack" href="http://fr.gravatar.com/"
+                                                 target="_blank">gravatar</a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Modifier"/></td>
+            </tr>
+        </table>
+        #{/form}
 
-</section>  </div>
+    </section>
+</div>

@@ -13,7 +13,7 @@ public class WidgetController extends Controller {
 
     @Before
     public static void init() {
-       List<LivreTag> tagLivres = LivreTag.all().fetch();
+        List<LivreTag> tagLivres = LivreTag.all().fetch();
         List<Tag> tags = new ArrayList<Tag>();
         for (LivreTag livreTag : tagLivres) {
             livreTag.tag.get();

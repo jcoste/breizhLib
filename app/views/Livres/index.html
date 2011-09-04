@@ -6,26 +6,26 @@
 #{stylesheet 'webwidget_rating_simple.css' /}
 <article>
     #{if editeur == null}
-        <p>&{'views.livres.index.title'}</p>
+    <p>&{'views.livres.index.title'}</p>
     #{/if}
     #{else}
-        <p>&{'views.livres.editeur.title'} ${editeur}</p>
+    <p>&{'views.livres.editeur.title'} ${editeur}</p>
     #{/else}
     #{tri editeur:editeur,tri:tri,page:paginator.page /}
     #{editeurs editeur:editeur,editeurs:editeurs,tri:tri, as:'editeurBook' /}
 
     #{if paginator.getElements()}
-        #{if paginator.getElements().size()}
-            #{list items:paginator.getElements(), as:'livre'}
-                #{if livre}
-                    #{livre livre:livre, as:'summary' /}
-                #{/if}
-            #{/list}
-        #{/if}
-        #{paginate.controls paginator:paginator /}
+    #{if paginator.getElements().size()}
+    #{list items:paginator.getElements(), as:'livre'}
+    #{if livre}
+    #{livre livre:livre, as:'summary' /}
+    #{/if}
+    #{/list}
+    #{/if}
+    #{paginate.controls paginator:paginator /}
     #{/if}
     #{else}
-        <p>&{'views.livres.noBookRecorded'}</p>
+    <p>&{'views.livres.noBookRecorded'}</p>
     #{/else}
 </article>
 

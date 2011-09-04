@@ -83,7 +83,7 @@ public class AndroidAPI extends Controller {
 
             if (livre != null) {
                 livre.isNotPresent = true;
-                livre.setEtat( EtatLivre.NON_PRESENT);
+                livre.setEtat(EtatLivre.NON_PRESENT);
                 renderJSON(livre, new LivreSerializer());
             } else {
                 renderJSON(new Result("isbn non trouvé sur les sites d'ouvrages", "UNKNOW_ISBN"));
