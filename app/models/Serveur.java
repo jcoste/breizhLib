@@ -7,7 +7,7 @@ import siena.*;
 import java.util.List;
 import java.util.UUID;
 
-@Table("Livre")
+@Table("Serveur")
 public class Serveur extends Model {
 
     @Id(Generator.AUTO_INCREMENT)
@@ -24,7 +24,7 @@ public class Serveur extends Model {
     public String code;
     @Required
     @Column("type")
-    public ServerType type;
+    public String type;
 
     public boolean defaut;
 
@@ -40,7 +40,7 @@ public class Serveur extends Model {
         if (type.equals(ServerType.EXPORT)) {
             this.code = generateCode();
         }
-        this.type = type;
+        this.type = type.name();
 
     }
 
@@ -58,11 +58,11 @@ public class Serveur extends Model {
     }
 
     public static Serveur findByType(ServerType type) {
-        return Serveur.all(Serveur.class).filter("type", type).get();
+        return Serveur.all(Serveur.class).filter("type", type.name()).get();
     }
 
     public static Serveur findDefaut() {
-        return Serveur.all(Serveur.class).filter("type", ServerType.IMPORT).filter("defaut", true).get();
+        return Serveur.all(Serveur.class).filter("type", ServerType.IMPORT.name()).filter("defaut", true).get();
     }
 }
 
