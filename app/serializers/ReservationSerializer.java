@@ -5,6 +5,7 @@ import com.google.gson.*;
 import models.Livre;
 import models.Reservation;
 import models.User;
+import utils.DateUtils;
 
 import java.lang.reflect.Type;
 import java.util.Date;
@@ -23,7 +24,7 @@ public class ReservationSerializer extends AbstractSerializer implements JsonSer
             obj.add("livreEmprunt", jsonSerializationContext.serialize(reservation.emprunt));
         }
         obj.addProperty("user", reservation.email);
-        if (reservation.dateEmprunt != null) {
+        if (reservation.dateEmprunt != null &&  !DateUtils.isSameDay(reservation.dateEmprunt,Reservation.getDummyDate())) {
             obj.addProperty("dateEmprunt", reservation.dateEmprunt.getTime());
         }
         if (reservation.dateReservation != null) {
@@ -50,35 +51,38 @@ public class ReservationSerializer extends AbstractSerializer implements JsonSer
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Livre.class, new LivreSerializer());
         Gson gson = builder.create();
-        reservation.emprunt = Livre.findByISBN(jsonObject.get("livreEmprunt").getAsJsonObject().get("isbn").getAsString());
-        reservation.empruntEncours = Livre.findByISBN(jsonObject.get("livre").getAsJsonObject().get("isbn").getAsString());
+        if (getFacultatifObject(jsonObject, "livreEmprunt") != null) {
+            reservation.emprunt = Livre.findByISBN(getFacultatifObject(jsonObject, "livreEmprunt").get("isbn").getAsString());
+        }
+        if (getFacultatifObject(jsonObject, "livre") != null) {
+            reservation.empruntEncours = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
+        }
         reservation.user = User.find(jsonObject.get("user").getAsString());
 
         if (getFacultatifString(jsonObject, "dateEmprunt") != null) {
             Date d = new Date();
             d.setTime(Long.valueOf(getFacultatifString(jsonObject, "dateEmprunt")));
-            if (!d.equals(Reservation.getDummyDate())) {
-                reservation.dateEmprunt = d;
-            }else{
-               reservation.dateEmprunt = null;
-            }
+            reservation.dateEmprunt = d;
+
+        } else {
+            reservation.dateEmprunt = Reservation.getDummyDate();
         }
         if (jsonObject.get("dateReservation").getAsString() != null) {
             Date d = new Date();
             d.setTime(Long.valueOf(jsonObject.get("dateReservation").getAsString()));
-            if (!d.equals(Reservation.getDummyDate())) {
+            if (!DateUtils.isSameDay(d, Reservation.getDummyDate())) {
                 reservation.dateReservation = d;
-            }else{
-               reservation.dateReservation = null;
+            } else {
+                reservation.dateReservation = null;
             }
         }
         if (getFacultatifString(jsonObject, "dateRetour") != null) {
             Date d = new Date();
             d.setTime(Long.valueOf(getFacultatifString(jsonObject, "dateRetour")));
-            if (!d.equals(Reservation.getDummyDate())) {
+            if (!DateUtils.isSameDay(d, Reservation.getDummyDate())) {
                 reservation.dateRetour = d;
-            }else{
-               reservation.dateRetour = null;
+            } else {
+                reservation.dateRetour = null;
             }
         }
         reservation.save();

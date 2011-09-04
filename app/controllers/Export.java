@@ -102,6 +102,9 @@ public class Export extends Controller {
                 resa.empruntEncours.get();
                 resa.user.get();
             }
+            if(resa.emprunt != null){
+                resa.emprunt.get();
+            }
         }
         renderJSON(reservations, new LivreSerializer(), new ReservationSerializer());
     }
