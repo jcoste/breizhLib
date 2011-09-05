@@ -19,6 +19,7 @@ public class ReservationSerializer extends AbstractSerializer implements JsonSer
         obj.addProperty("nom", reservation.nom);
         obj.addProperty("prenom", reservation.prenom);
         obj.addProperty("uid", reservation.getUid());
+        obj.addProperty("isAnnuler", reservation.isAnnuler);
         obj.add("livre", jsonSerializationContext.serialize(reservation.empruntEncours));
         if (reservation.emprunt != null) {
             obj.add("livreEmprunt", jsonSerializationContext.serialize(reservation.emprunt));
@@ -54,6 +55,8 @@ public class ReservationSerializer extends AbstractSerializer implements JsonSer
         if (getFacultatifObject(jsonObject, "livre") != null) {
             reservation.empruntEncours = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
         }
+
+        reservation.isAnnuler = getFacultatifBoolean(jsonObject, "isAnnuler");
         reservation.user = User.find(jsonObject.get("user").getAsString());
 
         if (getFacultatifString(jsonObject, "dateEmprunt") != null) {

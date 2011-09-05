@@ -47,6 +47,11 @@ public class LivreSerializer extends AbstractSerializer implements JsonSerialize
             livre = new Livre(jsonObject.get("titre").getAsString(), editeur, jsonObject.get("image").getAsString(), jsonObject.get("isbn").getAsString());
         }
 
+
+
+        livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
+        livre.save();
+
         String tags = jsonObject.get("tags").getAsString();
         String[] tagsListe = tags.split(";");
 
@@ -56,8 +61,6 @@ public class LivreSerializer extends AbstractSerializer implements JsonSerialize
             }
         }
 
-        livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
-        livre.save();
         return livre;
     }
 }

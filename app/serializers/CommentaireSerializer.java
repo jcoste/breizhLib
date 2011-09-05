@@ -30,10 +30,10 @@ public class CommentaireSerializer extends AbstractSerializer implements JsonSer
         if (commentaire == null) {
             commentaire = new Commentaire(null, null, jsonObject.get("nom").getAsString(), jsonObject.get("avis").getAsString(), jsonObject.get("note").getAsInt());
             commentaire.uid = jsonObject.get("uid").getAsString();
-            commentaire.livre = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
-            commentaire.user = User.find(jsonObject.get("user").getAsString());
-            commentaire.save();
         }
+        commentaire.livre = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
+        commentaire.user = User.find(jsonObject.get("user").getAsString());
+        commentaire.save();
         return commentaire;
     }
 }
