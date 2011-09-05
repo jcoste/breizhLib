@@ -30,13 +30,10 @@ public class CommentaireSerializer extends AbstractSerializer implements JsonSer
         if (commentaire == null) {
             commentaire = new Commentaire(null, null, jsonObject.get("nom").getAsString(), jsonObject.get("avis").getAsString(), jsonObject.get("note").getAsInt());
             commentaire.uid = jsonObject.get("uid").getAsString();
-            GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(Livre.class, new LivreSerializer());
-            Gson gson = builder.create();
-            commentaire.livre = gson.fromJson(jsonObject.get("livre"), Livre.class);
-            commentaire.user = User.find(jsonObject.get("user").getAsString());
-            commentaire.save();
         }
+        commentaire.livre = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
+        commentaire.user = User.find(jsonObject.get("user").getAsString());
+        commentaire.save();
         return commentaire;
     }
 }

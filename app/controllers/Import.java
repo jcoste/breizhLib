@@ -6,6 +6,7 @@ import com.google.gson.stream.JsonReader;
 import controllers.security.Secure;
 import models.*;
 import models.socialoauth.Role;
+import play.Logger;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
@@ -55,7 +56,12 @@ public class Import extends Controller {
             reader.beginArray();
             List<Livre> livres = new ArrayList<Livre>();
             while (reader.hasNext()) {
-                livres.add(gson.<Livre>fromJson(reader, Livre.class));
+                try {
+                    livres.add(gson.<Livre>fromJson(reader, Livre.class));
+                } catch (Exception e) {
+                    //TODO gestion des erreurs
+                    Logger.error("import Error : " + e);
+                }
             }
             reader.endArray();
             if (display) {
@@ -82,7 +88,12 @@ public class Import extends Controller {
             reader.beginArray();
             List<Editeur> editeurs = new ArrayList<Editeur>();
             while (reader.hasNext()) {
-                editeurs.add(gson.<Editeur>fromJson(reader, Editeur.class));
+                try {
+                    editeurs.add(gson.<Editeur>fromJson(reader, Editeur.class));
+                } catch (Exception e) {
+                    //TODO gestion des erreurs
+                    Logger.error("import Error : " + e);
+                }
             }
             reader.endArray();
             if (display) {
@@ -109,7 +120,12 @@ public class Import extends Controller {
             reader.beginArray();
             List<Commentaire> commentaires = new ArrayList<Commentaire>();
             while (reader.hasNext()) {
-                commentaires.add(gson.<Commentaire>fromJson(reader, Commentaire.class));
+                try {
+                    commentaires.add(gson.<Commentaire>fromJson(reader, Commentaire.class));
+                } catch (Exception e) {
+                    //TODO gestion des erreurs
+                    Logger.error("import Error : " + e);
+                }
             }
             reader.endArray();
             if (display) {
@@ -137,7 +153,12 @@ public class Import extends Controller {
             reader.beginArray();
             List<User> users = new ArrayList<User>();
             while (reader.hasNext()) {
-                users.add(gson.<User>fromJson(reader, User.class));
+                try {
+                    users.add(gson.<User>fromJson(reader, User.class));
+                } catch (Exception e) {
+                    //TODO gestion des erreurs
+                    Logger.error("import Error : " + e);
+                }
             }
             reader.endArray();
             if (display) {
@@ -166,7 +187,12 @@ public class Import extends Controller {
             reader.beginArray();
             List<Reservation> reservations = new ArrayList<Reservation>();
             while (reader.hasNext()) {
-                reservations.add(gson.<Reservation>fromJson(reader, Reservation.class));
+                try {
+                    reservations.add(gson.<Reservation>fromJson(reader, Reservation.class));
+                } catch (Exception e) {
+                    //TODO gestion des erreurs
+                    Logger.error("import Error : " + e);
+                }
             }
             reader.endArray();
             if (display) {

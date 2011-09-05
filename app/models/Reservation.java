@@ -49,6 +49,8 @@ public class Reservation extends Model {
     @Column("empruntEncours")
     public Livre empruntEncours;
 
+    public boolean isAnnuler;
+
     public Reservation(Livre livre, User user, String nom, String prenom, String email) {
         this.empruntEncours = livre;
         this.email = email;

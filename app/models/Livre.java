@@ -109,7 +109,7 @@ public class Livre extends Model implements Taggable {
     }
 
     public List<Reservation> getHistoriqueReservation() {
-        return Reservation.all(Reservation.class).filter("emprunt", this).fetch();
+        return Reservation.all(Reservation.class).filter("emprunt", this).filter("isAnnuler", false).fetch();
     }
 
     public List<Commentaire> getCommentaires() {

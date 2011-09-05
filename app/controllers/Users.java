@@ -178,7 +178,7 @@ public class Users extends Controller {
     @Get("/user/emprunts")
     public static void emprunts() {
         User user = (User) Secure.getUser();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).filter("isAnnuler", false).fetch();
         for (Reservation resa : reservations) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();

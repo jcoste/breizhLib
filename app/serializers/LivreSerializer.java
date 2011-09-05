@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LivreSerializer implements JsonSerializer<Livre>, JsonDeserializer<Livre> {
+public class LivreSerializer extends AbstractSerializer implements JsonSerializer<Livre>, JsonDeserializer<Livre> {
 
 
     public JsonElement serialize(Livre livre, Type type, JsonSerializationContext jsonSerializationContext) {
@@ -24,7 +24,7 @@ public class LivreSerializer implements JsonSerializer<Livre>, JsonDeserializer<
         obj.addProperty("etat", livre.getEtat().toString());
         String tags = "";
         for (Tag tag : livre.getTags()) {
-            tags += ";" + tag.name;
+            tags += tag.name+";" ;
         }
         obj.addProperty("tags", tags);
         if (livre.image == null || livre.image.contains("/shared/")) {
@@ -47,6 +47,11 @@ public class LivreSerializer implements JsonSerializer<Livre>, JsonDeserializer<
             livre = new Livre(jsonObject.get("titre").getAsString(), editeur, jsonObject.get("image").getAsString(), jsonObject.get("isbn").getAsString());
         }
 
+
+
+        livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
+        livre.save();
+
         String tags = jsonObject.get("tags").getAsString();
         String[] tagsListe = tags.split(";");
 
@@ -56,16 +61,6 @@ public class LivreSerializer implements JsonSerializer<Livre>, JsonDeserializer<
             }
         }
 
-        livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
-        livre.save();
         return livre;
-    }
-
-    private String getFacultatifString(JsonObject item, String name) {
-        try {
-            return item.get(name).getAsString();
-        } catch (Exception e) {
-            return null;
-        }
     }
 }
