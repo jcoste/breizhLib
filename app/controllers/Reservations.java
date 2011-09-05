@@ -44,7 +44,7 @@ public class Reservations extends Controller {
     @Get("/reservations")
     public static void reservations() {
         Date d = Reservation.getDummyDate();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
         for (Reservation resa : reservations) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
@@ -52,7 +52,7 @@ public class Reservations extends Controller {
         }
 
 
-        List<Reservation> emprunts = Reservation.all(Reservation.class).filter("dateEmprunt>", d).filter("dateRetour", null).fetch();
+        List<Reservation> emprunts = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("dateEmprunt>", d).filter("dateRetour", null).fetch();
         for (Reservation resa : emprunts) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
@@ -90,6 +90,7 @@ public class Reservations extends Controller {
         Livre livre = reservation.empruntEncours;
         livre.get();
         reservation.empruntEncours = null;
+        reservation.isAnnuler = true;
         livre.reservationEncours = null;
         reservation.update();
         livre.setEtat(EtatLivre.DISP0NIBLE);
