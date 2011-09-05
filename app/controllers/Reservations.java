@@ -91,7 +91,7 @@ public class Reservations extends Controller {
         livre.get();
         reservation.empruntEncours = null;
         livre.reservationEncours = null;
-        reservation.delete();
+        reservation.update();
         livre.setEtat(EtatLivre.DISP0NIBLE);
         livre.update();
         index(livre.iSBN);
