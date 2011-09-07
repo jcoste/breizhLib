@@ -9,11 +9,11 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 
 
-public class CommentaireSerializer extends AbstractSerializer implements JsonSerializer<Commentaire>, JsonDeserializer<Commentaire> {
+public class CommentaireSerializer extends AbstractSerializer<Commentaire> {
 
 
     public JsonElement serialize(Commentaire commentaire, Type type, JsonSerializationContext jsonSerializationContext) {
-        JsonObject obj = new JsonObject();
+        JsonObject obj = (JsonObject) super.serialize(commentaire, type, jsonSerializationContext);
         obj.addProperty("avis", commentaire.commentaire);
         obj.addProperty("nom", commentaire.nom);
         obj.addProperty("titre", commentaire.nom + " le " + new SimpleDateFormat("dd MMMM yyyy").format(commentaire.dateAjout));
@@ -31,9 +31,11 @@ public class CommentaireSerializer extends AbstractSerializer implements JsonSer
             commentaire = new Commentaire(null, null, jsonObject.get("nom").getAsString(), jsonObject.get("avis").getAsString(), jsonObject.get("note").getAsInt());
             commentaire.uid = jsonObject.get("uid").getAsString();
         }
-        commentaire.livre = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
-        commentaire.user = User.find(jsonObject.get("user").getAsString());
-        commentaire.save();
+        if (needUpdate(commentaire, jsonObject)) {
+            commentaire.livre = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
+            commentaire.user = User.find(jsonObject.get("user").getAsString());
+            commentaire.saveImport();
+        }
         return commentaire;
     }
 }

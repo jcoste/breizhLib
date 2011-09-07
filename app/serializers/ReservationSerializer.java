@@ -10,7 +10,7 @@ import utils.DateUtils;
 import java.lang.reflect.Type;
 import java.util.Date;
 
-public class ReservationSerializer extends AbstractSerializer implements JsonSerializer<Reservation>, JsonDeserializer<Reservation> {
+public class ReservationSerializer extends AbstractSerializer<Reservation> implements JsonSerializer<Reservation>, JsonDeserializer<Reservation> {
 
 
     public JsonElement serialize(Reservation reservation, Type type, JsonSerializationContext jsonSerializationContext) {
@@ -49,43 +49,48 @@ public class ReservationSerializer extends AbstractSerializer implements JsonSer
             reservation = new Reservation(null, null, jsonObject.get("nom").getAsString(), jsonObject.get("prenom").getAsString(), jsonObject.get("user").getAsString());
             reservation.uid = jsonObject.get("uid").getAsString();
         }
-        if (getFacultatifObject(jsonObject, "livreEmprunt") != null) {
-            reservation.emprunt = Livre.findByISBN(getFacultatifObject(jsonObject, "livreEmprunt").get("isbn").getAsString());
-        }
-        if (getFacultatifObject(jsonObject, "livre") != null) {
-            reservation.empruntEncours = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
-        }
 
-        reservation.isAnnuler = getFacultatifBoolean(jsonObject, "isAnnuler");
-        reservation.user = User.find(jsonObject.get("user").getAsString());
+        if (needUpdate(reservation, jsonObject)) {
 
-        if (getFacultatifString(jsonObject, "dateEmprunt") != null) {
-            Date d = new Date();
-            d.setTime(Long.valueOf(getFacultatifString(jsonObject, "dateEmprunt")));
-            reservation.dateEmprunt = d;
-
-        } else {
-            reservation.dateEmprunt = Reservation.getDummyDate();
-        }
-        if (jsonObject.get("dateReservation").getAsString() != null) {
-            Date d = new Date();
-            d.setTime(Long.valueOf(jsonObject.get("dateReservation").getAsString()));
-            if (!DateUtils.isSameDay(d, Reservation.getDummyDate())) {
-                reservation.dateReservation = d;
-            } else {
-                reservation.dateReservation = null;
+            if (getFacultatifObject(jsonObject, "livreEmprunt") != null) {
+                reservation.emprunt = Livre.findByISBN(getFacultatifObject(jsonObject, "livreEmprunt").get("isbn").getAsString());
             }
-        }
-        if (getFacultatifString(jsonObject, "dateRetour") != null) {
-            Date d = new Date();
-            d.setTime(Long.valueOf(getFacultatifString(jsonObject, "dateRetour")));
-            if (!DateUtils.isSameDay(d, Reservation.getDummyDate())) {
-                reservation.dateRetour = d;
-            } else {
-                reservation.dateRetour = null;
+            if (getFacultatifObject(jsonObject, "livre") != null) {
+                reservation.empruntEncours = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
             }
+
+            reservation.isAnnuler = getFacultatifBoolean(jsonObject, "isAnnuler");
+            reservation.user = User.find(jsonObject.get("user").getAsString());
+
+            if (getFacultatifString(jsonObject, "dateEmprunt") != null) {
+                Date d = new Date();
+                d.setTime(Long.valueOf(getFacultatifString(jsonObject, "dateEmprunt")));
+                reservation.dateEmprunt = d;
+
+            } else {
+                reservation.dateEmprunt = Reservation.getDummyDate();
+            }
+            if (jsonObject.get("dateReservation").getAsString() != null) {
+                Date d = new Date();
+                d.setTime(Long.valueOf(jsonObject.get("dateReservation").getAsString()));
+                if (!DateUtils.isSameDay(d, Reservation.getDummyDate())) {
+                    reservation.dateReservation = d;
+                } else {
+                    reservation.dateReservation = null;
+                }
+            }
+            if (getFacultatifString(jsonObject, "dateRetour") != null) {
+                Date d = new Date();
+                d.setTime(Long.valueOf(getFacultatifString(jsonObject, "dateRetour")));
+                if (!DateUtils.isSameDay(d, Reservation.getDummyDate())) {
+                    reservation.dateRetour = d;
+                } else {
+                    reservation.dateRetour = null;
+                }
+            }
+            reservation.saveImport();
+
         }
-        reservation.save();
         return reservation;
     }
 }

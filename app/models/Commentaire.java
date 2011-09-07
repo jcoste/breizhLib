@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Table("Commentaire")
-public class Commentaire extends Model {
+public class Commentaire extends UpdatableModel implements Updatable{
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
@@ -76,5 +76,6 @@ public class Commentaire extends Model {
         }
         return commentaires;
     }
+
 }
 

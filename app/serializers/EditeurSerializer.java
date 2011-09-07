@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditeurSerializer extends AbstractSerializer implements JsonSerializer<Editeur>, JsonDeserializer<Editeur> {
+public class EditeurSerializer extends AbstractSerializer<Editeur> implements JsonSerializer<Editeur>, JsonDeserializer<Editeur> {
 
 
     public Editeur deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
