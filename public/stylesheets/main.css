@@ -271,5 +271,5 @@ aside#leftbar {
 .big span { color: #bfe1f1; font-size:24px; }
 
 /* OVERLAY */
-#overlay {  width: 408px; height:386px; background: url("../images/transpBlue_overlay.png"); }
+#overlay {  width: 0px; height:1px; background: url("../images/transpBlue_overlay.png"); }
 #overlay img { position:relative; left:200px; top:189px; }

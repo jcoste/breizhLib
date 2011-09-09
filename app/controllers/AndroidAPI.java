@@ -33,7 +33,9 @@ public class AndroidAPI extends Controller {
 
     @Get("/android")
     public static void android() {
-        render();
+        List<Version> versions=Version.all(Version.class).order("-versionCode").fetch(3);
+        render(versions);
+
     }
 
     @Get("/android/version")
