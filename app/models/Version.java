@@ -2,6 +2,7 @@ package models;
 
 
 import play.data.validation.Required;
+import siena.Column;
 import siena.Generator;
 import siena.Id;
 import siena.Model;
@@ -18,6 +19,7 @@ public class Version extends Model {
     @Required
     public int versionCode;
 
+    @Column(value = "backlog")
     public String backlog;
 
     public boolean last;
