@@ -20,8 +20,6 @@ import java.util.List;
 })
 public class Application extends Controller {
 
-    public static final String API_CODE = "1234";
-
     @Get("/")
     public static void index() {
         if (Secure.getUser() != null) {
