@@ -46,21 +46,11 @@
         </ul>
 
         <div id="fonctionnalites" style="visibility:visible; display:block;">
-            <ul>
-                <li>Afficher les ouvrages de la bibliothèque du BreizhJug</li>
-                <li>Afficher les derniers commentaires</li>
-                <li>Afficher les informations de votre compte</li>
-                <li>Recherche d'ouvrage par lecture de code barre</li>
-                <li>Ajout d'ouvrage par lecture de code barre</li>
-                <li>Réservation d'ouvrage</li>
-                <li>Ajout de commentaires</li>
-            </ul>
-            <p>
+            #{list items:versions, as:'version'}
+                <p><h3>Version ${version.version} :</h3></p>
+                <p>${version.backlog.raw()}</p>
+            #{/list}
 
-            <h3>Prochainement :</h3></p>
-            <ul>
-                <li>...</li>
-            </ul>
 
         </div>
         <div id="capture" style="visibility:hidden; display:none;">

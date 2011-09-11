@@ -1,10 +1,37 @@
-<h1>Tags</h1>
-#{tag3d tags:_tags,tagcloudName:'tagcloudfooter' /}
+<script type="text/javascript">
+    function display(id) {
+        var div = document.getElementById(id);
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
+        } else{
+             hide(id);
+        }
+    }
 
-<h1><a href="https://twitter.com/#!/breizhjug">Tweets</a></h1>
-<div id="tweets" style="width:280px;">
+    function hide(id) {
+        var div = document.getElementById(id);
+        div.style.visibility = 'hidden';
+        div.style.display = "none";
+    }
+
+</script>
+
+
+<h1><a class="stack" href="javascript:display('tag');">Tags</a></h1>
+<div id="tag" style="visibility:visible; display:block;">
+#{tag3d tags:_tags,tagcloudName:'tagcloudfooter' /}
+</div>
+
+<h1><a class="stack" href="javascript:display('tweets');">Tweets</a></h1>
+<div id="tweets" style="width:280px;visibility:visible; display:block;">
     <!-- Tweets will get loaded from jQuery -->
 </div>
 <div id="overlay">
     <img src="public/images/ajax-loader.gif"/>
 </div>
+
+<!-- <h1><a class="stack" href="javascript:display('commentaires');">Commentaires</a></h1>
+<div id="commentaires" style="visibility:visible; display:block;">
+
+</div>  -->

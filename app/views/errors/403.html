@@ -3,24 +3,14 @@
 <html>
 <head>
     <title>Not found</title>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}"/>
-    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/template.css'}"/>
-    <!--[if lt IE 9]>
-    <script src="@{'/public/javascripts/html5-ie.js'}" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" media="all" href="@{'/public/stylesheets/template-ie.css'}"/>
-    <![endif]-->
-    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}"/>
-    <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+    #{head /}
 </head>
 <body>
-<header>
-    <img src="http://www.breizhjug.org/_/rsrc/1214896583171/config/app/images/customLogo/customLogo.gif?revision=4"/>
-
-    <h1>&{'views.main.title'}</h1>
-</header>
+#{header /}
 #{menu /}
+<div id="main">
 <h1>${result.message}</h1>
-<footer>&{'views.main.footer'}</footer>
+</div>
+#{footer /}
 </body>
 </html>

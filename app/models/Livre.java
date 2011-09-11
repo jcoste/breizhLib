@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @siena.Table("Livre")
-public class Livre extends Model implements Taggable {
+public class Livre extends UpdatableModel implements Taggable {
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;

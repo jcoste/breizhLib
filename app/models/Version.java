@@ -18,6 +18,8 @@ public class Version extends Model {
     @Required
     public int versionCode;
 
+    public String backlog;
+
     public boolean last;
 
     public String serverUrl;

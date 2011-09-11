@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @siena.Table("Reservation")
-public class Reservation extends Model {
+public class Reservation extends UpdatableModel {
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
