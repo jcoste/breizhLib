@@ -1,7 +1,7 @@
-#{extends 'main.html' /}
+#{extends 'mainFull.html' /}
 #{set title:'BreizhLib Import' /}
 
-<article>
+#{include 'Admin/menu.html' /}
 
     <p>Mise a jour de l'apicode pour le serveur par défaut</p>
     #{form @Import.code(),enctype:'multipart/form-data'}
@@ -38,6 +38,5 @@
         -> ${reservationsNb} Reservations importés
         #{/if}</p>
 
-</article>
 
 

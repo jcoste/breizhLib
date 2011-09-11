@@ -25,7 +25,7 @@ import java.util.List;
 @With(Secure.class)
 public class AndroidAPI extends Controller {
 
-    @Role("admin")
+    @Role("member")
     @Get("/api")
     public static void index() {
         render();

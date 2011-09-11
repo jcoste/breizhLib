@@ -1,6 +1,7 @@
-#{extends 'main.html' /}
+#{extends 'mainFull.html' /}
 #{set title:'BreizhLib Export' /}
 
+#{include 'Admin/menu.html' /}
 #{if serveur}
 <p>ApiCode : ${apicode}</p>
 #{form @Export.code(),enctype:'multipart/form-data'}

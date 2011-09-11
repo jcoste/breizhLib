@@ -2,39 +2,16 @@
 #{set title:'BreizhLib API' /}
 
 
-<script type="text/javascript">
-    function display(id, tab) {
-        var div = document.getElementById(id);
-        var li = document.getElementById('li' + id);
-        li.className = "active";
-        if (div.style.visibility == 'hidden') {
-            div.style.visibility = 'visible';
-            div.style.display = "block";
-            for (var i = 0; i < tab.length; ++i)
-                hide(tab[i]);
-        }
-    }
-
-    function hide(id) {
-        var div = document.getElementById(id);
-        var li = document.getElementById('li' + id);
-        li.className = "";
-        div.style.visibility = 'hidden';
-        div.style.display = "none";
-    }
-
-</script>
-
 <article>
     <h1>BreizhLib API</h1>
 
     <div id="menu">
         <ul id="onglets">
-            <li id="limethod" class="active"><a class="stack" href="javascript:display('method',['formats','errors'])">Méthodes</a>
+            <li id="limethod" class="active"><a class="stack" href="javascript:displayHide('method',['formats','errors'])">Méthodes</a>
             </li>
-            <li id="liformats"><a class="stack" href="javascript:display('formats',['method','errors'])">Format des
+            <li id="liformats"><a class="stack" href="javascript:displayHide('formats',['method','errors'])">Format des
                 réponses</a></li>
-            <li id="lierrors"><a class="stack" href="javascript:display('errors',['method','formats'])">Codes
+            <li id="lierrors"><a class="stack" href="javascript:displayHide('errors',['method','formats'])">Codes
                 d'erreurs</a></li>
         </ul>
         <div id="errors" style="visibility:hidden; display:none;"><p>TODO</p></div>
