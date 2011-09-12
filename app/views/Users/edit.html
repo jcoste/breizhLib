@@ -52,8 +52,7 @@
                 <td><p><input type="text" name="username" disabled value="${user.username}" size="20"/></p>
 
                     <p><input type="radio" name="publicUsername" value="oui" #{if user.publicUsername}checked
-                        #{/if}>public <input type="radio" name="publicUsername" value="non" #{if
-                        !user.publicUsername}checked #{/if}>privé</p></td>
+                        #{/if}>public <input type="radio" name="publicUsername" value="non" #{if !user.publicUsername}checked #{/if}>privé</p></td>
             </tr>
             #{/if}
             #{if user.email != null }
