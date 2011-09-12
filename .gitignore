@@ -24,11 +24,14 @@ cloudbeesCmd
 
 /conf/cloudbees.conf
 
+/lib/router-*
+
 /modules/cloudbees-*
 /modules/fbconnect-*
 /modules/gae-*
 /modules/siena-*
 /modules/router-*
+/modules/socialoauth-*
 /modules/db-*
 /modules/maven-*
 /modules/oauth-*

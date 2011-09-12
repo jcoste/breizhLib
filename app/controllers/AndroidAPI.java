@@ -6,11 +6,12 @@ import models.*;
 import models.socialoauth.Role;
 import play.Logger;
 import play.data.validation.Required;
+import play.modules.router.Any;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
 import play.mvc.With;
-import remote.Isbn13Extractor;
+import remote.IsbnNicebooksExtractor;
 import serializers.CommentaireSerializer;
 import serializers.LivreSerializer;
 import serializers.ProfilSerializer;
@@ -24,25 +25,27 @@ import java.util.List;
 @With(Secure.class)
 public class AndroidAPI extends Controller {
 
-    @Role("admin")
+    @Role("member")
     @Get("/api")
-    public static void index(){
+    public static void index() {
         render();
     }
 
     @Get("/android")
-    public static void android(){
-        render();
+    public static void android() {
+        List<Version> versions=Version.all(Version.class).order("-versionCode").fetch(3);
+        render(versions);
+
     }
 
     @Get("/android/version")
-    public static void version(){
+    public static void version() {
         Version version = Version.find();
-         if(version == null){
-             version = new Version("0.1.0");
-             version.insert();
-         }
-        renderText(version.version);
+        if (version == null) {
+            version = new Version("0.1.0", 1000);
+            version.insert();
+        }
+        renderText(version.versionCode + "\n" + version.version);
     }
 
     @Role("member")
@@ -50,27 +53,46 @@ public class AndroidAPI extends Controller {
     public static void userprofil() {
         User user = (User) Secure.getUser();
         if (user != null) {
-           renderJSON(user, new ProfilSerializer());
+            if (user.nom == null) {
+                user.nom = "";
+            }
+            if (user.prenom == null) {
+                user.prenom = "";
+            }
+            if (user.username == null) {
+                user.username = "";
+            }
+            renderJSON(user, new ProfilSerializer());
         }
-        renderJSON(new Result("Utilisateur inconnue", "UNKNOW_USER"));
+        renderJSON(new Result("Utilisateur inconnu", "UNKNOW_USER"));
     }
 
 
     @Role("public")
-    @Post("/api/find")
+    @Any("/api/find")
     public static void findisbn(String iSBN) {
-        String iSBN13 = iSBN.replaceAll("-", "");
+        try {
+            String iSBN13 = iSBN.replaceAll("-", "");
 
-        List<Livre> livres = Livre.findAll();
-        for (Livre livre : livres) {
-            if (livre.iSBN.replaceAll("-", "").equals(iSBN13)) {
-                renderJSON(livre, new LivreSerializer());
+            List<Livre> livres = Livre.findAll();
+            for (Livre livre : livres) {
+                if (livre.iSBN.replaceAll("-", "").equals(iSBN13)) {
+                    renderJSON(livre, new LivreSerializer());
+                }
             }
-        }
 
-        Livre livre = Isbn13Extractor.getLivre(iSBN);
-        livre.isNotPresent = true;
-        renderJSON(livre, new LivreSerializer());
+            Livre livre = IsbnNicebooksExtractor.getLivre(iSBN13);
+
+            if (livre != null) {
+                livre.isNotPresent = true;
+                livre.setEtat(EtatLivre.NON_PRESENT);
+                renderJSON(livre, new LivreSerializer());
+            } else {
+                renderJSON(new Result("isbn non trouvé sur les sites d'ouvrages", "UNKNOW_ISBN"));
+            }
+        } catch (Exception e) {
+            renderJSON(new Result("erreur inconnue", "ERROR"));
+        }
     }
 
     @Role("public")
@@ -86,14 +108,15 @@ public class AndroidAPI extends Controller {
         }
         Livre livre = null;
         if (!exist) {
-            livre = Isbn13Extractor.getLivre(iSBN);
-            if(iSBN.length() == 13){
-              livre.iSBN = iSBN.substring(0,3)+"-"+iSBN.substring(3,4)+"-"+iSBN.substring(4,8)+"-"+iSBN.substring(8,12)+"-"+iSBN.substring(12,13);
+            livre = IsbnNicebooksExtractor.getLivre(iSBN13);
+            if (iSBN13.length() == 13) {
+                Logger.info("rename isbn");
+                livre.iSBN = iSBN13.substring(0, 3) + "-" + iSBN13.substring(3, 4) + "-" + iSBN13.substring(4, 8) + "-" + iSBN13.substring(8, 12) + "-" + iSBN13.substring(12, 13);
             }
             livre.isNotPresent = false;
             livre.dateAjout = new Date();
 
-            if(livre.image != null && livre.image.length() > 0) {
+            if (livre.image != null && livre.image.length() > 0) {
                 Logger.debug(livre.image);
                 Picture imageFile = new Picture();
                 imageFile.image = new Blob(ImagesUtils.getByteFromUrl(livre.image));
@@ -121,39 +144,52 @@ public class AndroidAPI extends Controller {
     @Role("public")
     @Get(value = "/api/commentaires", format = "json")
     public static void commentaires() {
-         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
+        List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch();
 
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
         }
-        renderJSON(commentaires, new CommentaireSerializer(),new LivreSerializer());
+        renderJSON(commentaires, new CommentaireSerializer(), new LivreSerializer());
     }
 
-    @Role("public")
+    @Role("admin")
     @Get(value = "/api/reservations", format = "json")
     public static void reservations() {
-         Date d = Reservation.getDummyDate();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
+        Date d = Reservation.getDummyDate();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).filter("isAnnuler", false).fetch();
         for (Reservation resa : reservations) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
             }
         }
-        renderJSON(reservations, new ReservationSerializer(),new LivreSerializer());
+        renderJSON(reservations, new ReservationSerializer(), new LivreSerializer());
+    }
+
+    @Role("admin")
+    @Get(value = "/api/emprunts", format = "json")
+    public static void emprunts() {
+        Date d = Reservation.getDummyDate();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
+        for (Reservation resa : reservations) {
+            if (resa.empruntEncours != null) {
+                resa.empruntEncours.get();
+            }
+        }
+        renderJSON(reservations, new ReservationSerializer(), new LivreSerializer());
     }
 
     @Role("member")
     @Post("/api/book/reserver")
     public static void postReservation(String id, @Required String nom, @Required String prenom, @Required @play.data.validation.Email String email) {
         if (validation.hasErrors()) {
-            renderText("ERROR");
+            renderJSON(new Result("informations manquantes", "ERROR"));
         }
         if (id == null) {
-            renderText("ERROR");
+            renderJSON(new Result("Ouvrages inconnu", "ERROR"));
         }
         Livre livre = Livre.findByISBN(id);
         if (!livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
-            throw new IllegalStateException("le livre n'est pas disponible a la réservation");
+            renderJSON(new Result("le livre n'est pas disponible a la réservation", "NON_DISPONIBLE"));
         }
 
         User user = (User) Secure.getUser();
@@ -181,7 +217,7 @@ public class AndroidAPI extends Controller {
     public static void postComment(String bookId, @Required String nom, @Required String content, @Required int note) {
         Livre livre = Livre.findByISBN(bookId);
         if (validation.hasErrors()) {
-            render("Livres/show.html", livre);
+            renderJSON(new Result("paramètres incorrect", "DATA_INVALID"));
         }
 
 
@@ -190,7 +226,8 @@ public class AndroidAPI extends Controller {
         commentaire.insert();
         livre.popularite = livre.getCommentaires().size();
         livre.update();
-        renderText("OK");
+
+        renderJSON(commentaire, new CommentaireSerializer(), new LivreSerializer());
     }
 
 

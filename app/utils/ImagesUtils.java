@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class ImagesUtils {
 
-    public static byte[]  getByteFromUrl(String url){
+    public static byte[] getByteFromUrl(String url) {
         byte[] b = new byte[0];
         try {
             b = IOUtils.toByteArray((new URL(url)).openStream());

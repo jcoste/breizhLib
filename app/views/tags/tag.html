@@ -1,35 +1,39 @@
 #{if _as == 'book'}
-    #{secure.check 'admin'}
-      #{form @tag.Tags.addForbook(_bookId)}
-           <p><input type="text" name="tag" id="tag"/><input type="image" src="@{'/public/images/tag_blue_add.png'}" /></p>
-      #{/form}
-    #{/secure.check}
+#{secure.check 'admin'}
+#{form @tag.Tags.addForbook(_bookId)}
+<p><input type="text" name="tag" id="tag"/><input type="image" src="@{'/public/images/tag_blue_add.png'}"/></p>
+#{/form}
+#{/secure.check}
 #{/if}
-    #{if _tags}
-        #{script 'jimpl_cloud.js' /}
-        <script type="text/javascript">
-            $(function() {
-                $('#${_tagcloudName}').tagCloud({separator: '.'});
-            });
-        </script>
+#{if _tags}
+#{script 'jimpl_cloud.js' /}
+<script type="text/javascript">
+    $(function() {
+        $('#${_tagcloudName}').tagCloud({separator: '.'});
+    });
+</script>
 
 
-       #{if _as == 'book'}
-        #{if _tags.size()}<p><img src="@{'/public/images/tag_blue.png'}"/><div id="${_tagcloudName}" class="tagcloud">
-            #{list items:_tags, as:'tag'}
-                #{if tag}
-                   ${tag}.
-                #{/if}
-            #{/list} </div></p>
-        #{/if}
-       #{/if}
-       #{else}
-            #{if _tags.size()}<div id="${_tagcloudName}" class="tagcloud">
-            #{list items:_tags, as:'tag'}
-                #{if tag}
-                   ${tag.tag}.
-                #{/if}
-            #{/list} </div>
-            #{/if}
-       #{/else}
+#{if _as == 'book'}
+#{if _tags.size()}<p><img src="@{'/public/images/tag_blue.png'}"/>
+<div id="${_tagcloudName}" class="tagcloud">
+    #{list items:_tags, as:'tag'}
+    #{if tag}
+    ${tag}.
     #{/if}
+    #{/list}
+</div></p>
+#{/if}
+#{/if}
+#{else}
+#{if _tags.size()}
+<div id="${_tagcloudName}" class="tagcloud">
+    #{list items:_tags, as:'tag'}
+    #{if tag}
+    ${tag.tag}.
+    #{/if}
+    #{/list}
+</div>
+#{/if}
+#{/else}
+#{/if}

@@ -2,6 +2,7 @@ package models;
 
 
 import play.data.validation.Required;
+import siena.Column;
 import siena.Generator;
 import siena.Id;
 import siena.Model;
@@ -15,14 +16,24 @@ public class Version extends Model {
     @Required
     public String version;
 
+    @Required
+    public int versionCode;
+
+    @Column(value = "backlog")
+    public String backlog;
+
+    public boolean last;
+
+    public String serverUrl;
 
 
-    public Version(String version) {
-           this.version = version;
+    public Version(String version, int code) {
+        this.version = version;
+        this.versionCode = code;
     }
 
     public static Version find() {
-        Version version = Version.all(Version.class).get();
+        Version version = Version.all(Version.class).filter("last", true).get();
         return version;
     }
 

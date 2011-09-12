@@ -27,8 +27,11 @@ public class Isbn13Extractor {
                     //TODO sauvegarde de l'image partir de l'url
                     livre.image = line.substring(line.indexOf("<thumbnail_url>") + "<thumbnail_url>".length(), line.indexOf("</thumbnail_url>"));
                 }
-                if (line.contains("<title>")) {
-                    livre.titre = line.substring(line.indexOf("<title>") + "<title>".length(), line.indexOf("</title>"));
+                if (line.contains("<h1>")) {
+                    livre.titre = line.substring(line.indexOf("<h1>") + "<h1>".length(), line.indexOf("</h1>"));
+                }
+                if (line.contains("<h1>")) {
+                    livre.titre = line.substring(line.indexOf("<h1>") + "<h1>".length(), line.indexOf("</h1>"));
                 }
             }
             return livre;

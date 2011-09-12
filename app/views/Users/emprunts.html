@@ -1,4 +1,4 @@
-#{extends 'main.html' /}
+#{extends 'mainFull.html' /}
 #{set title:'BreizhLib' /}
 
 #{include 'Users/menu.html' /}
@@ -7,12 +7,14 @@
     #{if reservations.size() > 0}
     #{list items:reservations , as:'emprunt'}
 
-     <section class="miniature">
-          <h1><a href="@{Livres.show(emprunt.empruntEncours.iSBN)}">${emprunt.empruntEncours.titre}</a></h1>
-          <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-          <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-          <footer>Date de retour : ${emprunt.getDateRetourIdeal().format('dd MMMM yyyy', 'fr')}</footer>
-       </section>
+    <section class="miniature">
+        <h1><a href="@{Livres.show(emprunt.empruntEncours.iSBN)}">${emprunt.empruntEncours.titre}</a></h1>
+
+        <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+
+        <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+        <footer>Date de retour : ${emprunt.getDateRetourIdeal().format('dd MMMM yyyy', 'fr')}</footer>
+    </section>
     #{/list}
     #{/if}
     #{else}

@@ -22,6 +22,13 @@ public enum EtatLivre {
         public EtatLivre getNextState() {
             return INSDIPONIBLE;
         }
+    },
+
+    NON_PRESENT("non-present", "models.EtatLivre.nonpresent") {
+        @Override
+        public EtatLivre getNextState() {
+            return DISP0NIBLE;
+        }
     };
 
     private String classeCss;
@@ -45,6 +52,15 @@ public enum EtatLivre {
     public static EtatLivre fromCss(String etat) {
         for (EtatLivre e : values()) {
             if (e.classeCss.equals(etat)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public static EtatLivre fromString(String etat) {
+        for (EtatLivre e : values()) {
+            if (e.name().equals(etat)) {
                 return e;
             }
         }

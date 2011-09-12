@@ -1,17 +1,17 @@
 <script language="javascript">
-    function  display(id,tab){
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
-           for (var i=0; i < tab.length; ++i)
+    function display(id, tab) {
+        var div = document.getElementById(id);
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
+            for (var i = 0; i < tab.length; ++i)
                 hide(tab[i]);
-       }else{
-         hide(id);
-       }
+        } else {
+            hide(id);
+        }
     }
 
-    function  hide(id){
+    function hide(id) {
         var div = document.getElementById(id);
         div.style.visibility = 'hidden';
         div.style.display = "none";
@@ -19,42 +19,56 @@
 
 </script>
 <article>
-    <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}" ><img src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h1>
+    <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}"><img
+            src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h1>
 
-    #{if _user != null &&  _user.username != null}
-       #{social.tweeter text:"Avis sur l'ouvrage ${_livre.titre}",via:_user.username /}
+    #{if _user != null && _user.username != null}
+    <p>#{social.tweeter text:"Avis sur l'ouvrage ${_livre.titre}",via:_user.username /}</p>
     #{/if}
-    #{social.like url:_livre.iSBN,as:'book' /}
-    <table> <tr><td>
-        <img src="${_livre.image}" width="250px" height="300px"/>
-    </td><td>
-        #{secure.check 'member'}
-            #{if _livre.preview == null || _livre.preview }
-                <p><img src="@{'/public/images/loupe.png'}" width="16px" height="16px" /><a href="@{Livres.preview(_livre.iSBN)}" target="_blank">Preview</a></p>
-            #{/if}
-            #{if play.mode.name() == 'DEV'}
+    <p>#{social.like url:_livre.iSBN,as:'book' /}</p>
 
-                <p><a href="javascript:display('addBiblio',null)" class="stack" >Ajouter à ma bibliothèque</a>
-                    <div id="addBiblio" style="visibility:hidden; display:none;">
-                        <p>[] Lus</p>
-                        <p>[] A Lire</p>
-                    </div>
+    <p>
+        <g:plusone size="medium"></g:plusone>
+    </p>
+
+    <table>
+        <tr>
+            <td>
+                <img src="${_livre.image}" width="250px" height="300px"/>
+            </td>
+            <td>
+                #{secure.check 'member'}
+                #{if _livre.preview == null || _livre.preview }
+                <p><img src="@{'/public/images/loupe.png'}" width="16px" height="16px"/><a
+                        href="@{Livres.preview(_livre.iSBN)}" target="_blank">Preview</a></p>
+                #{/if}
+                #{if play.mode.name() == 'DEV'}
+
+                <p><a href="javascript:display('addBiblio',null)" class="stack">Ajouter à ma bibliothèque</a>
+
+                <div id="addBiblio" style="visibility:hidden; display:none;">
+                    <p>[] Lus</p>
+
+                    <p>[] A Lire</p>
+                </div>
                 </p>
-            #{/if}
+                #{/if}
 
-        <p>
-            #{if _livre.reservationEncours == null}
-            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
-            #{/if}
-        </p>
-            <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
-        #{/secure.check}
+                <p>
+                    #{if _livre.reservationEncours == null}
+                    <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
+                    #{/if}
+                </p>
 
-        <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
+                <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
+                #{/secure.check}
 
-        #{tag bookId:_livre.iSBN,tags:_livre.getTags(), as:'book',tagcloudName:'tagcloudlivre' /}
+                <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
 
-    </td></tr>
+                #{tag bookId:_livre.iSBN,tags:_livre.getTags(), as:'book',tagcloudName:'tagcloudlivre' /}
+
+            </td>
+        </tr>
     </table>
     #{if _livre.commentaires}
     <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
@@ -70,3 +84,16 @@
     #{commentaire bookId:_livre.iSBN,user:_user,note:_livre.getNote(), as:'post' /}
     #{/if}
 </article>
+
+<script type="text/javascript">
+    window.___gcfg = {lang: 'fr'};
+
+    (function() {
+        var po = document.createElement('script');
+        po.type = 'text/javascript';
+        po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(po, s);
+    })();
+</script>

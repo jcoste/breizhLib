@@ -1,35 +1,35 @@
 <script type="text/javascript">
-$(document).ready(function(){
-   $('.popup${_livre.id}').CreateBubblePopup();
-   $('.popup${_livre.id}').mouseover(function(){
+    $(document).ready(function() {
+        $('.popup${_livre.id}').CreateBubblePopup();
+        $('.popup${_livre.id}').mouseover(function() {
 
-			//show the bubble popup with new options
-			$(this).ShowBubblePopup({
-										innerHtml: "${_livre.titre}"+
-                                                   "<p>${_livre.editeur}</p>"+
-                                                   '<p>'+
-                                                        #{if _livre.reservationEncours == null}
-                                                        '<span class="${_livre.getEtat().getClasseCss()}">${_livre.getEtat().getClasseCss()}</span>'+
-                                                        #{/if}
-                                                    '</p>'+
-                                                     #{if _livre.getCommentaires().size() > 0}
-                                                    '${_livre.getCommentaires().size()} Commentaire${_livre.getCommentaires().pluralize()}'+
-                                                    #{/if}
-                                                     #{else}
-                                                    '&{"views.commentaires.aucunCommentaire"}'+
-                                                     #{/else}
-                                                    '<p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'script' /}</p>',
-										innerHtmlStyle: {
-															color: ('#333333'),
-															'text-align':'left'
-														},
-										themeName: 	'azure',
-										themePath: 	'../public/images/jquerybubblepopup-theme'
-								  });
-		});
-});
+            //show the bubble popup with new options
+            $(this).ShowBubblePopup({
+                        innerHtml: "${_livre.titre}" +
+                                "<p>${_livre.editeur}</p>" +
+                                '<p>' +
+                            #{if _livre.reservationEncours == null}
+                                '<span class="${_livre.getEtat().getClasseCss()}">${_livre.getEtat().getClasseCss()}</span>' +
+                            #{/if}
+                                '</p>' +
+                            #{if _livre.getCommentaires().size() > 0}
+                                '${_livre.getCommentaires().size()} Commentaire${_livre.getCommentaires().pluralize()}' +
+                            #{/if}
+                            #{else}
+                                '&{"views.commentaires.aucunCommentaire"}' +
+                            #{/else}
+                                '<p> #{stars max:5, value:_livre.getNote(),id:_livre.id,as:'script' /}</p>',
+                        innerHtmlStyle: {
+                            color: ('#333333'),
+                            'text-align':'left'
+                        },
+                        themeName:     'azure',
+                        themePath:     '../public/images/jquerybubblepopup-theme'
+                    });
+        });
+    });
 
 </script>
-<section class="book">
-    <a href="@{Livres.show(_livre.iSBN)}"  class="popup${_livre.id}"/> <img src="${_livre.image}"/></a>
+<section  class="book">
+    <a href="@{Livres.show(_livre.iSBN)}" class="popup${_livre.id}"/> <img src="${_livre.image}"/></a>
 </section>

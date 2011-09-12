@@ -15,7 +15,7 @@ public class GAESecure implements ISecure {
 
     protected String callback;
 
-    private  UserManagement um;
+    private UserManagement um;
 
     public GAESecure(UserManagement um) {
         init();
@@ -53,7 +53,7 @@ public class GAESecure implements ISecure {
         if (GAE.isLoggedIn()) {
             user = um.getByEmail(GAE.getUser().getEmail().toLowerCase());
             if (user == null) {
-                user = um.createUser(GAE.getUser().getEmail().toLowerCase(),null);
+                user = um.createUser(GAE.getUser().getEmail().toLowerCase(), null);
                 user.setActif(true);
                 user.save();
             }

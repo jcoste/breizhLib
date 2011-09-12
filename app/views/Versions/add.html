@@ -1,0 +1,20 @@
+ #{form @Versions.save(),enctype:'multipart/form-data'}
+               <table> <tr>
+                    <td><label for="version">Version (0.1.0) : </label></td>
+                    <td><p>#{error 'version' /}</p><input type="text" name="version" id="version" value="${params.version}"
+                                                        size="50"/></td>
+                </tr>
+                <tr>
+                    <td><label for="versionCode">Version Code (1000) : </label></td>
+                    <td><p>#{error 'versionCode' /}</p><input type="text" name="versionCode" id="versionCode" value="${params.versionCode}"
+                                                        size="50"/></td>
+                </tr>
+
+                <tr>
+                    <td><label for="backlog">Backlog  : </label></td>
+                    <td><p>#{error 'backlog' /}</p><textarea name="backlog" id="backlog" value="${params.backlog}"
+                                                        size="250" rows="5" cols="40"><ul><li>TODO</li></ul></textarea></td>
+                </tr>
+            </table>
+            <input type="submit" value="&{'views.livres.add.submit'}"/>
+            #{/form}

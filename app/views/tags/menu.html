@@ -4,13 +4,13 @@
         <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
         <li><a href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
         #{secure.check 'member'}
-            <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
-         #{/secure.check}
+        <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
+        #{/secure.check}
         <li><a href="@{Livres.index(0,'date')}">&{'views.main.menu.books'}</a></li>
         <li><a href="@{Editeurs.index()}">Editeurs</a></li>
         #{/secure.check}
         #{secure.check 'public', not:'member'}
-        <li><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></li>
+        <!-- li><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></li -->
         #{/secure.check}
         #{secure.check 'admin'}
         <li>Admin
@@ -19,12 +19,14 @@
                 <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
                 <li><a href="@{Users.index()}">Utilisateurs</a></li>
                 <li><a href="@{Pictures.explore()}">Explorateur</a></li>
+                <li><a href="@{Export.index()}">Export</a></li>
+                <li><a href="@{Import.index()}">Import</a></li>
             </ul>
         </li>
         #{/secure.check}
         #{secure.check 'member'}
         <li><a href="@{Users.infos()}">Mes Infos</a></li>
-        <li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li>
+        <!-- li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li -->
         #{/secure.check}
     </ul>
 </nav>

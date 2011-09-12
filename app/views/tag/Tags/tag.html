@@ -4,13 +4,13 @@
 #{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
 #{script 'webwidget_rating_simple.js' /}
 #{stylesheet 'webwidget_rating_simple.css' /}
- <article>
-    <h1><a href="@{tag.Tags.index()}" >Tag</a> : <img src="@{'/public/images/tag_blue.png'}"/>${tag}</h1>
+<article>
+    <h1><a href="@{tag.Tags.index()}">Tag</a> : <img src="@{'/public/images/tag_blue.png'}"/>${tag}</h1>
 
- #{list items:livres, as:'livre'}
+    #{list items:livres, as:'livre'}
     #{if livre}
-     #{livre livre:livre, as:'summary' /}
+    #{livre livre:livre, as:'summary' /}
     #{/if}
- #{/list}
+    #{/list}
 
 </article>

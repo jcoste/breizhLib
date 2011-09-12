@@ -4,6 +4,7 @@ package models;
 import controllers.security.Secure;
 import models.tag.LivreTag;
 import models.tag.Tag;
+import models.tag.Taggable;
 import play.data.binding.As;
 import play.data.validation.Required;
 import siena.*;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @siena.Table("Livre")
-public class Livre extends Model {
+public class Livre extends UpdatableModel implements Taggable {
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
@@ -108,7 +109,7 @@ public class Livre extends Model {
     }
 
     public List<Reservation> getHistoriqueReservation() {
-        return Reservation.all(Reservation.class).filter("emprunt", this).fetch();
+        return Reservation.all(Reservation.class).filter("emprunt", this).filter("isAnnuler", false).fetch();
     }
 
     public List<Commentaire> getCommentaires() {
@@ -138,19 +139,22 @@ public class Livre extends Model {
     }
 
     public void addTag(String tag) {
-      Tag newTag = Tag.findOrCreateByName(tag);
-      LivreTag livreTag = new LivreTag(this, newTag);
-      livreTag.insert();
+        Tag newTag = Tag.findOrCreateByName(tag);
+        LivreTag livreTag = LivreTag.findByTagAndLivre(newTag, this);
+        if (livreTag == null) {
+            livreTag = new LivreTag(this, newTag);
+            livreTag.insert();
+        }
     }
 
     public static List<Livre> findLikeTitre(String text) {
-       List<Livre> allLivres = findAll();
-       List<Livre> livres    = new ArrayList<Livre>();
-       for(Livre livre : allLivres){
-            if(livre.titre.toLowerCase().contains(text.toLowerCase())) {
-              livres.add(livre);
+        List<Livre> allLivres = findAll();
+        List<Livre> livres = new ArrayList<Livre>();
+        for (Livre livre : allLivres) {
+            if (livre.titre.toLowerCase().contains(text.toLowerCase())) {
+                livres.add(livre);
             }
-       }
+        }
         return livres;
     }
 }

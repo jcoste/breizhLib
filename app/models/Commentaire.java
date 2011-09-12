@@ -10,10 +10,12 @@ import java.util.Date;
 import java.util.List;
 
 @Table("Commentaire")
-public class Commentaire extends Model {
+public class Commentaire extends UpdatableModel implements Updatable{
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;
+
+    public String uid;
 
     @Required
     public String nom;
@@ -27,6 +29,7 @@ public class Commentaire extends Model {
     @Column("livre")
     public Livre livre;
 
+    @Column("user")
     public User user;
 
     @As("yyyy-MM-dd")
@@ -46,21 +49,33 @@ public class Commentaire extends Model {
         return nom + " : " + commentaire;
     }
 
+    public String getUid() {
+        if (uid == null) {
+            uid = "C" + id;
+        }
+        return uid;
+    }
+
     public static List<Commentaire> findAll() {
         return Commentaire.all(Commentaire.class).fetch();
     }
 
+    public static Commentaire findByUID(String uid) {
+        return Commentaire.all(Commentaire.class).filter("uid", uid).get();
+    }
+
 
     public static List<Commentaire> findLike(String recherche) {
-       List<Commentaire> allCommetairess = findAll();
-       List<Commentaire> commentaires = new ArrayList<Commentaire>();
-       for(Commentaire commentaire : allCommetairess){
-            if(commentaire.commentaire.toLowerCase().contains(recherche.toLowerCase()) ||
-               commentaire.nom.toLowerCase().contains(recherche.toLowerCase())) {
-              commentaires.add(commentaire);
+        List<Commentaire> allCommetairess = findAll();
+        List<Commentaire> commentaires = new ArrayList<Commentaire>();
+        for (Commentaire commentaire : allCommetairess) {
+            if (commentaire.commentaire.toLowerCase().contains(recherche.toLowerCase()) ||
+                    commentaire.nom.toLowerCase().contains(recherche.toLowerCase())) {
+                commentaires.add(commentaire);
             }
-       }
+        }
         return commentaires;
     }
+
 }
 

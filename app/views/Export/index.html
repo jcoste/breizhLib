@@ -1,0 +1,27 @@
+#{extends 'mainFull.html' /}
+#{set title:'BreizhLib Export' /}
+
+#{include 'Admin/menu.html' /}
+#{if serveur}
+<p>ApiCode : ${apicode}</p>
+#{form @Export.code(),enctype:'multipart/form-data'}
+<input type="submit" value="Generate"/>
+#{/form}
+#{/if}
+#{else}
+<table>
+    #{form @Export.init(),enctype:'multipart/form-data'}
+    <tr>
+        <td><label for="name">Nom : </label></td>
+        <td><p>#{error 'name' /}</p><input type="text" name="name" id="name" value="${params.name}"
+                                           size="50"/></td>
+    </tr>
+    <tr>
+        <td><label for="url">Url : </label></td>
+        <td><input type="text" name="url" id="url" value="${params.url}" size="50"/>
+        </td>
+    </tr>
+</table>
+<input type="submit" value="Init"/>
+#{/form}
+#{/else}

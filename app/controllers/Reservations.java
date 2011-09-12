@@ -1,8 +1,11 @@
 package controllers;
 
-import models.*;
-import models.socialoauth.Role;
 import controllers.security.Secure;
+import models.EtatLivre;
+import models.Livre;
+import models.Reservation;
+import models.User;
+import models.socialoauth.Role;
 import play.Logger;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -24,7 +27,7 @@ public class Reservations extends Controller {
         Livre livre = Livre.findByISBN(id);
         if (livre == null) {
             Logger.warn("l'ouvrage d'id {} n'existe pas en base", id);
-            error(Messages.get("bookid_not_exist",id));
+            error(Messages.get("bookid_not_exist", id));
         }
         List<Reservation> emprunts = livre.getHistoriqueReservation();
         for (Reservation resa : emprunts) {
@@ -41,7 +44,7 @@ public class Reservations extends Controller {
     @Get("/reservations")
     public static void reservations() {
         Date d = Reservation.getDummyDate();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
         for (Reservation resa : reservations) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
@@ -49,7 +52,7 @@ public class Reservations extends Controller {
         }
 
 
-        List<Reservation> emprunts = Reservation.all(Reservation.class).filter("dateEmprunt>", d).filter("dateRetour", null).fetch();
+        List<Reservation> emprunts = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("dateEmprunt>", d).filter("dateRetour", null).fetch();
         for (Reservation resa : emprunts) {
             if (resa.empruntEncours != null) {
                 resa.empruntEncours.get();
@@ -57,8 +60,6 @@ public class Reservations extends Controller {
         }
         render(reservations, emprunts);
     }
-
-
 
 
     @Role("admin")
@@ -89,8 +90,9 @@ public class Reservations extends Controller {
         Livre livre = reservation.empruntEncours;
         livre.get();
         reservation.empruntEncours = null;
+        reservation.isAnnuler = true;
         livre.reservationEncours = null;
-        reservation.delete();
+        reservation.update();
         livre.setEtat(EtatLivre.DISP0NIBLE);
         livre.update();
         index(livre.iSBN);
@@ -125,7 +127,7 @@ public class Reservations extends Controller {
             User user = (User) Secure.getUser();
             render(id, user);
         } else {
-            error(Messages.get("book_not_available",livre.titre));
+            error(Messages.get("book_not_available", livre.titre));
         }
     }
 
@@ -162,8 +164,6 @@ public class Reservations extends Controller {
         flash.success(Messages.get("reservation_save"));
         Livres.show(id);
     }
-
-
 
 
 }

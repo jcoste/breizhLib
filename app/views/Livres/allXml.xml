@@ -1,5 +1,5 @@
 <livres>
-#{list livres, as:'livre'}
+    #{list livres, as:'livre'}
     <livre>
         <editeur>${livre.editeur}</editeur>
         <name>${livre.titre}</name>
@@ -8,5 +8,5 @@
         <etat>${livre.etat}</etat>
         <tags>${livre.getTags().join(';')}</tags>
     </livre>
-#{/list}
+    #{/list}
 </livres>

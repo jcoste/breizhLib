@@ -1,69 +1,89 @@
-#{extends 'main.html' /}
+#{extends 'mainFull.html' /}
 #{set title:'BreizhLib explorer images' /}
 <script type="text/javascript">
-      function  display(id){
-       var div = document.getElementById(id);
-       if(div.style.visibility == 'hidden'){
-           div.style.visibility='visible';
-           div.style.display = "block";
-           var img = document.getElementById(id+'_img');
-           img.src = '/public/images/moins.png';
-       }else{
-          hide(id);
-       }
-    }
-
-    function  hide(id){
+    function plus(id) {
         var div = document.getElementById(id);
-        div.style.visibility = 'hidden';
-        div.style.display = "none";
-        var img = document.getElementById(id+'_img');
-        img.src = '/public/images/plus.png';
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
+            var img = document.getElementById(id + '_img');
+            img.src = '/public/images/moins.png';
+        } else {
+            moins(id);
+        }
     }
 
-    function  showImg(srcUrl){
+    function moins(id) {
+        var div = document.getElementById(id);
+        ;
+        if (div.style.visibility == 'hidden') {
+            div.style.visibility = 'visible';
+            div.style.display = "block";
+
+            var img = document.getElementById(id + '_img');
+            img.src = '/public/images/moins.png';
+        }
+
+    }
+
+    function showImg(srcUrl) {
         var img = document.getElementById('displayImg');
         img.src = srcUrl;
     }
 
 </script>
-<article>
- <h1>Explorateur d'images</h1>
-  %{
-          lastPath  = null;
-   }%
-<table width="90%"><tr><td width="30%" valign="top">
-     <p onclick="display('shared');"><img id="shared_img" src="@{'/public/images/plus.png'}"/> <img src="@{'/public/images/drive.png'}"/> shared/</p>
-     <div id="shared" style="visibility:hidden; display:none;margin-left: 10px;">
-     #{list items:pictures, as:'picture'}
-        #{if picture}
-             #{if !lastPath.equals(picture.path)}
-                #{if lastPath != null }
-                    </div>
-                #{/if}
-               <p onclick="display('${picture.path}');"> <img id="${picture.path}_img" src="@{'/public/images/plus.png'}"/> <img src="@{'/public/images/folder.png'}"/> ${picture.path}</p>
-                %{
-                    lastPath  = picture.path;
-                 }%
-               <div id="${picture.path}" style="visibility:hidden; display:none;margin-left: 10px;">
-              #{/if}
-               %{
-                  imgUrl  = "/shared/"+picture.name;
-                 }%
-             <p onclick="showImg('${imgUrl}');"><img src="@{'/public/images/picture.png'}"/> ${picture.name}</p>
-        #{/if}
-        #{/list}
-      </div>
-  </div>
-  </td><td width="70%" align="center">
+#{include 'Admin/menu.html' /}
 
-      <img id="displayImg" src="" alt="No Image Selected"/>
-  </td></tr>
-  <tr><td>
-      <h1 onclick="display('add');">Ajout d'image</h1>
-      <div id="add" style="visibility:hidden; display:none;margin-left: 10px;">
-      #{include 'Pictures/add.html' /}
-      </div>
-  </td></tr>
- </table>
-</article>
+    <div id="menu">
+        <ul id="onglets">
+            <li id="liexplore" class="active"><a class="stack" href="javascript:displayHide('explore',['add'])">Explorateur
+                d'images</a></li>
+            <li id="liadd"><a class="stack" href="javascript:displayHide('add',['explore'])">Ajout d'image</a></li>
+        </ul>
+
+        %{
+        lastPath = null;
+        }%
+        <div id="explore" style="visibility:visible; display:block;">
+            <table>
+                <tr>
+                    <td width="30%" valign="top">
+                        <p onclick="plus('shared');"><img id="shared_img" src="@{'/public/images/plus.png'}"/> <img
+                                src="@{'/public/images/drive.png'}"/> shared/</p>
+
+                        <div id="shared" style="visibility:hidden; display:none;margin-left: 10px;">
+                            #{list items:pictures, as:'picture'}
+                            #{if picture}
+                            #{if !lastPath.equals(picture.path)}
+                            #{if lastPath != null }
+                        </div>
+                        #{/if}
+                        <p onclick="plus('${picture.path}');"><img id="${picture.path}_img"
+                                                                   src="@{'/public/images/plus.png'}"/> <img
+                                src="@{'/public/images/folder.png'}"/> ${picture.path}</p>
+                        %{
+                        lastPath = picture.path;
+                        }%
+                        <div id="${picture.path}" style="visibility:hidden; display:none;margin-left: 10px;">
+                            #{/if}
+                            %{
+                            imgUrl = "/shared/"+picture.name;
+                            }%
+                            <p onclick="showImg('${imgUrl}');"><img src="@{'/public/images/picture.png'}"/>
+                                ${picture.name}</p>
+                            #{/if}
+                            #{/list}
+                        </div>
+                    </td>
+                    <td width="70%" align="center">
+
+                        <img id="displayImg" src="" alt="No Image Selected"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="add" style="visibility:hidden; display:none;margin-left: 10px;">
+            #{include 'Pictures/add.html' /}
+        </div>
+
+    </div>
