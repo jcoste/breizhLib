@@ -50,6 +50,12 @@ public class LoadDevData {
 
 
         }
+        if (Faq.all(Faq.class).count() == 0) {
+              Faq faq = new Faq("Comment réserver un ouvrage ?","Connectez vous,sélectionner l'ouvrage et cliquez sur réserver");
+              faq.save();
+        }
+
+
         if (Version.all(Version.class).count() == 0) {
             Version version = new Version("0.1.0", 1000);
             version.backlog = "<ul>\n" +
@@ -71,6 +77,7 @@ public class LoadDevData {
             version.save();
 
             version = new Version("0.1.9", 1009);
+            version.last = true;
             version.backlog = "<ul>\n" +
                     "                    <li>Google Analytics</li>\n" +
                     "                    <li>Correction bugs</li>\n" +
