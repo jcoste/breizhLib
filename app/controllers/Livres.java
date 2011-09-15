@@ -80,7 +80,7 @@ public class Livres extends Controller {
 
 
     @Role("public")
-    @Get("/news")
+    @Get("/")
     public static void last() {
         List<Livre> livres = Livre.all(Livre.class).order("-dateAjout").fetch(NB_NEWS_PAR_PAGE);
         render(livres);
