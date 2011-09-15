@@ -17,10 +17,14 @@ import utils.LoadDevData;
 })
 public class Application extends Controller {
 
+    @Get("/")
+    public static void index() {
+        Livres.last();
+    }
 
     @Get("/contact")
     public static void contact() {
-        Livres.last();
+        index();
     }
 
     @Get("/init")
@@ -28,7 +32,7 @@ public class Application extends Controller {
         if (Play.mode.equals(Play.Mode.DEV)) {
             LoadDevData.doJob();
         }
-        Livres.last();
+        index();
     }
 
     public static void empty() {
@@ -39,7 +43,7 @@ public class Application extends Controller {
         if (((User) Secure.getUser()).email == null) {
             Users.edit();
         } else {
-            Livres.last();
+            index();
         }
     }
 
