@@ -13,16 +13,7 @@
         <!-- li><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></li -->
         #{/secure.check}
         #{secure.check 'admin'}
-        <li><a href="@{Admin.index()}">Admin</a>
-            <ul>
-                <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
-                <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
-                <li><a href="@{Users.index()}">Utilisateurs</a></li>
-                <li><a href="@{Pictures.explore()}">Explorateur</a></li>
-                <li><a href="@{Export.index()}">Export</a></li>
-                <li><a href="@{Import.index()}">Import</a></li>
-            </ul>
-        </li>
+        <li><a href="@{Admin.index()}">Admin</a></li>
         #{/secure.check}
         #{secure.check 'member'}
         <li><a href="@{Users.infos()}">Mes Infos</a></li>

@@ -6,8 +6,8 @@
 #
 # views/main.html
 #
-views.main.title = Bibliothèque
-views.main.footer = Copyleft - breizhjug.org
+views.main.title = Bibliotheque du BreizhJug
+views.main.footer = Copyleft -
 
 
  #error=<span class="error">%s</span>
@@ -92,7 +92,7 @@ views.livres.index.title = Retrouvez ici les livres de la bibliothèque du Breiz
 #
 # views/Livres/last.html
 #
-views.livres.last.title =  Retrouvez ici les derniers livres de la bibliothèque du BreizhJug.
+views.livres.last.title =  Ci-dessous nos 5 derniers ouvrages :
 
 views.livres.editeur.title= Ouvrages de l'éditeur
 

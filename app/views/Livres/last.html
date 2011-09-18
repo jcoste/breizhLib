@@ -1,41 +1,150 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib Nouveautés' /}
-<script type="text/javascript">
-
-    function show(id) {
-        var divContainer = document.getElementById('popup');
-        for (i = 0; i < divContainer.children.length; i++) {
-            divContainer.children[i].style.visibility = 'hidden';
-            divContainer.children[i].style.display = "none";
-        }
-        var div = document.getElementById(id);
-        if (div.style.visibility == 'hidden') {
-            div.style.visibility = 'visible';
-            div.style.display = "block";
-
-        }
-    }
-
-</script>
-#{script 'jquery.bubblepopup.v2.3.1.min.js' /}
-#{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
-#{script 'webwidget_rating_simple.js' /}
-#{stylesheet 'webwidget_rating_simple.css' /}
 <article>
     <p>&{'views.livres.last.title'}</p>
 
-    #{if livres}
-    #{if livres.size()}
-    #{list items:livres, as:'livre'}
-    #{if livre}
-    #{livre livre:livre, page:0,redirect:'last', as:'summary' /}
-    #{/if}
-    #{/list}
-    #{/if}
-    #{/if}
+    <script type="text/javascript">
+            // Actions de navigation
+		    // Initialisation du compteur
+		    Cpt = 0;
+			// Execution de cette fonction lorsque le DOM sera entièrement chargé
+			$(document).ready(function()
+			{
+				// Element de référence pour la zone de visualisation (ici le premier item)
+				RefElem = $(".books li:first-child");
+				// Nombre d'éléments de la liste
+				NbElem = $(".books li").length;
 
-    #{else}
-    <p>&{'views.livres.noBookRecorded'}</p>
-    #{/else}
+				// Ciblage de la bande de diapositives
+				$(".books")
+					// Englobage de la liste par la zone de visualisation
+					.wrap('<div class="books-conteneur"></div>')
+					// Application d'une largeur à la bande de diapositive afin de conserver une structrure horizontale
+					.css("width", (RefElem.width() * NbElem) );
+				// Ciblage de la zone de visualisation
+				$(".books-conteneur")
+					// Application de la largeur d'une seule diapositive
+					.width(  RefElem.width() * 1  )
+					// Application de la hauteur d'une seule diapositive
+					.height( RefElem.height() )
+					// Blocage des débordements
+					.css("overflow", "hidden");
+
+
+				// Clic sur le bouton "Suivant"
+				$(".books-next").click(function() {
+					// Si le compteur est inférieur au nombre de diaposives moins 1
+					if(Cpt < (NbElem-1) ) {
+						// Ajout +1 au compteur (nous allons sur la diapositive suivante)
+						Cpt++;
+						// Mouvement du carrousel en arrière-plan
+						$(".books").animate({
+							marginLeft : - (RefElem.width() * Cpt)
+						});
+						// styles
+						idNew=Cpt+1;
+						$("#"+idNew).addClass("active");
+						$("#"+Cpt).removeClass("active");
+                         displayPopup(Cpt);
+						// popup
+						$("#popup").fadeOut(200).fadeIn(200);
+					}
+				});
+				// Action du bouton "Précédent"
+				$(".books-prev").click(function() {
+					// Si le compteur est supérieur à zéro
+					if(Cpt > 0) {
+						// Soustraction -1 au compteur (nous allons sur la diapositive précédente)
+						Cpt--;
+						// Mouvement du carrousel en arrière-plan
+						$(".books").animate({
+							marginLeft : - (RefElem.width() * Cpt)
+						});
+						// styles
+						idNew=Cpt+1;
+						$("#"+idNew).addClass("active");
+						idOld=Cpt+2;
+						$("#"+idOld).removeClass("active");
+
+                        displayPopup(Cpt);
+						// popup
+						$("#popup").fadeOut(200).fadeIn(200);
+					}
+				});
+
+				// Clic sur un numero
+				$(".direct-link").click(function(event) {
+					// Soustraction -1 au compteur (nous allons sur la diapositive précédente)
+					Goto = event.target.id - 1;
+					if (Cpt != Goto)
+					{
+						// Mouvement du carrousel en arrière-plan
+						$(".books").animate({
+							marginLeft : - (RefElem.width() * Goto)
+						});
+						// styles
+						$("#"+event.target.id).addClass("active");
+						idOld = Cpt+1;
+						$("#"+idOld).removeClass("active");
+						Cpt = Goto;
+                        displayPopup(Cpt);
+						// popup
+						$("#popup").fadeOut(200).fadeIn(200);
+					}
+				});
+
+                var livres = new Array();
+                var idx = 0;
+                #{list items:livres, as:'livre'}
+                  livres[idx++] = {titre:"${livre.titre}",editeur:"${livre.editeur}",nbCommentaires:${livre.getCommentaires().size()},etat:"${livre.getEtat().getClasseCss()}",note:${livre.getNote()}};
+                #{/list}
+
+                function displayPopup(idx){
+                     var div = document.getElementById('popup');
+                     if(livres[idx]){
+                         var stars = '';
+                         for(i=0 ; i<livres[idx].note;i++){
+                               stars+= "<img src=\"@{'/public/images/star.png'}\" style=\"vertical-align:bottom\"/>";
+                         }
+
+                         div.innerHTML = '<h3>'+livres[idx].titre+'</h3>'+
+                         '<span> Editeur: </span> '+livres[idx].editeur+' <br />'+
+                         '<span> Statut : </span> '+livres[idx].etat+' <br /> '+
+                         '<span> Commentaires : </span> '+livres[idx].nbCommentaires+' <br /> '+
+                         '<br />'+
+                         '<span> Note: </span>'  +stars+'<br />';
+                     } else{
+                         div.innerHTML ='';
+                     }
+                }
+                displayPopup(Cpt);
+			});
+
+			</script>
+
+    <div id="caroussel">
+				<div id="popup" src="@{'/public/images/popup-book-accueil.png'}"></div>
+				<ul class="books">
+                    #{if livres}
+                    #{if livres.size()}
+                    #{list items:livres, as:'livre'}
+                    #{if livre}
+                        <li><img src="${livre.image}" /></li>
+                    #{/if}
+                    #{/list}
+                    #{/if}
+                    #{/if}
+				</ul>
+				<ul class="books-pagination">
+					<li class="previous-off books-prev">« Précédent</li>
+					<li id="1" class="direct-link active">1</li>
+                    #{list items:1..livres.size()-1, as:'i'}
+					    <li id="${i+1}" class="direct-link">${i+1}</li>
+                    #{/list}
+					<li class="next books-next">Suivant »</li>
+				</ul>
+	</div>
+
+
 
 </article>
