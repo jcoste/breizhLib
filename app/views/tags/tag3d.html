@@ -9,7 +9,7 @@
 #{script 'jquery.tagsphere.js' /}
 <script type="text/javascript">
     $(function() {
-        $('#tagwidget').tagcloud({centrex:140, centrey:100});
+        $('#tagwidget').tagcloud({centrex:${_width/2}, centrey:${_height/2}});
     });
 </script>
 <style type="text/css">
@@ -29,7 +29,7 @@
 
 
 #{if _tags.size()}
-<div id="tagwidget" style="width:240px; height:260px; ">
+<div id="tagwidget" style="width:${_width}px; height:${_height}px; ">
     <ul>
         #{list items:_tags, as:'tag'}
         #{if tag}

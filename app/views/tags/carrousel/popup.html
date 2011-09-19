@@ -1,0 +1,12 @@
+<div id="popup" src="@{'/public/images/popup-book-accueil.png'}">
+                    <h3>${_livre.titre}</h3>
+					<span> Editeur: </span> ${_livre.editeur} <br />
+					<span> Statut : </span> ${_livre.getEtat().getClasseCss()} <br />
+					<span> Commentaires : </span> ${_livre.getCommentaires().size()} <br />
+					#{if _livre.getNote() > 0 }<span> Note: </span>
+                        #{list items:1.._livre.getNote(), as:'i'}
+						    <img src="@{'/public/images/star.png'}" style="vertical-align:bottom"/>
+                        #{/list}
+                    #{/if}
+                     <br />
+</div>

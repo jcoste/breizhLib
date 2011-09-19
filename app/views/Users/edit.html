@@ -93,6 +93,14 @@
                                                      size="20"/>
                 </td>
             </tr>
+            #{if user.username == null}
+                 <tr>
+                    <td><label for="username">Twitter : </label></td>
+                    <td><p>#{error 'username' /}</p><input type="text" name="username" id="username" value="${user.username}"
+                                                         size="20"/>
+                    </td>
+                </tr>
+            #{/if }
             <tr>
                 <td><label for="profil">Profil : </label></td>
                 <td><p>#{error 'profil' /}</p><input type="radio" name="profil" value="oui" #{if user.isPublic}checked

@@ -81,6 +81,8 @@ views.livres.add.image.label = Image:
 views.livres.add.iSBN.label =  ISBN-13:
 views.livres.add.submit = Ajouter
 
+views.livres.edit.title = Editer un Ouvrage de la bibliothèque
+
 views.livres.edit.submit = Modifier
 
 #

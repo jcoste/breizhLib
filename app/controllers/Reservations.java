@@ -125,7 +125,7 @@ public class Reservations extends Controller {
         Livre livre = Livre.findByISBN(id);
         if (livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
             User user = (User) Secure.getUser();
-            render(id, user);
+            render(id, user,livre);
         } else {
             error(Messages.get("book_not_available", livre.titre));
         }
