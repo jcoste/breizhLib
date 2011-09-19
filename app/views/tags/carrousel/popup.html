@@ -3,10 +3,9 @@
 					<span> Editeur: </span> ${_livre.editeur} <br />
 					<span> Statut : </span> ${_livre.getEtat().getClasseCss()} <br />
 					<span> Commentaires : </span> ${_livre.getCommentaires().size()} <br />
-					#{if _livre.getNote() > 0 }<span> Note: </span>
-                        #{list items:1.._livre.getNote(), as:'i'}
+					<span> Note: </span>
+                        #{if _livre.getNote() > 0 }#{list items:1.._livre.getNote(), as:'i'}
 						    <img src="@{'/public/images/star.png'}" style="vertical-align:bottom"/>
-                        #{/list}
-                    #{/if}
+                        #{/list}#{/if}
                      <br />
 </div>
