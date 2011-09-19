@@ -19,9 +19,35 @@
 
 </script>
 <article>
-    <h1>${_livre.titre} #{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}"><img
-            src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h1>
+     <div id="caroussel">
+				<div id="popup" src="@{'/public/images/popup-book-accueil.png'}">
+                    <h3>${_livre.titre}#{secure.check 'admin'}<a href="@{Livres.edit(_livre.id)}"><img src="@{'/public/images/edit.png'}" width="25px" height="25px"/></a> #{/secure.check}</h3>
+					<span> Editeur: </span> ${_livre.editeur} <br />
+					<span> Statut : </span> ${_livre.getEtat().getClasseCss()} <br />
+					<span> Commentaires : </span> ${_livre.getCommentaires().size()} <br />
+                     <span><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></span><br />
+					<span> Note: </span>
+                        #{if _livre.getNote() > 0 }#{list items:1.._livre.getNote(), as:'i'}
+						    <img src="@{'/public/images/star.png'}" style="vertical-align:bottom"/>
+                        #{/list}#{/if}
+                        <br />
+                    #{secure.check 'member'}
+                        #{if _livre.preview == null || _livre.preview }
+                            <span><img src="@{'/public/images/loupe.png'}" width="16px" height="16px"/><a
+                                    href="@{Livres.preview(_livre.iSBN)}" target="_blank">Preview</a></span><br /> <br/>
+                        #{/if}
 
+                     #{if _livre.reservationEncours == null}
+                            <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span><br/><br/>
+                    #{/if}
+
+                    #{/secure.check}
+
+
+				</div>
+                #{carrousel.images livre:_livre /}
+
+	</div> <br/>
     #{if _user != null && _user.username != null}
     <p>#{social.tweeter text:"Avis sur l'ouvrage ${_livre.titre}",via:_user.username /}</p>
     #{/if}
@@ -30,50 +56,25 @@
     <p>
         <g:plusone size="medium"></g:plusone>
     </p>
+    #{if play.mode.name() == 'DEV'}
+                    <p><a href="javascript:display('addBiblio',null)" class="stack">Ajouter à ma bibliothèque</a>
 
-    <table>
-        <tr>
-            <td>
-                <img src="${_livre.image}" width="250px" height="300px"/>
-            </td>
-            <td>
-                #{secure.check 'member'}
-                #{if _livre.preview == null || _livre.preview }
-                <p><img src="@{'/public/images/loupe.png'}" width="16px" height="16px"/><a
-                        href="@{Livres.preview(_livre.iSBN)}" target="_blank">Preview</a></p>
-                #{/if}
-                #{if play.mode.name() == 'DEV'}
+                    <div id="addBiblio" style="visibility:hidden; display:none;">
+                        <p>[] Lus</p>
 
-                <p><a href="javascript:display('addBiblio',null)" class="stack">Ajouter à ma bibliothèque</a>
+                        <p>[] A Lire</p>
+                    </div>
+                    </p>
+    #{/if}
+    <p>#{tag bookId:_livre.iSBN,tags:_livre.getTags(), as:'book',tagcloudName:'tagcloudlivre' /}</p>
 
-                <div id="addBiblio" style="visibility:hidden; display:none;">
-                    <p>[] Lus</p>
 
-                    <p>[] A Lire</p>
-                </div>
-                </p>
-                #{/if}
 
-                <p>
-                    #{if _livre.reservationEncours == null}
-                    <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span>
-                    #{/if}
-                </p>
 
-                <p><a href="@{Reservations.index(_livre.iSBN)}">Historique emprunt</a></p>
-                #{/secure.check}
-
-                <p><span class="${_livre.getEtat().getClasseCss()}">&{_livre.etat.getLocalMessage()}</span></p>
-
-                #{tag bookId:_livre.iSBN,tags:_livre.getTags(), as:'book',tagcloudName:'tagcloudlivre' /}
-
-            </td>
-        </tr>
-    </table>
-    #{if _livre.commentaires}
-    <h1>${_livre.commentaires.size()} Commentaire${_livre.commentaires.pluralize()} </h1>
-    #{if _livre.commentaires.size() > 0}
-    #{list items:_livre.commentaires, as:'comment'}
+    #{if _livre.getCommentaires()}
+    <h1>${_livre.getCommentaires().size()} Commentaire${_livre.getCommentaires().pluralize()} </h1>
+    #{if _livre.getCommentaires().size() > 0}
+    #{list items:_livre.getCommentaires(), as:'comment'}
     #{commentaire comment:comment,user:user, as:'summary' /}
     #{/list}
     #{/if}
