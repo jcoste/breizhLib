@@ -1,7 +1,7 @@
 <nav>
     <ul>
         #{secure.check 'public'}
-        <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
+        <li class="active"><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
         <li><a href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
         #{secure.check 'member'}
         <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
