@@ -6,7 +6,7 @@
 </head>
 <body>
 #{header /}
-#{menu user:session.user /}
+#{menu user:session.user, action:action /}
 <div id="main">
     #{doLayout /}
 </div>
@@ -14,6 +14,5 @@
     #{widget tags:tags /}
 </aside>
 #{footer /}
-
 </body>
 </html>

@@ -3,6 +3,7 @@ package controllers;
 
 import models.tag.LivreTag;
 import models.tag.Tag;
+import play.Logger;
 import play.mvc.Before;
 import play.mvc.Controller;
 
@@ -26,5 +27,6 @@ public class WidgetController extends Controller {
             }
         }
         renderArgs.put("tags", tags);
+        renderArgs.put("action",request.action );
     }
 }

@@ -78,20 +78,20 @@ nav li {
     list-style: none;
 }
 
-nav li .active{
+nav li .active {
 	font-weight:bold;
 }
 
 nav li a {
 	display: block;
     text-decoration: none;
-	
+
 	line-height:40px;
 	padding:  0 20px;
-	
+
 	color: #000;
 	text-shadow: 1px 1px 1px #fff;
-	
+
 	border-left: 1px solid #efefef;
 	border-right: 1px solid #dcdcdc;
 }

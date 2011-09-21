@@ -1,23 +1,19 @@
 <nav>
     <ul>
         #{secure.check 'public'}
-        <li><a href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
-        <li><a href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
-        #{secure.check 'member'}
-        <li><a href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
-        #{/secure.check}
-        <li><a href="@{Livres.index(0,'date')}">&{'views.main.menu.books'}</a></li>
-        <li><a href="@{Editeurs.index()}">Editeurs</a></li>
-        #{/secure.check}
-        #{secure.check 'public', not:'member'}
-        <!-- li><a href="@{security.Secure.login('all')}">&{'views.main.menu.login'}</a></li -->
+        <li><a #{if _action == "Livres.last"}class="active"#{/if} href="@{Livres.last()}">&{'views.main.menu.news'}</a></li>
+            <li><a #{if _action == "Commentaires.last"}class="active"#{/if} href="@{Commentaires.last()}">&{'views.main.menu.lastCommentaires'}</a></li>
+            #{secure.check 'member'}
+                <li><a #{if _action  == "Livres.search"}class="active"#{/if} href="@{Livres.search()}">&{'views.main.menu.search'}</a></li>
+            #{/secure.check}
+                <li><a #{if _action == "Livres.index"}class="active"#{/if} href="@{Livres.index(0,'date')}">&{'views.main.menu.books'}</a></li>
+                <li><a #{if _action == "Editeurs.index"}class="active"#{/if} href="@{Editeurs.index()}">Editeurs</a></li>
         #{/secure.check}
         #{secure.check 'admin'}
-        <li><a href="@{Admin.index()}">Admin</a></li>
+            <li><a #{if _action == "Admin.index"}class="active"#{/if} href="@{Admin.index()}">Admin</a></li>
         #{/secure.check}
         #{secure.check 'member'}
-        <li><a href="@{Users.infos()}">Mes Infos</a></li>
-        <!-- li><a href="@{security.Secure.logout()}">&{'views.main.menu.logout'}</a></li -->
+            <li><a #{if _action == "Users.infos"}class="active"#{/if} href="@{Users.infos()}">Mes Infos</a></li>
         #{/secure.check}
     </ul>
 </nav>
