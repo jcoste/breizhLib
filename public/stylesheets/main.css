@@ -263,12 +263,23 @@ aside#leftbar {
 
 /* TWEETS */
 #tweets { position: relative; width: 376px; height:250px; overflow:auto; }
-#tweets p { font-size: 14px; margin-bottom: 10px; padding: 10px; color: #7a8a99; background: url("../images/transpBlue.png"); }
+#tweets p { 
+	font-size: 14px; 
+	border-bottom: 1px solid silver;
+	padding: 10px; 
+	color: #7a8a99;
+	background: none;
+  	border-bottom: 1px solid silver;
+}
 #tweets p a { padding-left:2px; }
 #tweets p a img { border:none; }
 
 .big { font-size:20px; }
 .big span { color: #bfe1f1; font-size:24px; }
+
+#tagwidget {
+	margin: auto;
+}
 
 /* OVERLAY */
 #overlay {  width: 408px; height:386px; background: url("../images/transpBlue_overlay.png"); }
