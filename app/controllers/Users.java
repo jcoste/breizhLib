@@ -2,10 +2,7 @@ package controllers;
 
 
 import controllers.security.Secure;
-import models.Commentaire;
-import models.Email;
-import models.Reservation;
-import models.User;
+import models.*;
 import models.socialoauth.Role;
 import notifiers.Mails;
 import play.Play;
@@ -44,8 +41,8 @@ public class Users extends Controller {
         User user = User.findById(id);
         if (user != null && (user.isPublic || Secure.getUser().equals(user))) {
             List<Commentaire> commentaires = user.commentaires();
-            List<Reservation> ouvrages = user.ouvrages();
-            List<Reservation> ouvragesEncours = user.ouvragesEncours();
+            List<Emprunt> ouvrages = user.ouvrages();
+            List<Emprunt> ouvragesEncours = user.ouvragesEncours();
             List<Reservation> reservations = user.reservations();
             render(user, commentaires, ouvrages, ouvragesEncours, reservations);
         }
@@ -182,14 +179,14 @@ public class Users extends Controller {
     @Get("/user/emprunts")
     public static void emprunts() {
         User user = (User) Secure.getUser();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).filter("isAnnuler", false).fetch();
-        for (Reservation resa : reservations) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
+        List<Emprunt> emprunts = Emprunt.all(Emprunt.class).filter("user", user).filter("dateRetour", null).fetch();
+        for (Emprunt emprunt : emprunts) {
+            if (emprunt.emprunt != null) {
+                emprunt.emprunt.get();
             }
         }
 
-        render(user, reservations);
+        render(user, emprunts);
     }
 
 

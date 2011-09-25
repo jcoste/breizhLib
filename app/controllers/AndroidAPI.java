@@ -156,10 +156,10 @@ public class AndroidAPI extends Controller {
     @Get(value = "/api/reservations", format = "json")
     public static void reservations() {
         Date d = Reservation.getDummyDate();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt", d).filter("dateRetour", null).filter("isAnnuler", false).fetch();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("datePret", null).filter("isAnnuler", false).fetch();
         for (Reservation resa : reservations) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
+            if (resa.livre != null) {
+                resa.livre.get();
             }
         }
         renderJSON(reservations, new ReservationSerializer(), new LivreSerializer());
@@ -192,7 +192,7 @@ public class AndroidAPI extends Controller {
 
         Reservation reservation = new Reservation(livre, user, nom, prenom, email);
         reservation.insert();
-        livre.reservationEncours = reservation;
+        livre.reservation = reservation;
         livre.setEtat(livre.getEtat().getNextState());
         livre.update();
 

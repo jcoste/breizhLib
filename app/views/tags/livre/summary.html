@@ -8,7 +8,7 @@
                         innerHtml: "${_livre.titre}" +
                                 "<p>${_livre.editeur}</p>" +
                                 '<p>' +
-                            #{if _livre.reservationEncours == null}
+                            #{if _livre.reservation == null}
                                 '<span class="${_livre.getEtat().getClasseCss()}">${_livre.getEtat().getClasseCss()}</span>' +
                             #{/if}
                                 '</p>' +

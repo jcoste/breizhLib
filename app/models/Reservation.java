@@ -10,7 +10,6 @@ import siena.Model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 @siena.Table("Reservation")
@@ -38,26 +37,19 @@ public class Reservation extends UpdatableModel {
     public Date dateReservation;
 
     @As("yyyy-MM-dd")
-    public Date dateEmprunt;
+    public Date datePret;
 
-    @As("yyyy-MM-dd")
-    public Date dateRetour;
-
-    @Column("emprunt")
-    public Livre emprunt;
-
-    @Column("empruntEncours")
-    public Livre empruntEncours;
+    @Column("ouvrage")
+    public Livre livre;
 
     public boolean isAnnuler;
 
     public Reservation(Livre livre, User user, String nom, String prenom, String email) {
-        this.empruntEncours = livre;
+        this.livre = livre;
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
         this.dateReservation = new Date();
-        this.dateEmprunt = Reservation.getDummyDate();
         this.user = user;
     }
 
@@ -68,16 +60,6 @@ public class Reservation extends UpdatableModel {
         return uid;
     }
 
-    public boolean isDateEmpruntNull() {
-        return dateEmprunt.equals(getDummyDate());
-    }
-
-    public Date getDateRetourIdeal() {
-        Calendar c1 = Calendar.getInstance();
-        c1.setTime(dateEmprunt);
-        c1.add(Calendar.MONTH, 2);
-        return c1.getTime();
-    }
 
     public static Reservation findById(Long id) {
         return Model.all(Reservation.class).filter("id", id).get();

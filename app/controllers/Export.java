@@ -98,12 +98,9 @@ public class Export extends Controller {
         Date d = Reservation.getDummyDate();
         List<Reservation> reservations = Reservation.all(Reservation.class).fetch();
         for (Reservation resa : reservations) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
+            if (resa.livre != null) {
+                resa.livre.get();
                 resa.user.get();
-            }
-            if (resa.emprunt != null) {
-                resa.emprunt.get();
             }
         }
         renderJSON(reservations, new LivreSerializer(), new ReservationSerializer());
