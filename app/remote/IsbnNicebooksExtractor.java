@@ -28,11 +28,13 @@ public class IsbnNicebooksExtractor {
                     livre.image = line.substring(line.indexOf("<img src=") + 10, line.indexOf("alt=") - 2);
                 }
                 if (line.contains("<h1>")) {
-                    livre.titre = line.substring(line.indexOf("<h1>") + "<h1>".length(), line.indexOf("</h1>"));
+                    livre.titre = new String(line.substring(line.indexOf("<h1>") + "<h1>".length(), line.indexOf("</h1>")).getBytes(),"UTF-8");
+
                 }
                 if (line.contains("diteur</dt>")) {
                     line = reader.readLine();
-                    livre.editeur = line.substring(line.indexOf("\">") + 2, line.indexOf("</a></dd>"));
+                    livre.editeur =  new String(line.substring(line.indexOf("\">") + 2, line.indexOf("</a></dd>")).getBytes(),"UTF-8");
+
                 }
             }
             return livre;

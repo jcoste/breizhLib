@@ -8,7 +8,7 @@ public class IsbnExtractorTest {
 
     @Test
     public void testFind(){
-        Livre livre = Isbn13Extractor.getLivre("9782212123630");
+        Livre livre = IsbnNicebooksExtractor.getLivre("978-2-7440-2119-0");
 
         System.out.println(livre.iSBN);
         System.out.println(livre.titre);

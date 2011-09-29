@@ -1,0 +1,8 @@
+<ul class="books-pagination">
+					<li class="previous-off books-prev">« Précédent</li>
+					<li id="1" class="direct-link active">1</li>
+                    #{list items:1.._livres.size()-1, as:'i'}
+					    <li id="${i+1}" class="direct-link">${i+1}</li>
+                    #{/list}
+					<li class="next books-next">Suivant »</li>
+</ul>

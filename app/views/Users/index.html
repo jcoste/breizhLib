@@ -1,7 +1,10 @@
-#{extends 'main.html' /}
+#{extends 'mainFull.html' /}
 #{set title:'BreizhLib' /}
 
-<article>
+
+#{include 'Admin/menu.html' /}
+<div>
+
     <h1>${users.size()} Utilisateur${users.pluralize()} </h1>
     #{if users.size() > 0}
     #{list items:users, as:'user'}
@@ -21,4 +24,5 @@
     </section>
     #{/list}
     #{/if}
-</article>
+
+</div>

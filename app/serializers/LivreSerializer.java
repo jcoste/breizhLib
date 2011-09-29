@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LivreSerializer extends AbstractSerializer implements JsonSerializer<Livre>, JsonDeserializer<Livre> {
+public class LivreSerializer extends AbstractSerializer<Livre> implements JsonSerializer<Livre>, JsonDeserializer<Livre> {
 
 
     public JsonElement serialize(Livre livre, Type type, JsonSerializationContext jsonSerializationContext) {
@@ -24,7 +24,7 @@ public class LivreSerializer extends AbstractSerializer implements JsonSerialize
         obj.addProperty("etat", livre.getEtat().toString());
         String tags = "";
         for (Tag tag : livre.getTags()) {
-            tags += tag.name+";" ;
+            tags += tag.name + ";";
         }
         obj.addProperty("tags", tags);
         if (livre.image == null || livre.image.contains("/shared/")) {
@@ -48,19 +48,21 @@ public class LivreSerializer extends AbstractSerializer implements JsonSerialize
         }
 
 
+        if (needUpdate(livre,jsonObject)) {
+            livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
+            livre.saveImport();
 
-        livre.setEtat(EtatLivre.fromString(jsonObject.get("etat").getAsString()));
-        livre.save();
+            String tags = jsonObject.get("tags").getAsString();
+            String[] tagsListe = tags.split(";");
 
-        String tags = jsonObject.get("tags").getAsString();
-        String[] tagsListe = tags.split(";");
-
-        for (String tag : tagsListe) {
-            if (tag != null && tag.length() > 0) {
-                livre.addTag(tag);
+            for (String tag : tagsListe) {
+                if (tag != null && tag.length() > 0) {
+                    livre.addTag(tag);
+                }
             }
         }
 
         return livre;
     }
+
 }

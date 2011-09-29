@@ -1,10 +1,13 @@
-<h1>Tags</h1>
-#{tag3d tags:_tags,tagcloudName:'tagcloudfooter' /}
+<div class="cloudtags">
+<div class="title"><span>Tags</span></div>
+<div class="content" id="tag" style="visibility:visible; display:block;">
+#{tag3d tags:_tags,tagcloudName:'tagcloudfooter',width:200,height:200 /}
+</div>
+</div>
 
-<h1><a href="https://twitter.com/#!/breizhjug">Tweets</a></h1>
-<div id="tweets" style="width:280px;">
+<div class="tweeter">
+<div class="title"><span>Tweets</span></div>
+<div class="content" id="tweets" style="width:240px;visibility:visible; display:block;">
     <!-- Tweets will get loaded from jQuery -->
 </div>
-<div id="overlay">
-    <img src="public/images/ajax-loader.gif"/>
 </div>

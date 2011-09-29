@@ -1,4 +1,4 @@
-#{extends 'main.html' /}
+#{extends 'mainFull.html' /}
 #{set title:'BreizhLib explorer images' /}
 <script type="text/javascript">
     function plus(id) {
@@ -26,47 +26,26 @@
 
     }
 
-    function display(id, tab) {
-        var div = document.getElementById(id);
-        var li = document.getElementById('li' + id);
-        li.className = "active";
-        if (div.style.visibility == 'hidden') {
-            div.style.visibility = 'visible';
-            div.style.display = "block";
-
-            for (var i = 0; i < tab.length; ++i)
-                hide(tab[i]);
-        }
-    }
-
-    function hide(id) {
-        var div = document.getElementById(id);
-        var li = document.getElementById('li' + id);
-        li.className = "";
-        div.style.visibility = 'hidden';
-        div.style.display = "none";
-
-    }
-
     function showImg(srcUrl) {
         var img = document.getElementById('displayImg');
         img.src = srcUrl;
     }
 
 </script>
-<article>
+#{include 'Admin/menu.html' /}
+
     <div id="menu">
         <ul id="onglets">
-            <li id="liexplore" class="active"><a class="stack" href="javascript:display('explore',['add'])">Explorateur
+            <li id="liexplore" class="active"><a class="stack" href="javascript:displayHide('explore',['add'])">Explorateur
                 d'images</a></li>
-            <li id="liadd"><a class="stack" href="javascript:display('add',['explore'])">Ajout d'image</a></li>
+            <li id="liadd"><a class="stack" href="javascript:displayHide('add',['explore'])">Ajout d'image</a></li>
         </ul>
 
         %{
         lastPath = null;
         }%
         <div id="explore" style="visibility:visible; display:block;">
-            <table width="90%">
+            <table>
                 <tr>
                     <td width="30%" valign="top">
                         <p onclick="plus('shared');"><img id="shared_img" src="@{'/public/images/plus.png'}"/> <img
@@ -108,4 +87,3 @@
         </div>
 
     </div>
-</article>

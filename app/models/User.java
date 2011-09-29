@@ -8,13 +8,12 @@ import play.libs.Codec;
 import play.mvc.Scope;
 import siena.Generator;
 import siena.Id;
-import siena.Model;
 
 import java.util.Date;
 import java.util.List;
 
 @siena.Table("User")
-public class User extends Model implements IUser {
+public class User extends UpdatableModel implements IUser {
 
     @Id(Generator.AUTO_INCREMENT)
     public Long id;

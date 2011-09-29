@@ -2,8 +2,13 @@
 #{set title:'BreizhLib' /}
 
 <article>
+    <div id="caroussel">
+		#{carrousel.popup livre:livre /}
+		#{carrousel.images livre:livre /}
+	</div>
     <section class="full">
         <h1>&{'views.reservations.reserver.title'}</h1>
+
         #{form @Reservations.postReservation(id)}
         <p>
 

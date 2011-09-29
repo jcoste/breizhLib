@@ -2,6 +2,7 @@
 
 <datastore-indexes>
     <datastore-index kind="Reservation" ancestor="false" source="manual">
+        <property name="isAnnuler" direction="asc"/>
         <property name="user" direction="asc"/>
         <property name="dateRetour" direction="asc"/>
     </datastore-index>
@@ -12,6 +13,7 @@
     </datastore-index>
     <datastore-index kind="Reservation" ancestor="false" source="manual">
         <property name="dateRetour" direction="asc"/>
+        <property name="isAnnuler" direction="asc"/>
         <property name="dateEmprunt" direction="asc"/>
     </datastore-index>
     <datastore-index kind="Reservation" ancestor="false" source="manual">

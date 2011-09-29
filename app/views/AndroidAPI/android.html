@@ -1,29 +1,6 @@
 #{extends 'mainFull.html' /}
 #{set title:'BreizhLib Android' /}
 
-<script type="text/javascript">
-    function display(id, tab) {
-        var div = document.getElementById(id);
-        var li = document.getElementById('li' + id);
-        li.className = "active";
-        if (div.style.visibility == 'hidden') {
-            div.style.visibility = 'visible';
-            div.style.display = "block";
-            for (var i = 0; i < tab.length; ++i)
-                hide(tab[i]);
-        }
-    }
-
-    function hide(id) {
-        var div = document.getElementById(id);
-        var li = document.getElementById('li' + id);
-        li.className = "";
-        div.style.visibility = 'hidden';
-        div.style.display = "none";
-    }
-
-</script>
-
 
 <article>
     <h1>Application Android</h1>
@@ -37,32 +14,31 @@
     </p>
 
     <div id="menu">
-        <ul id="onglets">
+        <ul id="onglets" class="all">
             <li id="lifonctionnalites" class="active"><a class="stack"
-                                                         href="javascript:display('fonctionnalites',['capture','errors'])">Fonctionnalités</a>
+                                                         href="javascript:displayHide('fonctionnalites',['capture','version'])">Fonctionnalités</a>
             </li>
-            <li id="licapture"><a class="stack" href="javascript:display('capture',['fonctionnalites','errors'])">Captures</a>
+            <li id="licapture"><a class="stack" href="javascript:displayHide('capture',['fonctionnalites','version'])">Captures</a>
             </li>
+            #{secure.check 'admin'}
+            <li id="liversion"><a class="stack" href="javascript:displayHide('version',['fonctionnalites','capture'])">MAJ Android</a>
+            </li>
+            #{/secure.check}
         </ul>
 
         <div id="fonctionnalites" style="visibility:visible; display:block;">
-            <ul>
-                <li>Afficher les ouvrages de la bibliothèque du BreizhJug</li>
-                <li>Afficher les derniers commentaires</li>
-                <li>Afficher les informations de votre compte</li>
-                <li>Recherche d'ouvrage par lecture de code barre</li>
-                <li>Ajout d'ouvrage par lecture de code barre</li>
-                <li>Réservation d'ouvrage</li>
-                <li>Ajout de commentaires</li>
-            </ul>
-            <p>
+            #{list items:versions, as:'version'}
+                <p><h3>Version ${version.version} :</h3></p>
+                <p>${version.backlog.raw()}</p>
+            #{/list}
 
-            <h3>Prochainement :</h3></p>
-            <ul>
-                <li>...</li>
-            </ul>
 
         </div>
+         #{secure.check 'admin'}
+        <div id="version" style="visibility:hidden; display:none;">
+            #{include 'Versions/add.html' /}
+        </div>
+        #{/secure.check}
         <div id="capture" style="visibility:hidden; display:none;">
             <table>
                 <tr>

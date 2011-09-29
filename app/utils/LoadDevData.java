@@ -1,9 +1,6 @@
 package utils;
 
-import models.Commentaire;
-import models.Editeur;
-import models.Livre;
-import models.User;
+import models.*;
 import play.Logger;
 import play.libs.Crypto;
 
@@ -50,6 +47,46 @@ public class LoadDevData {
             commentaire.insert();
             livre.popularite = livre.getCommentaires().size();
             livre.update();
+
+
+        }
+        if (Faq.all(Faq.class).count() == 0) {
+              Faq faq = new Faq("Comment réserver un ouvrage ?","Connectez vous,sélectionner l'ouvrage et cliquez sur réserver");
+              faq.save();
+        }
+
+
+        if (Version.all(Version.class).count() == 0) {
+            Version version = new Version("0.1.0", 1000);
+            version.backlog = "<ul>\n" +
+                    "                    <li>Afficher les ouvrages de la bibliothèque du BreizhJug</li>\n" +
+                    "                    <li>Afficher les derniers commentaires</li>\n" +
+                    "                    <li>Afficher les informations de votre compte</li>\n" +
+                    "                    <li>Recherche d'ouvrage par lecture de code barre</li>\n" +
+                    "                    <li>Ajout d'ouvrage par lecture de code barre</li>\n" +
+                    "                    <li>Réservation d'ouvrage</li>\n" +
+                    "                    <li>Ajout de commentaires</li>\n" +
+                    "                </ul>";
+            version.save();
+
+            version = new Version("0.1.8", 1008);
+            version.backlog = "<ul>\n" +
+                    "                    <li>Correction bugs</li>\n" +
+                    "                    <li>Gestion des paramètres</li>\n" +
+                    "                </ul>";
+            version.save();
+
+            version = new Version("0.1.9", 1009);
+            version.last = true;
+            version.backlog = "<ul>\n" +
+                    "                    <li>Google Analytics</li>\n" +
+                    "                    <li>Correction bugs</li>\n" +
+                    "                    <li>légère modification graphique</li>\n" +
+                    "                </ul>";
+            version.save();
+
         }
     }
+
+
 }

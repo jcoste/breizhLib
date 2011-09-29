@@ -1,7 +1,7 @@
 <footer>
     <section id="footer-area">
         <aside class="footer-segment">
-            &{'views.main.footer'}
+            &{'views.main.footer'} <a href="http://breizhjug.org" target="_blank" title="Site du BreizhJug">breizhjug.org</a> / Réalisation <a href="https://plus.google.com/111452422183097276035" target="_blank" >Sylvain Guernion</a> / Design <a href="http://jltweb.info" target="_blank" title="Site perso de Julien Le Thuaut">Julien le Thuaut</a>
         </aside>
 
         <aside class="footer-segment-right">
@@ -11,3 +11,4 @@
         </aside>
     </section>
 </footer>
+<p style="text-align: center;"><a href="@{Faqs.index()}">Faq</a> - <a href="@{AndroidAPI.android()}">Android</a>#{secure.check 'member'} - <a href="@{AndroidAPI.index()}">API</a>#{/secure.check}</p>
