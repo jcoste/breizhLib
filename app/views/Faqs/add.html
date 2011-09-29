@@ -1,0 +1,20 @@
+#{extends 'mainFull.html' /}
+#{set title:'BreizhLib Export' /}
+
+#{include 'Admin/menu.html' /}
+
+<table>
+    #{form @Faqs.post(),enctype:'multipart/form-data'}
+    <tr>
+        <td><label for="question">Question : </label></td>
+        <td><p>#{error 'question' /}</p><input type="text" name="question" id="question" value="${params.question}"
+                                           size="50"/></td>
+    </tr>
+    <tr>
+        <td><label for="reponse">Réponse : </label></td>
+        <td><input type="text" name="reponse" id="reponse" value="${params.reponse}" size="50"/>
+        </td>
+    </tr>
+</table>
+<input type="submit" value="Init"/>
+#{/form}

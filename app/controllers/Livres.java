@@ -80,7 +80,7 @@ public class Livres extends Controller {
 
 
     @Role("public")
-    @Get("/news")
+    @Get("/")
     public static void last() {
         List<Livre> livres = Livre.all(Livre.class).order("-dateAjout").fetch(NB_NEWS_PAR_PAGE);
         render(livres);
@@ -129,9 +129,16 @@ public class Livres extends Controller {
             render("Livres/add.html");
         }
 
-        if (Livre.all(Livre.class).filter("iSBN", iSBN).get() != null) {
-            error(Messages.get("book_already_exist"));
+        iSBN = iSBN.replaceAll("-", "");
+        iSBN = iSBN.replaceAll(".", "");
+
+        List<Livre> livres = Livre.findAll();
+        for (Livre livre : livres) {
+            if (livre.iSBN.replaceAll("-", "").equals(iSBN)) {
+                error(Messages.get("book_already_exist"));
+            }
         }
+
 
         //TODO contrôle de l'image, pour ne pas créer une image vide
         String image = null;

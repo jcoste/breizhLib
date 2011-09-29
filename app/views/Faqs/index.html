@@ -1,0 +1,14 @@
+#{extends 'main.html' /}
+#{set title:'BreizhLib' /}
+
+<article>
+    <h1>FAQ</h1>
+
+
+    #{list items:faqs, as:'faq'}
+        #{if faq}
+            <h3>${faq.question.raw()}</h3>
+            <p>${faq.reponse.raw()}</p>
+        #{/if}
+    #{/list}
+</article>

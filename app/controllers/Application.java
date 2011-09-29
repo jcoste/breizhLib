@@ -1,7 +1,6 @@
 package controllers;
 
 import controllers.security.Secure;
-import models.Livre;
 import models.User;
 import play.Play;
 import play.modules.router.Get;
@@ -10,8 +9,6 @@ import play.modules.router.StaticRoutes;
 import play.mvc.Controller;
 import play.mvc.With;
 import utils.LoadDevData;
-
-import java.util.List;
 
 @With(Secure.class)
 @StaticRoutes({
@@ -22,11 +19,7 @@ public class Application extends Controller {
 
     @Get("/")
     public static void index() {
-        if (Secure.getUser() != null) {
-            Livres.index(0, "date");
-        }
-        List<Livre> livres = Livre.all(Livre.class).fetch();
-        render(livres);
+        Livres.last();
     }
 
     @Get("/contact")
@@ -50,7 +43,7 @@ public class Application extends Controller {
         if (((User) Secure.getUser()).email == null) {
             Users.edit();
         } else {
-            Application.index();
+            index();
         }
     }
 
