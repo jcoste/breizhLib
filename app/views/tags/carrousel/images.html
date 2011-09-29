@@ -1,0 +1,16 @@
+<ul class="books">
+                    #{if _livres}
+                    #{if _livres.size()}
+                    #{list items:_livres, as:'livre'}
+                    #{if livre}
+                        <li><a href="@{Livres.show(livre.iSBN)}" ><img src="${livre.image}" /></a></li>
+                    #{/if}
+                    #{/list}
+                    #{/if}
+                    #{/if}
+
+
+                    #{if _livre}
+                        <li><a href="@{Livres.show(_livre.iSBN)}" ><img src="${_livre.image}" /></a></li>
+                    #{/if}
+</ul>

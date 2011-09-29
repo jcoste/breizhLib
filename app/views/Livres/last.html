@@ -1,41 +1,16 @@
 #{extends 'main.html' /}
 #{set title:'BreizhLib Nouveautés' /}
-<script type="text/javascript">
-
-    function show(id) {
-        var divContainer = document.getElementById('popup');
-        for (i = 0; i < divContainer.children.length; i++) {
-            divContainer.children[i].style.visibility = 'hidden';
-            divContainer.children[i].style.display = "none";
-        }
-        var div = document.getElementById(id);
-        if (div.style.visibility == 'hidden') {
-            div.style.visibility = 'visible';
-            div.style.display = "block";
-
-        }
-    }
-
-</script>
-#{script 'jquery.bubblepopup.v2.3.1.min.js' /}
-#{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
-#{script 'webwidget_rating_simple.js' /}
-#{stylesheet 'webwidget_rating_simple.css' /}
 <article>
     <p>&{'views.livres.last.title'}</p>
 
-    #{if livres}
-    #{if livres.size()}
-    #{list items:livres, as:'livre'}
-    #{if livre}
-    #{livre livre:livre, page:0,redirect:'last', as:'summary' /}
-    #{/if}
-    #{/list}
-    #{/if}
-    #{/if}
+    #{carrousel.script livres:livres /}
 
-    #{else}
-    <p>&{'views.livres.noBookRecorded'}</p>
-    #{/else}
+    <div id="caroussel">
+				<div id="popup" src="@{'/public/images/popup-book-accueil.png'}"></div>
+               #{carrousel.images livres:livres /}
+               #{carrousel.pagination livres:livres /}
+	</div>
+
+
 
 </article>

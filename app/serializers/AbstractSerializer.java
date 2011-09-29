@@ -4,9 +4,10 @@ import com.google.gson.*;
 import models.UpdatableModel;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 
 
-public class AbstractSerializer<T> implements JsonSerializer<T>, JsonDeserializer<T> {
+public class    AbstractSerializer<T> implements JsonSerializer<T>, JsonDeserializer<T> {
 
     public String getFacultatifString(JsonObject jsonObject, String property) {
         try {
@@ -39,7 +40,11 @@ public class AbstractSerializer<T> implements JsonSerializer<T>, JsonDeserialize
 
     public JsonElement serialize(UpdatableModel t, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject jsonObj = new JsonObject();
-        jsonObj.addProperty("lastMaj",t.getLastMaj().getTime());
+        if(t.getLastMaj() != null ){
+            jsonObj.addProperty("lastMaj",t.getLastMaj().getTime());
+        }else{
+           jsonObj.addProperty("lastMaj",new Date().getTime());
+        }
         return jsonObj;
     }
 

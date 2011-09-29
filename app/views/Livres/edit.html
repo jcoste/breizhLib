@@ -2,7 +2,13 @@
 #{set title:'BreizhLib Ajout' /}
 
 <article>
-    <h1>&{'views.livres.add.title'}</h1>
+    <ul id="onglets">
+            <li id="liadd" class="active"><a class="stack" href="javascript:displayHide('add',['addediteur'])">Ouvrage</a>
+            </li>
+            <li id="liaddediteur"><a class="stack" href="javascript:displayHide('addediteur',['add'])">Editeur</a></li>
+        </ul>
+        <div id="add" style="visibility:visible; display:block;">
+    <h1>&{'views.livres.edit.title'}</h1>
     <section>
 
         #{if flash.error}
@@ -29,7 +35,7 @@
                         <option value="${editeur}"
                         #{if livre.editeur.equals(editeur) }selected="true"#{/if}>${editeur}</option>
                         #{/list}
-                    </select><a href="@{Editeurs.add()}">Nouveau</a> #{error 'editeur' /}
+                    </select> #{error 'editeur' /}
                 </td>
             </tr>
             <tr>
@@ -53,6 +59,10 @@
             </tr>
         </table>
         #{/form}
+            </section>
+       </div>
+       <div id="addediteur" style="visibility:hidden; display:none;">
+            #{include 'Editeurs/add.html' /}
+       </div>
 
-    </section>
 </article>
