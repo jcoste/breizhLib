@@ -3,10 +3,10 @@
 require:
     - play
     - play -> siena 2.0.1
+	- play ->  db 1.1.1
     - play -> cloudbees 0.2.1
     - localmodule -> socialoauth 0.1
-    - play -> fbconnect 0.5
-    - play ->  db 1.1.1
+    - org.play -> fbconnect 1.0-gsylvain35
     - org.play -> oauth  1.0-gsylvain35
     - org.play -> router 1.1-gsylvain35
 
