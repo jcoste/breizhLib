@@ -175,6 +175,44 @@ public class Users extends Controller {
         render(users);
     }
 
+
+    @Role("member")
+    @Get("/deleteAccount")
+    public static void deleteAccount() {
+        User user = (User) Secure.getUser();
+         List<Commentaire> commentaires = user.commentaires();
+         List<Emprunt> emprunts = user.ouvragesEncours();
+         List<Reservation> reservations = user.reservations();
+
+        render(user,emprunts,commentaires,reservations);
+    }
+
+    public static void postDeleteAccount(String commentaires){
+         User user = (User) Secure.getUser();
+         if (commentaires == null || commentaires.equals("oui")) {
+                List<Commentaire> comments = user.commentaires();
+              for (Commentaire commentaire : comments) {
+                  commentaire.delete();
+
+              }
+         }
+          List<Reservation> reservations = user.reservations();
+         if(reservations.size() > 0){
+            for (Reservation reservation : reservations) {
+                    reservation.isAnnuler = true;
+                    Livre livre = reservation.livre;
+                    livre.get();
+                    livre.reservation = null;
+                    reservation.update();
+                    livre.setEtat(EtatLivre.DISP0NIBLE);
+                    livre.update();
+            }
+         }
+
+         user.delete();
+         Secure.logout();
+    }
+
     @Role("member")
     @Get("/user/emprunts")
     public static void emprunts() {
