@@ -190,12 +190,21 @@ public class Users extends Controller {
     public static void postDeleteAccount(String commentaires){
          User user = (User) Secure.getUser();
          if (commentaires == null || commentaires.equals("oui")) {
-                List<Commentaire> comments = user.commentaires();
+              List<Commentaire> comments = user.commentaires();
               for (Commentaire commentaire : comments) {
                   commentaire.delete();
 
               }
+         }else{
+              List<Commentaire> comments = user.commentaires();
+              for (Commentaire commentaire : comments) {
+                  commentaire.user = null;
+                  commentaire.update();
+
+              }
          }
+
+
           List<Reservation> reservations = user.reservations();
          if(reservations.size() > 0){
             for (Reservation reservation : reservations) {
