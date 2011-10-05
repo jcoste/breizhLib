@@ -1,7 +1,8 @@
 *{ You can use plain selenium command using the selenium tag }*
 
 #{selenium 'admin login'}
-open('/login-all')
+open('/init')
+open('/security.secure/login?impl=all')
 assertTitle('Login')
 type('username', 'admin@breizhlib.org')
 type('password', '1234')
@@ -18,7 +19,7 @@ open('/')
 assertTextPresent('Déconnexion')
 assertTextPresent('Admin')
 assertTextPresent('Mes Infos')
-open('/logout')
+open('/security.secure/logout')
 
-assertTextPresent('Se Connecter')
+assertTextPresent('S'identifier')
 #{/selenium}

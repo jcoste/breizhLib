@@ -20,7 +20,7 @@ public class Application extends Controller {
 
     @Get("/")
     public static void index() {
-         Logger.info(params.get("action"));
+        Logger.info(params.get("action"));
         Livres.last();
     }
 
