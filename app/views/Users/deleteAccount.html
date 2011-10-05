@@ -1,0 +1,24 @@
+#{extends 'mainFull.html' /}
+#{set title:'BreizhLib' /}
+
+#{include 'Users/menu.html' /}
+
+
+#{if reservations != null && reservations.size() > 0 }
+<h2>Votre réservation sera annulée</h2>
+#{/if}
+#{if emprunts != null && emprunts.size() > 0 }
+<h1>Il n'est pas possible de supprimer votre compte pour le moment, veuillez rendre les ouvrages empruntés</h1>
+#{/if}
+#{else}
+    <h3>Suppression de votre compte</h3>
+    #{form @Users.postDeleteAccount(),enctype:'multipart/form-data'}
+        #{if commentaires != null && commentaires.size() > 0 }
+            <p>supprimer vos commentaires ?</p>
+            <p><input type="radio" name="commentaires" value="oui" >Oui <input type="radio" name="commentaires" value="non" checked>  Non</p>
+        #{/if}
+        <input type="submit" value="Supprimer"/>
+    #{/form}
+
+
+#{/else}

@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.security.Secure;
 import models.User;
+import play.Logger;
 import play.Play;
 import play.modules.router.Get;
 import play.modules.router.ServeStatic;
@@ -19,6 +20,7 @@ public class Application extends Controller {
 
     @Get("/")
     public static void index() {
+         Logger.info(params.get("action"));
         Livres.last();
     }
 

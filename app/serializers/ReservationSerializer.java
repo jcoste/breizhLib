@@ -20,19 +20,19 @@ public class ReservationSerializer extends AbstractSerializer<Reservation> imple
         obj.addProperty("prenom", reservation.prenom);
         obj.addProperty("uid", reservation.getUid());
         obj.addProperty("isAnnuler", reservation.isAnnuler);
-        obj.add("livre", jsonSerializationContext.serialize(reservation.empruntEncours));
-        if (reservation.emprunt != null) {
-            obj.add("livreEmprunt", jsonSerializationContext.serialize(reservation.emprunt));
+        obj.add("livre", jsonSerializationContext.serialize(reservation.livre));
+        if (reservation.livre != null) {
+            obj.add("livreEmprunt", jsonSerializationContext.serialize(reservation.livre));
         }
         obj.addProperty("user", reservation.email);
-        if (reservation.dateEmprunt != null && !DateUtils.isSameDay(reservation.dateEmprunt, Reservation.getDummyDate())) {
-            obj.addProperty("dateEmprunt", reservation.dateEmprunt.getTime());
+        if (reservation.datePret != null && !DateUtils.isSameDay(reservation.datePret, Reservation.getDummyDate())) {
+            obj.addProperty("dateEmprunt", reservation.datePret.getTime());
         }
         if (reservation.dateReservation != null) {
             obj.addProperty("dateReservation", reservation.dateReservation.getTime());
         }
-        if (reservation.dateRetour != null) {
-            obj.addProperty("dateRetour", reservation.dateRetour.getTime());
+        if (reservation.datePret != null) {
+            obj.addProperty("dateRetour", reservation.datePret.getTime());
         }
 
         // pour etre compatible avec les versions 0.1.0 et 0.1.1 de l'application android
@@ -53,10 +53,10 @@ public class ReservationSerializer extends AbstractSerializer<Reservation> imple
         if (needUpdate(reservation, jsonObject)) {
 
             if (getFacultatifObject(jsonObject, "livreEmprunt") != null) {
-                reservation.emprunt = Livre.findByISBN(getFacultatifObject(jsonObject, "livreEmprunt").get("isbn").getAsString());
+                reservation.livre = Livre.findByISBN(getFacultatifObject(jsonObject, "livreEmprunt").get("isbn").getAsString());
             }
             if (getFacultatifObject(jsonObject, "livre") != null) {
-                reservation.empruntEncours = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
+                reservation.livre = Livre.findByISBN(getFacultatifObject(jsonObject, "livre").get("isbn").getAsString());
             }
 
             reservation.isAnnuler = getFacultatifBoolean(jsonObject, "isAnnuler");
@@ -65,10 +65,10 @@ public class ReservationSerializer extends AbstractSerializer<Reservation> imple
             if (getFacultatifString(jsonObject, "dateEmprunt") != null) {
                 Date d = new Date();
                 d.setTime(Long.valueOf(getFacultatifString(jsonObject, "dateEmprunt")));
-                reservation.dateEmprunt = d;
+                reservation.datePret = d;
 
             } else {
-                reservation.dateEmprunt = Reservation.getDummyDate();
+                reservation.datePret = Reservation.getDummyDate();
             }
             if (jsonObject.get("dateReservation").getAsString() != null) {
                 Date d = new Date();
@@ -79,15 +79,7 @@ public class ReservationSerializer extends AbstractSerializer<Reservation> imple
                     reservation.dateReservation = null;
                 }
             }
-            if (getFacultatifString(jsonObject, "dateRetour") != null) {
-                Date d = new Date();
-                d.setTime(Long.valueOf(getFacultatifString(jsonObject, "dateRetour")));
-                if (!DateUtils.isSameDay(d, Reservation.getDummyDate())) {
-                    reservation.dateRetour = d;
-                } else {
-                    reservation.dateRetour = null;
-                }
-            }
+
             reservation.saveImport();
 
         }

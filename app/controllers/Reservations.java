@@ -1,10 +1,7 @@
 package controllers;
 
 import controllers.security.Secure;
-import models.EtatLivre;
-import models.Livre;
-import models.Reservation;
-import models.User;
+import models.*;
 import models.socialoauth.Role;
 import play.Logger;
 import play.data.validation.Email;
@@ -29,10 +26,10 @@ public class Reservations extends Controller {
             Logger.warn("l'ouvrage d'id {} n'existe pas en base", id);
             error(Messages.get("bookid_not_exist", id));
         }
-        List<Reservation> emprunts = livre.getHistoriqueReservation();
-        for (Reservation resa : emprunts) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
+        List<Emprunt> emprunts = livre.getHistoriqueEmprunt();
+        for (Emprunt resa : emprunts) {
+            if (resa.emprunt != null) {
+                resa.emprunt.get();
             }
         }
         User user = (User) Secure.getUser();
@@ -44,18 +41,18 @@ public class Reservations extends Controller {
     @Get("/reservations")
     public static void reservations() {
         Date d = Reservation.getDummyDate();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("dateEmprunt", d).filter("dateRetour", null).fetch();
+        List<Reservation> reservations = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("datePret", null).fetch();
         for (Reservation resa : reservations) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
+            if (resa.livre != null) {
+                resa.livre.get();
             }
         }
 
 
-        List<Reservation> emprunts = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("dateEmprunt>", d).filter("dateRetour", null).fetch();
-        for (Reservation resa : emprunts) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
+        List<Emprunt> emprunts = Emprunt.all(Emprunt.class).filter("dateRetour", null).fetch();
+        for (Emprunt resa : emprunts) {
+            if (resa.emprunt != null) {
+                resa.emprunt.get();
             }
         }
         render(reservations, emprunts);
@@ -64,19 +61,17 @@ public class Reservations extends Controller {
 
     @Role("admin")
     public static void rendreLivre(Long id) {
-        Reservation reservation = Reservation.findById(id);
-        Livre livre = reservation.empruntEncours;
+        Emprunt emprunt = Emprunt.findById(id);
+        Livre livre = emprunt.emprunt;
         livre.get();
         if (!livre.getEtat().equals(EtatLivre.INSDIPONIBLE)) {
             throw new IllegalStateException("le livre n'a pas été prêté : " + livre.getEtat());
         }
-        Reservation resa = livre.reservationEncours;
-        resa.get();
-        resa.emprunt = livre;
-        resa.empruntEncours = null;
-        resa.dateRetour = new Date();
-        livre.reservationEncours = null;
-        resa.update();
+
+
+        emprunt.dateRetour = new Date();
+        livre.emprunt = null;
+        emprunt.update();
         //TODO envoyer un email au lecteur pour l'inviter a ajouter un commentaire sur le livre
         livre.setEtat(livre.getEtat().getNextState());
         livre.update();
@@ -87,11 +82,10 @@ public class Reservations extends Controller {
     @Get("/reservation/{id}/annuler")
     public static void annuler(Long id) {
         Reservation reservation = Reservation.findById(id);
-        Livre livre = reservation.empruntEncours;
+        Livre livre = reservation.livre;
         livre.get();
-        reservation.empruntEncours = null;
         reservation.isAnnuler = true;
-        livre.reservationEncours = null;
+        livre.reservation = null;
         reservation.update();
         livre.setEtat(EtatLivre.DISP0NIBLE);
         livre.update();
@@ -102,15 +96,20 @@ public class Reservations extends Controller {
     @Get("/reservation/{id}/pret")
     public static void pretLivre(Long id) {
         Reservation reservation = Reservation.findById(id);
-        Livre livre = reservation.empruntEncours;
+        Livre livre = reservation.livre;
         livre.get();
         if (!livre.getEtat().equals(EtatLivre.RESERVE)) {
             throw new IllegalStateException("le livre n'a pas été réservé : " + livre.getEtat());
         }
-        livre.reservationEncours.get();
-        livre.reservationEncours.dateEmprunt = new Date();
-        livre.reservationEncours.empruntEncours.get();
-        livre.reservationEncours.update();
+        livre.reservation.get();
+
+        Emprunt emprunt = new Emprunt(reservation);
+        emprunt.save();
+
+        reservation.datePret = new Date();
+        reservation.update();
+        livre.reservation = null;
+        livre.emprunt = emprunt;
         livre.setEtat(livre.getEtat().getNextState());
         livre.update();
         reservations();
@@ -125,7 +124,7 @@ public class Reservations extends Controller {
         Livre livre = Livre.findByISBN(id);
         if (livre.getEtat().equals(EtatLivre.DISP0NIBLE)) {
             User user = (User) Secure.getUser();
-            render(id, user);
+            render(id, user,livre);
         } else {
             error(Messages.get("book_not_available", livre.titre));
         }
@@ -158,7 +157,7 @@ public class Reservations extends Controller {
 
         Reservation reservation = new Reservation(livre, user, nom, prenom, email);
         reservation.insert();
-        livre.reservationEncours = reservation;
+        livre.reservation = reservation;
         livre.setEtat(livre.getEtat().getNextState());
         livre.update();
         flash.success(Messages.get("reservation_save"));

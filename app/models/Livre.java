@@ -42,8 +42,11 @@ public class Livre extends UpdatableModel implements Taggable {
 
     public Boolean preview;
 
-    @Column("reservationEncours")
-    public Reservation reservationEncours;
+    @Column("reservation")
+    public Reservation reservation;
+
+    @Column("emprunt")
+    public Emprunt emprunt;
 
     public transient boolean isNotPresent;
 
@@ -89,8 +92,11 @@ public class Livre extends UpdatableModel implements Taggable {
 
     public static Livre initData(Livre livre) {
         if (livre != null) {
-            if (livre.reservationEncours != null) {
-                livre.reservationEncours.get();
+            if (livre.reservation != null) {
+                livre.reservation.get();
+            }
+            if (livre.emprunt != null) {
+                livre.emprunt.get();
             }
         }
         return livre;
@@ -109,7 +115,11 @@ public class Livre extends UpdatableModel implements Taggable {
     }
 
     public List<Reservation> getHistoriqueReservation() {
-        return Reservation.all(Reservation.class).filter("emprunt", this).filter("isAnnuler", false).fetch();
+        return Reservation.all(Reservation.class).filter("livre", this).filter("isAnnuler", false).fetch();
+    }
+
+     public List<Emprunt> getHistoriqueEmprunt() {
+        return Emprunt.all(Emprunt.class).filter("emprunt", this).fetch();
     }
 
     public List<Commentaire> getCommentaires() {

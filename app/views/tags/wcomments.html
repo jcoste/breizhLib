@@ -1,0 +1,14 @@
+
+#{list items:_comments, as:'comment'}
+    <p> - #{secure.check 'member'}
+            #{if comment.user.isPublic}
+                <a href="@{Users.profil(comment.user.id)}">${comment.nom}</a>
+            #{/if}
+            #{else}
+                ${comment.nom}
+            #{/else}
+        #{/secure.check}
+        #{secure.check 'public', not:'member'}
+                ${comment.nom}
+        #{/secure.check} pour <a href="@{Livres.show(comment.livre.id)}">${comment.livre.titre}</a></p>
+#{/list}

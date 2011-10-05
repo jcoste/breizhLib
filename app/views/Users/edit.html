@@ -47,14 +47,22 @@
         #{form @Users.postEdit(),enctype:'multipart/form-data'}
         <table>
             #{if user.username != null }
-            <tr>
-                <td><label>Nom d'utilisateur : </label></td>
-                <td><p><input type="text" name="username" disabled value="${user.username}" size="20"/></p>
+                <tr>
+                    <td><label>Twitter : </label></td>
+                    <td><p><input type="text" name="username" disabled value="${user.username}" size="20"/></p>
 
-                    <p><input type="radio" name="publicUsername" value="oui" #{if user.publicUsername}checked
-                        #{/if}>public <input type="radio" name="publicUsername" value="non" #{if !user.publicUsername}checked #{/if}>privé</p></td>
-            </tr>
+                        <p><input type="radio" name="publicUsername" value="oui" #{if user.publicUsername}checked
+                            #{/if}>public <input type="radio" name="publicUsername" value="non" #{if !user.publicUsername}checked #{/if}>privé</p></td>
+                </tr>
             #{/if}
+            #{if user.username == null}
+                 <tr>
+                    <td><label for="username">Twitter : </label></td>
+                    <td><p>#{error 'username' /}</p><input type="text" name="username" id="username" value="${user.username}"
+                                                         size="20"/>
+                    </td>
+                </tr>
+            #{/if }
             #{if user.email != null }
             <tr id="email_0">
                 <td><label>Email : </label></td>
@@ -92,6 +100,7 @@
                                                      size="20"/>
                 </td>
             </tr>
+
             <tr>
                 <td><label for="profil">Profil : </label></td>
                 <td><p>#{error 'profil' /}</p><input type="radio" name="profil" value="oui" #{if user.isPublic}checked

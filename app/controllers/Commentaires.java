@@ -21,13 +21,16 @@ public class Commentaires extends Controller {
 
     private static int NB_PAR_PAGE = 6;
 
-    private static int NB_NEWS_PAR_PAGE = 4;
+    public static int NB_NEWS_PAR_PAGE = 4;
 
     @Get("/commentaires")
     public static void last() {
         List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch(NB_NEWS_PAR_PAGE);
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
+            if(commentaire.user != null){
+                commentaire.user.get();
+            }
         }
         render(commentaires);
     }
@@ -41,6 +44,9 @@ public class Commentaires extends Controller {
         List<Commentaire> commentaires = livre.getCommentaires();
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
+            if(commentaire.user != null){
+                commentaire.user.get();
+            }
         }
         render(commentaires, livre);
     }
@@ -143,6 +149,7 @@ public class Commentaires extends Controller {
 
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
+            commentaire.user.get();
         }
         render(commentaires);
     }
@@ -154,6 +161,7 @@ public class Commentaires extends Controller {
 
         for (Commentaire commentaire : commentaires) {
             commentaire.livre.get();
+            commentaire.user.get();
         }
         render(commentaires);
     }

@@ -2,6 +2,10 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}"/>
     <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/template.css'}"/>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/font/BlackJack-fontfacekit/stylesheet.css'}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/carrousel.css'}"/>
+
     #{get 'moreStyles' /}
     #{if play.mode.name() == 'PROD'}
     #{google.analytics UAaccount:'UA-25249240-1' /}
@@ -11,7 +15,7 @@
           href="@@{Application.index()}books.xml"/>
     <link rel="alternate" type="application/rss+xml" title="All Comments - RSS 2.0"
           href="@@{Commentaires.index()}.xml"/>
-    <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+    <script src="@{'/public/javascripts/jquery-1.6.4.js'}" type="text/javascript" charset="utf-8"></script>
     <script src="@{'/public/javascripts/common.js'}" type="text/javascript" charset="utf-8"></script>
     #{get 'moreScripts' /}
     <!--[if lt IE 9]>
@@ -20,3 +24,4 @@
     <![endif]-->
 
     <script src="@{'/public/javascripts/jquery-tweets-0.1.js'}" type="text/javascript" charset="utf-8"></script>
+    <!-- script src="@{'/public/javascripts/tweet/jquery.tweet.js'}" type="text/javascript" charset="utf-8"></script -->

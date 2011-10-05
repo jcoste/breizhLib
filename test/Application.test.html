@@ -4,10 +4,10 @@
 // Open the home page, and check that no error occured
 open('/')
 assertNotTitle('Application error')
-assertTitle('BreizhLib')
+assertTitle('BreizhLib Nouveautés')
 open('/init')
-assertTitle('BreizhLib')
+assertTitle('BreizhLib Nouveautés')
 open('/news')
 assertTitle('BreizhLib Nouveautés')
-assertTextPresent('Retrouvez ici les derniers livres de la bibliothèque du BreizhJug.')
+assertTextPresent('Ci-dessous nos 5 derniers ouvrages :')
 #{/selenium}

@@ -1,6 +1,7 @@
 package controllers;
 
 
+import models.Commentaire;
 import models.tag.LivreTag;
 import models.tag.Tag;
 import play.mvc.Before;
@@ -26,5 +27,13 @@ public class WidgetController extends Controller {
             }
         }
         renderArgs.put("tags", tags);
+        renderArgs.put("action",request.action );
+
+        List<Commentaire> commentaires = Commentaire.all(Commentaire.class).order("-dateAjout").fetch(Commentaires.NB_NEWS_PAR_PAGE);
+        for (Commentaire commentaire : commentaires) {
+            commentaire.livre.get();
+            commentaire.user.get();
+        }
+        renderArgs.put("lcommentaires", commentaires);
     }
 }

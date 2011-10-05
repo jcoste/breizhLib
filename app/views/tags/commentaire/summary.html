@@ -1,18 +1,17 @@
 <section class="full">
     <p> #{stars max:5, value:_comment.note,id:_comment.id,as:'static' /}</p>
-
     <p>${_comment.commentaire}</p>
     <footer>
         #{secure.check 'member'}
-        #{if _comment.user.isPublic}
-        <a href="@{Users.profil(_comment.user.id)}">${_comment.nom}</a>
-        #{/if}
-        #{else}
-        ${_comment.nom}
-        #{/else}
+            #{if _comment.user.isPublic}
+                <a href="@{Users.profil(_comment.user.id)}">${_comment.nom}</a>
+            #{/if}
+            #{else}
+                ${_comment.nom}
+            #{/else}
         #{/secure.check}
         #{secure.check 'public', not:'member'}
-        ${_comment.nom}
+                ${_comment.nom}
         #{/secure.check} le ${_comment.dateAjout.format('dd MMMM yyyy HH:mm:ss', 'fr')}
     </footer>
 </section>

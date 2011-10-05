@@ -2,10 +2,7 @@ package controllers;
 
 
 import controllers.security.Secure;
-import models.Commentaire;
-import models.Email;
-import models.Reservation;
-import models.User;
+import models.*;
 import models.socialoauth.Role;
 import notifiers.Mails;
 import play.Play;
@@ -44,8 +41,8 @@ public class Users extends Controller {
         User user = User.findById(id);
         if (user != null && (user.isPublic || Secure.getUser().equals(user))) {
             List<Commentaire> commentaires = user.commentaires();
-            List<Reservation> ouvrages = user.ouvrages();
-            List<Reservation> ouvragesEncours = user.ouvragesEncours();
+            List<Emprunt> ouvrages = user.ouvrages();
+            List<Emprunt> ouvragesEncours = user.ouvragesEncours();
             List<Reservation> reservations = user.reservations();
             render(user, commentaires, ouvrages, ouvragesEncours, reservations);
         }
@@ -78,7 +75,7 @@ public class Users extends Controller {
 
     @Role("member")
     @Post("/user/edit")
-    public static void postEdit(@Required String nom, @Required String prenom, String email, String publicUsername, String profil) throws UnsupportedEncodingException {
+    public static void postEdit(@Required String nom, @Required String prenom, String email, String username, String publicUsername, String profil) throws UnsupportedEncodingException {
         User user = (User) Secure.getUser();
         if (user != null) {
             user.nom = nom;
@@ -94,6 +91,10 @@ public class Users extends Controller {
                 user.isPublic = true;
             } else {
                 user.isPublic = false;
+            }
+
+            if(username != null && user.username == null){
+              user.username = username;
             }
 
             user.update();
@@ -174,18 +175,65 @@ public class Users extends Controller {
         render(users);
     }
 
+
+    @Role("member")
+    @Get("/deleteAccount")
+    public static void deleteAccount() {
+        User user = (User) Secure.getUser();
+         List<Commentaire> commentaires = user.commentaires();
+         List<Emprunt> emprunts = user.ouvragesEncours();
+         List<Reservation> reservations = user.reservations();
+
+        render(user,emprunts,commentaires,reservations);
+    }
+
+    public static void postDeleteAccount(String commentaires){
+         User user = (User) Secure.getUser();
+         if (commentaires == null || commentaires.equals("oui")) {
+              List<Commentaire> comments = user.commentaires();
+              for (Commentaire commentaire : comments) {
+                  commentaire.delete();
+
+              }
+         }else{
+              List<Commentaire> comments = user.commentaires();
+              for (Commentaire commentaire : comments) {
+                  commentaire.user = null;
+                  commentaire.update();
+
+              }
+         }
+
+
+          List<Reservation> reservations = user.reservations();
+         if(reservations.size() > 0){
+            for (Reservation reservation : reservations) {
+                    reservation.isAnnuler = true;
+                    Livre livre = reservation.livre;
+                    livre.get();
+                    livre.reservation = null;
+                    reservation.update();
+                    livre.setEtat(EtatLivre.DISP0NIBLE);
+                    livre.update();
+            }
+         }
+
+         user.delete();
+         Secure.logout();
+    }
+
     @Role("member")
     @Get("/user/emprunts")
     public static void emprunts() {
         User user = (User) Secure.getUser();
-        List<Reservation> reservations = Reservation.all(Reservation.class).filter("user", user).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).filter("isAnnuler", false).fetch();
-        for (Reservation resa : reservations) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
+        List<Emprunt> emprunts = Emprunt.all(Emprunt.class).filter("user", user).filter("dateRetour", null).fetch();
+        for (Emprunt emprunt : emprunts) {
+            if (emprunt.emprunt != null) {
+                emprunt.emprunt.get();
             }
         }
 
-        render(user, reservations);
+        render(user, emprunts);
     }
 
 

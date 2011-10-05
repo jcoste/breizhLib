@@ -4,13 +4,11 @@
 #{include 'Users/menu.html' /}
 <div>
     <h1>Mes Emprunts</h1>
-    #{if reservations.size() > 0}
-    #{list items:reservations , as:'emprunt'}
+    #{if emprunts.size() > 0}
+    #{list items:emprunts , as:'emprunt'}
 
     <section class="miniature">
-        <h1><a href="@{Livres.show(emprunt.empruntEncours.iSBN)}">${emprunt.empruntEncours.titre}</a></h1>
-
-        <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+        <h1><a href="@{Livres.show(emprunt.emprunt.iSBN)}">${emprunt.emprunt.titre}</a></h1>
 
         <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
         <footer>Date de retour : ${emprunt.getDateRetourIdeal().format('dd MMMM yyyy', 'fr')}</footer>

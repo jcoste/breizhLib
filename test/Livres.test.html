@@ -2,7 +2,7 @@
 
 #{selenium}
 open('/init')
-assertTitle('BreizhLib')
+assertTitle('BreizhLib Nouveautés')
 open('/book/978-2-7440-2452-8')
 assertTitle('BreizhLib Nouveautés')
 assertTextPresent('Développement d'applications professionnelles avec Android 2')
@@ -10,7 +10,4 @@ assertTextPresent('Java')
 assertTextPresent('Android')
 assertTextPresent('1 Commentaire')
 assertTextPresent('test commentaire')
-
-clickAndWait('link=Réserver')
-assertTextPresent('Access denied')
 #{/selenium}
