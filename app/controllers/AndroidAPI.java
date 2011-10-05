@@ -171,8 +171,8 @@ public class AndroidAPI extends Controller {
         Date d = Reservation.getDummyDate();
         List<Reservation> reservations = Reservation.all(Reservation.class).filter("dateEmprunt>", Reservation.getDummyDate()).filter("dateRetour", null).fetch();
         for (Reservation resa : reservations) {
-            if (resa.empruntEncours != null) {
-                resa.empruntEncours.get();
+            if (resa.livre != null) {
+                resa.livre.get();
             }
         }
         renderJSON(reservations, new ReservationSerializer(), new LivreSerializer());
