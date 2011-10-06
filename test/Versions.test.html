@@ -1,0 +1,8 @@
+#{selenium}
+// Open the home page, and check that no error occured
+open('/init')
+assertTitle('BreizhLib Nouveautés')
+open('/android/version')
+assertTextPresent('0.1.9')
+assertTextPresent('1009')
+#{/selenium}
