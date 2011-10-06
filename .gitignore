@@ -35,3 +35,5 @@ cloudbeesCmd
 /modules/db-*
 /modules/maven-*
 /modules/oauth-*
+/modules/cobertura-*
+/modules/socialoauth-*

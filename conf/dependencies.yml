@@ -5,6 +5,7 @@ require:
     - play -> siena 2.0.1
     - play -> gae 1.4
     - play -> cloudbees 0.2.1
+    - play -> cobertura 2.1
     - localmodule -> socialoauth 0.1
     - org.play -> fbconnect 1.0-gsylvain35
     - org.play -> oauth  1.0-gsylvain35
