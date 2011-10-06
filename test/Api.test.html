@@ -6,12 +6,13 @@ open('/api/reservations')
 assertTextPresent('[]')
 #{/selenium}
 
-
-#{selenium 'reservations'}
+*{
+#{selenium 'commentaires'}
 open('/init')
 open('/api/commentaires')
-assertTextPresent('[{"lastMaj":1317837831022,"avis":"test commentaire","nom":"Guernion Sylvain","titre":"Guernion Sylvain le 05 octobre 2011","note":5,"uid":"C14","livre":{"editeur":"PEARSON","titre":"Développement d\u0027applications professionnelles avec Android 2","isbn":"978-2-7440-2452-8","note":5,"aAjouter":false,"etat":"DISP0NIBLE","tags":"Java;Android;","image":"http://www.pearson.fr/Resources/titles/27440100948550/Images/27440100948550L.gif"}}]')
+assertTextPresent('"avis":"test commentaire","nom":"Guernion Sylvain","titre":"Guernion Sylvain le 05 Octobre 2011","note":5,"uid":"C14","livre":{"editeur":"PEARSON","titre":"Développement d\u0027applications professionnelles avec Android 2","isbn":"978-2-7440-2452-8","note":5,"aAjouter":false,"etat":"DISP0NIBLE","tags":"Java;Android;","image":"http://www.pearson.fr/Resources/titles/27440100948550/Images/27440100948550L.gif"}}]')
 #{/selenium}
+}*
 
 #{selenium 'ouvrages'}
 open('/init')

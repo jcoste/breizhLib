@@ -26,7 +26,7 @@ public class CommentaireSerializerTest extends UnitTest {
 
         assertNotNull(obj);
 
-        String result = "{\"lastMaj\":"+commentaire.lastmaj.getTime()+",\"avis\":\"content\",\"nom\":\"test\",\"titre\":\"test le 06 octobre 2011\",\"note\":4,\"uid\":\"Cnull\",\"user\":\"admin@breizhlib.org\",\"livre\":null}" ;
+        String result = "{\"lastMaj\":"+commentaire.lastmaj.getTime()+",\"avis\":\"content\",\"nom\":\"test\",\"titre\":\"test le 06 Octobre 2011\",\"note\":4,\"uid\":\"Cnull\",\"user\":\"admin@breizhlib.org\",\"livre\":null}" ;
         assertEquals(result,obj.toString());
     }
 
