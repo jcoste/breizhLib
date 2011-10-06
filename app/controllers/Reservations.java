@@ -40,7 +40,6 @@ public class Reservations extends Controller {
     @Role("admin")
     @Get("/reservations")
     public static void reservations() {
-        Date d = Reservation.getDummyDate();
         List<Reservation> reservations = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("datePret", null).fetch();
         for (Reservation resa : reservations) {
             if (resa.livre != null) {
@@ -84,6 +83,9 @@ public class Reservations extends Controller {
         Reservation reservation = Reservation.findById(id);
         Livre livre = reservation.livre;
         livre.get();
+        if (!livre.getEtat().equals(EtatLivre.RESERVE)) {
+            throw new IllegalStateException("le livre n'a pas été réservé : " + livre.getEtat());
+        }
         reservation.isAnnuler = true;
         livre.reservation = null;
         reservation.update();
