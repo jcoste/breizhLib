@@ -1,0 +1,20 @@
+#{selenium}
+open('/init')
+assertTitle('BreizhLib Nouveautés')
+
+open('/security.secure/login?impl=all')
+assertTitle('Login')
+type('username', 'admin@breizhlib.org')
+type('password', '1234')
+clickAndWait('signin')
+
+open('/book/978-2-7440-2452-8/reserver')
+type('nom', 'adminNom')
+type('prenom', 'adminPrenon')
+clickAndWait('resa')
+
+open('/reservations')
+assertTitle('BreizhLib')
+assertTextPresent('Réservation en cours')
+assertTextPresent('réservé par adminNom adminPrenon')
+#{/selenium}
