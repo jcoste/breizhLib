@@ -6,3 +6,29 @@ open('/android/version')
 assertTextPresent('0.1.9')
 assertTextPresent('1009')
 #{/selenium}
+
+
+#{selenium 'add'}
+// Open the home page, and check that no error occured
+open('/init')
+assertTitle('BreizhLib Nouveautés')
+open('/android/add')
+assertTextPresent('Version (0.1.0) :')
+assertTextPresent('Backlog :')
+#{/selenium}
+
+
+#{selenium 'post'}
+// Open the home page, and check that no error occured
+open('/init')
+assertTitle('BreizhLib Nouveautés')
+open('/android/add')
+type('version', '0.0.50')
+type('versionCode', '10050')
+type('backlog', '<ul><li>Test selenuim</li></ul>')
+
+clickAndWait('add')
+open('/android/version')
+assertTextPresent('0.0.50')
+assertTextPresent('10050')
+#{/selenium}
