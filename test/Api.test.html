@@ -1,13 +1,2 @@
 *{ You can use plain selenium command using the selenium tag }*
 
-#{selenium 'reservations'}
-open('/init')
-open('/api/reservations')
-assertTextPresent('[]')
-#{/selenium}
-
-#{selenium 'ouvrages'}
-open('/init')
-open('/api/ouvrages')
-assertTextPresent('[{"editeur":"PEARSON","titre":"Développement d\u0027applications professionnelles avec Android 2","isbn":"978-2-7440-2452-8","note":5,"aAjouter":false,"etat":"DISP0NIBLE","tags":"Java;Android;","image":"http://www.pearson.fr/Resources/titles/27440100948550/Images/27440100948550L.gif"},{"editeur":"PEARSON","titre":"Programmation concurrente en Java","isbn":"978-2-7440-2333-0","note":0,"aAjouter":false,"etat":"DISP0NIBLE","tags":"Java;","image":"http://www.pearson.fr/Resources/titles/27440100754850/Images/27440100754850L.gif"},{"editeur":"PEARSON","titre":"Coder Proprement","isbn":"978-2-7440-2327-9","note":0,"aAjouter":false,"etat":"DISP0NIBLE","tags":"","image":"http://www.pearson.fr/Resources/titles/27440100643800/Images/27440100643800L.gif"},{"editeur":"PEARSON","titre":"Apache Maven","isbn":"978-2-7440-2337-8","note":0,"aAjouter":false,"etat":"DISP0NIBLE","tags":"Maven;","image":"http://www.pearson.fr/Resources/titles/27440100730370/Images/27440100730370L.gif"}]')
-#{/selenium}
