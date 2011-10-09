@@ -13,7 +13,7 @@ import siena.Query;
 import java.util.Date;
 import java.util.List;
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Export extends Controller {
 
     @Role("admin")

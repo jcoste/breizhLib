@@ -20,7 +20,7 @@ import play.mvc.With;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Users extends Controller {
 
 
@@ -170,7 +170,7 @@ public class Users extends Controller {
 
     @Role("admin")
     @Get("/users")
-    public static void index() {
+    public static void admin() {
         List<User> users = User.findAll();
         render(users);
     }

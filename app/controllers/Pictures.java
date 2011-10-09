@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.appengine.api.datastore.Blob;
+import controllers.security.Secure;
 import models.Picture;
 import models.socialoauth.Role;
 import play.data.validation.Required;
@@ -8,6 +9,7 @@ import play.libs.Images;
 import play.modules.router.Get;
 import play.modules.router.Post;
 import play.mvc.Controller;
+import play.mvc.With;
 
 import java.io.*;
 import java.net.URI;
@@ -15,6 +17,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 
+@With({Secure.class,Widgets.class})
 public class Pictures extends Controller {
 
     @Get("/shared/{file}")

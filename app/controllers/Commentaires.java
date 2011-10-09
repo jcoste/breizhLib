@@ -16,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Commentaires extends Controller {
 
     private static int NB_PAR_PAGE = 6;

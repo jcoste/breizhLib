@@ -11,7 +11,7 @@ import play.mvc.Controller;
 import play.mvc.With;
 import utils.LoadDevData;
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 @StaticRoutes({
         @ServeStatic(value = "/public/", directory = "public"),
         @ServeStatic(value = "/images/", directory = "images")

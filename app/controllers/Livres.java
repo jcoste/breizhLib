@@ -15,7 +15,7 @@ import utils.Paginator;
 
 import java.util.List;
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Livres extends Controller {
 
     private static int NB_PAR_PAGE = 10;
