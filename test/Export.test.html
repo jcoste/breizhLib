@@ -1,0 +1,25 @@
+#{selenium 'index'}
+    open('/init')
+    open('/security.secure/login?impl=all')
+    assertTitle('Login')
+    type('username', 'admin@breizhlib.org')
+    type('password', '1234')
+    clickAndWait('signin')
+
+    open('/export')
+    assertTextPresent('Bibliothèque')
+    assertTextPresent('Ajouter')
+    assertTextPresent('Réservations')
+    assertTextPresent('Explorateur')
+    assertTextPresent('Faq')
+    assertTextPresent('Gestion Utilisateurs')
+    assertTextPresent('Utilisateurs')
+    assertTextPresent('Synchronisation')
+    assertTextPresent('Export')
+    assertTextPresent('Import')
+    assertTextPresent('Nom :')
+    assertTextPresent('Url :')
+
+
+
+#{/selenium}
