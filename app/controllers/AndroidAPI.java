@@ -22,7 +22,7 @@ import utils.ImagesUtils;
 import java.util.Date;
 import java.util.List;
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class AndroidAPI extends Controller {
 
     @Role("member")

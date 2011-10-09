@@ -11,7 +11,7 @@ import play.mvc.With;
 
 import java.util.List;
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Faqs  extends Controller {
 
     @Role("public")

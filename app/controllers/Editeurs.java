@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Editeurs extends Controller {
 
     @Role("admin")

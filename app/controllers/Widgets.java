@@ -1,6 +1,7 @@
 package controllers;
 
 
+import controllers.security.Secure;
 import models.Commentaire;
 import models.Widget;
 import models.WidgetData;
@@ -8,10 +9,12 @@ import models.tag.LivreTag;
 import models.tag.Tag;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.With;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@With(Secure.class)
 public class Widgets extends Controller {
 
     @Before

@@ -1,6 +1,7 @@
 package controllers.tag;
 
 import controllers.Livres;
+import controllers.Widgets;
 import controllers.security.Secure;
 import models.Livre;
 import models.socialoauth.Role;
@@ -13,7 +14,7 @@ import play.mvc.With;
 
 import java.util.List;
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Tags extends Controller {
 
 

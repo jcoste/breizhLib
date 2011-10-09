@@ -15,7 +15,7 @@ import play.mvc.With;
 import java.util.Date;
 import java.util.List;
 
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Reservations extends Controller {
 
     @Role("member")
@@ -39,7 +39,7 @@ public class Reservations extends Controller {
 
     @Role("admin")
     @Get("/reservations")
-    public static void reservations() {
+    public static void admin() {
         List<Reservation> reservations = Reservation.all(Reservation.class).filter("isAnnuler", false).filter("datePret", null).fetch();
         for (Reservation resa : reservations) {
             if (resa.livre != null) {
@@ -74,7 +74,7 @@ public class Reservations extends Controller {
         //TODO envoyer un email au lecteur pour l'inviter a ajouter un commentaire sur le livre
         livre.setEtat(livre.getEtat().getNextState());
         livre.update();
-        reservations();
+        admin();
     }
 
     @Role("member")
@@ -114,7 +114,7 @@ public class Reservations extends Controller {
         livre.emprunt = emprunt;
         livre.setEtat(livre.getEtat().getNextState());
         livre.update();
-        reservations();
+        admin();
     }
 
     @Role("member")

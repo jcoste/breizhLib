@@ -2,13 +2,18 @@
     <h1>Bibliothèque</h1>
      <ul>
          <li><a href="@{Livres.add()}">&{'views.main.menu.add'}</a></li>
-         <li><a href="@{Reservations.reservations()}">&{'views.main.menu.reservations'}</a></li>
+         <li><a href="@{Reservations.admin()}">&{'views.main.menu.reservations'}</a></li>
          <li><a href="@{Pictures.explore()}">Explorateur</a></li>
-         <li><a href="@{Faqs.add()}">Faq</a></li>
+
      </ul>
      <h1>Gestion Utilisateurs</h1>
      <ul>
-        <li><a href="@{Users.index()}">Utilisateurs</a></li>
+        <li><a href="@{Users.admin()}">Utilisateurs</a></li>
+     </ul>
+     <h1>Site</h1>
+     <ul>
+         <li><a href="@{Faqs.add()}">Faq</a></li>
+         <li><a href="@{Admin.index()}">Widgets</a></li>
      </ul>
      <h1>Synchronisation</h1>
      <ul>
