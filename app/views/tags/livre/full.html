@@ -41,7 +41,7 @@
                                     href="@{Livres.preview(_livre.iSBN)}" target="_blank">Preview</a></span><br /> <br/>
                         #{/if}
 
-                     #{if _livre.reservationEncours == null}
+                     #{if _livre.reservation == null && _livre.emprunt == null}
                             <span class="${_livre.getEtat().getClasseCss()}"><a href="@{Reservations.reserver(_livre.iSBN)}">&{'views.reservations.reserver.submit'}</a></span><br/><br/>
                     #{/if}
 

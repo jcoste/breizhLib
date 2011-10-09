@@ -1,0 +1,35 @@
+
+#{selenium 'editeurs'}
+    open('/init')
+
+    open('/editeurs')
+    assertTitle('BreizhLib Editeurs')
+    assertTextPresent('1 Editeur')
+    assertTextPresent('PEARSON')
+    assertTextPresent('http://www.pearson.fr/')
+
+
+#{/selenium}
+
+#{selenium 'editeurs add'}
+    open('/init')
+    open('/security.secure/login?impl=all')
+    assertTitle('Login')
+    type('username', 'admin@breizhlib.org')
+    type('password', '1234')
+    clickAndWait('signin')
+
+    open('/add')
+    assertTitle('BreizhLib Ajout')
+    click('editeuronglet')
+    assertTextPresent('Ajouter un Editeur')
+    assertTextPresent('Nom :')
+    assertTextPresent('Site :')
+    assertTextPresent('Image :')
+
+
+    type('nom', 'SelenuimTest')
+    type('site', 'Selenuim.com')
+    clickAndWait('addediteur')
+
+#{/selenium}

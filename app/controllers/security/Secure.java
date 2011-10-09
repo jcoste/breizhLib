@@ -2,7 +2,6 @@ package controllers.security;
 
 
 import controllers.Application;
-import controllers.WidgetController;
 import controllers.socialoauth.*;
 import models.ServerType;
 import models.Serveur;
@@ -13,11 +12,9 @@ import play.cache.Cache;
 import play.modules.router.Get;
 import play.mvc.Before;
 import play.mvc.Controller;
-import play.mvc.With;
 
 import java.util.Date;
 
-@With(WidgetController.class)
 public class Secure extends Controller {
 
     private static SecureAdapter secure = new SecureAdapter(TwitterSecure.ID);

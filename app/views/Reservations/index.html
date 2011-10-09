@@ -4,50 +4,57 @@
 <article>
     <p>&{'views.reservations.index.title'} <a href="@{Livres.show(livre.iSBN)}">${livre.titre}</a></p>
 
-    <h1>&{'views.reservations.index.title2'}</h1>
-    #{if livre.reservationEncours}
+    <ul id="onglets">
+            <li id="lireservations" class="active"><a class="stack"
+                                                      href="javascript:displayHide('reservations',['emprunts'])">&{'views.reservations.index.title2'}</a>
+            </li>
+            <li id="liemprunts"><a class="stack" href="javascript:displayHide('emprunts',['reservations'])">&{'views.reservations.index.title3'}</a>
+            </li>
+        </ul>
+    <div id="reservations" style="visibility:visible; display:block;">
+        #{if livre.reservation}
 
-    <section class="miniature">
-        <h1>${livre.reservationEncours.nom} ${livre.reservationEncours.prenom}</h1>
+        <section class="miniature">
+            <h1>${livre.reservation.nom} ${livre.reservation.prenom}</h1>
 
-        <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
+            <p><span class="${livre.getEtat().getClasseCss()}">&{livre.etat.getLocalMessage()}</span></p>
 
-        <p>&{'views.reservations.date'}
-            ${livre.reservationEncours.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-        #{if livre.reservationEncours.isDateEmpruntNull()}
-        #{if livre.reservationEncours.user.equals(user)}
-        <footer>
-                    <span class="indisponible">
-                        <a href="@{Reservations.annuler(livre.reservationEncours.id)}">&{'views.reservations.index.annuler'}</a>
-                    </span>
-        </footer>
-        #{/if}
+            <p>&{'views.reservations.date'}
+                ${livre.reservation.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+            #{if livre.reservation.datePret == null}
+            #{if livre.reservation.user.equals(user)}
+            <footer>
+                        <span class="indisponible">
+                            <a href="@{Reservations.annuler(livre.reservation.id)}">&{'views.reservations.index.annuler'}</a>
+                        </span>
+            </footer>
+            #{/if}
+            #{/if}
+            #{else}
+            <p>&{'views.reservations.dateEmprunt'}
+                ${livre.emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+            #{/else}
+        </section>
         #{/if}
         #{else}
-        <p>&{'views.reservations.dateEmprunt'}
-            ${livre.reservationEncours.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+        <p>&{'views.reservations.aucuneReservation'}</p>
         #{/else}
-    </section>
-    #{/if}
-    #{else}
-    <p>&{'views.reservations.aucuneReservation'}</p>
-    #{/else}
-    <h1>&{'views.reservations.index.title3'}</h1>
+    </div>
+    <div id="emprunts" style="visibility:hidden; display:none;">
+        #{if emprunts.size() > 0}
+        #{list items:emprunts, as:'emprunt'}
+        <section class="miniature">
+            <h1>${emprunt.nom} ${emprunt.prenom}</h1>
 
-    #{if emprunts.size() > 0}
-    #{list items:emprunts, as:'emprunt'}
-    <section class="miniature">
-        <h1>${emprunt.nom} ${emprunt.prenom}</h1>
-
-        <p>&{'views.reservations.date'} ${emprunt.dateReservation.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-
-        <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-
-        <p>&{'views.reservations.dateRetour'} ${emprunt.dateRetour.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
-    </section>
-    #{/list}
-    #{/if}
-    #{else}
-    <p>&{'views.reservations.index.aucunEmprunt'}</p>
-    #{/else}
+            <p>&{'views.reservations.dateEmprunt'} ${emprunt.dateEmprunt.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+            #{if emprunt.dateRetour != null}
+            <p>&{'views.reservations.dateRetour'} ${emprunt.dateRetour.format('dd MMMM yyyy HH:mm:ss', 'fr')}</p>
+            #{/if}
+        </section>
+        #{/list}
+        #{/if}
+        #{else}
+        <p>&{'views.reservations.index.aucunEmprunt'}</p>
+        #{/else}
+    </div>
 </article>

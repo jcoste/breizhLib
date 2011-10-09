@@ -1,0 +1,71 @@
+*{ You can use plain selenium command using the selenium tag }*
+
+#{selenium 'infos'}
+    open('/init')
+    open('/security.secure/login?impl=all')
+    assertTitle('Login')
+    type('username', 'admin@breizhlib.org')
+    type('password', '1234')
+    clickAndWait('signin')
+    open('/user/infos')
+    assertTextPresent('Email :	admin@breizhlib.org')
+    assertTextPresent('Prénom :	Sylvain')
+    assertTextPresent('Nom :	Guernion')
+    assertTextPresent('Modifier mon mot de passe')
+    assertTextPresent('ancien mot de passe :')
+    assertTextPresent('mot de passe :')
+    assertTextPresent('confirmation du mot de passe :')
+
+    assertTextPresent('Mon Compte')
+    assertTextPresent('Editer Mes infos')
+    assertTextPresent('Supprimer le compte')
+    assertTextPresent('Mon profil')
+    assertTextPresent('Ma bibliothèque')
+    assertTextPresent('Mes commentaires')
+    assertTextPresent('Mes Emprunts')
+#{/selenium}
+
+#{selenium 'commentaires'}
+    open('/init')
+    open('/security.secure/login?impl=all')
+    assertTitle('Login')
+    type('username', 'admin@breizhlib.org')
+    type('password', '1234')
+    clickAndWait('signin')
+    open('/user/commentaires')
+    assertTextPresent('Mes Commentaires')
+    assertTextPresent('1 Commentaire')
+    assertTextPresent('Développement d'applications professionnelles avec Android 2')
+    assertTextPresent('test commentaire')
+#{/selenium}
+
+#{selenium 'emprunts'}
+    open('/init')
+    open('/security.secure/login?impl=all')
+    assertTitle('Login')
+    type('username', 'admin@breizhlib.org')
+    type('password', '1234')
+    clickAndWait('signin')
+    open('/user/emprunts')
+    assertTextPresent('Mes Emprunts')
+    assertTextPresent('Date emprunt :')
+    assertTextPresent('Développement d'applications professionnelles avec Android 2')
+#{/selenium}
+
+
+#{selenium 'profil'}
+    open('/init')
+    open('/security.secure/login?impl=all')
+    assertTitle('Login')
+    type('username', 'admin@breizhlib.org')
+    type('password', '1234')
+    clickAndWait('signin')
+    open('/user/infos')
+    clickAndWait('profil')
+
+    assertTextPresent('Votre profil est public')
+    assertTextPresent('Guernion Sylvain')
+    assertTextPresent('1 Commentaire')
+    assertTextPresent('1 Ouvrage en cours de lecture')
+    assertTextPresent('Aucun ouvrage lus')
+#{/selenium}

@@ -49,6 +49,10 @@ public class Commentaire extends UpdatableModel implements Updatable{
         return nom + " : " + commentaire;
     }
 
+    public String summary() {
+        return commentaire.substring(0,50)+"...";
+    }
+
     public String getUid() {
         if (uid == null) {
             uid = "C" + id;

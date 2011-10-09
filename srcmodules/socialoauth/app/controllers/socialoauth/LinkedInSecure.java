@@ -25,7 +25,7 @@ public class LinkedInSecure  extends OAuthSecure implements ISecure {
 
     public LinkedInSecure(UserManagement um) {
         super(" https://api.linkedin.com/uas/oauth/requestToken",
-                "https://www.linkedin.com/uas/oauth/authenticate",
+                "https://api.linkedin.com/uas/oauth/authorize",
                 "https://api.linkedin.com/uas/oauth/accessToken");
         this.um = um;
         init();

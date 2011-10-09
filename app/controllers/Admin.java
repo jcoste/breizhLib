@@ -7,7 +7,7 @@ import play.mvc.Controller;
 import play.mvc.With;
 
 @Role("admin")
-@With(Secure.class)
+@With({Secure.class,Widgets.class})
 public class Admin extends Controller {
 
 

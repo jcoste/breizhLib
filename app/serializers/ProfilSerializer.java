@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import models.Commentaire;
+import models.Emprunt;
 import models.Reservation;
 import models.User;
 
@@ -30,7 +31,7 @@ public class ProfilSerializer extends AbstractSerializer<User> implements JsonSe
         }
         obj.addProperty("commentaires", commentaires.size() + commentairesSuffix);
 
-        List<Reservation> ouvrages = user.ouvrages();
+        List<Emprunt> ouvrages = user.ouvrages();
         String ouvragesSuffix = " Ouvrage";
         if (ouvrages.size() > 1) {
             ouvragesSuffix += "s lus";
@@ -50,7 +51,7 @@ public class ProfilSerializer extends AbstractSerializer<User> implements JsonSe
 
         obj.addProperty("reservations", reservations.size() + reservationsSuffix);
 
-        List<Reservation> ouvragesEncours = user.ouvragesEncours();
+        List<Emprunt> ouvragesEncours = user.ouvragesEncours();
         String ouvragesEncoursSuffix = " Ouvrage";
         if (ouvragesEncours.size() > 1) {
             ouvragesEncoursSuffix += "s";

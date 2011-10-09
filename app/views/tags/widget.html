@@ -1,13 +1,8 @@
-<div class="cloudtags">
-<div class="title"><span>Tags</span></div>
-<div class="content" id="tag" style="visibility:visible; display:block;">
-#{tag3d tags:_tags,tagcloudName:'tagcloudfooter',width:200,height:200 /}
-</div>
-</div>
+#{list items:_widget.widgets, as:'widget'}
+      #{secure.check  widget.role}
+        #{include widget.template /}
+      #{/secure.check}
+#{/list}
 
-<div class="tweeter">
-<div class="title"><span>Tweets</span></div>
-<div class="content" id="tweets" style="width:240px;visibility:visible; display:block;">
-    <!-- Tweets will get loaded from jQuery -->
-</div>
-</div>
+
+

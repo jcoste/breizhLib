@@ -49,11 +49,33 @@ public class LoadDevData {
             livre.update();
 
 
+            Emprunt emprunt = new Emprunt(livre,devAdminUser,devAdminUser.nom,devAdminUser.prenom,devAdminUser.email);
+            emprunt.insert();
+            livre.emprunt = emprunt;
+            livre.update();
+
+
         }
         if (Faq.all(Faq.class).count() == 0) {
               Faq faq = new Faq("Comment réserver un ouvrage ?","Connectez vous,sélectionner l'ouvrage et cliquez sur réserver");
               faq.save();
         }
+
+        if (Widget.all(Widget.class).count() == 0) {
+            Widget widget = new Widget("Tags","Widgets/cloudtags.html","public");
+            widget.order = 2;
+            widget.insert();
+
+            widget = new Widget("Tweets","Widgets/tweeter.html","public");
+            widget.order = 1;
+            widget.insert();
+
+            widget = new Widget("Commentaires récents","Widgets/commentaires.html","admin");
+            widget.order = 0;
+            widget.insert();
+
+        }
+
 
 
         if (Version.all(Version.class).count() == 0) {

@@ -1,0 +1,26 @@
+#{selenium 'faq'}
+    open('/init')
+    open('/faq')
+    assertTextPresent('FAQ')
+    assertTextPresent('Comment réserver un ouvrage ?')
+    assertTextPresent('Connectez vous,sélectionner l\'ouvrage et cliquez sur réserver')
+#{/selenium}
+
+
+#{selenium 'faqAdd'}
+    open('/init')
+    open('/security.secure/login?impl=all')
+    assertTitle('Login')
+    type('username', 'admin@breizhlib.org')
+    type('password', '1234')
+    clickAndWait('signin')
+
+    open('/faq/add')
+    assertTextPresent('Question :')
+    assertTextPresent('Réponse :')
+
+    type('question', 'Comment voir les derniers commentaires ?')
+    type('reponse', 'sélectionnez "Dernier commentaires" dans le menu' )
+    clickAndWait('add')
+
+#{/selenium}

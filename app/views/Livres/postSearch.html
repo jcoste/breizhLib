@@ -16,83 +16,115 @@
             <option value="commentaires"
             #{if type.equals('commentaires') }selected="true"#{/if}>Commentaires</option>
         </select>
-        <input type="submit" value="Rechercher"/></p>
+        <input type="submit" id="find" value="Rechercher"/></p>
     #{/form}
     #{if message}
     <p>${message}</p>
     #{/if}
     #{script 'jquery.bubblepopup.v2.3.1.min.js' /}
     #{stylesheet 'jquery.bubblepopup.v2.3.1.css' /}
-    #{list items:livres, as:'livre'}
-    #{if type.equals('tout') || type.equals('livres')}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.search${livre.id}').CreateBubblePopup();
-            $('.search${livre.id}').mouseover(function() {
 
-                //show the bubble popup with new options
-                $(this).ShowBubblePopup({
-                            innerHtml:
-                                    '<section class="book">' +
-                                            '<img src="${livre.image}"/>' +
-                                            '</section>',
-                            innerHtmlStyle: {
-                                color: ('#333333'),
-                                'text-align':'left'
-                            },
-                            themeName:     'azure',
-                            themePath:     '../public/images/jquerybubblepopup-theme'
-                        });
-            });
-        });
+    <ul id="onglets">
 
-    </script>
-    <p><a href="@{Livres.show(livre.iSBN)}"> ${livre.titre}</a><img src="@{'/public/images/loupe.png'}" width="16px"
-                                                                    height="16px" class="search${livre.id}"/></p>
-    #{/if}
-    #{if type.equals('images')}
-    #{script 'webwidget_rating_simple.js' /}
-    #{stylesheet 'webwidget_rating_simple.css' /}
-    #{livre livre:livre, as:'summary' /}
-    #{/if}
-    #{/list}
+        #{if type.equals('tout') || type.equals('livres')}
+            <li id="liouvrages" #{if type.equals('tout') || type.equals('livres')} class="active" #{/if}><a class="stack"
+                                                      href="javascript:displayHide('ouvrages',['images','editeurs','commentaires'])">Ouvrages (${livres.size()})</a>
+            </li>
+          #{/if}
+        #{if type.equals('tout') || type.equals('editeurs')}
+            <li id="liediteurs" #{if !type.equals('tout') || type.equals('editeurs')} class="active" #{/if}><a class="stack" href="javascript:displayHide('editeurs',['images','ouvrages','commentaires'])">Editeurs (${editeurs.size()})</a>
+            </li>
+          #{/if}
+        #{if type.equals('tout') || type.equals('images')}
+            <li id="liimages" #{if !type.equals('tout') || type.equals('images')} class="active" #{/if}><a class="stack" href="javascript:displayHide('images',['editeurs','ouvrages','commentaires'])">Images (${livres.size()+editeurs.size()})</a>
+                </li>
+          #{/if}
+        #{if type.equals('tout') || type.equals('commentaires')}
+            <li id="licommentaires" #{if !type.equals('tout') || type.equals('commentaires')} class="active" #{/if}><a class="stack" href="javascript:displayHide('commentaires',['editeurs','ouvrages','images'])">Commentaires (${commentaires.size()})</a>
+            </li>
+         #{/if}
+     </ul>
 
-    #{list items:editeurs, as:'editeur'}
-    #{if type.equals('tout') || type.equals('editeurs')}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.searchE${editeur.id}').CreateBubblePopup();
-            $('.searchE${editeur.id}').mouseover(function() {
+    <div id="ouvrages" #{if type.equals('tout') || type.equals('livres')} style="visibility:visible; display:block;" #{/if}#{else}  style="visibility:hidden; display:none;"#{/else}>
 
-                //show the bubble popup with new options
-                $(this).ShowBubblePopup({
-                            innerHtml:
+         #{if type.equals('tout') || type.equals('livres')}
+            #{carrousel.script livres:livres /}
 
-                                    '<img src="${editeur.image}"/>',
-                            innerHtmlStyle: {
-                                color: ('#333333'),
-                                'text-align':'left'
-                            },
-                            themeName:     'azure',
-                            themePath:     '../public/images/jquerybubblepopup-theme'
-                        });
-            });
-        });
+            <div id="caroussel">
+                        <div id="popup" src="@{'/public/images/popup-book-accueil.png'}"></div>
+                       #{carrousel.images livres:livres /}
+                       #{carrousel.pagination livres:livres /}
+            </div>
 
-    </script>
-    <p>${editeur.nom} - <a href="${editeur.site}" target="_blank">Site</a> - <a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a><img
-            src="@{'/public/images/loupe.png'}" width="16px" height="16px" class="searchE${editeur.id}"/></p>
-    #{/if}
-    #{if type.equals('images')}
-    <section class="book">
-        <img src="${editeur.image}" alt="${editeur.nom}" width="100px"/>
-    </section>
-    #{/if}
-    #{/list}
+         #{/if}
 
-    #{list items:commentaires, as:'commentaire'}
-    #{if type.equals('tout') || type.equals('commentaires')}
-    <p>${commentaire.nom} - ${commentaire.commentaire}</p>
-    #{/if}
-    #{/list}
+    </div>
+    <div id="editeurs" #{if !type.equals('tout') || type.equals('editeurs')} style="visibility:visible; display:block;" #{/if}#{else}  style="visibility:hidden; display:none;"#{/else}>
+        #{list items:editeurs, as:'editeur'}
+            #{if type.equals('tout') || type.equals('editeurs')}
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.searchE${editeur.id}').CreateBubblePopup();
+                    $('.searchE${editeur.id}').mouseover(function() {
+
+                        //show the bubble popup with new options
+                        $(this).ShowBubblePopup({
+                                    innerHtml:
+
+                                            '<img src="${editeur.image}"/>',
+                                    innerHtmlStyle: {
+                                        color: ('#333333'),
+                                        'text-align':'left'
+                                    },
+                                    themeName:     'azure',
+                                    themePath:     '../public/images/jquerybubblepopup-theme'
+                                });
+                    });
+                });
+
+            </script>
+            <p>${editeur.nom} - <a href="${editeur.site}" target="_blank">Site</a> - <a href="@{Livres.editeur(editeur.nom,0)}">Ouvrages</a><img
+                    src="@{'/public/images/loupe.png'}" width="16px" height="16px" class="searchE${editeur.id}"/></p>
+            #{/if}
+
+            #{/list}
+
+
+    </div>
+    <div id="images" #{if !type.equals('tout') || type.equals('images')} style="visibility:visible; display:block;" #{/if}#{else}  style="visibility:hidden; display:none;"#{/else}>
+
+     #{if type.equals('tout') || type.equals('images')}
+        #{list items:livres, as:'livre'}
+            #{script 'webwidget_rating_simple.js' /}
+            #{stylesheet 'webwidget_rating_simple.css' /}
+            #{livre livre:livre, as:'summary' /}
+
+      #{/list}
+     #{/if}
+       #{if type.equals('tout') || type.equals('images')}
+            #{list items:editeurs, as:'editeur'}
+
+                <section class="book">
+                    <img src="${editeur.image}" alt="${editeur.nom}" width="100px"/>
+                </section>
+
+            #{/list}
+       #{/if}
+
+    </div>
+    <div id="commentaires" #{if !type.equals('tout') || type.equals('commentaires')} style="visibility:visible; display:block;" #{/if}#{else}  style="visibility:hidden; display:none;"#{/else}>
+         #{list items:commentaires, as:'commentaire'}
+            #{if type.equals('tout') || type.equals('commentaires')}
+            <p>${commentaire.nom} - ${commentaire.commentaire}</p>
+            #{/if}
+         #{/list}
+
+    </div>
+
+
+     <div id="all" style="visibility:hidden; display:none;>
+
+
+
+    </div>
 </article>

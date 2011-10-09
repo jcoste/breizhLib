@@ -1,13 +1,16 @@
 package controllers;
 
+import controllers.security.Secure;
 import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
 import org.eclipse.mylyn.wikitext.core.parser.builder.HtmlDocumentBuilder;
 import org.eclipse.mylyn.wikitext.textile.core.TextileLanguage;
 import play.modules.router.Any;
 import play.mvc.Controller;
+import play.mvc.With;
 
 import java.io.StringWriter;
 
+@With({Secure.class,Widgets.class})
 public class Textile extends Controller {
 
     // Controller classique Play! qui sera appelé par l'iframe Preview de MarkItUp.

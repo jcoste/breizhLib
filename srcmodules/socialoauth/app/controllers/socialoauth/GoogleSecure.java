@@ -11,6 +11,7 @@ import play.exceptions.UnexpectedException;
 import play.mvc.Router;
 import play.mvc.Scope;
 
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,13 +50,21 @@ public class GoogleSecure extends OAuthSecure implements ISecure {
     }
 
     public void authenticate(String callback) throws Exception {
-        // 1: get the request token
+         // 1: get the request token
+         Logger.info("---------------OK ------------------------");
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("oauth_consumer_key",consumerKey);
         args.put("oauth_signature_method","HMAC-SHA1");
         args.put("oauth_timestamp", System.currentTimeMillis()/1000 + "");
+        //TODO args.put("oauth_nonce", "0c7236394b4d39d4e07f2b4c37d33651");
+        //TODO args.put("oauth_signature", "19NEfAVNf%2B1fajiwqIOZeAWNKws%3D");
         args.put("callback", callback);
+        args.put("scope", "https://www.google.com/books/feeds/");
+
+
+        //oauth_signature&oauth_nonce
         String callbackURL = Router.getFullUrl(request.controller + ".oauthCallback", args);
+        Logger.info("url--->"+callbackURL);
         getConnector().authenticate(getCredentials(), callbackURL);
     }
 

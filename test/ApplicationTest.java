@@ -6,7 +6,7 @@ public class ApplicationTest extends FunctionalTest {
 
     @Test
     public void testThatIndexPageWorks() {
-        Response response = GET("/");
+        Response response = GET("/news");
         assertIsOk(response);
         assertContentType("text/html", response);
         assertCharset("utf-8", response);
