@@ -61,6 +61,22 @@ public class LoadDevData {
               faq.save();
         }
 
+        if (Widget.all(Widget.class).count() == 0) {
+            Widget widget = new Widget("Tags","Widgets/cloudtags.html","public");
+            widget.order = 2;
+            widget.insert();
+
+            widget = new Widget("Tweets","Widgets/tweeter.html","public");
+            widget.order = 1;
+            widget.insert();
+
+            widget = new Widget("Commentaires récents","Widgets/commentaires.html","admin");
+            widget.order = 0;
+            widget.insert();
+
+        }
+
+
 
         if (Version.all(Version.class).count() == 0) {
             Version version = new Version("0.1.0", 1000);

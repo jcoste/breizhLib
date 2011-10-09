@@ -2,7 +2,7 @@ package controllers.security;
 
 
 import controllers.Application;
-import controllers.WidgetController;
+import controllers.Widgets;
 import controllers.socialoauth.*;
 import models.ServerType;
 import models.Serveur;
@@ -17,7 +17,7 @@ import play.mvc.With;
 
 import java.util.Date;
 
-@With(WidgetController.class)
+@With(Widgets.class)
 public class Secure extends Controller {
 
     private static SecureAdapter secure = new SecureAdapter(GAESecure.ID);

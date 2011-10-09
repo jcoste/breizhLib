@@ -2,6 +2,7 @@ package controllers;
 
 
 import models.Commentaire;
+import models.Widget;
 import models.WidgetData;
 import models.tag.LivreTag;
 import models.tag.Tag;
@@ -11,7 +12,7 @@ import play.mvc.Controller;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WidgetController extends Controller {
+public class Widgets extends Controller {
 
     @Before
     public static void init() {
@@ -39,6 +40,10 @@ public class WidgetController extends Controller {
             commentaire.user.get();
         }
         data.put("lcommentaires", commentaires);
+
+        data.widgets = Widget.findAll();
+
+
         renderArgs.put("widget", data);
     }
 }
