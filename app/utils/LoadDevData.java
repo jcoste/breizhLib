@@ -49,6 +49,12 @@ public class LoadDevData {
             livre.update();
 
 
+            Emprunt emprunt = new Emprunt(livre,devAdminUser,devAdminUser.nom,devAdminUser.prenom,devAdminUser.email);
+            emprunt.insert();
+            livre.emprunt = emprunt;
+            livre.update();
+
+
         }
         if (Faq.all(Faq.class).count() == 0) {
               Faq faq = new Faq("Comment réserver un ouvrage ?","Connectez vous,sélectionner l'ouvrage et cliquez sur réserver");
