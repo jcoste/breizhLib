@@ -11,3 +11,28 @@ assertTextPresent('Android')
 assertTextPresent('1 Commentaire')
 assertTextPresent('test commentaire')
 #{/selenium}
+
+
+#{selenium 'search'}
+open('/init')
+open('/security.secure/logout')
+open('/search')
+type('recherche', 'java')
+clickAndWait('find')
+assertTextPresent('Access denied')
+
+open('/security.secure/login?impl=all')
+assertTitle('Login')
+type('username', 'admin@breizhlib.org')
+type('password', '1234')
+clickAndWait('signin')
+
+open('/search')
+type('recherche', 'java')
+clickAndWait('find')
+assertTextPresent('Programmation concurrente en Java')
+assertTextPresent('Ouvrages (1)')
+assertTextPresent('Editeurs (0)')
+assertTextPresent('Images (1)')
+
+#{/selenium}
