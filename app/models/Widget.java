@@ -39,4 +39,10 @@ public class Widget extends Model {
     public static List<Widget> findAll() {
         return Widget.all(Widget.class).order("order").fetch();
     }
+
+    public static Widget findById(Long id) {
+        return Widget.all(Widget.class).filter("id", id).get();
+    }
+
+
 }
