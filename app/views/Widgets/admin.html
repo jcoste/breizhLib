@@ -1,0 +1,46 @@
+#{extends 'mainFull.html' /}
+#{set title:'BreizhLib Admin' /}
+
+#{include 'Admin/menu.html' /}
+
+
+<div id="menu">
+        <ul id="onglets">
+            <li id="liaddWidget" class="active"><a class="stack" href="javascript:displayHide('addWidget',['widgets'])">Ajout</a>
+            </li>
+            <li id="liwidgets"><a class="stack" href="javascript:displayHide('widgets',['addWidget'])">Widgets</a></li>
+        </ul>
+        <div id="addWidget" style="visibility:visible; display:block;">
+             <h1>Widget Admin</h1>
+            <table>
+                #{form @Widgets.save(),enctype:'multipart/form-data'}
+                <tr>
+                    <td><label for="titre">Titre : </label></td>
+                    <td><p>#{error 'titre' /}</p><input type="text" name="titre" id="titre" value="${params.titre}"
+                                                        size="50"/></td>
+                </tr>
+                <tr>
+                    <td><label for="role">Role : </label></td>
+                    <td><select name="role" id="role">
+                        #{list items:roles, as:'role'}
+                            <option value="${role}">${role}</option>
+                        #{/list}
+                    </select> #{error 'role' /}
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="template">Template : </label></td>
+                    <td><input type="text" name="template" id="template" value="${params.template}" size="50" />#{error 'iSBN' /}
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Add"/>
+            #{/form}
+
+        </div>
+        <div id="widgets" style="visibility:hidden; display:none;">
+            #{list items:widgets, as:'widget'}
+                    <p>${widget.titre} - ${widget.role} - <a href="@{Widgets.delete(widget.id)}">x</a></p>
+            #{/list}
+        </div>
+    </div>
