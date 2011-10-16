@@ -18,7 +18,7 @@ import java.util.List;
 @With({Secure.class,Widgets.class})
 public class Livres extends Controller {
 
-    private static int NB_PAR_PAGE = 10;
+    private static int NB_PAR_PAGE = 1000;
 
     public static int NB_NEWS_PAR_PAGE = 5;
 

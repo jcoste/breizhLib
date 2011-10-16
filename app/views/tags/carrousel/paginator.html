@@ -1,0 +1,14 @@
+<ul class="books-pagination">
+                    #{if _paginator.getElements().size()!=1}
+					    <li class="previous-off books-prev">« Précédent</li>
+                    #{/if}
+					<li id="1" class="direct-link active">1</li>
+                    #{if _paginator.getElements().size()>1}
+                        #{list items:1.._paginator.getElements().size()-1, as:'i'}
+                            <li id="${i+1}" class="direct-link">${i+1}</li>
+                        #{/list}
+                    #{/if}
+                    #{if _paginator.getElements().size()>1}
+					    <li class="next books-next">Suivant »</li>
+                    #{/if}
+</ul>

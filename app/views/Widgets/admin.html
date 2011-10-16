@@ -6,11 +6,11 @@
 
 <div id="menu">
         <ul id="onglets">
-            <li id="liaddWidget" class="active"><a class="stack" href="javascript:displayHide('addWidget',['widgets'])">Ajout</a>
+            <li id="liaddWidget" ><a class="stack" href="javascript:displayHide('addWidget',['widgets'])">Ajout</a>
             </li>
-            <li id="liwidgets"><a class="stack" href="javascript:displayHide('widgets',['addWidget'])">Widgets</a></li>
+            <li id="liwidgets" class="active"><a class="stack" href="javascript:displayHide('widgets',['addWidget'])">Widgets</a></li>
         </ul>
-        <div id="addWidget" style="visibility:visible; display:block;">
+        <div id="addWidget" style="visibility:hidden; display:none;">
              <h1>Widget Admin</h1>
             <table>
                 #{form @Widgets.save(),enctype:'multipart/form-data'}
@@ -30,7 +30,11 @@
                 </tr>
                 <tr>
                     <td><label for="template">Template : </label></td>
-                    <td><input type="text" name="template" id="template" value="${params.template}" size="50" />#{error 'iSBN' /}
+                    <td><select name="role" id="template">
+                        #{list items:templates, as:'template'}
+                            <option value="${template}">${template}</option>
+                        #{/list}
+                    </select>#{error 'iSBN' /}
                     </td>
                 </tr>
             </table>
@@ -38,9 +42,9 @@
             #{/form}
 
         </div>
-        <div id="widgets" style="visibility:hidden; display:none;">
+        <div id="widgets" style="visibility:visible; display:block;">
             #{list items:widgets, as:'widget'}
-                    <p>${widget.titre} - ${widget.role} - <a href="@{Widgets.delete(widget.id)}">x</a></p>
+                    <p>${widget.titre} - ${widget.role} - <a href="@{Widgets.up(widget.id)}">up</a> - <a href="@{Widgets.down(widget.id)}">down</a> - <a href="@{Widgets.delete(widget.id)}">x</a></p>
             #{/list}
         </div>
     </div>
