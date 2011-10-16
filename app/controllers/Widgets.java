@@ -60,16 +60,60 @@ public class Widgets extends Controller {
         roles.add("member");
         roles.add("admin");
 
+        List<String> templates = new ArrayList<String>();
+        templates.add("Widgets/tweeter.html");
+        templates.add("Widgets/commentaires.html");
+        templates.add("Widgets/cloudtags.html");
+
         List<Widget> widgets =Widget.findAll();
-        render(roles,widgets);
+        render(roles,widgets,templates);
     }
 
-     @Role("admin")
+    @Role("admin")
     public static void delete(Long id){
        Widget widget = Widget.findById(id);
        if(widget != null){
            widget.delete();
        }
+       admin();
+    }
+
+     @Role("admin")
+    public static void up(Long id){
+       Widget widget = Widget.findById(id);
+       if(widget != null && widget.order > 0){
+          int order = widget.order;
+          List<Widget> widgets = Widget.findAll();
+           for(Widget pWidget : widgets){
+               if(pWidget.order == order-1 ){
+                   pWidget.order = pWidget.order +1;
+                   pWidget.save();
+               }
+           }
+           widget.order = order -1;
+           widget.save();
+       }
+
+       admin();
+    }
+
+    @Role("admin")
+    public static void down(Long id){
+       Widget widget = Widget.findById(id);
+       List<Widget> widgets = Widget.findAll();
+        if(widget != null && widget.order != widgets.size()-1  ){
+                  int order = widget.order;
+
+                   for(Widget pWidget : widgets){
+                       if(pWidget.order == order+1 ){
+                           pWidget.order = pWidget.order -1;
+                           pWidget.save();
+                       }
+                   }
+                   widget.order = order +1;
+                   widget.save();
+               }
+
        admin();
     }
 
@@ -83,6 +127,7 @@ public class Widgets extends Controller {
 
         if(widget == null){
             widget = new Widget(titre,template,role);
+            widget.order =  Widget.findAll().size()-1;
             widget.insert();
         }
         admin();

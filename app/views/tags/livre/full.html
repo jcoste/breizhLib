@@ -52,8 +52,11 @@
                 #{carrousel.images livre:_livre /}
 
 	</div><br/>
-    <table><tr><td>
+    <table border="1"><tr><td>
+        #{tag bookId:_livre.iSBN,tags:_livre.getTags(), as:'book',tagcloudName:'tagcloudlivre' /}
+    </td><td>
              #{if play.mode.name() == 'DEV'}
+                <div style="width:200px;">
                             <a href="javascript:display('addBiblio',null)" class="stack">Ajouter à ma bibliothèque</a>
 
                             <div id="addBiblio" style="visibility:hidden; display:none;">
@@ -61,9 +64,8 @@
 
                                 <p>[] A Lire</p>
                             </div>
+                </div>
             #{/if}
-    </td><td>
-        #{tag bookId:_livre.iSBN,tags:_livre.getTags(), as:'book',tagcloudName:'tagcloudlivre' /}
     </td><td>#{if _user != null && _user.username != null}
         #{social.tweeter text:"Avis sur l'ouvrage ${_livre.titre}",via:_user.username /}<br />
     #{/if}#{social.like url:_livre.iSBN,as:'book' /}<br /><g:plusone size="medium"></g:plusone>

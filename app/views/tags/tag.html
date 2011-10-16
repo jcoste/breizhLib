@@ -16,7 +16,7 @@
 
 #{if _as == 'book'}
 #{if _tags.size()}<p><img src="@{'/public/images/tag_blue.png'}"/>
-<div id="${_tagcloudName}" class="tagcloud">
+<div id="${_tagcloudName}" class="tagcloud" style="width:200px;">
     #{list items:_tags, as:'tag'}
     #{if tag}
     ${tag}.

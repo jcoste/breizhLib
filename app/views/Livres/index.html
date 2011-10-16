@@ -14,18 +14,13 @@
     #{tri editeur:editeur,tri:tri,page:paginator.page /}
     #{editeurs editeur:editeur,editeurs:editeurs,tri:tri, as:'editeurBook' /}
 
-    #{if paginator.getElements()}
-    #{if paginator.getElements().size()}
-    #{list items:paginator.getElements(), as:'livre'}
-    #{if livre}
-    #{livre livre:livre, as:'summary' /}
-    #{/if}
-    #{/list}
-    #{/if}
-    #{paginate.controls paginator:paginator /}
-    #{/if}
-    #{else}
-    <p>&{'views.livres.noBookRecorded'}</p>
-    #{/else}
+    #{carrousel.script livres:paginator.getElements() /}
+
+    <div id="caroussel">
+				<div id="popup" src="@{'/public/images/popup-book-accueil.png'}"></div>
+               #{carrousel.images livres:paginator.getElements() /}
+               #{carrousel.paginator paginator:paginator /}
+	</div>
 </article>
 
+                       p
