@@ -7,7 +7,7 @@
 
     #{list items:faqs, as:'faq'}
         #{if faq}
-            <h3>${faq.question.raw()}</h3>
+            <h3>${faq.question.raw()}#{secure.check 'admin'}  - <a href="@{Faqs.up(faq.id)}">up</a> - <a href="@{Faqs.down(faq.id)}">down</a>#{/secure.check}</h3>
             <p>${faq.reponse.raw()}</p>
         #{/if}
     #{/list}
